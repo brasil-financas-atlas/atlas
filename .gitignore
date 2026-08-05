@@ -1,0 +1,12 @@
+# Site gerado pelo `mkdocs build` — nao versionar, e recriado sempre
+site/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Sistema
+.DS_Store
+Thumbs.db
