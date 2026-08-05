@@ -10,8 +10,8 @@ const githubSyncService = {
       throw new Error("Personal Access Token (PAT) do GitHub é necessário.");
     }
 
-    const cleanOwner = owner || 'dragaodoomar';
-    const cleanRepo = repo || 'bfa-main';
+    const cleanOwner = owner || 'davidlhferro';
+    const cleanRepo = repo || 'atlas';
     const apiUrl = `https://api.github.com/repos/${cleanOwner}/${cleanRepo}/contents/${path}`;
 
     // 1. Fetch current file SHA if exists
