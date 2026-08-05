@@ -10,6 +10,35 @@ const LOCAL_STORAGE_CMS_KEY = 'bfa_cms_overrides';
 const LOCAL_STORAGE_INLINE_EDIT_KEY = 'bfa_inline_edit_mode';
 const LOCAL_STORAGE_THEME_KEY = 'bfa_theme_preference';
 
+// Conteúdo publicado: é o arquivo que o GitHubSyncModal commita no repositório.
+// Sem carregá-lo, as edições ficariam presas no localStorage de quem editou.
+const CMS_PUBLICADO_URL = 'src/data/overrides.json';
+
+const CMS_VAZIO = { lastUpdated: null, modules: [], lessons: {}, news: [], quizzes: {}, overrides: {} };
+
+function normalizarCms(dados) {
+  if (!dados || typeof dados !== 'object') return { ...CMS_VAZIO };
+  return {
+    lastUpdated: dados.lastUpdated || null,
+    modules: Array.isArray(dados.modules) ? dados.modules : [],
+    news: Array.isArray(dados.news) ? dados.news : [],
+    lessons: dados.lessons && !Array.isArray(dados.lessons) ? dados.lessons : {},
+    quizzes: dados.quizzes && !Array.isArray(dados.quizzes) ? dados.quizzes : {},
+    overrides: dados.overrides && typeof dados.overrides === 'object' ? dados.overrides : {}
+  };
+}
+
+function paraTempo(valor) {
+  const t = valor ? Date.parse(valor) : NaN;
+  return Number.isNaN(t) ? 0 : t;
+}
+
+// Marca a hora da edição para saber quem está mais atual: este navegador ou o
+// conteúdo já publicado no repositório.
+function comHorario(dados) {
+  return { ...dados, lastUpdated: new Date().toISOString() };
+}
+
 const AVAILABLE_THEMES = [
   {
     id: 'brasil-atlas',
@@ -52,11 +81,34 @@ function AdminProvider({ children }) {
   const [cmsData, setCmsData] = React.useState(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_CMS_KEY);
-      return saved ? JSON.parse(saved) : { modules: [], lessons: [], news: [], quizzes: [], overrides: {} };
+      return saved ? normalizarCms(JSON.parse(saved)) : { ...CMS_VAZIO };
     } catch (e) {
-      return { modules: [], lessons: [], news: [], quizzes: [], overrides: {} };
+      return { ...CMS_VAZIO };
     }
   });
+
+  // Busca o conteúdo publicado no repositório e o adota quando for mais recente
+  // do que o deste navegador. Para quem só visita o site (localStorage vazio),
+  // o publicado sempre vence — é assim que a edição do admin chega ao público.
+  React.useEffect(() => {
+    let cancelado = false;
+
+    fetch(`${CMS_PUBLICADO_URL}?v=${Date.now()}`, { cache: 'no-store' })
+      .then(res => (res.ok ? res.json() : null))
+      .then(publicado => {
+        if (cancelado || !publicado) return;
+        setCmsData(local => (
+          paraTempo(publicado.lastUpdated) >= paraTempo(local.lastUpdated)
+            ? normalizarCms(publicado)
+            : local
+        ));
+      })
+      .catch(erro => {
+        console.warn('Não foi possível carregar o conteúdo publicado:', erro);
+      });
+
+    return () => { cancelado = true; };
+  }, []);
 
   const [inlineEditActive, setInlineEditActiveState] = React.useState(() => {
     try {
@@ -150,7 +202,7 @@ function AdminProvider({ children }) {
   };
 
   const updateLesson = (lessonId, updatedData) => {
-    setCmsData(prev => ({
+    setCmsData(prev => comHorario({
       ...prev,
       lessons: { ...prev.lessons, [lessonId]: { ...(prev.lessons?.[lessonId] || {}), ...updatedData } }
     }));
@@ -158,7 +210,7 @@ function AdminProvider({ children }) {
 
   const addNews = (newsItem) => {
     const item = { id: `news_${Date.now()}`, date: new Date().toISOString().split('T')[0], ...newsItem };
-    setCmsData(prev => ({ ...prev, news: [item, ...(prev.news || [])] }));
+    setCmsData(prev => comHorario({ ...prev, news: [item, ...(prev.news || [])] }));
   };
 
   const saveOverride = (id, newContent) => {
@@ -170,7 +222,7 @@ function AdminProvider({ children }) {
       } else {
         updatedOverrides[id] = newContent;
       }
-      const updatedCms = { ...prev, overrides: updatedOverrides };
+      const updatedCms = comHorario({ ...prev, overrides: updatedOverrides });
       try {
         localStorage.setItem(LOCAL_STORAGE_CMS_KEY, JSON.stringify(updatedCms));
       } catch (e) {}

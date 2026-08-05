@@ -32,8 +32,10 @@ function GitHubSyncModal({ isOpen, onClose }) {
         path: 'plataforma/src/data/overrides.json',
         branch: 'main',
         content: {
-          lastUpdated: new Date().toISOString(),
-          ...cmsData
+          ...cmsData,
+          // Precisa vir depois do spread: é esta data que marca o conteúdo
+          // publicado como mais recente do que o de qualquer navegador.
+          lastUpdated: new Date().toISOString()
         },
         token: token.trim(),
         message: `content(cms): edições in-context sincronizadas [${new Date().toLocaleDateString('pt-BR')}]`
