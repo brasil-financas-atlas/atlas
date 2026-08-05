@@ -61,7 +61,7 @@ function GitHubSyncModal({ isOpen, onClose }) {
         </div>
 
         <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', lineHeight: 1.6 }}>
-          Este assistente grava todas as suas edições de texto, vídeos e quizzes em <strong><code>plataforma/src/data/overrides.json</code></strong> no repositório do GitHub. O Netlify detectará o commit e atualizará o site público automaticamente em segundos!
+          Este assistente grava todas as suas edições de texto, vídeos e quizzes em <strong><code>plataforma/src/data/overrides.json</code></strong> no repositório do GitHub (<code>davidlhferro/atlas</code>). O Netlify detectará o commit e atualizará o site público automaticamente em segundos!
         </p>
 
         {status === 'success' ? (
@@ -85,6 +85,25 @@ function GitHubSyncModal({ isOpen, onClose }) {
           </div>
         ) : (
           <form onSubmit={handleSync}>
+            <div className="bfa-form-group" style={{ marginBottom: '1.25rem' }}>
+              <label style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.3rem', display: 'block' }}>
+                🔑 Digite ou cole o seu GitHub Personal Access Token (PAT):
+              </label>
+              <input
+                type="password"
+                value={token}
+                onChange={(e) => setToken(e.target.value)}
+                placeholder="github_pat_... ou ghp_..."
+                className="bfa-input"
+                style={{ width: '100%', padding: '0.65rem', fontFamily: 'var(--font-mono)' }}
+                required
+                autoFocus
+              />
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.3rem', display: 'block' }}>
+                🔒 Recomenda-se gerar um <strong>Fine-grained token</strong> com permissão <em>Contents: Read & Write</em> para <code>davidlhferro/atlas</code>.
+              </span>
+            </div>
+
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
               <div>
                 <label style={{ fontWeight: 700, fontSize: '0.8rem' }}>Dono do Repositório (Owner):</label>
@@ -108,24 +127,6 @@ function GitHubSyncModal({ isOpen, onClose }) {
                   required
                 />
               </div>
-            </div>
-
-            <div className="bfa-form-group" style={{ marginBottom: '1.25rem' }}>
-              <label style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.3rem', display: 'block' }}>
-                GitHub Personal Access Token (PAT):
-              </label>
-              <input
-                type="password"
-                value={token}
-                onChange={(e) => setToken(e.target.value)}
-                placeholder="github_pat_... ou ghp_..."
-                className="bfa-input"
-                style={{ width: '100%', padding: '0.65rem', fontFamily: 'var(--font-mono)' }}
-                required
-              />
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.3rem', display: 'block' }}>
-                🔒 Recomenda-se gerar um <strong>Fine-grained token</strong> restrito <strong>apenas ao repositório bfa-main</strong> (com permissão <em>Contents: Read & Write</em>).
-              </span>
             </div>
 
             {errorMsg && (

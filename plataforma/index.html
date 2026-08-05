@@ -15,22 +15,29 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
 
   <!-- App Styles -->
-  <link rel="stylesheet" href="/src/styles/globals.css" />
-  <link rel="stylesheet" href="/src/styles/typography.css" />
-  <link rel="stylesheet" href="/src/styles/components.css" />
-  <link rel="stylesheet" href="/src/styles/animations.css" />
-  <link rel="stylesheet" href="/src/styles/admin.css" />
-  <link rel="stylesheet" href="/src/styles/themes.css" />
+  <link rel="stylesheet" href="./src/styles/globals.css" />
+  <link rel="stylesheet" href="./src/styles/typography.css" />
+  <link rel="stylesheet" href="./src/styles/components.css" />
+  <link rel="stylesheet" href="./src/styles/animations.css" />
+  <link rel="stylesheet" href="./src/styles/admin.css" />
+  <link rel="stylesheet" href="./src/styles/themes.css" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg" />
 </head>
 <body>
   <div id="root"></div>
 
   <!-- React + ReactDOM (CDN) -->
-  <script crossorigin src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Global Error Handler -->
+  <script>
+    window.addEventListener('error', function(e) {
+      document.body.innerHTML = '<div style="color:red; padding:20px; font-family:monospace; background:white; z-index:9999; position:relative;"><h3>App Error</h3><p>' + e.message + '</p><pre>' + (e.error ? e.error.stack : '') + '</pre></div>';
+    });
+  </script>
 
   <!-- Babel Standalone (JSX transform) -->
   <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.min.js"></script>
@@ -46,39 +53,39 @@
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
 
   <!-- Data & Utilities -->
-  <script type="text/babel" src="/src/data/contentData.js"></script>
-  <script type="text/babel" src="/src/utils/helpers.js"></script>
+  <script type="text/babel" src="./src/data/contentData.js"></script>
+  <script type="text/babel" src="./src/utils/helpers.js"></script>
   
   <!-- Contexts -->
-  <script type="text/babel" src="/src/context/AdminContext.jsx"></script>
-  <script type="text/babel" src="/src/context/ProgressContext.jsx"></script>
-  <script type="text/babel" src="/src/router.jsx"></script>
+  <script type="text/babel" src="./src/context/AdminContext.jsx"></script>
+  <script type="text/babel" src="./src/context/ProgressContext.jsx"></script>
+  <script type="text/babel" src="./src/router.jsx"></script>
 
   <!-- Utils & Sync -->
-  <script src="/src/utils/githubSync.js"></script>
+  <script src="./src/utils/githubSync.js"></script>
 
   <!-- Components -->
-  <script type="text/babel" src="/src/components/Icons.jsx"></script>
-  <script type="text/babel" src="/src/components/ThemeSelector.jsx"></script>
-  <script type="text/babel" src="/src/components/GitHubSyncModal.jsx"></script>
-  <script type="text/babel" src="/src/components/NavbarFooter.jsx"></script>
-  <script type="text/babel" src="/src/components/EditableBlock.jsx"></script>
-  <script type="text/babel" src="/src/components/LessonContent.jsx"></script>
-  <script type="text/babel" src="/src/components/VideoAndForum.jsx"></script>
-  <script type="text/babel" src="/src/components/QuizEngine.jsx"></script>
-  <script type="text/babel" src="/src/components/CalculadoraJurosCompostos.jsx"></script>
-  <script type="text/babel" src="/src/components/AudioReader.jsx"></script>
-  <script type="text/babel" src="/src/components/CertificadoGenerator.jsx"></script>
+  <script type="text/babel" src="./src/components/Icons.jsx"></script>
+  <script type="text/babel" src="./src/components/ThemeSelector.jsx"></script>
+  <script type="text/babel" src="./src/components/GitHubSyncModal.jsx"></script>
+  <script type="text/babel" src="./src/components/NavbarFooter.jsx"></script>
+  <script type="text/babel" src="./src/components/EditableBlock.jsx"></script>
+  <script type="text/babel" src="./src/components/LessonContent.jsx"></script>
+  <script type="text/babel" src="./src/components/VideoAndForum.jsx"></script>
+  <script type="text/babel" src="./src/components/QuizEngine.jsx"></script>
+  <script type="text/babel" src="./src/components/CalculadoraJurosCompostos.jsx"></script>
+  <script type="text/babel" src="./src/components/AudioReader.jsx"></script>
+  <script type="text/babel" src="./src/components/CertificadoGenerator.jsx"></script>
 
   <!-- Pages -->
-  <script type="text/babel" src="/src/pages/Home.jsx"></script>
-  <script type="text/babel" src="/src/pages/DisciplinaOverview.jsx"></script>
-  <script type="text/babel" src="/src/pages/AulaPage.jsx"></script>
-  <script type="text/babel" src="/src/pages/ExtraPages.jsx"></script>
-  <script type="text/babel" src="/src/pages/AdminPages.jsx"></script>
+  <script type="text/babel" src="./src/pages/Home.jsx"></script>
+  <script type="text/babel" src="./src/pages/DisciplinaOverview.jsx"></script>
+  <script type="text/babel" src="./src/pages/AulaPage.jsx"></script>
+  <script type="text/babel" src="./src/pages/ExtraPages.jsx"></script>
+  <script type="text/babel" src="./src/pages/AdminPages.jsx"></script>
 
   <!-- App Entry -->
-  <script type="text/babel" src="/src/App.jsx"></script>
-  <script type="text/babel" src="/src/main.jsx"></script>
+  <script type="text/babel" src="./src/App.jsx"></script>
+  <script type="text/babel" src="./src/main.jsx"></script>
 </body>
 </html>

@@ -378,7 +378,6 @@ function Exercicios() {
             );
           })}
         </div>
-        )}
       </div>
     </div>
   );

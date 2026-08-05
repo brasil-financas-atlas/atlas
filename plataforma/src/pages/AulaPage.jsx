@@ -243,9 +243,6 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           )}
 
 
-          {/* Audio Reader TTS Accessible Component */}
-          <AudioReader textContent={markdownContent} />
-
           {/* Exact Markdown Theory Content */}
           <article className="bfa-lesson-article">
             <LessonContent markdownContent={markdownContent} lessonId={lessonId} />
