@@ -17,13 +17,15 @@ const githubSyncService = {
     // 1. Fetch current file SHA if exists
     let sha = null;
     try {
-      const getRes = await fetch(`${apiUrl}?ref=${branch}`, {
-        headers: {
-          'Authorization': `token ${token}`,
-          'Accept': 'application/vnd.github.v3+json'
-        }
-      });
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/vnd.github.v3+json'
+    };
 
+    // 1. Fetch current file SHA if exists
+    let sha = null;
+    try {
+      const getRes = await fetch(`${apiUrl}?ref=${branch}`, { headers });
       if (getRes.ok) {
         const getData = await getRes.json();
         sha = getData.sha;
@@ -49,15 +51,19 @@ const githubSyncService = {
     const putRes = await fetch(apiUrl, {
       method: 'PUT',
       headers: {
-        'Authorization': `token ${token}`,
-        'Content-Type': 'application/json',
-        'Accept': 'application/vnd.github.v3+json'
+        ...headers,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)
     });
 
     if (!putRes.ok) {
-      const errData = await putRes.json();
+      const errData = await putRes.json().catch(() => ({}));
+      if (putRes.status === 404) {
+        throw new Error(`Repositório ou caminho não encontrado em '${cleanOwner}/${cleanRepo}'. Verifique se o Dono/Repo é 'davidlhferro/atlas' e se o token PAT tem acesso a ele.`);
+      } else if (putRes.status === 401 || putRes.status === 403) {
+        throw new Error(`Sem permissão para comitar no repositório '${cleanOwner}/${cleanRepo}'. Verifique a permissão 'Contents: Read & Write' no seu Fine-Grained Token.`);
+      }
       throw new Error(errData.message || "Falha ao enviar commit para a API do GitHub.");
     }
 
