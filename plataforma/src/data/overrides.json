@@ -1,7 +1,33 @@
 {
-  "lastUpdated": "2026-08-05T00:00:00.000Z",
-  "overrides": {},
-  "lessons": {},
-  "quizzes": {},
-  "news": []
+  "lastUpdated": "2026-08-05T18:13:43.737Z",
+  "modules": [],
+  "lessons": {
+    "matematica-modulo-1-algebra-do-zero-aula-01-numeros-e-operacoes": {
+      "videoUrl": ""
+    }
+  },
+  "news": [
+    {
+      "id": "news_1785885081773",
+      "date": "2026-08-04",
+      "title": "86578",
+      "category": "Mercado",
+      "summary": "r67",
+      "author": "admin"
+    },
+    {
+      "id": "news_1785885076331",
+      "date": "2026-08-04",
+      "title": "67777",
+      "category": "Mercado",
+      "summary": "645yw34e5h",
+      "author": "admin"
+    }
+  ],
+  "quizzes": [],
+  "overrides": {
+    "financas-modulo-1-fundamentos-aula-08-risco-e-diversificacao-foco-desc": "888888888",
+    "cronograma-header-title": "Gerador de Cronograma de Estudos e TESTE 123456789",
+    "home-hero-badge": "Plataforma Educacional Aberta — NIF Dragão do CEU"
+  }
 }
