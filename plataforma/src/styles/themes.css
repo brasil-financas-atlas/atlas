@@ -1,0 +1,108 @@
+/* ==========================================================================
+   BRASIL FINANÇAS ATLAS (BFA) — 4 PROFESSIONAL DESIGN THEMES
+   ========================================================================== */
+
+/* Theme 1: Brasil Atlas Classic (Default) */
+body.theme-classic, :root {
+  --theme-bg-body: #F8FAFC;
+  --theme-bg-surface: #FFFFFF;
+  --theme-color-primary: #1B3A5C;
+  --theme-color-secondary: #1B6B3A;
+  --theme-color-accent: #C8963E;
+  --theme-text-main: #0F172A;
+  --theme-text-sub: #475569;
+  --theme-border: #E2E8F0;
+  --theme-hero-gradient: linear-gradient(135deg, #0F243C 0%, #1B3A5C 60%, #1B6B3A 100%);
+  --theme-card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+}
+
+/* Theme 2: Executive Financial / B3 Corporate */
+body.theme-executive {
+  --theme-bg-body: #F4F6F8;
+  --theme-bg-surface: #FFFFFF;
+  --theme-color-primary: #0A2540;
+  --theme-color-secondary: #00D4B2;
+  --theme-color-accent: #635BFF;
+  --theme-text-main: #1A1F36;
+  --theme-text-sub: #4E5D78;
+  --theme-border: #E3E8EE;
+  --theme-hero-gradient: linear-gradient(135deg, #0A2540 0%, #1A1F36 100%);
+  --theme-card-shadow: 0 10px 30px -5px rgba(10, 37, 64, 0.08);
+}
+
+/* Theme 3: Khan Minimalist Academy */
+body.theme-khan {
+  --theme-bg-body: #FFFFFF;
+  --theme-bg-surface: #F8FAFC;
+  --theme-color-primary: #0056B3;
+  --theme-color-secondary: #108548;
+  --theme-color-accent: #E0A800;
+  --theme-text-main: #212529;
+  --theme-text-sub: #6C757D;
+  --theme-border: #DEE2E6;
+  --theme-hero-gradient: linear-gradient(135deg, #0056B3 0%, #003D80 100%);
+  --theme-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Theme 4: Dark Obsidian Pro */
+body.theme-obsidian {
+  --theme-bg-body: #0D1117;
+  --theme-bg-surface: #161B22;
+  --theme-color-primary: #10B981;
+  --theme-color-secondary: #3B82F6;
+  --theme-color-accent: #F59E0B;
+  --theme-text-main: #F0F6FC;
+  --theme-text-sub: #8B949E;
+  --theme-border: #30363D;
+  --theme-hero-gradient: linear-gradient(135deg, #161B22 0%, #0D1117 100%);
+  --theme-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Theme Application Wrappers */
+body {
+  background-color: var(--theme-bg-body);
+  color: var(--theme-text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bfa-card {
+  background-color: var(--theme-bg-surface);
+  border: 1px solid var(--theme-border);
+  box-shadow: var(--theme-card-shadow);
+}
+
+.bfa-section--alt {
+  background-color: var(--theme-bg-surface);
+  border-color: var(--theme-border);
+}
+
+/* Live Theme Switcher Component Bar */
+.bfa-theme-switcher-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--theme-bg-surface);
+  border: 1px solid var(--theme-border);
+  border-radius: 9999px;
+  box-shadow: var(--theme-card-shadow);
+  margin-left: 1rem;
+}
+
+.bfa-theme-chip {
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid var(--theme-border);
+  background: transparent;
+  color: var(--theme-text-sub);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bfa-theme-chip.active {
+  background: var(--theme-color-primary);
+  color: #FFFFFF;
+  border-color: var(--theme-color-primary);
+}
