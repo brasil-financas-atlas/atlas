@@ -1,0 +1,124 @@
+/* ==========================================================================
+   Brasil Finanças Atlas (BFA) - Keyframes & Micro-Interactions
+   ========================================================================== */
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(27, 107, 58, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(27, 107, 58, 0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Utility Animation Classes */
+.animate-fade-in {
+  animation: fadeIn var(--transition-normal) forwards ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp var(--transition-normal) forwards ease-out;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown var(--transition-normal) forwards ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--transition-normal) forwards ease-out;
+}
+
+.animate-pulse {
+  animation: pulseGlow 2s infinite;
+}
+
+/* Badge Shimmer Effect */
+.shimmer-badge,
+.skeleton-loader {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.skeleton-loader {
+  background-color: var(--color-slate-200);
+  border-radius: var(--radius-md);
+  min-height: 1.2rem;
+}
+
+/* Interactive Hover Utilities */
+.hover-lift {
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.hover-scale {
+  transition: transform var(--transition-fast);
+}
+
+.hover-scale:hover {
+  transform: scale(1.03);
+}
+
+.active-press:active {
+  transform: scale(0.97);
+}
