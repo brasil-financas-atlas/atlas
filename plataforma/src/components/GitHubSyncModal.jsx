@@ -3,8 +3,8 @@ const { useState, useEffect, useContext, createContext, useMemo, useRef } = Reac
 function GitHubSyncModal({ isOpen, onClose }) {
   const { cmsData } = useContext(AdminContext || createContext({}));
   const [token, setToken] = useState(() => localStorage.getItem('bfa_gh_token') || '');
-  const [owner, setOwner] = useState(() => localStorage.getItem('bfa_gh_owner') || 'dragaodoomar');
-  const [repo, setRepo] = useState(() => localStorage.getItem('bfa_gh_repo') || 'bfa-main');
+  const [owner, setOwner] = useState(() => localStorage.getItem('bfa_gh_owner') || 'davidlhferro');
+  const [repo, setRepo] = useState(() => localStorage.getItem('bfa_gh_repo') || 'atlas');
   const [status, setStatus] = useState('idle'); // idle | syncing | success | error
   const [errorMsg, setErrorMsg] = useState('');
   const [commitUrl, setCommitUrl] = useState('');
