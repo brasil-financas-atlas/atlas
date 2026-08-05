@@ -1,8 +1,8 @@
-# Aula 3: Classes de ativos e correlação
+# Unidade 3: Classes de ativos e correlação
 
 ## Comece aqui
 
-Um time de futebol não escala onze atacantes. Uma carteira também não: cada **classe de ativos** joga numa posição — umas defendem, outras atacam, outras seguram o meio de campo. Esta aula apresenta o elenco completo e o conceito que define como eles jogam juntos: a **correlação**.
+Um time de futebol não escala onze atacantes. Uma carteira também não: cada **classe de ativos** joga numa posição — umas defendem, outras atacam, outras seguram o meio de campo. Esta unidade apresenta o elenco completo e o conceito que define como eles jogam juntos: a **correlação**.
 
 ## Ideia central
 
@@ -69,4 +69,4 @@ Um colega diz: "minha carteira é super diversificada: tenho ações da Vale, da
 - Classes de ativos são as posições do time; correlação mede se os jogadores se movem juntos.
 - Diversificação real exige correlações baixas — não apenas quantidade.
 - No Brasil, exterior + indexadores diferentes são as fontes mais fortes de descorrelação.
-- Elenco apresentado. A próxima aula escala o time: quanto colocar em cada classe — a alocação de ativos.
+- Elenco apresentado. A próxima unidade escala o time: quanto colocar em cada classe — a alocação de ativos.

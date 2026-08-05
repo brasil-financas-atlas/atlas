@@ -1,4 +1,4 @@
-# Aula 4: CDB, LCI, LCA e FGC
+# Unidade 4: CDB, LCI, LCA e FGC
 
 ## Comece aqui
 
@@ -71,4 +71,4 @@ Calcule a rentabilidade líquida de cada um e indique qual escolheria. Que fator
 - CDB, LCI e LCA são empréstimos ao banco, não ao governo.
 - LCI e LCA são isentos de IR; CDB tem tabela regressiva.
 - O FGC garante até R$250.000 por CPF por banco.
-- A próxima aula sai da renda fixa e entra em renda variável: ações e a bolsa de valores.
+- A próxima unidade sai da renda fixa e entra em renda variável: ações e a bolsa de valores.

@@ -1580,3 +1580,161 @@
   }
 }
 
+
+/* ══════════════════════════════════════════════════════════════════════
+   DIAGRAMAS DO CONTEÚDO (vindos do Markdown das unidades)
+   ══════════════════════════════════════════════════════════════════════
+   As unidades usam esquemas visuais feitos em HTML/CSS e SVG em vez de
+   imagem, para acompanharem o tema, funcionarem no celular e manterem o
+   texto buscável. Sem estas regras, os diagramas aparecem como texto
+   solto e as linhas do SVG ficam invisíveis (linha não tem traço por
+   padrão). Receitas de uso: DESIGN.md.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Grade de conceitos (ex.: as 4 operações) ─── */
+.bfa-ops {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin: 1.5rem 0;
+}
+
+.bfa-ops__item {
+  background: var(--bg-surface, #fff);
+  border: 1px solid var(--border-color, #e2e6f0);
+  border-radius: var(--radius-lg, 14px);
+  padding: 1.1rem 1.2rem;
+  border-top: 5px solid var(--color-ouro, #ca9e43);
+}
+
+.bfa-ops__sinal {
+  display: block;
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-ouro, #ca9e43);
+}
+
+.bfa-ops__nome {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #6b7280);
+  margin: 0.45rem 0 0.3rem;
+}
+
+/* A pergunta é a estrela: precisa pesar mais que a conta */
+.bfa-ops__pergunta {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 0.6rem;
+}
+
+.bfa-ops__exemplo {
+  display: inline-block;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.82rem;
+  color: var(--text-secondary, #6b7280);
+  background: var(--bg-app, rgba(0, 0, 0, 0.05));
+  border-radius: var(--radius-sm, 8px);
+  padding: 0.25em 0.55em;
+}
+
+.bfa-ops__item--soma { border-top-color: var(--color-verde, #1f9d6b); }
+.bfa-ops__item--soma .bfa-ops__sinal { color: var(--color-verde, #1f9d6b); }
+.bfa-ops__item--sub  { border-top-color: #e05252; }
+.bfa-ops__item--sub  .bfa-ops__sinal { color: #e05252; }
+.bfa-ops__item--mult { border-top-color: var(--color-azul, #2f6fb0); }
+.bfa-ops__item--mult .bfa-ops__sinal { color: var(--color-azul, #2f6fb0); }
+.bfa-ops__item--div  { border-top-color: var(--color-ouro, #ca9e43); }
+.bfa-ops__item--div  .bfa-ops__sinal { color: var(--color-ouro, #ca9e43); }
+
+/* ─── Barras de comparação ─── */
+.bfa-barras {
+  margin: 1.5rem 0;
+  padding: 1.2rem 1.3rem;
+  background: var(--bg-surface, #fff);
+  border: 1px solid var(--border-color, #e2e6f0);
+  border-radius: var(--radius-lg, 14px);
+}
+
+.bfa-barra { margin-bottom: 1rem; }
+.bfa-barra:last-of-type { margin-bottom: 0.6rem; }
+
+.bfa-barra__rotulo {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-secondary, #6b7280);
+  margin-bottom: 0.3rem;
+}
+
+.bfa-barra__trilho {
+  background: var(--bg-app, rgba(0, 0, 0, 0.07));
+  border-radius: var(--radius-full, 999px);
+  overflow: hidden;
+}
+
+.bfa-barra__preenchimento {
+  background: var(--color-azul, #2f6fb0);
+  color: var(--text-inverse, #fff);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full, 999px);
+  white-space: nowrap;
+}
+
+.bfa-barra__preenchimento--destaque {
+  background: var(--color-ouro, #ca9e43);
+  color: var(--color-azul-dark, #011e50);
+}
+
+.bfa-barras__nota {
+  margin: 0.8rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-ouro-dark, #a07830);
+}
+
+/* ─── Reta numérica (SVG) ─── */
+.bfa-reta {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 660px;
+  margin: 1.6rem auto;
+  font-family: inherit;
+}
+
+.bfa-reta__negativo { stroke: #e05252; stroke-width: 4; stroke-linecap: round; }
+.bfa-reta__positivo { stroke: var(--color-verde, #1f9d6b); stroke-width: 4; stroke-linecap: round; }
+.bfa-reta__tick     { stroke: var(--text-secondary, #6b7280); stroke-width: 1.5; }
+
+.bfa-reta__zero {
+  fill: var(--bg-surface, #fff);
+  stroke: var(--color-azul-dark, #011e50);
+  stroke-width: 2.5;
+}
+
+.bfa-reta text { text-anchor: middle; }
+.bfa-reta__num           { fill: var(--text-secondary, #6b7280); font-size: 13px; }
+.bfa-reta__num--destaque { fill: var(--color-ouro-dark, #a07830); font-size: 13px; font-weight: 700; }
+.bfa-reta__num--zero     { fill: var(--color-azul-dark, #011e50); font-size: 14px; font-weight: 800; }
+
+.bfa-reta__zona { font-size: 11px; font-weight: 700; letter-spacing: 0.11em; }
+.bfa-reta__zona--neg  { fill: #e05252; }
+.bfa-reta__zona--pos  { fill: var(--color-verde, #1f9d6b); }
+.bfa-reta__zona--zero { fill: var(--text-secondary, #6b7280); }
+
+.bfa-reta__seta       { stroke: var(--color-ouro, #ca9e43); stroke-width: 2.5; fill: none; }
+.bfa-reta__seta-ponta { fill: var(--color-ouro, #ca9e43); }
+.bfa-reta__legenda    { fill: var(--color-ouro-dark, #a07830); font-size: 13px; font-weight: 600; }
+
+/* Celular: a grade vira uma coluna */
+@media screen and (max-width: 44em) {
+  .bfa-ops { grid-template-columns: 1fr; }
+}

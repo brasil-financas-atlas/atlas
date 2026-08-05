@@ -1,4 +1,4 @@
-# Aula 3: Balanço patrimonial
+# Unidade 3: Balanço patrimonial
 
 ## Comece aqui
 
@@ -53,7 +53,7 @@ Leitura rápida:
 1. A equação fecha: 400 = 150 + 250. ✓
 2. Dívida bruta = 30 + 80 = **R$ 110 mi**; dívida líquida = 110 − 50 = **R$ 60 mi**.
 3. O PL (250) é bem maior que a dívida líquida (60): estrutura de capital confortável.
-4. A maior parte do ativo está em fábricas e frota (250 de 400) — coerente com a vantagem competitiva de distribuição que vimos na aula 2.
+4. A maior parte do ativo está em fábricas e frota (250 de 400) — coerente com a vantagem competitiva de distribuição que vimos na unidade 2.
 
 ## Mini quiz
 
@@ -65,11 +65,11 @@ Leitura rápida:
 
 ## PBL
 
-Ana montou o "balanço pessoal" dela: R$ 2.000 na poupança, um notebook de R$ 3.000, uma dívida de R$ 4.500 no cartão (vence este mês) e R$ 6.000 de um financiamento de curso (vence em 3 anos). Monte o balanço de Ana no formato da aula (circulante × não circulante), calcule o patrimônio líquido dela e diagnostique: o problema de Ana é de **patrimônio** ou de **prazo**? O que ela poderia negociar para melhorar a situação sem ganhar um real a mais?
+Ana montou o "balanço pessoal" dela: R$ 2.000 na poupança, um notebook de R$ 3.000, uma dívida de R$ 4.500 no cartão (vence este mês) e R$ 6.000 de um financiamento de curso (vence em 3 anos). Monte o balanço de Ana no formato da unidade (circulante × não circulante), calcule o patrimônio líquido dela e diagnostique: o problema de Ana é de **patrimônio** ou de **prazo**? O que ela poderia negociar para melhorar a situação sem ganhar um real a mais?
 
 ## Resumo
 
 - Balanço é a fotografia de uma data: ativo (o que tem), passivo (o que deve), PL (o que sobra para os sócios).
 - Ativo = Passivo + PL, sempre.
 - Dívida líquida (dívida bruta menos caixa) é a medida-chave de endividamento.
-- A próxima aula sai da fotografia e vai para o filme: a DRE, que mostra se a empresa dá lucro.
+- A próxima unidade sai da fotografia e vai para o filme: a DRE, que mostra se a empresa dá lucro.

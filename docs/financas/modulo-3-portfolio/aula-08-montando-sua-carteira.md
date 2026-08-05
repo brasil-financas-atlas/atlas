@@ -1,17 +1,17 @@
-# Aula 8: Montando sua primeira carteira — estudo de caso completo
+# Unidade 8: Montando sua primeira carteira — estudo de caso completo
 
 ## Comece aqui
 
-Hora de juntar as sete aulas num processo único. Esta aula percorre, passo a passo, a montagem de uma carteira real — do perfil ao plano de acompanhamento — usando um personagem que reúne tudo o que o módulo ensinou. Ao final, você replica o processo para o seu caso no PBL.
+Hora de juntar as sete unidades num processo único. Esta unidade percorre, passo a passo, a montagem de uma carteira real — do perfil ao plano de acompanhamento — usando um personagem que reúne tudo o que o módulo ensinou. Ao final, você replica o processo para o seu caso no PBL.
 
 ## O processo em 7 passos
 
 1. **Base**: reserva de emergência pronta (3–6 meses de custo de vida em Selic/liquidez diária). Sem ela, não há carteira.
-2. **Perfil e objetivos** (aula 2): o quê, quando, quanta queda aguenta.
-3. **Alocação-alvo por objetivo** (aulas 3–4): percentuais por classe, núcleo e satélites.
-4. **Teste de estresse** (aula 5): a carteira aguenta uma crise? Você aguenta?
-5. **Veículos e custos** (aula 7): os produtos mais baratos e eficientes para cada classe.
-6. **Rotina** (aula 6): aporte mensal automático + regra de rebalanceamento escrita.
+2. **Perfil e objetivos** (unidade 2): o quê, quando, quanta queda aguenta.
+3. **Alocação-alvo por objetivo** (unidades 3–4): percentuais por classe, núcleo e satélites.
+4. **Teste de estresse** (unidade 5): a carteira aguenta uma crise? Você aguenta?
+5. **Veículos e custos** (unidade 7): os produtos mais baratos e eficientes para cada classe.
+6. **Rotina** (unidade 6): aporte mensal automático + regra de rebalanceamento escrita.
 7. **Revisão anual**: o plano só muda quando a **vida** muda (objetivo, renda, horizonte) — não quando o mercado grita.
 
 ## Estudo de caso: a carteira de Marina

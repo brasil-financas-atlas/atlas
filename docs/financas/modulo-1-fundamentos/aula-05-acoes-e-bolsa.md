@@ -1,4 +1,4 @@
-# Aula 5: Ações e a bolsa de valores
+# Unidade 5: Ações e a bolsa de valores
 
 ## Comece aqui
 
@@ -68,4 +68,4 @@ MGLU3 caiu muito mais que WEGE3 em um período de alta da Selic e dólar forte. 
 - Ação é ser sócio de uma empresa; risco e retorno são variáveis.
 - ON dá voto; PN dá prioridade em dividendos.
 - O preço reflete expectativas de lucro futuro, não valor passado.
-- A próxima aula mostra como investir em ações sem escolher empresa: fundos e ETFs.
+- A próxima unidade mostra como investir em ações sem escolher empresa: fundos e ETFs.

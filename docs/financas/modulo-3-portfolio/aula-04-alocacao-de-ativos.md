@@ -1,4 +1,4 @@
-# Aula 4: Alocação de ativos
+# Unidade 4: Alocação de ativos
 
 ## Comece aqui
 
@@ -6,7 +6,7 @@ Estudos clássicos de finanças mostram algo contraintuitivo: no longo prazo, **
 
 ## Ideia central
 
-**Alocação de ativos** é decidir os percentuais de cada classe *antes* de escolher qualquer produto — e essa decisão nasce do perfil e dos objetivos da aula 2. Primeiro o esqueleto, depois a carne: primeiro "30% em ações", só depois "quais ações".
+**Alocação de ativos** é decidir os percentuais de cada classe *antes* de escolher qualquer produto — e essa decisão nasce do perfil e dos objetivos da unidade 2. Primeiro o esqueleto, depois a carne: primeiro "30% em ações", só depois "quais ações".
 
 ## Conceitos essenciais
 
@@ -43,7 +43,7 @@ Repare no padrão: o que muda de um perfil para outro é o peso de **renda vari�
 
 ## Exemplo resolvido
 
-Ana (aula 2) vai investir R$ 500 por mês para o longo prazo, perfil moderado. Carteira-alvo: 35% pós, 25% IPCA+, 10% pré, 15% ações BR, 10% internacional, 5% FIIs.
+Ana (unidade 2) vai investir R$ 500 por mês para o longo prazo, perfil moderado. Carteira-alvo: 35% pós, 25% IPCA+, 10% pré, 15% ações BR, 10% internacional, 5% FIIs.
 
 Aporte mensal: R$ 175 no Tesouro Selic, R$ 125 no IPCA+, R$ 50 no prefixado, R$ 75 num ETF Brasil, R$ 50 num ETF global, R$ 25 num FII diversificado. Seis ordens simples, repetidas todo mês. Quando ela dominar o Módulo 2 e quiser apostar numa empresa específica, essa posição entra como **satélite** dentro dos 15% de ações — sem quebrar o esqueleto.
 
@@ -64,4 +64,4 @@ Monte a carteira-alvo de João, 30 anos, professor concursado (renda estável), 
 - Alocação entre classes decide a maior parte do resultado de longo prazo.
 - Primeiro o esqueleto (percentuais), depois os produtos; núcleo diversificado, satélites de convicção.
 - Política escrita no dia calmo evita improviso no dia de crise.
-- Definida a carteira-alvo, a próxima aula mede o risco do conjunto — e mostra por que 1+1 pode ser menos que 2 (no bom sentido).
+- Definida a carteira-alvo, a próxima unidade mede o risco do conjunto — e mostra por que 1+1 pode ser menos que 2 (no bom sentido).

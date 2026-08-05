@@ -50,7 +50,7 @@ Matemática e finanças explicadas de um jeito simples, para quem está no ensin
 
 </div>
 
-## Como funciona cada aula
+## Como funciona cada unidade
 
 <div class="grid cards" markdown>
 
@@ -70,7 +70,7 @@ Matemática e finanças explicadas de um jeito simples, para quem está no ensin
 
     ---
 
-    Cada aula termina com um caso para investigar — do tipo que aparece na sua vida.
+    Cada unidade termina com um caso para investigar — do tipo que aparece na sua vida.
 
 </div>
 

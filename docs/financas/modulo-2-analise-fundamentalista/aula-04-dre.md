@@ -1,4 +1,4 @@
-# Aula 4: DRE — Demonstração do Resultado
+# Unidade 4: DRE — Demonstração do Resultado
 
 ## Comece aqui
 
@@ -53,12 +53,12 @@ DRE simplificada da **Sorvetes Tropical S.A.** (em R$ milhões):
 | (−) IR (30%) | −10 | |
 | (=) **Lucro líquido** | **23** | **7,7%** |
 
-Leitura: a cada R$ 100 vendidos, R$ 40 sobram depois de fabricar o sorvete, R$ 15 sobram da operação como um todo e **R$ 7,70 chegam ao acionista**. Os juros consumiram R$ 12 mi — se a empresa reduzir a dívida líquida de R$ 60 mi que vimos na aula 3, esse degrau devolve lucro direto ao acionista.
+Leitura: a cada R$ 100 vendidos, R$ 40 sobram depois de fabricar o sorvete, R$ 15 sobram da operação como um todo e **R$ 7,70 chegam ao acionista**. Os juros consumiram R$ 12 mi — se a empresa reduzir a dívida líquida de R$ 60 mi que vimos na unidade 3, esse degrau devolve lucro direto ao acionista.
 
 ## Cuidados de leitura
 
 - **Um trimestre não é tendência.** Compare com o mesmo trimestre do ano anterior (efeito sazonal: sorvete vende mais no verão!).
-- **Lucro contábil não é dinheiro no caixa.** Vendas a prazo entram na receita antes de o dinheiro entrar — por isso existe a aula 5.
+- **Lucro contábil não é dinheiro no caixa.** Vendas a prazo entram na receita antes de o dinheiro entrar — por isso existe a unidade 5.
 - **Resultados "não recorrentes"** (venda de um prédio, acordo judicial) inflam ou derrubam o lucro de um período. Procure o lucro **recorrente**.
 
 ## Mini quiz
@@ -78,4 +78,4 @@ A lanchonete de João faturou R$ 20.000 no mês. Gastou R$ 9.000 com ingrediente
 - A DRE mostra o caminho da receita até o lucro líquido em um período.
 - As margens (bruta, operacional, líquida) dizem **onde** a empresa ganha ou perde eficiência.
 - Lucro contábil não é caixa — vendas a prazo e efeitos não recorrentes distorcem.
-- A próxima aula fecha o trio de demonstrações com a que menos mente: o fluxo de caixa.
+- A próxima unidade fecha o trio de demonstrações com a que menos mente: o fluxo de caixa.

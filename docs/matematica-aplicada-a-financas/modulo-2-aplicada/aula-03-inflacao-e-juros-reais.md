@@ -1,4 +1,4 @@
-# Aula 3: Inflação e juros reais
+# Unidade 3: Inflação e juros reais
 
 ## Comece aqui
 
@@ -90,4 +90,4 @@ Um investimento rendeu 12% no ano, mas a inflação foi 7%. O investidor diz: "f
 - Inflação corrói o valor do dinheiro; o que importa é o rendimento real.
 - A fórmula exata é: (1 + nominal) / (1 + inflação) − 1.
 - O IPCA é o termômetro oficial da inflação no Brasil.
-- A próxima aula explica como impostos e taxas cortam ainda mais o que sobra.
+- A próxima unidade explica como impostos e taxas cortam ainda mais o que sobra.

@@ -1,4 +1,4 @@
-# Aula 4: Regra de três
+# Unidade 4: Regra de três
 
 ## Comece aqui
 
@@ -45,4 +45,4 @@ Você conhece três valores e quer descobrir o quarto.
 - Regra de três resolve qualquer problema de proporção com três valores conhecidos.
 - Grandezas diretas: aumentam juntas. Inversas: uma aumenta enquanto a outra cai.
 - Em finanças: câmbio, rendimento proporcional e conversão de taxas.
-- A próxima aula entra em potências — essencial pra entender juros compostos.
+- A próxima unidade entra em potências — essencial pra entender juros compostos.

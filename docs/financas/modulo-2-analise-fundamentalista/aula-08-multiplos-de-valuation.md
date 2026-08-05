@@ -1,4 +1,4 @@
-# Aula 8: Múltiplos de valuation
+# Unidade 8: Múltiplos de valuation
 
 ## Comece aqui
 
@@ -49,7 +49,7 @@ A Sorvetes Tropical tem 100 milhões de ações a R$ 2,30 cada (valor de mercado
 | EV/EBITDA | (230 + 60) ÷ 62 | 4,7× |
 | DY | 9,2 ÷ 230 | 4,0% |
 
-Os pares do setor de alimentos negociam a P/L ~14× e EV/EBITDA ~7×. A Tropical está mais barata que os pares — coerente com o ROE fraco que diagnosticamos na aula 6. A pergunta de um milhão: se a empresa reduzir a dívida e o ROE subir, o mercado reprecifica — e quem comprou a 10× de lucro ganha duas vezes (lucro maior **e** múltiplo maior). Se o ROE continuar fraco, o "desconto" era justo. Múltiplo não dá resposta; dá a pergunta certa.
+Os pares do setor de alimentos negociam a P/L ~14× e EV/EBITDA ~7×. A Tropical está mais barata que os pares — coerente com o ROE fraco que diagnosticamos na unidade 6. A pergunta de um milhão: se a empresa reduzir a dívida e o ROE subir, o mercado reprecifica — e quem comprou a 10× de lucro ganha duas vezes (lucro maior **e** múltiplo maior). Se o ROE continuar fraco, o "desconto" era justo. Múltiplo não dá resposta; dá a pergunta certa.
 
 ## Mini quiz
 
@@ -68,4 +68,4 @@ Ana comparou duas farmácias de rede: a Farma A negocia a P/L 25 e cresce lucros
 - Múltiplos dividem preço por fundamento: P/L, P/VP, EV/EBITDA e DY são o kit essencial.
 - Múltiplo baixo só é barganha se o fundamento for sustentável — cuidado com value traps.
 - Compare com pares, com a história da empresa e sempre pergunte o porquê do desconto.
-- A próxima aula fecha o módulo estimando o valor intrínseco em reais: o fluxo de caixa descontado.
+- A próxima unidade fecha o módulo estimando o valor intrínseco em reais: o fluxo de caixa descontado.

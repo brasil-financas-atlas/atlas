@@ -1,4 +1,4 @@
-# Aula 8: Risco, retorno e diversificação
+# Unidade 8: Risco, retorno e diversificação
 
 ## Comece aqui
 
@@ -65,4 +65,4 @@ Sugira como ela poderia rebalancear a carteira para reduzir risco sem necessaria
 - Risco é incerteza, não só perda. Volatilidade é uma medida de risco.
 - Diversificação funciona porque ativos com baixa correlação não caem juntos.
 - O perfil de investidor define quanto risco faz sentido para cada pessoa.
-- A próxima e última aula conecta tudo isso com a macroeconomia: Selic, IPCA, PIB e câmbio afetam cada classe de ativo de forma diferente.
+- A próxima e última unidade conecta tudo isso com a macroeconomia: Selic, IPCA, PIB e câmbio afetam cada classe de ativo de forma diferente.

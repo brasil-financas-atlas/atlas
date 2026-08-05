@@ -10,7 +10,7 @@ Ao final do módulo, você deve conseguir montar e defender uma carteira complet
 
 Concluir o [Módulo 1: Fundamentos em Finanças](../modulo-1-fundamentos/index.md). O [Módulo 2: Análise Fundamentalista](../modulo-2-analise-fundamentalista/index.md) complementa (as posições de convicção da carteira vêm de lá), mas não é obrigatório para começar.
 
-## Aulas
+## Unidades
 
 1. [O que é um portfólio (e por que não ter um ativo só)](aula-01-o-que-e-um-portfolio.md)
 2. [Perfil de investidor e objetivos](aula-02-perfil-de-investidor-e-objetivos.md)
@@ -21,14 +21,14 @@ Concluir o [Módulo 1: Fundamentos em Finanças](../modulo-1-fundamentos/index.m
 7. [Custos e impostos na carteira](aula-07-custos-e-impostos.md)
 8. [Montando sua primeira carteira — estudo de caso completo](aula-08-montando-sua-carteira.md)
 
-## Estrutura de cada aula
+## Estrutura de cada unidade
 
 - **Comece aqui**: a ideia principal sem jargão.
 - **Conceitos essenciais**: termos que você precisa dominar.
 - **Exemplo resolvido**: aplicação passo a passo.
 - **Mini quiz**: questões curtas de fixação.
 - **PBL**: problema aberto para pensar como gestor da própria carteira.
-- **Resumo**: o que levar para a próxima aula.
+- **Resumo**: o que levar para a próxima unidade.
 
 ## Próximo passo
 

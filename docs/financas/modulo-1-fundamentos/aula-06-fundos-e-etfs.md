@@ -1,4 +1,4 @@
-# Aula 6: Fundos de investimento e ETFs
+# Unidade 6: Fundos de investimento e ETFs
 
 ## Comece aqui
 
@@ -71,4 +71,4 @@ Calcule o rendimento líquido (de taxa) de cada um. Depois responda: em qual sit
 - Fundos ativos têm gestor e taxa alta; ETFs replicam índice com taxa baixa.
 - A maioria dos fundos ativos não supera o índice consistentemente no longo prazo.
 - Come-cotas prejudica os juros compostos em fundos de renda fixa e multimercado.
-- A próxima aula explica FIIs: como investir no mercado imobiliário sem comprar um imóvel.
+- A próxima unidade explica FIIs: como investir no mercado imobiliário sem comprar um imóvel.

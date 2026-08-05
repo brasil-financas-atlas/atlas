@@ -1,0 +1,51 @@
+name: BFA — Sincronizar conteúdo
+
+# Roda quando alguém edita o Markdown em docs/ (ou o script), regenera o
+# contentData.js e comita o resultado. A Netlify detecta o commit e republica.
+#
+# Antes este arquivo estava na raiz do repositório, e por isso o GitHub nunca
+# o executou: workflows só rodam quando estão dentro de .github/workflows/.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+      - "build_exact_data.py"
+  workflow_dispatch: # permite rodar na mão, pelo botão "Run workflow"
+
+permissions:
+  contents: write
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Sem "|| true": se o script falhar, o workflow precisa falhar também,
+      # senão o erro passa em silêncio e ninguém descobre.
+      - name: Regerar contentData.js a partir de docs/
+        run: python build_exact_data.py
+
+      # Faltava este passo: sem ele, o arquivo gerado era descartado quando o
+      # runner desligava, e nada chegava ao site.
+      - name: Comitar o resultado (se algo mudou)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add plataforma/src/data/contentData.js
+          if git diff --staged --quiet; then
+            echo "Nada mudou no conteúdo — nenhum commit necessário."
+          else
+            git commit -m "content: regenera contentData.js a partir de docs/ [skip ci]"
+            git push
+            echo "contentData.js atualizado. A Netlify vai republicar."
+          fi

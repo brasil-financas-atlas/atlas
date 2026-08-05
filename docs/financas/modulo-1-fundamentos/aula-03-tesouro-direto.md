@@ -1,4 +1,4 @@
-# Aula 3: Tesouro Direto
+# Unidade 3: Tesouro Direto
 
 ## Comece aqui
 
@@ -60,4 +60,4 @@ Para cada objetivo, indique o título mais adequado e explique por que os outros
 - Tesouro Direto é empréstimo ao governo federal; o mais seguro do Brasil.
 - Tesouro Selic: baixíssima oscilação, ideal para curto prazo.
 - Tesouro Prefixado e IPCA+: oscilam se vendidos antes do vencimento.
-- A próxima aula mostra como funcionam os produtos bancários de renda fixa: CDB, LCI e LCA.
+- A próxima unidade mostra como funcionam os produtos bancários de renda fixa: CDB, LCI e LCA.

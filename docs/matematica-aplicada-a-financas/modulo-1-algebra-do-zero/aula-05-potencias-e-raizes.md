@@ -1,8 +1,8 @@
-# Aula 5: Potências e raízes
+# Unidade 5: Potências e raízes
 
 ## Comece aqui
 
-Juros compostos funcionam com potências. Sem entender o que é 1,10³ você não consegue calcular quanto R$1.000 vira em 3 anos a 10% ao ano. Esta aula destrava isso.
+Juros compostos funcionam com potências. Sem entender o que é 1,10³ você não consegue calcular quanto R$1.000 vira em 3 anos a 10% ao ano. Esta unidade destrava isso.
 
 ## Ideia central
 
@@ -45,4 +45,4 @@ Raiz cúbica do fator de crescimento, menos 1, dá a taxa por período.
 - Potência é multiplicação repetida: $a^n = a \times a \times \ldots \times a$ ($n$ vezes).
 - Raiz é a operação inversa da potência.
 - A fórmula dos juros compostos $(1+i)^n$ usa potência diretamente.
-- A próxima aula ensina notação científica — pra ler números grandes sem se perder.
+- A próxima unidade ensina notação científica — pra ler números grandes sem se perder.

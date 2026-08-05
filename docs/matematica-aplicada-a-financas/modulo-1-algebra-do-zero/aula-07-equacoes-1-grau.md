@@ -1,4 +1,4 @@
-# Aula 7: Equações de 1º grau
+# Unidade 7: Equações de 1º grau
 
 ## Comece aqui
 

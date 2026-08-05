@@ -1,4 +1,4 @@
-# Aula 6: Aportes e rebalanceamento
+# Unidade 6: Aportes e rebalanceamento
 
 ## Comece aqui
 
@@ -62,4 +62,4 @@ A carteira de Carlos tinha alvo 40% renda fixa / 40% ações / 20% FIIs. Após u
 - Aporte regular constrói o patrimônio e suaviza o preço médio; disciplina vence timing.
 - Rebalancear devolve a carteira ao alvo e realiza lucros/compras sistematicamente.
 - Prefira rebalancear com aportes (custo zero); bandas ou calendário, nunca pânico.
-- A próxima aula cuida do que corrói tudo silenciosamente: custos e impostos.
+- A próxima unidade cuida do que corrói tudo silenciosamente: custos e impostos.

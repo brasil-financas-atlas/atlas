@@ -1,4 +1,4 @@
-# Aula 1: O que é análise fundamentalista?
+# Unidade 1: O que é análise fundamentalista?
 
 ## Comece aqui
 
@@ -29,10 +29,10 @@ Com ações é igual, com uma diferença: o "dono" (o mercado) muda o preço tod
 
 ## O que a análise fundamentalista olha
 
-1. **Os números da empresa**: balanço patrimonial, demonstração de resultados e fluxo de caixa (aulas 3, 4 e 5).
-2. **A qualidade do negócio**: setor, concorrência, vantagens competitivas (aula 2).
-3. **Indicadores**: rentabilidade, endividamento, liquidez (aulas 6 e 7).
-4. **O preço em relação ao valor**: múltiplos e valuation (aulas 8 e 9).
+1. **Os números da empresa**: balanço patrimonial, demonstração de resultados e fluxo de caixa (unidades 3, 4 e 5).
+2. **A qualidade do negócio**: setor, concorrência, vantagens competitivas (unidade 2).
+3. **Indicadores**: rentabilidade, endividamento, liquidez (unidades 6 e 7).
+4. **O preço em relação ao valor**: múltiplos e valuation (unidades 8 e 9).
 
 ## Exemplo resolvido
 
@@ -41,7 +41,7 @@ Duas empresas de sorvete têm ações custando R$ 10 cada.
 - A **Sorvetes Tropical S.A.** lucra R$ 2 por ação ao ano e cresce todo ano.
 - A **Gelados Genéricos S.A.** lucra R$ 0,20 por ação e vive endividada.
 
-O preço é o mesmo, mas o valor é claramente diferente: a Tropical devolve o preço da ação em lucro em 5 anos (10 ÷ 2); a Genéricos levaria 50 anos (10 ÷ 0,20). Só de olhar o lucro por ação, você já percebe que "ação barata" não é a de menor preço — é a que custa pouco **em relação ao que entrega**. É exatamente isso que os múltiplos da aula 8 vão medir.
+O preço é o mesmo, mas o valor é claramente diferente: a Tropical devolve o preço da ação em lucro em 5 anos (10 ÷ 2); a Genéricos levaria 50 anos (10 ÷ 0,20). Só de olhar o lucro por ação, você já percebe que "ação barata" não é a de menor preço — é a que custa pouco **em relação ao que entrega**. É exatamente isso que os múltiplos da unidade 8 vão medir.
 
 ## Mini quiz
 
@@ -60,4 +60,4 @@ João viu um influenciador dizendo que uma ação "está barata porque caiu 40% 
 - Ação é um pedaço de uma empresa real; analisar a ação é analisar a empresa.
 - Preço é o que o mercado cobra; valor é o que a empresa vale pela sua capacidade de gerar lucro.
 - A análise fundamentalista estima o valor e compara com o preço, buscando margem de segurança.
-- A próxima aula mostra como avaliar a qualidade do negócio: setor, modelo de negócio e vantagens competitivas.
+- A próxima unidade mostra como avaliar a qualidade do negócio: setor, modelo de negócio e vantagens competitivas.

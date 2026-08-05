@@ -8,9 +8,9 @@ Ao final do módulo, você deve conseguir pegar uma empresa da B3, entender como
 
 ## Pré-requisito
 
-Concluir o [Módulo 1: Fundamentos em Finanças](../modulo-1-fundamentos/index.md), em especial as aulas de ações e de risco. Para as contas de valor presente, o [Módulo 2 de Matemática](../../matematica-aplicada-a-financas/modulo-2-aplicada/index.md) (juros compostos) é essencial.
+Concluir o [Módulo 1: Fundamentos em Finanças](../modulo-1-fundamentos/index.md), em especial as unidades de ações e de risco. Para as contas de valor presente, o [Módulo 2 de Matemática](../../matematica-aplicada-a-financas/modulo-2-aplicada/index.md) (juros compostos) é essencial.
 
-## Aulas
+## Unidades
 
 1. [O que é análise fundamentalista?](aula-01-o-que-e-analise-fundamentalista.md)
 2. [A empresa por trás da ação](aula-02-a-empresa-por-tras-da-acao.md)
@@ -24,16 +24,16 @@ Concluir o [Módulo 1: Fundamentos em Finanças](../modulo-1-fundamentos/index.m
 
 ## Fio condutor
 
-As aulas acompanham uma mesma empresa fictícia, a **Sorvetes Tropical S.A.**, do primeiro contato com o negócio (aula 2) até o valuation completo (aula 9). Ao final, você terá visto uma análise fundamentalista inteira, de ponta a ponta.
+As unidades acompanham uma mesma empresa fictícia, a **Sorvetes Tropical S.A.**, do primeiro contato com o negócio (unidade 2) até o valuation completo (unidade 9). Ao final, você terá visto uma análise fundamentalista inteira, de ponta a ponta.
 
-## Estrutura de cada aula
+## Estrutura de cada unidade
 
 - **Comece aqui**: a ideia principal sem jargão.
 - **Conceitos essenciais**: termos que você precisa dominar.
 - **Exemplo resolvido**: aplicação passo a passo.
 - **Mini quiz**: questões curtas de fixação.
 - **PBL**: problema aberto para pensar como analista.
-- **Resumo**: o que levar para a próxima aula.
+- **Resumo**: o que levar para a próxima unidade.
 
 ## Próximo passo
 

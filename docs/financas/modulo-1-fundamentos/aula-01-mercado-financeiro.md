@@ -1,4 +1,4 @@
-# Aula 1: O que é o mercado financeiro?
+# Unidade 1: O que é o mercado financeiro?
 
 ## Comece aqui
 
@@ -63,4 +63,4 @@ O que muda para João? Ele deveria continuar na poupança ou procurar outra alte
 - Mercado financeiro conecta investidores e tomadores de dinheiro.
 - Todo investimento envolve risco, retorno e liquidez.
 - Juros compostos fazem o tempo trabalhar a favor de quem começa cedo.
-- A próxima aula explica quem organiza e regula esse sistema no Brasil.
+- A próxima unidade explica quem organiza e regula esse sistema no Brasil.

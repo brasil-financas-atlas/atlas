@@ -3,8 +3,8 @@ const { useState, useEffect, useContext, createContext, useMemo, useRef } = Reac
 function GitHubSyncModal({ isOpen, onClose }) {
   const { cmsData } = useContext(AdminContext || createContext({}));
   const [token, setToken] = useState(() => localStorage.getItem('bfa_gh_token') || '');
-  const [owner, setOwner] = useState(() => localStorage.getItem('bfa_gh_owner') || 'dragaodoomar');
-  const [repo, setRepo] = useState(() => localStorage.getItem('bfa_gh_repo') || 'bfa-main');
+  const [owner, setOwner] = useState(() => localStorage.getItem('bfa_gh_owner') || 'davidlhferro');
+  const [repo, setRepo] = useState(() => localStorage.getItem('bfa_gh_repo') || 'atlas');
   const [status, setStatus] = useState('idle'); // idle | syncing | success | error
   const [errorMsg, setErrorMsg] = useState('');
   const [commitUrl, setCommitUrl] = useState('');
@@ -124,7 +124,7 @@ function GitHubSyncModal({ isOpen, onClose }) {
                 required
               />
               <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.3rem', display: 'block' }}>
-                🔒 Recomenda-se gerar um <strong>Fine-grained token</strong> restrito <strong>apenas ao repositório bfa-main</strong> (com permissão <em>Contents: Read & Write</em>).
+                🔒 Gere um <strong>Fine-grained token</strong> restrito <strong>apenas ao repositório atlas</strong>, com permissão <em>Contents: Read & Write</em> e validade curta (30 dias). O token fica salvo neste navegador — não use em computador compartilhado.
               </span>
             </div>
 

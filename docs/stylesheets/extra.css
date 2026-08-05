@@ -1,0 +1,510 @@
+/* ══════════════════════════════════════════════════════════════════════
+   ⚙️  MÁQUINA DO VISUAL — Brasil Finanças Atlas
+   ══════════════════════════════════════════════════════════════════════
+
+   ⚠️ Para mudar CORES e FORMATOS, mexa em `design.css`, não aqui.
+
+   Este arquivo é a engrenagem: ele pega as cores definidas no painel
+   de controle (design.css) e aplica em cada parte do site.
+   Mexer aqui exige um pouco de CSS. Se não souber, peça ajuda.
+   ══════════════════════════════════════════════════════════════════════ */
+
+
+/* ─── Barra do topo ─────────────────────────────────────────────────── */
+.md-header {
+  background-color: var(--bfa-cor-header) !important;
+  box-shadow: 0 2px 12px rgba(1, 30, 80, 0.18);
+}
+
+.md-header__title {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #ffffff !important;
+}
+
+.md-search__input {
+  border-radius: var(--bfa-arredondamento-p) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #fff !important;
+}
+
+.md-search__input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+
+/* ─── Menu lateral ──────────────────────────────────────────────────── */
+.md-nav__title {
+  color: var(--bfa-cor-principal) !important;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.md-nav__link--active { color: var(--bfa-cor-destaque) !important; font-weight: 600; }
+.md-nav__link:hover   { color: var(--bfa-cor-destaque) !important; }
+
+
+/* ─── Conteúdo ──────────────────────────────────────────────────────── */
+.md-main { background-color: var(--bfa-cor-fundo); }
+
+.md-content__inner {
+  background: var(--bfa-cor-caixa);
+  border-radius: var(--bfa-arredondamento);
+  padding: 2rem 2.5rem;
+  margin: 1.5rem 0;
+  box-shadow: var(--bfa-sombra);
+}
+
+.md-content h1 {
+  color: var(--bfa-cor-principal);
+  font-weight: 800;
+  font-size: 1.9rem;
+  border-bottom: 3px solid var(--bfa-cor-destaque);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.md-content h2 {
+  color: var(--bfa-cor-principal);
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-top: 2rem;
+}
+
+.md-content h3 { color: var(--bfa-cor-principal-clara); font-weight: 600; }
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   HERO — o banner grande da página inicial
+   ══════════════════════════════════════════════════════════════════════ */
+.bfa-hero {
+  background: linear-gradient(135deg,
+              var(--bfa-cor-principal) 0%,
+              var(--bfa-cor-principal-clara) 100%);
+  border-radius: var(--bfa-arredondamento);
+  padding: 3rem 2.5rem;
+  margin: 0 0 2.5rem;
+  text-align: center;
+  color: #fff;
+  box-shadow: var(--bfa-sombra-forte);
+}
+
+.bfa-hero h1 {
+  color: #fff !important;
+  border: none !important;
+  font-size: 2.4rem !important;
+  line-height: 1.15;
+  margin: 0 0 0.6rem !important;
+  padding: 0 !important;
+}
+
+.bfa-hero .bfa-hero__sub {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 34rem;
+  margin: 0 auto 1.8rem;
+  line-height: 1.6;
+}
+
+/* Botão grande do hero */
+.bfa-hero .md-button {
+  background: var(--bfa-cor-destaque);
+  color: var(--bfa-cor-principal-escura) !important;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 0.7rem 2rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.bfa-hero .md-button:hover {
+  background: var(--bfa-cor-destaque-clara);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+}
+
+/* Botão secundário (contorno) */
+.bfa-hero .md-button--secundario {
+  background: transparent;
+  color: #fff !important;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: none;
+}
+
+.bfa-hero .md-button--secundario:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #fff;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   CARDS — os blocos clicáveis (grid cards do Material)
+   ══════════════════════════════════════════════════════════════════════ */
+.md-typeset .grid.cards > ul > li {
+  border: 1px solid var(--bfa-cor-borda);
+  border-radius: var(--bfa-arredondamento);
+  background: var(--bfa-cor-caixa);
+  box-shadow: var(--bfa-sombra);
+  padding: 1.4rem 1.3rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Barrinha colorida no topo do card */
+.md-typeset .grid.cards > ul > li::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: var(--bfa-cor-destaque);
+}
+
+.md-typeset .grid.cards > ul > li:hover {
+  transform: translateY(var(--bfa-levantar-hover));
+  box-shadow: var(--bfa-sombra-forte);
+  border-color: var(--bfa-cor-destaque);
+}
+
+.md-typeset .grid.cards > ul > li > hr {
+  margin: 0.8rem 0;
+  border-color: var(--bfa-cor-borda);
+}
+
+/* Cor da barrinha por matéria: adicione { .card-matematica } no card.
+   Os dois seletores cobrem onde o Markdown pode encaixar a classe. */
+.md-typeset .grid.cards > ul > li.card-matematica::before,
+.md-typeset .grid.cards > ul > li:has(.card-matematica)::before { background: var(--bfa-cor-matematica); }
+
+.md-typeset .grid.cards > ul > li.card-financas::before,
+.md-typeset .grid.cards > ul > li:has(.card-financas)::before   { background: var(--bfa-cor-financas); }
+
+.md-typeset .grid.cards > ul > li.card-brhsic::before,
+.md-typeset .grid.cards > ul > li:has(.card-brhsic)::before     { background: var(--bfa-cor-brhsic); }
+
+/* Ícone grande dentro do card */
+.md-typeset .grid.cards .bfa-card__icone {
+  font-size: 2rem;
+  line-height: 1;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Selo de status: {.selo-pronto} ou {.selo-construcao} */
+.md-typeset .selo-pronto,
+.md-typeset .selo-construcao {
+  display: inline-block;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.18em 0.7em;
+  border-radius: 999px;
+  vertical-align: middle;
+}
+
+.md-typeset .selo-pronto     { background: rgba(31, 157, 107, 0.15); color: #1f9d6b; }
+.md-typeset .selo-construcao { background: rgba(202, 158, 67, 0.18); color: #8a6a1c; }
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   DIAGRAMAS DE CONTEÚDO
+   Esquemas visuais feitos em HTML/CSS em vez de imagem: acompanham o
+   modo escuro, funcionam no celular e o texto continua buscável.
+   Receitas de uso em DESIGN.md.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Grade de conceitos (ex.: as 4 operações) ─── */
+.bfa-ops {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin: 1.5rem 0;
+}
+
+.bfa-ops__item {
+  background: var(--bfa-cor-caixa);
+  border: 1px solid var(--bfa-cor-borda);
+  border-radius: var(--bfa-arredondamento);
+  padding: 1.1rem 1.2rem;
+  box-shadow: var(--bfa-sombra);
+  border-top: 5px solid var(--bfa-cor-destaque);
+}
+
+.bfa-ops__sinal {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  display: block;
+  color: var(--bfa-cor-destaque);
+}
+
+.bfa-ops__nome {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--bfa-cor-texto-suave);
+  margin: 0.45rem 0 0.3rem;
+}
+
+/* A pergunta é a estrela: mais visível que a conta */
+.bfa-ops__pergunta {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--bfa-cor-texto);
+  margin: 0 0 0.6rem;
+  line-height: 1.3;
+}
+
+.bfa-ops__exemplo {
+  font-family: var(--md-code-font-family, monospace);
+  font-size: 0.82rem;
+  color: var(--bfa-cor-texto-suave);
+  background: rgba(1, 30, 80, 0.05);
+  border-radius: var(--bfa-arredondamento-p);
+  padding: 0.25em 0.55em;
+  display: inline-block;
+}
+
+[data-md-color-scheme="slate"] .bfa-ops__exemplo {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* Cores por operação */
+.bfa-ops__item--soma  { border-top-color: #1f9d6b; }
+.bfa-ops__item--soma  .bfa-ops__sinal { color: #1f9d6b; }
+.bfa-ops__item--sub   { border-top-color: #e05252; }
+.bfa-ops__item--sub   .bfa-ops__sinal { color: #e05252; }
+.bfa-ops__item--mult  { border-top-color: #2f6fb0; }
+.bfa-ops__item--mult  .bfa-ops__sinal { color: #2f6fb0; }
+.bfa-ops__item--div   { border-top-color: #ca9e43; }
+.bfa-ops__item--div   .bfa-ops__sinal { color: #ca9e43; }
+
+/* ─── Barras de comparação ─── */
+.bfa-barras {
+  margin: 1.5rem 0;
+  padding: 1.2rem 1.3rem;
+  background: var(--bfa-cor-caixa);
+  border: 1px solid var(--bfa-cor-borda);
+  border-radius: var(--bfa-arredondamento);
+  box-shadow: var(--bfa-sombra);
+}
+
+.bfa-barra { margin-bottom: 1rem; }
+.bfa-barra:last-of-type { margin-bottom: 0.6rem; }
+
+.bfa-barra__rotulo {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--bfa-cor-texto-suave);
+  margin-bottom: 0.3rem;
+}
+
+.bfa-barra__trilho {
+  background: rgba(1, 30, 80, 0.07);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+[data-md-color-scheme="slate"] .bfa-barra__trilho {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.bfa-barra__preenchimento {
+  background: var(--bfa-cor-principal-clara);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.bfa-barra__preenchimento--destaque {
+  background: var(--bfa-cor-destaque);
+  color: var(--bfa-cor-principal-escura);
+}
+
+.bfa-barras__nota {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--bfa-cor-destaque);
+  margin: 0.8rem 0 0;
+  text-align: center;
+}
+
+/* ─── Reta numérica (SVG) ─── */
+.bfa-reta {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 660px;
+  margin: 1.6rem auto;
+  font-family: inherit;
+}
+
+.bfa-reta__negativo { stroke: #e05252; stroke-width: 4; stroke-linecap: round; }
+.bfa-reta__positivo { stroke: #1f9d6b; stroke-width: 4; stroke-linecap: round; }
+.bfa-reta__tick     { stroke: var(--bfa-cor-texto-suave); stroke-width: 1.5; }
+
+.bfa-reta__zero {
+  fill: var(--bfa-cor-caixa);
+  stroke: var(--bfa-cor-texto);
+  stroke-width: 2.5;
+}
+
+.bfa-reta text { text-anchor: middle; }
+.bfa-reta__num           { fill: var(--bfa-cor-texto-suave); font-size: 13px; }
+.bfa-reta__num--destaque { fill: var(--bfa-cor-destaque); font-size: 13px; font-weight: 700; }
+.bfa-reta__num--zero     { fill: var(--bfa-cor-texto); font-size: 14px; font-weight: 800; }
+
+.bfa-reta__zona {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+}
+.bfa-reta__zona--neg  { fill: #e05252; }
+.bfa-reta__zona--pos  { fill: #1f9d6b; }
+.bfa-reta__zona--zero { fill: var(--bfa-cor-texto-suave); }
+
+.bfa-reta__seta       { stroke: var(--bfa-cor-destaque); stroke-width: 2.5; fill: none; }
+.bfa-reta__seta-ponta { fill: var(--bfa-cor-destaque); }
+.bfa-reta__legenda    { fill: var(--bfa-cor-destaque); font-size: 13px; font-weight: 600; }
+
+/* No modo escuro, vermelho e verde precisam clarear para manter contraste */
+[data-md-color-scheme="slate"] .bfa-reta__negativo,
+[data-md-color-scheme="slate"] .bfa-reta__zona--neg { stroke: #ff7b7b; fill: #ff7b7b; }
+[data-md-color-scheme="slate"] .bfa-reta__negativo  { fill: none; }
+[data-md-color-scheme="slate"] .bfa-reta__positivo,
+[data-md-color-scheme="slate"] .bfa-reta__zona--pos { stroke: #4ecfa0; fill: #4ecfa0; }
+[data-md-color-scheme="slate"] .bfa-reta__positivo  { fill: none; }
+
+/* Celular: uma coluna */
+@media screen and (max-width: 44em) {
+  .bfa-ops { grid-template-columns: 1fr; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   BOTÕES no meio do conteúdo
+   ══════════════════════════════════════════════════════════════════════ */
+.md-typeset .md-button {
+  border-radius: 999px;
+  font-weight: 600;
+  border-color: var(--bfa-cor-principal);
+  color: var(--bfa-cor-principal);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.md-typeset .md-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(1, 30, 80, 0.18);
+}
+
+.md-typeset .md-button--primary {
+  background: var(--bfa-cor-principal);
+  border-color: var(--bfa-cor-principal);
+  color: #fff !important;
+}
+
+
+/* ─── Tabelas ───────────────────────────────────────────────────────── */
+.md-typeset table:not([class]) {
+  border-radius: var(--bfa-arredondamento-p);
+  overflow: hidden;
+  box-shadow: var(--bfa-sombra);
+  border: 1px solid var(--bfa-cor-borda);
+  font-size: 0.9rem;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--bfa-cor-principal) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+}
+
+.md-typeset table:not([class]) td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--bfa-cor-borda);
+}
+
+.md-typeset table:not([class]) tr:last-child td { border-bottom: none; }
+
+
+/* ─── Caixas de aviso e gabaritos ───────────────────────────────────── */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: var(--bfa-arredondamento-p) !important;
+  border-left-width: 4px !important;
+  box-shadow: var(--bfa-sombra);
+}
+
+.md-typeset .note { border-left-color: var(--bfa-cor-destaque) !important; }
+
+.md-typeset .note > .admonition-title {
+  background-color: rgba(202, 158, 67, 0.12) !important;
+}
+
+.md-typeset .tip { border-left-color: #2ecc71 !important; }
+
+
+/* ─── Código ────────────────────────────────────────────────────────── */
+.md-typeset code {
+  border-radius: var(--bfa-arredondamento-p);
+  background: rgba(1, 30, 80, 0.06);
+  color: var(--bfa-cor-principal);
+  font-size: 0.88em;
+  padding: 0.15em 0.45em;
+}
+
+.md-typeset pre > code {
+  border-radius: var(--bfa-arredondamento-p);
+  background: var(--bfa-cor-principal-escura) !important;
+  color: #e8eaf6 !important;
+}
+
+
+/* ─── Navegação anterior/próxima ────────────────────────────────────── */
+.md-footer__link {
+  border-radius: var(--bfa-arredondamento-p);
+  transition: opacity 0.2s;
+}
+
+
+/* ─── Rodapé ────────────────────────────────────────────────────────── */
+.md-footer { background-color: var(--bfa-cor-header); }
+.md-footer-meta { background-color: rgba(0, 0, 0, 0.15); }
+
+
+/* ─── Fórmulas ──────────────────────────────────────────────────────── */
+.MathJax { font-size: 1.05em !important; }
+
+
+/* ─── Barra de rolagem ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bfa-cor-fundo); }
+::-webkit-scrollbar-thumb { background: var(--bfa-cor-borda); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bfa-cor-destaque); }
+
+
+/* ─── Celular ───────────────────────────────────────────────────────── */
+@media screen and (max-width: 76.25em) {
+  .md-content__inner {
+    padding: 1.25rem 1rem;
+    border-radius: var(--bfa-arredondamento-p);
+  }
+
+  .bfa-hero {
+    padding: 2.2rem 1.2rem;
+    border-radius: var(--bfa-arredondamento-p);
+  }
+
+  .bfa-hero h1 { font-size: 1.7rem !important; }
+  .bfa-hero .bfa-hero__sub { font-size: 0.95rem; }
+}

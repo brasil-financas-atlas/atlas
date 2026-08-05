@@ -1,4 +1,4 @@
-# Aula 1: O que é um portfólio (e por que não ter um ativo só)
+# Unidade 1: O que é um portfólio (e por que não ter um ativo só)
 
 ## Comece aqui
 
@@ -17,7 +17,7 @@ A frase mais antiga das finanças continua sendo a mais importante: **não coloq
 | Concentração | O oposto: depender demais de um único ativo, setor ou moeda |
 | Risco específico | Risco de uma empresa/ativo em particular (a fábrica pega fogo) — diversificável |
 | Risco de mercado | Risco que afeta tudo ao mesmo tempo (crise, pandemia) — não some com diversificação |
-| Correlação | O quanto dois ativos se movem juntos (aprofundamos na aula 3) |
+| Correlação | O quanto dois ativos se movem juntos (aprofundamos na unidade 3) |
 
 ## Por que diversificar funciona
 
@@ -54,4 +54,4 @@ Carlos trabalha num banco, tem todas as economias em ações **desse mesmo banco
 - Portfólio é o conjunto; o que importa é o comportamento do time, não de cada jogador.
 - Diversificação elimina o risco específico, mas não o risco de mercado.
 - Combinar ativos que se movem diferente reduz o risco do conjunto quase de graça.
-- A próxima aula responde a pergunta que vem antes de qualquer carteira: **quem é você** como investidor?
+- A próxima unidade responde a pergunta que vem antes de qualquer carteira: **quem é você** como investidor?

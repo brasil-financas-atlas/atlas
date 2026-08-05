@@ -1,4 +1,4 @@
-# Aula 7: Custos e impostos na carteira
+# Unidade 7: Custos e impostos na carteira
 
 ## Comece aqui
 
@@ -34,7 +34,7 @@ Dois pontos de taxa comeram **40% do resultado final**. É a mesma matemática d
 
 ## Regras práticas
 
-1. **Compare sempre o retorno líquido**: CDB 100% do CDI com IR pode perder de LCI 90% do CDI isenta (Módulo 1, aula de rentabilidade líquida).
+1. **Compare sempre o retorno líquido**: CDB 100% do CDI com IR pode perder de LCI 90% do CDI isenta (Módulo 1, unidade de rentabilidade líquida).
 2. **Prazo reduz IR** na renda fixa: segurar mais de 2 anos leva a alíquota a 15%.
 3. **Girar a carteira custa caro**: cada venda com lucro antecipa imposto que poderia continuar rendendo. Quem compra e segura deixa o IR "trabalhando dentro" do bolo.
 4. **Taxa de administração alta exige justificativa**: um fundo que cobra 2% precisa **bater o índice em mais de 2% todo ano** só para empatar com o ETF de 0,2%.
@@ -67,4 +67,4 @@ Ana (17 anos) vai guardar R$ 200/mês por 10 anos e está em dúvida entre: (a) 
 - Custos compõem contra você: 1–2% ao ano devoram dezenas de por cento em décadas.
 - Compare tudo pelo líquido: IR, come-cotas e isenções mudam o ranking.
 - Segurar posições e usar veículos baratos é a otimização mais fácil que existe.
-- Última aula: juntar tudo — perfil, alocação, risco, rotina e custos — numa carteira completa, de ponta a ponta.
+- Última unidade: juntar tudo — perfil, alocação, risco, rotina e custos — numa carteira completa, de ponta a ponta.

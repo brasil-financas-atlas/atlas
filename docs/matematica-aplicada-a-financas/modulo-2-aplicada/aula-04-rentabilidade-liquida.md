@@ -1,4 +1,4 @@
-# Aula 4: Rentabilidade líquida
+# Unidade 4: Rentabilidade líquida
 
 ## Comece aqui
 
@@ -86,4 +86,4 @@ Calcule a rentabilidade líquida de cada produto e determine qual é mais vantaj
 - Rentabilidade bruta é propaganda; rentabilidade líquida é o que importa.
 - IR segue tabela regressiva: quanto mais tempo, menor o imposto.
 - Produtos isentos (LCI, LCA) podem ser mais rentáveis mesmo com taxa nominal menor.
-- A próxima aula explica como usar CDI e Selic como referência para comparar qualquer investimento.
+- A próxima unidade explica como usar CDI e Selic como referência para comparar qualquer investimento.

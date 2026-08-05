@@ -1,4 +1,4 @@
-# Aula 6: Notação científica
+# Unidade 6: Notação científica
 
 ## Comece aqui
 
@@ -42,4 +42,4 @@ R$2,3 × 10⁶ = R$2.300.000
 - Notação científica compacta números grandes sem perder precisão.
 - Em finanças: PIB, dívida pública, capitalização de mercado e patrimônio de fundos.
 - Saber converter entre notação científica e número inteiro evita erros de leitura.
-- A próxima e última aula do Nível 1 ensina equações de 1º grau — a base pra resolver qualquer "quanto preciso investir pra ter X?".
+- A próxima e última unidade do Nível 1 ensina equações de 1º grau — a base pra resolver qualquer "quanto preciso investir pra ter X?".

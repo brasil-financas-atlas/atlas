@@ -1,4 +1,4 @@
-# Aula 7: Fundos de Investimento Imobiliário (FIIs)
+# Unidade 7: Fundos de Investimento Imobiliário (FIIs)
 
 ## Comece aqui
 
@@ -69,4 +69,4 @@ Qual parece mais barato? Qual os riscos que os números não mostram? Que outras
 - FIIs permitem investir no mercado imobiliário com qualquer valor e liquidez diária.
 - FII de tijolo recebe aluguel; FII de papel recebe juros de títulos imobiliários.
 - Rendimentos mensais são isentos de IR para PF dentro das regras da lei.
-- A próxima aula explica como combinar diferentes ativos para controlar risco: diversificação de carteira.
+- A próxima unidade explica como combinar diferentes ativos para controlar risco: diversificação de carteira.

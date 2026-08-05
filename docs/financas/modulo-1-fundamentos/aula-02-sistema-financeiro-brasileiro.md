@@ -1,4 +1,4 @@
-# Aula 2: Sistema Financeiro Brasileiro
+# Unidade 2: Sistema Financeiro Brasileiro
 
 ## Comece aqui
 
@@ -50,4 +50,4 @@ Quem protege o investidor nesse caso: BC, CVM ou B3? Cada um tem algum papel aqu
 - Banco Central regula bancos e define a Selic.
 - CVM regula o mercado de capitais: ações, fundos, debêntures.
 - B3 é a bolsa onde os ativos são negociados; corretoras são o canal de acesso.
-- A próxima aula explica como funciona o principal produto de renda fixa do governo: o Tesouro Direto.
+- A próxima unidade explica como funciona o principal produto de renda fixa do governo: o Tesouro Direto.

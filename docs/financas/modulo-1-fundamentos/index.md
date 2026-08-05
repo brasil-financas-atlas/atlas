@@ -6,7 +6,7 @@ Esta trilha leva você do zero até conseguir comparar investimentos e entender 
 
 Ao final da trilha, você deve conseguir explicar como o mercado financeiro funciona, comparar produtos básicos de investimento e montar uma primeira carteira modelo com noção de risco, retorno e diversificação.
 
-## Aulas
+## Unidades
 
 1. [O que é o mercado financeiro?](aula-01-mercado-financeiro.md)
 2. [Sistema Financeiro Brasileiro](aula-02-sistema-financeiro-brasileiro.md)
@@ -18,16 +18,16 @@ Ao final da trilha, você deve conseguir explicar como o mercado financeiro func
 8. [Risco e diversificação](aula-08-risco-e-diversificacao.md)
 9. [Macroeconomia para investidores](aula-09-macro-para-investidores.md)
 
-## Estrutura de cada aula
+## Estrutura de cada unidade
 
-Cada aula segue o mesmo formato:
+Cada unidade segue o mesmo formato:
 
 - **Comece aqui**: a ideia principal sem jargão.
 - **Conceitos essenciais**: termos que você precisa dominar.
 - **Exemplo resolvido**: aplicação passo a passo.
 - **Mini quiz**: questões curtas de fixação.
 - **PBL**: problema aberto para pensar como investidor.
-- **Resumo**: o que você precisa levar para a próxima aula.
+- **Resumo**: o que você precisa levar para a próxima unidade.
 
 ## Próximo passo
 

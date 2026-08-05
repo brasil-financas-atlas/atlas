@@ -1,4 +1,4 @@
-# Aula 5: Fluxo de caixa
+# Unidade 5: Fluxo de caixa
 
 ## Comece aqui
 
@@ -30,7 +30,7 @@ Uma empresa pode mostrar lucro na DRE e mesmo assim quebrar por falta de dinheir
 
 ## Exemplo resolvido
 
-DFC simplificada da **Sorvetes Tropical S.A.** (em R$ milhões), no mesmo ano da DRE da aula 4:
+DFC simplificada da **Sorvetes Tropical S.A.** (em R$ milhões), no mesmo ano da DRE da unidade 4:
 
 | Fluxo | Valor |
 |---|---:|
@@ -68,4 +68,4 @@ A loja virtual de Ana lucrou R$ 8.000 no papel neste trimestre. Mas: R$ 12.000 d
 - A DFC mostra o dinheiro real: operação (FCO), investimentos (FCI) e financiamentos (FCF).
 - Fluxo de caixa livre (FCO − capex) é o que sobra para dívida e acionistas.
 - O padrão saudável da empresa madura é FCO positivo, FCI negativo e FCF negativo.
-- Com as três demonstrações na mão, a próxima aula transforma tudo em indicadores comparáveis de rentabilidade.
+- Com as três demonstrações na mão, a próxima unidade transforma tudo em indicadores comparáveis de rentabilidade.

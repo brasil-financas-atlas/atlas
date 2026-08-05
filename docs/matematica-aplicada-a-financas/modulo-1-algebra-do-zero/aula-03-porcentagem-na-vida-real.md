@@ -1,4 +1,4 @@
-# Aula 3: Porcentagem na vida real
+# Unidade 3: Porcentagem na vida real
 
 ## Comece aqui
 
@@ -46,4 +46,4 @@ Banco e governo adoram misturar os dois pra confundir. Saber a diferença é o p
 - Porcentagem = parte de 100. Não é fórmula, é proporção.
 - Três operações básicas: calcular X% de Y, descobrir que % X é de Y, e achar o valor original.
 - Ponto percentual ≠ porcentagem — diferença importante em finanças.
-- A próxima aula generaliza essa ideia pra qualquer proporção: regra de três.
+- A próxima unidade generaliza essa ideia pra qualquer proporção: regra de três.

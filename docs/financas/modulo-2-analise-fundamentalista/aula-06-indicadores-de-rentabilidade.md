@@ -1,4 +1,4 @@
-# Aula 6: Indicadores de rentabilidade
+# Unidade 6: Indicadores de rentabilidade
 
 ## Comece aqui
 
@@ -27,7 +27,7 @@ $$
 
 Se o ROE é 20%, cada R$ 100 dos sócios investidos na empresa gera R$ 20 de lucro por ano. Compare com a referência que você já conhece do Módulo 1: se um título público paga ~10% ao ano sem risco, uma empresa com ROE consistente de 20% cria valor de verdade; com ROE de 6%, o acionista carrega risco para ganhar menos que a renda fixa.
 
-**Cuidado**: dívida infla o ROE. Uma empresa muito endividada tem PL pequeno, o que aumenta artificialmente o indicador — sempre leia o ROE junto com o endividamento (aula 7).
+**Cuidado**: dívida infla o ROE. Uma empresa muito endividada tem PL pequeno, o que aumenta artificialmente o indicador — sempre leia o ROE junto com o endividamento (unidade 7).
 
 ## Dois caminhos para a rentabilidade
 
@@ -44,7 +44,7 @@ Os dois modelos funcionam. O problema é margem baixa **e** giro baixo.
 
 ## Exemplo resolvido
 
-Com os números da Sorvetes Tropical (aulas 3 e 4): lucro líquido 23, receita 300, PL 250, ativo 400.
+Com os números da Sorvetes Tropical (unidades 3 e 4): lucro líquido 23, receita 300, PL 250, ativo 400.
 
 | Indicador | Conta | Resultado |
 |---|---|---:|
@@ -53,7 +53,7 @@ Com os números da Sorvetes Tropical (aulas 3 e 4): lucro líquido 23, receita 3
 | ROA | 23 ÷ 400 | 5,8% |
 | Giro do ativo | 300 ÷ 400 | 0,75× |
 
-Diagnóstico: ROE de 9,2% está **abaixo** do que pagava a renda fixa no período — a Tropical, hoje, não remunera bem o risco do acionista. A decomposição mostra o caminho: margem de 7,7% × giro de 0,75. Como as fábricas e a frota são pesadas (ativo grande), o giro é baixo; a alavanca mais realista é recuperar margem — lembra dos R$ 12 mi de juros da aula 4? Reduzir dívida elevaria lucro, ROE e margem ao mesmo tempo.
+Diagnóstico: ROE de 9,2% está **abaixo** do que pagava a renda fixa no período — a Tropical, hoje, não remunera bem o risco do acionista. A decomposição mostra o caminho: margem de 7,7% × giro de 0,75. Como as fábricas e a frota são pesadas (ativo grande), o giro é baixo; a alavanca mais realista é recuperar margem — lembra dos R$ 12 mi de juros da unidade 4? Reduzir dívida elevaria lucro, ROE e margem ao mesmo tempo.
 
 ## Mini quiz
 
@@ -72,4 +72,4 @@ Duas empresas do mesmo setor: a empresa A tem lucro de R$ 50 mi, PL de R$ 500 mi
 - Rentabilidade compara o lucro com uma base: vendas, patrimônio ou ativos.
 - ROE mede o retorno do dinheiro dos sócios; compare-o com a renda fixa e com pares do setor.
 - ROA = margem × giro: existem modelos de negócio de margem e modelos de giro.
-- A próxima aula olha o outro lado da moeda: quanto de dívida sustenta esses retornos.
+- A próxima unidade olha o outro lado da moeda: quanto de dívida sustenta esses retornos.

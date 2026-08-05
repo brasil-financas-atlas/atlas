@@ -1,4 +1,4 @@
-# Aula 2: Frações e decimais
+# Unidade 2: Frações e decimais
 
 ## Comece aqui
 
@@ -42,4 +42,4 @@ Taxas de juros são sempre frações do capital. Quando um investimento rende 8%
 - Fração, decimal e porcentagem são três formas de expressar a mesma quantidade.
 - Para converter fração em decimal: divida numerador pelo denominador.
 - Para converter decimal em porcentagem: multiplique por 100.
-- A próxima aula usa tudo isso pra ensinar porcentagem aplicada a dinheiro.
+- A próxima unidade usa tudo isso pra ensinar porcentagem aplicada a dinheiro.

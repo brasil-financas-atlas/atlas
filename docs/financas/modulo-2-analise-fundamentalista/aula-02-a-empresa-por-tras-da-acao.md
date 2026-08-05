@@ -1,4 +1,4 @@
-# Aula 2: A empresa por trás da ação
+# Unidade 2: A empresa por trás da ação
 
 ## Comece aqui
 
@@ -55,11 +55,11 @@ Riscos do negócio: verão fraco derruba vendas (sazonalidade), açúcar e leite
 
 ## PBL
 
-Carlos quer investir em uma de duas empresas: uma fabricante de celulares genéricos que compete por preço, e uma empresa de software de gestão usada por 8 em cada 10 farmácias do país, cobrando mensalidade. Analise as duas pelo roteiro da aula (modelo de negócio, setor e vantagens competitivas) e explique qual tende a ter lucros mais protegidos no longo prazo — e o que poderia destruir essa proteção.
+Carlos quer investir em uma de duas empresas: uma fabricante de celulares genéricos que compete por preço, e uma empresa de software de gestão usada por 8 em cada 10 farmácias do país, cobrando mensalidade. Analise as duas pelo roteiro da unidade (modelo de negócio, setor e vantagens competitivas) e explique qual tende a ter lucros mais protegidos no longo prazo — e o que poderia destruir essa proteção.
 
 ## Resumo
 
 - Entender o negócio vem antes de analisar os números.
 - Vantagens competitivas (marca, custo, rede, custo de troca, regulação) protegem o lucro futuro.
 - O setor define boa parte do destino da empresa: crescimento, concorrência e riscos.
-- A próxima aula abre a primeira demonstração financeira: o balanço patrimonial — a fotografia do que a empresa tem e deve.
+- A próxima unidade abre a primeira demonstração financeira: o balanço patrimonial — a fotografia do que a empresa tem e deve.

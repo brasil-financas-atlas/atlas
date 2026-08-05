@@ -1,4 +1,4 @@
-# Aula 2: Perfil de investidor e objetivos
+# Unidade 2: Perfil de investidor e objetivos
 
 ## Comece aqui
 
@@ -22,7 +22,7 @@ Carteira boa é a que você consegue **manter** nos dias ruins. Uma carteira tec
 
 ## Horizonte manda no risco
 
-Regra prática que resume a aula:
+Regra prática que resume a unidade:
 
 | Quando vai usar o dinheiro | Risco aceitável | Exemplos de ativos |
 |---|---|---|
@@ -55,11 +55,11 @@ Perceba: a mesma pessoa tem **três perfis ao mesmo tempo**, um por objetivo. Pe
 
 ## PBL
 
-Monte o "mapa de investidor" de duas pessoas: (a) Carlos, 45 anos, autônomo com renda instável, dois filhos, quer trocar de carro em 1 ano e se aposentar aos 65; (b) Júlia, 19 anos, estagiária morando com os pais, sem planos de curto prazo. Para cada um: defina objetivos, horizontes, avalie capacidade × tolerância (invente hipóteses razoáveis e declare-as) e diga que fatia de renda variável faria sentido em cada caso — justificando com os conceitos da aula.
+Monte o "mapa de investidor" de duas pessoas: (a) Carlos, 45 anos, autônomo com renda instável, dois filhos, quer trocar de carro em 1 ano e se aposentar aos 65; (b) Júlia, 19 anos, estagiária morando com os pais, sem planos de curto prazo. Para cada um: defina objetivos, horizontes, avalie capacidade × tolerância (invente hipóteses razoáveis e declare-as) e diga que fatia de renda variável faria sentido em cada caso — justificando com os conceitos da unidade.
 
 ## Resumo
 
 - Objetivo, horizonte e tolerância a risco vêm antes de qualquer escolha de ativo.
 - Horizonte curto exige segurança; horizonte longo compra o direito de oscilar.
 - Respeite o menor entre tolerância e capacidade de risco.
-- Na próxima aula, conhecemos os "jogadores" disponíveis para o time: as classes de ativos e como elas se relacionam.
+- Na próxima unidade, conhecemos os "jogadores" disponíveis para o time: as classes de ativos e como elas se relacionam.

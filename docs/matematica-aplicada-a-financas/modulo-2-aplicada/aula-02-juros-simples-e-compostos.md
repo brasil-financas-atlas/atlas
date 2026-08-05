@@ -1,4 +1,4 @@
-# Aula 2: Juros simples e compostos
+# Unidade 2: Juros simples e compostos
 
 ## Comece aqui
 
@@ -87,4 +87,4 @@ A diferença de prazo é 3 vezes maior — mas a diferença no resultado final �
 - Juros simples rendem sobre o capital inicial; compostos rendem sobre tudo que já acumulou.
 - A diferença entre os dois cresce exponencialmente com o tempo.
 - Investimentos brasileiros usam juros compostos — isso beneficia quem investe e prejudica quem se endivida.
-- A próxima aula mostra como a inflação corrói esse rendimento.
+- A próxima unidade mostra como a inflação corrói esse rendimento.

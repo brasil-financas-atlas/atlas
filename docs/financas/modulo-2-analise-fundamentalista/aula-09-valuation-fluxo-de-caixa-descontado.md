@@ -1,4 +1,4 @@
-# Aula 9: Valuation — fluxo de caixa descontado
+# Unidade 9: Valuation — fluxo de caixa descontado
 
 ## Comece aqui
 
@@ -20,7 +20,7 @@ O valuation por FCD aplica essa conta a **todos** os fluxos de caixa futuros da 
 |----------|---------------------|
 | Valor presente (VP) | Quanto vale hoje um dinheiro que só chega no futuro |
 | Taxa de desconto | Os juros usados para "encolher" o dinheiro futuro; reflete o risco e o custo de oportunidade |
-| Fluxo de caixa livre | O dinheiro que a empresa gera após investimentos (aula 5) — é ele que se desconta |
+| Fluxo de caixa livre | O dinheiro que a empresa gera após investimentos (unidade 5) — é ele que se desconta |
 | Perpetuidade | Estimativa do valor de todos os fluxos após o período projetado |
 | Valor intrínseco | A soma de todos os VPs: o "preço justo" estimado |
 | Margem de segurança | Só comprar bem abaixo do valor intrínseco, porque toda projeção erra |
@@ -37,7 +37,7 @@ O valuation por FCD aplica essa conta a **todos** os fluxos de caixa futuros da 
 
 ## Exemplo resolvido
 
-FCD simplificado da Sorvetes Tropical. Fluxo de caixa livre atual: R$ 15 mi (aula 5). Premissas conservadoras: crescimento de 4% ao ano por 5 anos, taxa de desconto de 14% (Tesouro ~10% + prêmio de risco 4%), perpetuidade sem crescimento real.
+FCD simplificado da Sorvetes Tropical. Fluxo de caixa livre atual: R$ 15 mi (unidade 5). Premissas conservadoras: crescimento de 4% ao ano por 5 anos, taxa de desconto de 14% (Tesouro ~10% + prêmio de risco 4%), perpetuidade sem crescimento real.
 
 | Ano | FCL projetado | VP a 14% |
 |---:|---:|---:|
@@ -49,7 +49,7 @@ FCD simplificado da Sorvetes Tropical. Fluxo de caixa livre atual: R$ 15 mi (aul
 | Perpetuidade (18,2 ÷ 0,14, descontada) | 130,3 | 67,6 |
 | **Valor da operação** | | **≈ 125** |
 
-Do valor da operação, subtraímos a dívida líquida (60): valor para o acionista ≈ **R$ 65 mi**... bem abaixo dos R$ 230 mi de valor de mercado da aula 8! O que isso significa? Com **essas** premissas conservadoras, o preço atual só se justifica se a empresa crescer bem mais ou recuperar margem. O FCD revelou o que o mercado está apostando — agora o analista julga se a aposta é razoável. É este confronto entre premissas e preço que a BRHSIC espera ver num bom relatório.
+Do valor da operação, subtraímos a dívida líquida (60): valor para o acionista ≈ **R$ 65 mi**... bem abaixo dos R$ 230 mi de valor de mercado da unidade 8! O que isso significa? Com **essas** premissas conservadoras, o preço atual só se justifica se a empresa crescer bem mais ou recuperar margem. O FCD revelou o que o mercado está apostando — agora o analista julga se a aposta é razoável. É este confronto entre premissas e preço que a BRHSIC espera ver num bom relatório.
 
 ## Mini quiz
 
@@ -61,7 +61,7 @@ Do valor da operação, subtraímos a dívida líquida (60): valor para o acioni
 
 ## PBL — estudo de caso final do módulo
 
-Escolha uma empresa listada na B3 que você conheça do dia a dia (varejo, alimentos, banco). Monte um mini-relatório de uma página com: (1) o negócio e suas vantagens competitivas (aula 2); (2) três números-chave do balanço, DRE e caixa (aulas 3–5); (3) ROE e endividamento comparados a um concorrente (aulas 6–7); (4) P/L e EV/EBITDA contra o par (aula 8); e (5) sua conclusão: o que o preço atual está assumindo, e você compraria com margem de segurança? Este é o formato de pitch que competições como a BRHSIC avaliam.
+Escolha uma empresa listada na B3 que você conheça do dia a dia (varejo, alimentos, banco). Monte um mini-relatório de uma página com: (1) o negócio e suas vantagens competitivas (unidade 2); (2) três números-chave do balanço, DRE e caixa (unidades 3–5); (3) ROE e endividamento comparados a um concorrente (unidades 6–7); (4) P/L e EV/EBITDA contra o par (unidade 8); e (5) sua conclusão: o que o preço atual está assumindo, e você compraria com margem de segurança? Este é o formato de pitch que competições como a BRHSIC avaliam.
 
 ## Resumo
 
