@@ -120,13 +120,16 @@ class GitAutoSync:
                     logging.error(f"[AUTO-SYNC] ERRO ao criar commit: {out_commit}")
                     return
 
-            # 2. Puxa atualizações remotas via rebase seguro
-            logging.info("[AUTO-SYNC] Puxando atualizacoes do GitHub (git pull --rebase)...")
-            success_pull, out_pull = self._run_git(["pull", "--rebase", remote_target, self.branch])
-            if not success_pull and "up to date" not in out_pull and "Already up to date" not in out_pull:
-                if "rebase in progress" in out_pull or "conflict" in out_pull.lower():
-                    logging.warning("[AUTO-SYNC] Conflito no git pull --rebase. Abortando rebase para manter estabilidade.")
-                    self._run_git(["rebase", "--abort"])
+            # 2. Busca commits remotos (fetch) e aplica rebase limpo
+            logging.info("[AUTO-SYNC] Buscando atualizacoes do GitHub (git fetch)...")
+            success_fetch, out_fetch = self._run_git(["fetch", remote_target, self.branch])
+            if success_fetch:
+                logging.info("[AUTO-SYNC] Rebasando historico com FETCH_HEAD...")
+                success_rebase, out_rebase = self._run_git(["rebase", "FETCH_HEAD"])
+                if not success_rebase:
+                    logging.warning(f"[AUTO-SYNC] Aviso no rebase: {out_rebase}. Abortando rebase se necessário.")
+                    if "rebase in progress" in out_rebase or "conflict" in out_rebase.lower():
+                        self._run_git(["rebase", "--abort"])
 
             # 3. Envia os commits locais para o repositório remoto
             logging.info("[AUTO-SYNC] Enviando commits para branch principal (git push)...")
