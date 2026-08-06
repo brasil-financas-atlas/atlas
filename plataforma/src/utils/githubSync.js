@@ -10,13 +10,10 @@ const githubSyncService = {
       throw new Error("Personal Access Token (PAT) do GitHub é necessário.");
     }
 
-    const cleanOwner = owner || 'davidlhferro';
+    const cleanOwner = owner || 'brasil-financas-atlas';
     const cleanRepo = repo || 'atlas';
     const apiUrl = `https://api.github.com/repos/${cleanOwner}/${cleanRepo}/contents/${path}`;
 
-    // 1. Fetch current file SHA if exists
-    let sha = null;
-    try {
     const headers = {
       'Authorization': `Bearer ${token}`,
       'Accept': 'application/vnd.github.v3+json'
@@ -60,7 +57,7 @@ const githubSyncService = {
     if (!putRes.ok) {
       const errData = await putRes.json().catch(() => ({}));
       if (putRes.status === 404) {
-        throw new Error(`Repositório ou caminho não encontrado em '${cleanOwner}/${cleanRepo}'. Verifique se o Dono/Repo é 'davidlhferro/atlas' e se o token PAT tem acesso a ele.`);
+        throw new Error(`Repositório ou caminho não encontrado em '${cleanOwner}/${cleanRepo}'. Verifique se o Dono/Repo é '${cleanOwner}/${cleanRepo}' e se o token PAT tem acesso a ele.`);
       } else if (putRes.status === 401 || putRes.status === 403) {
         throw new Error(`Sem permissão para comitar no repositório '${cleanOwner}/${cleanRepo}'. Verifique a permissão 'Contents: Read & Write' no seu Fine-Grained Token.`);
       }
@@ -77,3 +74,4 @@ const githubSyncService = {
 };
 
 window.githubSyncService = githubSyncService;
+
