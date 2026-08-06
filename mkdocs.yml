@@ -1,7 +1,7 @@
 site_name: Brasil Finanças Atlas
 site_description: Trilhas abertas de matemática e finanças para estudantes do ensino médio.
-site_url: https://lucas-guimaraes-silva.github.io/bfa/
-repo_url: https://github.com/lucas-guimaraes-silva/bfa
+site_url: https://brasil-financas-atlas.github.io/bfa/
+repo_url: https://github.com/brasil-financas-atlas/bfa
 repo_name: bfa
 
 theme:
@@ -59,7 +59,7 @@ markdown_extensions:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/lucas-guimaraes-silva/bfa
+      link: https://github.com/brasil-financas-atlas/bfa
 
 nav:
   - Início: index.md
