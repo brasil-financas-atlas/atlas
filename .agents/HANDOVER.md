@@ -1,32 +1,32 @@
 # Handoff Briefing
 
 ## Goal
-Redesign the frontend UI/UX of the Brasil Finanças Atlas (BFA) educational platform with a premium Brazilian-themed aesthetic, implement interactive features (video player, timestamped forum threads, quiz engine, admin CMS), and establish a direct Git-as-a-CMS synchronization system back to GitHub.
+Redesign and maintain the Brasil Finanças Atlas (BFA) educational platform frontend UI/UX, implement interactive features (video player, timestamped forum, quiz engine, admin CMS), and ensure direct Git-as-a-CMS synchronization back to GitHub (`brasil-financas-atlas/atlas`).
 
 ## Current Status
 - **Completed:** 
-  - Premium UI/UX overhaul of the platform using a modern Brazil-themed color palette (refined green, blue, gold) and responsive layout.
-  - Interactive components including a video lesson player, a forum with comment threads tied to specific video timestamps, a quiz engine, and a compound interest calculator.
-  - Hardcoded CMS panel allowing administrators to modify lessons, videos, and questions.
-  - Direct API-based sync client (`githubSync.js`) and modal (`GitHubSyncModal.jsx`) that commits `overrides.json` state directly to the GitHub repo using Fine-Grained Personal Access Tokens.
-  - Automated deployment workflow via GitHub Actions (`content-sync-deploy.yml`) to rebuild dataset references.
-  - Resolved blank screen issues caused by script loading order and Babel parsing anomalies on CDN React scripts.
+  - Updated git remote `origin` to `https://github.com/brasil-financas-atlas/atlas.git`.
+  - Updated `githubSync.js` and `GitHubSyncModal.jsx` default repository target to `brasil-financas-atlas/atlas` and fixed nested try block syntax.
+  - Added full GitHub & File Synchronization guide to `README.md` covering direct browser CMS sync, terminal sync, and Python background watcher.
+  - Fixed legacy `localStorage` keys and verified fine-grained PAT handling.
 - **In-Progress:**
-  - Testing real-time deployments on Netlify following GitHub sync actions.
+  - Local changes ready to commit and push to `brasil-financas-atlas/atlas`.
 - **Blockers:**
   - None.
 
 ## Decisions Made (Locked)
-- **CDN-based React + Babel Standalone:** Chosen to avoid local build environments (Node/npm), making it easy for the student/teacher team to run the server using python's built-in `http.server`.
-- **Git-as-a-CMS Sync:** Storing overrides as a JSON file in the repository to bypass database hosting costs and complex API servers.
-- **Strict script sequence in `index.html`:** Ensures global state and libraries load before component logic runs.
+- **Default Repository Targets:** Owner `brasil-financas-atlas` and Repo `atlas` set as primary defaults across `githubSync.js`, `GitHubSyncModal.jsx`, and `README.md`.
+- **Relative Path Resolution:** Use relative `./src/` paths in `index.html` to guarantee compatibility across GitHub Pages (`/atlas/plataforma/`), Netlify, and local Python server (`http://localhost:8080`).
+- **Authorization Headers:** Use `Authorization: Bearer <token>` for Fine-Grained PAT GitHub REST API calls.
+- **Hosting Strategy:** GitHub Pages (or GitHub Actions `gh-pages` deploy) combined with HashRouter (`#/`) is preferred over Netlify rewrites (`/* -> /index.html`), as it avoids Babel Standalone syntax parsing crashes on 200 HTML responses.
 
 ## Failed Approaches / Dead Ends (Do Not Retry)
-- **ES Module imports/exports in Babel scripts:** Fails on the local filesystem (`file://`) due to CORS policies. All shared utilities must be explicitly bound to the global `window` object instead of using standard `import`/`export` syntax.
+- **Unsanitized `localStorage` Reads for GitHub Sync:** Initializing `useState` directly from raw `localStorage` allowed stale values (`dragaodoomar`/`bfa-main` or `davidlhferro`) to persist and return HTTP 404 Not Found errors when used with repository-scoped PATs. Always filter out legacy keys.
+- **Absolute `/src/` paths in `index.html`:** Causes HTTP 404 script loading failures when the project is hosted in a repository subpath (such as GitHub Pages subfolders).
 
 ## Extracted Memories & Preferences
-- Always declare React hook destructurings (`const { useState, ... } = React;`) at the top of all component files to prevent Babel compile crashes.
-- Do not add standard packaging configurations (Vite, Webpack) unless explicitly requested, as the project target is single-command deployment.
+- Always declare React hook destructurings (`const { useState, ... } = React;`) at the top of all component files.
+- Always check for JSX syntax errors in standalone Babel scripts (`ExtraPages.jsx`), as an unhandled parse error will break component initialization across the entire app.
 
 ## Immediate Next Step
-- Run `python -m http.server 8080 --directory plataforma` to inspect the latest frontend layout, log in using the credentials in `README.md`, and verify the "Publicar no GitHub" modal sync workflow.
+- Run `git add . && git commit -m "docs & feat: update repo ownership to brasil-financas-atlas/atlas and expand sync guide" && git push origin main` in `C:\codigos\bfa-main` to publish all changes.

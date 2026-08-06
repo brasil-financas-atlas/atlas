@@ -68,7 +68,7 @@ Para garantir **100% de segurança** e **impedir qualquer acesso a outros reposi
 1. Acesse no GitHub: **Settings ➔ Developer Settings ➔ Personal Access Tokens ➔ Fine-grained tokens**.
 2. Clique no botão **Generate new token**.
 3. Em **Token name**, digite `BFA Sync Token`.
-4. Em **Repository access**, marque a opção **`Only select repositories`** e selecione exclusivamente o repositório **`bfa-main`** (ou o repositório da plataforma).
+4. Em **Repository access**, marque a opção **`Only select repositories`** e selecione exclusivamente o repositório **`atlas`** (ou o repositório da plataforma).
 5. Na seção **Permissions ➔ Repository permissions**, procure por **Contents** e altere para **`Read and write`**.
 6. Clique em **Generate token** no final da página e copie a chave gerada (ela começa com `github_pat_...`).
 
@@ -77,8 +77,39 @@ Para garantir **100% de segurança** e **impedir qualquer acesso a outros reposi
 ### 3. Vincular o Token na Plataforma
 1. Faça login na plataforma como Admin.
 2. Clique no botão **`🚀 Publicar no GitHub`** no menu superior.
-3. Cole a sua chave `ghp_...` e confirme o Dono (`dragaodoomar`) e Repositório (`bfa-main`).
-4. Pronto! Suas alterações serão salvas diretamente no repositório e o Netlify atualizará o site em ~30 segundos. Para que os outros desenvolvedores recebam as edições no PC deles, basta rodarem `git pull origin main`.
+3. Cole a sua chave `github_pat_...` (o Dono vem preenchido como `brasil-financas-atlas` e o Repositório como `atlas`).
+4. Pronto! Suas alterações serão salvas diretamente no repositório do GitHub e o Netlify atualizará o site em ~30 segundos.
+
+---
+
+## 🔄 Guia Completo de Sincronização de Arquivos e GitHub
+
+A plataforma conta com um sistema de **Git-as-a-CMS**, sincronizando as edições dos conteúdos pedagógicos (`plataforma/src/data/overrides.json`) e do código-fonte diretamente com o repositório oficial (`https://github.com/brasil-financas-atlas/atlas`).
+
+### Método 1: Sincronização Direta do Navegador (Git-as-a-CMS)
+Toda alteração feita via CMS in-context na interface (textos, vídeos, questões de quizzes) pode ser enviada diretamente para o GitHub:
+1. No painel admin, clique em **🚀 Publicar no GitHub**.
+2. Digite seu Personal Access Token (PAT) do GitHub.
+3. O sistema fará um commit direto no arquivo `plataforma/src/data/overrides.json` da branch `main` da organização `brasil-financas-atlas`.
+
+### Método 2: Sincronização Manual pelo Terminal
+Para sincronizar alterações locais feitas no código com o repositório oficial:
+```bash
+# Caso precise atualizar o remote após a mudança de proprietário:
+git remote set-url origin https://github.com/brasil-financas-atlas/atlas.git
+
+# Para commitar e enviar alterações:
+git add .
+git commit -m "chore: sincroniza alterações locais com o github"
+git push origin main
+```
+
+### Método 3: Sincronização Automática em Tempo Real (Background Watcher)
+Ao editar localmente o arquivo `plataforma/src/data/overrides.json`, você pode ativar o monitorador automático em Python:
+```bash
+python auto_sync.py
+```
+*O script detecta modificações a cada 3 segundos e realiza `commit` + `push` para o GitHub automaticamente.*
 
 ---
 

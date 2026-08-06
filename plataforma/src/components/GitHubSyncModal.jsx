@@ -3,7 +3,10 @@ const { useState, useEffect, useContext, createContext, useMemo, useRef } = Reac
 function GitHubSyncModal({ isOpen, onClose }) {
   const { cmsData } = useContext(AdminContext || createContext({}));
   const [token, setToken] = useState(() => localStorage.getItem('bfa_gh_token') || '');
-  const [owner, setOwner] = useState(() => localStorage.getItem('bfa_gh_owner') || 'davidlhferro');
+  const [owner, setOwner] = useState(() => {
+    const saved = localStorage.getItem('bfa_gh_owner');
+    return (!saved || saved === 'davidlhferro') ? 'brasil-financas-atlas' : saved;
+  });
   const [repo, setRepo] = useState(() => localStorage.getItem('bfa_gh_repo') || 'atlas');
   const [status, setStatus] = useState('idle'); // idle | syncing | success | error
   const [errorMsg, setErrorMsg] = useState('');
@@ -61,7 +64,7 @@ function GitHubSyncModal({ isOpen, onClose }) {
         </div>
 
         <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', lineHeight: 1.6 }}>
-          Este assistente grava todas as suas edições de texto, vídeos e quizzes em <strong><code>plataforma/src/data/overrides.json</code></strong> no repositório do GitHub (<code>davidlhferro/atlas</code>). O Netlify detectará o commit e atualizará o site público automaticamente em segundos!
+          Este assistente grava todas as suas edições de texto, vídeos e quizzes em <strong><code>plataforma/src/data/overrides.json</code></strong> no repositório do GitHub (<code>brasil-financas-atlas/atlas</code>). O Netlify detectará o commit e atualizará o site público automaticamente em segundos!
         </p>
 
         {status === 'success' ? (
@@ -100,7 +103,7 @@ function GitHubSyncModal({ isOpen, onClose }) {
                 autoFocus
               />
               <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.3rem', display: 'block' }}>
-                🔒 Recomenda-se gerar um <strong>Fine-grained token</strong> com permissão <em>Contents: Read & Write</em> para <code>davidlhferro/atlas</code>.
+                🔒 Recomenda-se gerar um <strong>Fine-grained token</strong> com permissão <em>Contents: Read & Write</em> para <code>brasil-financas-atlas/atlas</code>.
               </span>
             </div>
 
