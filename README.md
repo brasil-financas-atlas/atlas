@@ -2,6 +2,12 @@
 
 Trilha aberta de educação financeira e matemática aplicada para estudantes do ensino médio — do zero absoluto até análise de investimentos e valuation.
 
+**🌐 Site oficial:** https://brasil-financas-atlas.netlify.app/ — deploy do Guima, publicado deste repositório.
+
+**🔧 Deploy do David:** https://helpful-elf-ca3f18.netlify.app/ — ambiente de desenvolvimento dele, do mesmo código.
+
+**📖 Versão MkDocs:** https://brasil-financas-atlas.github.io/bfa/ — mesma trilha em formato de documentação, gerada de [brasil-financas-atlas/bfa](https://github.com/brasil-financas-atlas/bfa).
+
 ---
 
 ## 🚀 Como Executar o Projeto Localmente no seu PC
