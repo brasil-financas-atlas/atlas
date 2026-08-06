@@ -5,7 +5,7 @@ Trilha aberta de educação financeira e matemática aplicada para estudantes do
 **🌐 Site no ar:** https://helpful-elf-ca3f18.netlify.app/
 *(endereço provisório do Netlify — será renomeado)*
 
-**📚 Repositório do conteúdo:** [lucas-guimaraes-silva/bfa](https://github.com/lucas-guimaraes-silva/bfa) — as unidades em Markdown são escritas lá e a versão MkDocs continua no ar em https://lucas-guimaraes-silva.github.io/bfa/
+**📚 Repositório do conteúdo:** [brasil-financas-atlas/bfa](https://github.com/brasil-financas-atlas/bfa) — as unidades em Markdown são escritas lá e a versão MkDocs continua no ar em https://brasil-financas-atlas.github.io/bfa/
 
 ---
 
