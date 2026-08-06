@@ -82,34 +82,50 @@ Para garantir **100% de segurança** e **impedir qualquer acesso a outros reposi
 
 ---
 
-## 🔄 Guia Completo de Sincronização de Arquivos e GitHub
+## 🔄 Guia Completo de Sincronização (Site e Arquivos Locais do PC)
 
-A plataforma conta com um sistema de **Git-as-a-CMS**, sincronizando as edições dos conteúdos pedagógicos (`plataforma/src/data/overrides.json`) e do código-fonte diretamente com o repositório oficial (`https://github.com/brasil-financas-atlas/atlas`).
+A plataforma conta com um sistema de **Git-as-a-CMS** para sincronizar as edições pedagógicas (`plataforma/src/data/overrides.json`) e alterações de código com o repositório oficial no GitHub (`https://github.com/brasil-financas-atlas/atlas`).
 
-### Método 1: Sincronização Direta do Navegador (Git-as-a-CMS)
-Toda alteração feita via CMS in-context na interface (textos, vídeos, questões de quizzes) pode ser enviada diretamente para o GitHub:
-1. No painel admin, clique em **🚀 Publicar no GitHub**.
-2. Digite seu Personal Access Token (PAT) do GitHub.
-3. O sistema fará um commit direto no arquivo `plataforma/src/data/overrides.json` da branch `main` da organização `brasil-financas-atlas`.
+---
 
-### Método 2: Sincronização Manual pelo Terminal
-Para sincronizar alterações locais feitas no código com o repositório oficial:
+### 🌐 1. Sincronização pelo Site (Área Admin / Navegador)
+
+Para salvar edições de aulas, vídeos e quizzes feitas diretamente na interface web e atualizar a nuvem:
+
+1. Faça login na plataforma em `/#/admin/login` (ex: usuário `admin` e senha `bfa@2024`).
+2. Faça as edições desejadas nas aulas (textos, vídeos, questões).
+3. No topo da página, clique no botão verde **`🚀 Publicar no GitHub`**.
+4. Insira o seu **Personal Access Token (PAT)** do GitHub (o dono `brasil-financas-atlas` e repositório `atlas` já vêm preenchidos).
+5. Clique em **Publicar**. As alterações serão gravadas diretamente no repositório GitHub e o Netlify atualizará o site público automaticamente.
+
+---
+
+### 💻 2. Sincronização de Arquivos Locais do seu PC
+
+Se você edita os arquivos do projeto localmente (via VS Code, bloco de notas ou edita o arquivo `overrides.json` direto no PC), utilize uma das opções abaixo:
+
+#### Opção A: Sincronizador Automático em Background (Python) — *Recomendado*
+Rode o script em Python que monitora o seu PC em tempo real. Cada vez que um arquivo for alterado e salvo no PC, ele envia automaticamente para o GitHub:
+1. Abra o Terminal ou Prompt de Comando (cmd) na pasta raiz do projeto.
+2. Execute o comando:
+   ```bash
+   python auto_sync.py
+   ```
+3. Mantenha essa janela de terminal aberta enquanto trabalha. O script verificará edições a cada 3 segundos e fará o `commit` + `push` automático.
+
+#### Opção B: Sincronização Manual via Comandos Git
+Para enviar alterações locais manualmente pelo terminal:
 ```bash
-# Caso precise atualizar o remote após a mudança de proprietário:
+# 1. Garanta que o remote aponta para a nova organização (caso não tenha feito ainda):
 git remote set-url origin https://github.com/brasil-financas-atlas/atlas.git
 
-# Para commitar e enviar alterações:
+# 2. Adicione os arquivos alterados e faça o commit:
 git add .
-git commit -m "chore: sincroniza alterações locais com o github"
+git commit -m "chore: sincroniza alterações locais do PC com o GitHub"
+
+# 3. Envie para a branch principal:
 git push origin main
 ```
-
-### Método 3: Sincronização Automática em Tempo Real (Background Watcher)
-Ao editar localmente o arquivo `plataforma/src/data/overrides.json`, você pode ativar o monitorador automático em Python:
-```bash
-python auto_sync.py
-```
-*O script detecta modificações a cada 3 segundos e realiza `commit` + `push` para o GitHub automaticamente.*
 
 ---
 
