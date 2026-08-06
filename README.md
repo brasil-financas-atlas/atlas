@@ -100,30 +100,58 @@ Para salvar edições de aulas, vídeos e quizzes feitas diretamente na interfac
 
 ---
 
-### 💻 2. Sincronização de Arquivos Locais do seu PC
+### 💻 2. Sincronização Automática de Arquivos Locais do seu PC (Passo a Passo Detalhado)
 
-Se você edita os arquivos do projeto localmente (via VS Code, bloco de notas ou edita o arquivo `overrides.json` direto no PC), utilize uma das opções abaixo:
+Se você edita os arquivos do projeto no seu computador (via VS Code, bloco de notas ou edita scripts de aula diretamente no PC), o serviço **Auto-Sync (`auto_sync.py`)** envia todas as suas alterações em tempo real para o GitHub sem travar ou pedir senha.
 
-#### Opção A: Sincronizador Automático em Background (Python) — *Recomendado*
-Rode o script em Python que monitora o seu PC em tempo real. Cada vez que um arquivo for alterado e salvo no PC, ele envia automaticamente para o GitHub:
-1. Abra o Terminal ou Prompt de Comando (cmd) na pasta raiz do projeto.
-2. Execute o comando:
-   ```bash
-   python auto_sync.py
-   ```
-3. Mantenha essa janela de terminal aberta enquanto trabalha. O script verificará edições a cada 3 segundos e fará o `commit` + `push` automático.
-
-#### Opção B: Sincronização Manual via Comandos Git
-Para enviar alterações locais manualmente pelo terminal:
+#### 📌 Passo 1: Instalar a Biblioteca de Monitoramento (Executar uma única vez)
+Abra o Terminal / CMD na pasta do projeto e execute:
 ```bash
-# 1. Garanta que o remote aponta para a nova organização (caso não tenha feito ainda):
+pip install watchdog
+```
+
+#### 📌 Passo 2: Configurar o seu Token de Acesso (PAT) no arquivo `.env`
+Para que o script faça `git push` automaticamente em segundo plano para o repositório privado da organização (`brasil-financas-atlas/atlas`):
+
+1. Na raiz da pasta do projeto, crie um arquivo chamado **`.env`** (ou abra o `.env` existente).
+2. Adicione a linha abaixo substituindo pela sua chave Personal Access Token do GitHub:
+   ```env
+   GITHUB_PAT=github_pat_seu_token_aqui
+   ```
+   *(Como gerar o PAT: GitHub Settings ➔ Developer Settings ➔ Personal Access Tokens ➔ Tokens classic com escopo `repo`, ou Fine-Grained Token apontando para a org `brasil-financas-atlas`)*.
+
+#### 📌 Passo 3: Iniciar o Sincronizador Automático
+No terminal da pasta do projeto (`C:\codigos\bfa-main`), execute:
+```bash
+python auto_sync.py
+```
+
+- **Como funciona:** O script ativa o detector nativo de alterações em tempo real no Windows (`watchdog`). Sempre que você editar e salvar qualquer arquivo no PC, o script aguarda 3 segundos de inatividade (debounce) e executa automaticamente:
+  1. `git pull --rebase origin main` (para fundir edições feitas no site sem conflitos).
+  2. `git add -A` e `git commit -m "chore(auto-sync): atualiza arquivos locais [data/hora]"`.
+  3. `git push` direto para a branch `main` do GitHub `brasil-financas-atlas/atlas`.
+
+#### 📌 Passo 4: Como Rodar em Background Silencioso no Windows (Opcional)
+Se você não quiser manter a janela do prompt de comando aberta:
+- Execute via `pythonw` (sem janela de terminal):
+  ```cmd
+  pythonw auto_sync.py
+  ```
+- Todas as mensagens de sucesso ou erros serão gravadas no arquivo de log **`auto_sync.log`** na pasta do projeto.
+
+---
+
+#### 🛠️ Opção Alternativa: Sincronização Manual via Comandos Git
+Caso prefira fazer commits manuais sem o script automático:
+```bash
+# 1. Atualizar o repositório remoto para a organização:
 git remote set-url origin https://github.com/brasil-financas-atlas/atlas.git
 
-# 2. Adicione os arquivos alterados e faça o commit:
+# 2. Adicionar alterações e commitar:
 git add .
 git commit -m "chore: sincroniza alterações locais do PC com o GitHub"
 
-# 3. Envie para a branch principal:
+# 3. Enviar para o GitHub:
 git push origin main
 ```
 

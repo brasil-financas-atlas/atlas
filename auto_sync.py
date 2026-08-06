@@ -25,9 +25,23 @@ REPO_DIR = os.path.abspath(os.path.dirname(__file__))
 BRANCH = "main"
 DEBOUNCE_INTERVAL = 3.0  # Segundos de inatividade antes de sincronizar
 
+# Carrega PAT de arquivo .env se existir
+ENV_FILE = os.path.join(REPO_DIR, ".env")
+GITHUB_PAT = os.environ.get("GITHUB_PAT", "")
+
+if not GITHUB_PAT and os.path.exists(ENV_FILE):
+    try:
+        with open(ENV_FILE, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("GITHUB_PAT="):
+                    GITHUB_PAT = line.strip().split("=", 1)[1].strip("\"'")
+                    break
+    except Exception:
+        pass
+
 IGNORED_PATTERNS = [
     "\\.git\\", "node_modules", "\\.venv\\", "\\.vscode\\",
-    "auto_sync.log", "\\.tmp", "~$", "\\.swp"
+    "auto_sync.log", "\\.tmp", "~$", "\\.swp", "\\.env"
 ]
 
 # Configuração do sistema de logs
@@ -42,10 +56,16 @@ logging.basicConfig(
 )
 
 class GitAutoSync:
-    def __init__(self, repo_dir, branch):
+    def __init__(self, repo_dir, branch, pat=""):
         self.repo_dir = repo_dir
         self.branch = branch
+        self.pat = pat
         self.is_syncing = False
+
+    def _get_remote_url(self):
+        if self.pat:
+            return f"https://x-access-token:{self.pat}@github.com/brasil-financas-atlas/atlas.git"
+        return "origin"
 
     def _run_git(self, args, timeout=40):
         """Executa comandos do Git impedindo travamento por solicitação de senha."""
@@ -84,9 +104,11 @@ class GitAutoSync:
         self.is_syncing = True
         logging.info("[AUTO-SYNC] Alteracao detectada! Iniciando sincronizacao com GitHub...")
 
+        remote_target = self._get_remote_url()
+
         try:
             # 1. Puxa atualizações remotas via rebase seguro
-            success, out = self._run_git(["pull", "--rebase", "origin", self.branch])
+            success, out = self._run_git(["pull", "--rebase", remote_target, self.branch])
             if not success and "up to date" not in out and "Already up to date" not in out:
                 if "rebase in progress" in out or "conflict" in out.lower():
                     logging.warning("[AUTO-SYNC] Conflito no git pull --rebase. Abortando rebase para manter estabilidade.")
@@ -103,11 +125,13 @@ class GitAutoSync:
                 success_commit, out_commit = self._run_git(["commit", "-m", commit_msg])
                 if success_commit:
                     logging.info("[AUTO-SYNC] Enviando commits para branch principal (git push)...")
-                    success_push, out_push = self._run_git(["push", "origin", self.branch])
+                    success_push, out_push = self._run_git(["push", remote_target, self.branch])
                     if success_push:
-                        logging.info("[AUTO-SYNC] SUCCESSO! Alteracoes sincronizadas no GitHub.")
+                        logging.info("[AUTO-SYNC] SUCESSO! Alteracoes sincronizadas no GitHub.")
                     else:
                         logging.error(f"[AUTO-SYNC] ERRO no git push: {out_push}")
+                        if "could not read Username" in out_push or "Authentication failed" in out_push:
+                            logging.error("[AUTO-SYNC] DICA: Adicione seu PAT no arquivo .env (GITHUB_PAT=sua_chave) para autenticação automática sem prompt.")
                 else:
                     logging.error(f"[AUTO-SYNC] ERRO ao criar commit: {out_commit}")
             else:
@@ -143,9 +167,13 @@ def main():
     logging.info(f"[AUTO-SYNC] Iniciando Servico Auto-Sync BFA")
     logging.info(f"[AUTO-SYNC] Diretorio: {REPO_DIR}")
     logging.info(f"[AUTO-SYNC] Branch: {BRANCH}")
+    if GITHUB_PAT:
+        logging.info("[AUTO-SYNC] Autenticacao via GITHUB_PAT detectada.")
+    else:
+        logging.info("[AUTO-SYNC] Autenticacao via Git Credential Manager do sistema.")
     logging.info("==================================================")
 
-    syncer = GitAutoSync(REPO_DIR, BRANCH)
+    syncer = GitAutoSync(REPO_DIR, BRANCH, pat=GITHUB_PAT)
     
     # Roda uma sincronização inicial
     syncer.sync()
