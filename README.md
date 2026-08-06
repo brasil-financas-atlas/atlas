@@ -2,6 +2,11 @@
 
 Trilha aberta de educação financeira e matemática aplicada para estudantes do ensino médio — do zero absoluto até análise de investimentos e valuation.
 
+**🌐 Site no ar:** https://helpful-elf-ca3f18.netlify.app/
+*(endereço provisório do Netlify — será renomeado)*
+
+**📚 Repositório do conteúdo:** [lucas-guimaraes-silva/bfa](https://github.com/lucas-guimaraes-silva/bfa) — as unidades em Markdown são escritas lá e a versão MkDocs continua no ar em https://lucas-guimaraes-silva.github.io/bfa/
+
 ---
 
 ## 🚀 Como Executar o Projeto Localmente no seu PC
