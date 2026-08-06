@@ -6,6 +6,13 @@ import logging
 from pathlib import Path
 from threading import Timer
 
+# Garante suporte a UTF-8 no stdout do Windows CMD
+if hasattr(sys.stdout, 'reconfigure'):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
 try:
     from watchdog.observers import Observer
     from watchdog.events import FileSystemEventHandler
@@ -75,19 +82,19 @@ class GitAutoSync:
             return
 
         self.is_syncing = True
-        logging.info("⚡ Alteração detectada! Iniciando sincronização automática com GitHub...")
+        logging.info("[AUTO-SYNC] Alteracao detectada! Iniciando sincronizacao com GitHub...")
 
         try:
             # 1. Puxa atualizações remotas via rebase seguro
             success, out = self._run_git(["pull", "--rebase", "origin", self.branch])
             if not success and "up to date" not in out and "Already up to date" not in out:
                 if "rebase in progress" in out or "conflict" in out.lower():
-                    logging.warning("⚠️ Conflito no git pull --rebase. Abortando rebase para manter estabilidade.")
+                    logging.warning("[AUTO-SYNC] Conflito no git pull --rebase. Abortando rebase para manter estabilidade.")
                     self._run_git(["rebase", "--abort"])
 
             # 2. Se houver alterações locais, faz staging, commit e push
             if self.has_changes():
-                logging.info("📦 Adicionando arquivos e gerando commit...")
+                logging.info("[AUTO-SYNC] Adicionando arquivos e gerando commit...")
                 self._run_git(["add", "-A"])
 
                 timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -95,16 +102,16 @@ class GitAutoSync:
 
                 success_commit, out_commit = self._run_git(["commit", "-m", commit_msg])
                 if success_commit:
-                    logging.info("🚀 Enviando commits para a branch principal (git push)...")
+                    logging.info("[AUTO-SYNC] Enviando commits para branch principal (git push)...")
                     success_push, out_push = self._run_git(["push", "origin", self.branch])
                     if success_push:
-                        logging.info("✅ Sincronização concluída com sucesso no GitHub!")
+                        logging.info("[AUTO-SYNC] SUCCESSO! Alteracoes sincronizadas no GitHub.")
                     else:
-                        logging.error(f"❌ Falha no git push: {out_push}")
+                        logging.error(f"[AUTO-SYNC] ERRO no git push: {out_push}")
                 else:
-                    logging.error(f"❌ Falha ao criar commit: {out_commit}")
+                    logging.error(f"[AUTO-SYNC] ERRO ao criar commit: {out_commit}")
             else:
-                logging.info("ℹ️ Nenhuma alteração pendente para commit.")
+                logging.info("[AUTO-SYNC] Nenhuma alteracao pendente para commit.")
 
         finally:
             self.is_syncing = False
@@ -133,9 +140,9 @@ class DebouncedWatchdogHandler(FileSystemEventHandler):
 
 def main():
     logging.info("==================================================")
-    logging.info(f"🔄 Iniciando Serviço de Auto-Sync BFA")
-    logging.info(f"📂 Diretório: {REPO_DIR}")
-    logging.info(f"🌿 Branch: {BRANCH}")
+    logging.info(f"[AUTO-SYNC] Iniciando Servico Auto-Sync BFA")
+    logging.info(f"[AUTO-SYNC] Diretorio: {REPO_DIR}")
+    logging.info(f"[AUTO-SYNC] Branch: {BRANCH}")
     logging.info("==================================================")
 
     syncer = GitAutoSync(REPO_DIR, BRANCH)
@@ -144,7 +151,7 @@ def main():
     syncer.sync()
 
     if HAS_WATCHDOG:
-        logging.info("👁️ Modo Watchdog nativo ativado (Monitoramento em tempo real).")
+        logging.info("[AUTO-SYNC] Modo Watchdog nativo ativado (Monitoramento em tempo real).")
         event_handler = DebouncedWatchdogHandler(syncer.sync, delay=DEBOUNCE_INTERVAL)
         observer = Observer()
         observer.schedule(event_handler, REPO_DIR, recursive=True)
@@ -155,10 +162,10 @@ def main():
                 time.sleep(1)
         except KeyboardInterrupt:
             observer.stop()
-            logging.info("🛑 Serviço finalizado pelo usuário.")
+            logging.info("[AUTO-SYNC] Servico finalizado pelo usuario.")
         observer.join()
     else:
-        logging.info("⏱️ Modo Polling ativado (Verificação a cada 3 segundos).")
+        logging.info("[AUTO-SYNC] Modo Polling ativado (Verificacao a cada 3 segundos).")
         while True:
             time.sleep(3)
             if syncer.has_changes():
