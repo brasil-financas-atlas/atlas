@@ -172,7 +172,7 @@ function AudioReader({ markdownContent, lessonTitle }) {
       marginBottom: '1.5rem',
       display: 'flex',
       alignItems: 'center',
-      justify-content: 'space-between',
+      justifyContent: 'space-between',
       gap: '1rem',
       flexWrap: 'wrap',
       boxShadow: 'var(--shadow-sm)'
