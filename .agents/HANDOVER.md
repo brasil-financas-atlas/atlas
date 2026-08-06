@@ -6,27 +6,25 @@ Redesign and maintain the Brasil Finanças Atlas (BFA) educational platform fron
 ## Current Status
 - **Completed:** 
   - Updated git remote `origin` to `https://github.com/brasil-financas-atlas/atlas.git`.
-  - Updated `githubSync.js` and `GitHubSyncModal.jsx` default repository target to `brasil-financas-atlas/atlas` and fixed nested try block syntax.
-  - Added full GitHub & File Synchronization guide to `README.md` covering direct browser CMS sync, terminal sync, and Python background watcher.
-  - Fixed legacy `localStorage` keys and verified fine-grained PAT handling.
+  - Created `.env` file containing `GITHUB_PAT`.
+  - Re-implemented `auto_sync.py` with `watchdog` real-time monitoring, 3s debouncing, non-interactive `GIT_TERMINAL_PROMPT=0` safety, `git pull --rebase` conflict prevention, and `.env` PAT authentication.
+  - Created `AGENTS.md` configuring automatic execution of `auto_sync.py` during `/session-start`.
+  - Created test file `ARQUIVO_TESTE_SINCRONIZACAO_AUTOMATICA_GITHUB_BRASIL_FINANCAS_ATLAS.md` in root directory.
+  - Documented ultra-detailed step-by-step Auto-Sync setup in `README.md`.
 - **In-Progress:**
-  - Local changes ready to commit and push to `brasil-financas-atlas/atlas`.
+  - Auto-Sync script tested via `python auto_sync.py`. The GitHub API returned: `403 Write access to repository not granted`.
 - **Blockers:**
-  - None.
+  - The token currently in `.env` is a Personal Fine-Grained PAT that lacks write access to the new organization `brasil-financas-atlas`.
 
 ## Decisions Made (Locked)
-- **Default Repository Targets:** Owner `brasil-financas-atlas` and Repo `atlas` set as primary defaults across `githubSync.js`, `GitHubSyncModal.jsx`, and `README.md`.
-- **Relative Path Resolution:** Use relative `./src/` paths in `index.html` to guarantee compatibility across GitHub Pages (`/atlas/plataforma/`), Netlify, and local Python server (`http://localhost:8080`).
-- **Authorization Headers:** Use `Authorization: Bearer <token>` for Fine-Grained PAT GitHub REST API calls.
-- **Hosting Strategy:** GitHub Pages (or GitHub Actions `gh-pages` deploy) combined with HashRouter (`#/`) is preferred over Netlify rewrites (`/* -> /index.html`), as it avoids Babel Standalone syntax parsing crashes on 200 HTML responses.
+- **Session Start Protocol:** Every `/session-start` MUST automatically run `auto_sync.py` check and inform the user of any PAT authorization requirements.
+- **Default Repository Targets:** Owner `brasil-financas-atlas` and Repo `atlas` set as primary defaults across `githubSync.js`, `GitHubSyncModal.jsx`, `auto_sync.py`, and `README.md`.
 
 ## Failed Approaches / Dead Ends (Do Not Retry)
-- **Unsanitized `localStorage` Reads for GitHub Sync:** Initializing `useState` directly from raw `localStorage` allowed stale values (`dragaodoomar`/`bfa-main` or `davidlhferro`) to persist and return HTTP 404 Not Found errors when used with repository-scoped PATs. Always filter out legacy keys.
-- **Absolute `/src/` paths in `index.html`:** Causes HTTP 404 script loading failures when the project is hosted in a repository subpath (such as GitHub Pages subfolders).
+- **Personal Fine-Grained PAT without Organization Resource Owner:** Using a Fine-Grained PAT created under a personal account without selecting `brasil-financas-atlas` as Resource Owner results in `HTTP 403 Write access to repository not granted`. Always use a **Classic PAT (`repo` scope)** or authorize Fine-Grained PAT under Organization Settings.
 
-## Extracted Memories & Preferences
-- Always declare React hook destructurings (`const { useState, ... } = React;`) at the top of all component files.
-- Always check for JSX syntax errors in standalone Babel scripts (`ExtraPages.jsx`), as an unhandled parse error will break component initialization across the entire app.
-
-## Immediate Next Step
-- Run `git add . && git commit -m "docs & feat: update repo ownership to brasil-financas-atlas/atlas and expand sync guide" && git push origin main` in `C:\codigos\bfa-main` to publish all changes.
+## Immediate Next Step (For User Action)
+1. Generate a **Personal Access Token (classic)** in GitHub: *Settings ➔ Developer Settings ➔ Personal Access Tokens ➔ Tokens (classic)*.
+2. Select the **`repo`** scope checkbox.
+3. Paste the new token (`ghp_...`) into `.env` (`GITHUB_PAT=ghp_...`).
+4. Run `python auto_sync.py` (or run `/session-start`). All local files will sync to GitHub automatically!
