@@ -67,6 +67,19 @@ class GitAutoSync:
             return f"https://x-access-token:{self.pat}@github.com/brasil-financas-atlas/atlas.git"
         return "origin"
 
+    def _limpar_segredo(self, texto):
+        """Remove o PAT de qualquer texto antes de ir para o log.
+
+        O remote autenticado carrega o token dentro da propria URL, e o git
+        repete essa URL nas mensagens de erro. Sem esta limpeza, um push que
+        falha grava o token em texto puro no auto_sync.log.
+        """
+        if not texto:
+            return texto
+        if self.pat:
+            texto = texto.replace(self.pat, "***TOKEN-OCULTO***")
+        return texto
+
     def _run_git(self, args, timeout=40):
         """Executa comandos do Git impedindo travamento por solicitação de senha."""
         env = os.environ.copy()
@@ -84,13 +97,14 @@ class GitAutoSync:
                 timeout=timeout
             )
             if result.returncode == 0:
-                return True, result.stdout.strip()
+                return True, self._limpar_segredo(result.stdout.strip())
             else:
-                return False, result.stderr.strip() or result.stdout.strip()
+                saida = result.stderr.strip() or result.stdout.strip()
+                return False, self._limpar_segredo(saida)
         except subprocess.TimeoutExpired:
-            return False, f"Comando {' '.join(cmd)} expirou tempo limite de {timeout}s."
+            return False, f"Comando git {args[0]} expirou tempo limite de {timeout}s."
         except Exception as e:
-            return False, str(e)
+            return False, self._limpar_segredo(str(e))
 
     def has_changes(self):
         """Verifica se há alterações modificadas ou novos arquivos staged/unstaged."""
@@ -107,37 +121,60 @@ class GitAutoSync:
         remote_target = self._get_remote_url()
 
         try:
-            # 1. Se houver alterações locais, faz staging e commit primeiro
+            # 1. Traz o remoto ANTES de qualquer coisa. Se nao der para saber o
+            #    que existe no GitHub, nao ha como publicar com seguranca.
+            logging.info("[AUTO-SYNC] Buscando atualizacoes do GitHub (git fetch)...")
+            ok_fetch, saida_fetch = self._run_git(["fetch", remote_target, self.branch])
+            if not ok_fetch:
+                logging.error(
+                    "[AUTO-SYNC] ERRO no fetch: %s. Sincronizacao cancelada — "
+                    "publicar sem conhecer o remoto sobrescreveria o trabalho de outra pessoa.",
+                    saida_fetch
+                )
+                return
+
+            # 2. Coloca as alteracoes locais em um commit.
             if self.has_changes():
                 logging.info("[AUTO-SYNC] Adicionando arquivos e gerando commit local...")
-                self._run_git(["add", "-A"])
+                ok_add, saida_add = self._run_git(["add", "-A"])
+                if not ok_add:
+                    logging.error("[AUTO-SYNC] ERRO no git add: %s", saida_add)
+                    return
 
                 timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
                 commit_msg = f"chore(auto-sync): atualiza arquivos locais [{timestamp}]"
 
-                success_commit, out_commit = self._run_git(["commit", "-m", commit_msg])
-                if not success_commit and "nothing to commit" not in out_commit:
-                    logging.error(f"[AUTO-SYNC] ERRO ao criar commit: {out_commit}")
+                ok_commit, saida_commit = self._run_git(["commit", "-m", commit_msg])
+                if not ok_commit and "nothing to commit" not in saida_commit:
+                    logging.error("[AUTO-SYNC] ERRO ao criar commit: %s", saida_commit)
                     return
 
-            # 2. Busca commits remotos (fetch) e aplica rebase limpo
-            logging.info("[AUTO-SYNC] Buscando atualizacoes do GitHub (git fetch)...")
-            success_fetch, out_fetch = self._run_git(["fetch", remote_target, self.branch])
-            if success_fetch:
-                logging.info("[AUTO-SYNC] Rebasando historico com FETCH_HEAD...")
-                success_rebase, out_rebase = self._run_git(["rebase", "FETCH_HEAD"])
-                if not success_rebase:
-                    logging.warning(f"[AUTO-SYNC] Aviso no rebase: {out_rebase}. Abortando rebase se necessário.")
-                    if "rebase in progress" in out_rebase or "conflict" in out_rebase.lower():
-                        self._run_git(["rebase", "--abort"])
+            # 3. Reaplica o commit local EM CIMA do que ja esta no GitHub.
+            logging.info("[AUTO-SYNC] Rebasando historico com FETCH_HEAD...")
+            ok_rebase, saida_rebase = self._run_git(["rebase", "FETCH_HEAD"])
 
-            # 3. Envia os commits locais para o repositório remoto
+            if not ok_rebase:
+                # Conflito significa que o mesmo arquivo mudou nos dois lados.
+                # Escolher um automaticamente e o que apaga o trabalho alheio,
+                # entao aqui o servico para e devolve a decisao para a pessoa.
+                logging.error("[AUTO-SYNC] CONFLITO no rebase: %s", saida_rebase)
+                self._run_git(["rebase", "--abort"])
+                logging.error(
+                    "[AUTO-SYNC] PUSH CANCELADO. Alguem alterou os mesmos arquivos no GitHub. "
+                    "Resolva a mao: `git pull --rebase origin %s`, revise o resultado e envie. "
+                    "O servico continua rodando, mas nao vai publicar ate isso ser resolvido.",
+                    self.branch
+                )
+                return
+
+            # 4. So agora publica. Sem --force em hipotese nenhuma: se o push
+            #    for recusado, o remoto andou de novo e a proxima rodada trata.
             logging.info("[AUTO-SYNC] Enviando commits para branch principal (git push)...")
-            success_push, out_push = self._run_git(["push", remote_target, self.branch])
-            if success_push:
+            ok_push, saida_push = self._run_git(["push", remote_target, self.branch])
+            if ok_push:
                 logging.info("[AUTO-SYNC] SUCESSO! Alteracoes sincronizadas no GitHub.")
             else:
-                logging.error(f"[AUTO-SYNC] ERRO no git push: {out_push}")
+                logging.error("[AUTO-SYNC] ERRO no git push: %s", saida_push)
 
         finally:
             self.is_syncing = False
