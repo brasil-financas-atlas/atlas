@@ -107,35 +107,34 @@ class GitAutoSync:
         remote_target = self._get_remote_url()
 
         try:
-            # 1. Puxa atualizações remotas via rebase seguro
-            success, out = self._run_git(["pull", "--rebase", remote_target, self.branch])
-            if not success and "up to date" not in out and "Already up to date" not in out:
-                if "rebase in progress" in out or "conflict" in out.lower():
-                    logging.warning("[AUTO-SYNC] Conflito no git pull --rebase. Abortando rebase para manter estabilidade.")
-                    self._run_git(["rebase", "--abort"])
-
-            # 2. Se houver alterações locais, faz staging, commit e push
+            # 1. Se houver alterações locais, faz staging e commit primeiro
             if self.has_changes():
-                logging.info("[AUTO-SYNC] Adicionando arquivos e gerando commit...")
+                logging.info("[AUTO-SYNC] Adicionando arquivos e gerando commit local...")
                 self._run_git(["add", "-A"])
 
                 timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
                 commit_msg = f"chore(auto-sync): atualiza arquivos locais [{timestamp}]"
 
                 success_commit, out_commit = self._run_git(["commit", "-m", commit_msg])
-                if success_commit:
-                    logging.info("[AUTO-SYNC] Enviando commits para branch principal (git push)...")
-                    success_push, out_push = self._run_git(["push", remote_target, self.branch])
-                    if success_push:
-                        logging.info("[AUTO-SYNC] SUCESSO! Alteracoes sincronizadas no GitHub.")
-                    else:
-                        logging.error(f"[AUTO-SYNC] ERRO no git push: {out_push}")
-                        if "could not read Username" in out_push or "Authentication failed" in out_push:
-                            logging.error("[AUTO-SYNC] DICA: Adicione seu PAT no arquivo .env (GITHUB_PAT=sua_chave) para autenticação automática sem prompt.")
-                else:
+                if not success_commit and "nothing to commit" not in out_commit:
                     logging.error(f"[AUTO-SYNC] ERRO ao criar commit: {out_commit}")
+                    return
+
+            # 2. Puxa atualizações remotas via rebase seguro
+            logging.info("[AUTO-SYNC] Puxando atualizacoes do GitHub (git pull --rebase)...")
+            success_pull, out_pull = self._run_git(["pull", "--rebase", remote_target, self.branch])
+            if not success_pull and "up to date" not in out_pull and "Already up to date" not in out_pull:
+                if "rebase in progress" in out_pull or "conflict" in out_pull.lower():
+                    logging.warning("[AUTO-SYNC] Conflito no git pull --rebase. Abortando rebase para manter estabilidade.")
+                    self._run_git(["rebase", "--abort"])
+
+            # 3. Envia os commits locais para o repositório remoto
+            logging.info("[AUTO-SYNC] Enviando commits para branch principal (git push)...")
+            success_push, out_push = self._run_git(["push", remote_target, self.branch])
+            if success_push:
+                logging.info("[AUTO-SYNC] SUCESSO! Alteracoes sincronizadas no GitHub.")
             else:
-                logging.info("[AUTO-SYNC] Nenhuma alteracao pendente para commit.")
+                logging.error(f"[AUTO-SYNC] ERRO no git push: {out_push}")
 
         finally:
             self.is_syncing = False
