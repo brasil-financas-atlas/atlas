@@ -9,8 +9,9 @@ Sempre que a skill `/session-start` for executada neste repositório, o agente D
    - Executar uma sincronização inicial de teste com `python -c "import auto_sync; syncer = auto_sync.GitAutoSync(auto_sync.REPO_DIR, auto_sync.BRANCH, pat=auto_sync.GITHUB_PAT); syncer.sync()"`.
    - Iniciar o processo de monitoramento em segundo plano (`pythonw auto_sync.py`) se necessário.
 
-2. **Lembrar o Usuário das Ações Pendentes no GitHub (Caso de Erro 403):**
-   - Como o repositório foi transferido para a organização `brasil-financas-atlas`, tokens Fine-Grained antigos criados para contas pessoais retornam `403 Write access to repository not granted`.
-   - Lembre o usuário de:
-     1. Gerar um **Personal Access Token (classic)** em *GitHub Settings ➔ Developer Settings ➔ Personal Access Tokens ➔ Tokens (classic)* marcando a opção **`repo`**.
-     2. Colar a nova chave no arquivo `.env` (`GITHUB_PAT=ghp_...`).
+2. **Lembrar o Usuário das Ações Pendentes no GitHub (Caso de Erro de Permissão ou Workflows):**
+   - Como o repositório contém workflows do GitHub Actions em `.github/workflows/`, o Personal Access Token (PAT) DEVE ter as permissões marcadas:
+     1. **`repo`** (Acesso completo a repositórios privados).
+     2. **`workflow`** (Permissão para atualizar fluxos de trabalho do GitHub Actions).
+   - Se o `git push` for rejeitado por falta de escopo `workflow`, lembre o usuário de editar a chave no GitHub ativando a opção **`workflow`**.
+

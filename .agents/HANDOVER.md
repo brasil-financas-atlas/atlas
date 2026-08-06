@@ -6,25 +6,23 @@ Redesign and maintain the Brasil Finanças Atlas (BFA) educational platform fron
 ## Current Status
 - **Completed:** 
   - Updated git remote `origin` to `https://github.com/brasil-financas-atlas/atlas.git`.
-  - Created `.env` file containing `GITHUB_PAT`.
-  - Re-implemented `auto_sync.py` with `watchdog` real-time monitoring, 3s debouncing, non-interactive `GIT_TERMINAL_PROMPT=0` safety, `git pull --rebase` conflict prevention, and `.env` PAT authentication.
-  - Created `AGENTS.md` configuring automatic execution of `auto_sync.py` during `/session-start`.
-  - Created test file `ARQUIVO_TESTE_SINCRONIZACAO_AUTOMATICA_GITHUB_BRASIL_FINANCAS_ATLAS.md` in root directory.
-  - Documented ultra-detailed step-by-step Auto-Sync setup in `README.md`.
+  - Saved new PAT token in `.env`.
+  - Merged local and remote branches (`allow-unrelated-histories`) into a clean state.
+  - Untracked `auto_sync.log` and updated `.gitignore`.
+  - Configured `auto_sync.py` to auto-commit and push seamlessly.
 - **In-Progress:**
-  - Auto-Sync script tested via `python auto_sync.py`. The GitHub API returned: `403 Write access to repository not granted`.
+  - `git push` requires PAT with `workflow` scope enabled on GitHub.
 - **Blockers:**
-  - The token currently in `.env` is a Personal Fine-Grained PAT that lacks write access to the new organization `brasil-financas-atlas`.
+  - Token in `.env` needs the **`workflow`** permission checked on GitHub because the repo contains `.github/workflows/*.yml`.
 
 ## Decisions Made (Locked)
 - **Session Start Protocol:** Every `/session-start` MUST automatically run `auto_sync.py` check and inform the user of any PAT authorization requirements.
-- **Default Repository Targets:** Owner `brasil-financas-atlas` and Repo `atlas` set as primary defaults across `githubSync.js`, `GitHubSyncModal.jsx`, `auto_sync.py`, and `README.md`.
+- **PAT Scopes:** PAT token MUST have both **`repo`** and **`workflow`** scopes checked on GitHub.
 
 ## Failed Approaches / Dead Ends (Do Not Retry)
-- **Personal Fine-Grained PAT without Organization Resource Owner:** Using a Fine-Grained PAT created under a personal account without selecting `brasil-financas-atlas` as Resource Owner results in `HTTP 403 Write access to repository not granted`. Always use a **Classic PAT (`repo` scope)** or authorize Fine-Grained PAT under Organization Settings.
+- **PAT without `workflow` scope:** Pushing a repo with `.github/workflows/*.yml` without `workflow` scope causes GitHub to reject with `refusing to allow a Personal Access Token to create or update workflow without workflow scope`.
 
 ## Immediate Next Step (For User Action)
-1. Generate a **Personal Access Token (classic)** in GitHub: *Settings ➔ Developer Settings ➔ Personal Access Tokens ➔ Tokens (classic)*.
-2. Select the **`repo`** scope checkbox.
-3. Paste the new token (`ghp_...`) into `.env` (`GITHUB_PAT=ghp_...`).
-4. Run `python auto_sync.py` (or run `/session-start`). All local files will sync to GitHub automatically!
+1. In GitHub Settings ➔ Personal Access Tokens, edit the token or create a new token with **`repo`** AND **`workflow`** checked.
+2. Update `.env` with the new token (`GITHUB_PAT=github_pat_...`).
+3. Run `python auto_sync.py` (or run `/session-start`) to complete the sync push instantly!
