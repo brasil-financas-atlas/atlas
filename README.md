@@ -94,6 +94,48 @@ A plataforma conta com um sistema de **Git-as-a-CMS** para sincronizar as ediç�
 
 ---
 
+## ☁️ Guia de Deploy Contínuo e Gratuito Sincronizado com GitHub
+
+Com o fluxo de **Auto-Sync** ativo (PC ➔ GitHub), qualquer alteração salva no seu computador é enviada para a branch `main` do repositório no GitHub. Para ter o site publicado na web automaticamente e de graça, você pode conectar o repositório a uma das plataformas cloud recomendadas:
+
+### 1. Opção Recomendada: Netlify (Free Tier)
+> 📌 *Atualmente utilizado nos links da plataforma (`brasil-financas-atlas.netlify.app`).*
+
+1. **Criar Conta**: Acesse [netlify.com](https://www.netlify.com/) e faça login usando a sua conta do GitHub.
+2. **Importar Repositório**:
+   - Clique em **Add new site ➔ Import an existing project**.
+   - Escolha o provedor **GitHub**.
+   - Selecione a organização **`brasil-financas-atlas`** e o repositório **`atlas`**.
+3. **Configurações de Build**:
+   - **Branch de deploy**: `main`
+   - **Publish directory**: `plataforma` *(ou `.` dependendo da estrutura do app)*
+   - **Build command**: Deixe em branco (para sites HTML/JS estáticos) ou `npm run build` (caso use Vite/React).
+4. **Deploy Automático**: Clique em **Deploy atlas**.
+   - A partir deste momento, sempre que o `auto_sync.py` ou a área Admin enviarem um commit para o GitHub, o Netlify atualizará a URL do site em **~30 segundos**.
+
+---
+
+### 2. Opção Alternativa: Vercel (Free Hobby Tier)
+
+1. Acesse [vercel.com](https://vercel.com/) e faça login com o GitHub.
+2. Clique em **Add New... ➔ Project**.
+3. Selecione o repositório `brasil-financas-atlas/atlas`.
+4. Defina a pasta raiz do projeto em **Root Directory** como `plataforma` (se aplicável).
+5. Clique em **Deploy**. As atualizações serão publicadas automaticamente a cada `git push`.
+
+---
+
+### 3. Opção de Altíssima Performance: Cloudflare Pages (Free Tier)
+
+1. Acesse [dash.cloudflare.com](https://dash.cloudflare.com/) ➔ **Workers & Pages**.
+2. Clique em **Create Application ➔ Pages ➔ Connect to Git**.
+3. Escolha o repositório `brasil-financas-atlas/atlas`.
+4. Defina o **Build output directory** como `plataforma`.
+5. Clique em **Save and Deploy**. Oferece 100.000 requisições diárias sem taxa de tráfego.
+
+---
+
+
 ### 🌐 1. Sincronização pelo Site (Área Admin / Navegador)
 
 Para salvar edições de aulas, vídeos e quizzes feitas diretamente na interface web e atualizar a nuvem:
