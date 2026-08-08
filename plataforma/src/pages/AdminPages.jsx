@@ -4,27 +4,35 @@ function ThemeSelector() {
   const { themePreference, setThemePreference } = useContext(AdminContext || createContext({}));
 
   const themes = [
-    { id: 'theme-classic', name: 'Brasil Atlas Classic', desc: 'Verde Floresta & Azul Marinho' },
-    { id: 'theme-executive', name: 'B3 Corporate Executive', desc: 'Grafite & Azul B3' },
-    { id: 'theme-khan', name: 'Minimalist Academy', desc: 'Azul Acadêmico & Branco' },
-    { id: 'theme-obsidian', name: 'Dark Obsidian Pro', desc: 'Modo Escuro com Emerald' }
+    { id: 'brasil-atlas', name: 'Brasil Atlas Classic', desc: 'Verde Floresta & Azul Marinho' },
+    { id: 'b3-corporate', name: 'B3 Corporate Executive', desc: 'Grafite & Azul B3' },
+    { id: 'khan-minimalist', name: 'Minimalist Academy', desc: 'Azul Acadêmico & Branco' },
+    { id: 'dark-obsidian', name: 'Dark Obsidian Pro', desc: 'Modo Escuro com Emerald' }
   ];
 
   return (
-    <div className="bfa-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
-      <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-azul-dark)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <BfaIcon name="sparkles" size={20} color="var(--color-ouro-dark)" /> Seleção de Tema Visual da Plataforma
+    <div className="tool-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
+      <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        ⚡ Seleção de Tema Visual da Plataforma
       </h3>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
         {themes.map((t) => (
           <button
             key={t.id}
             onClick={() => setThemePreference && setThemePreference(t.id)}
-            className={`bfa-btn ${themePreference === t.id ? 'bfa-btn--azul' : 'bfa-btn--ghost'}`}
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '1rem', textAlign: 'left' }}
+            className={`btn-primary ${themePreference === t.id ? '' : 'btn-secondary'}`}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              padding: '1rem',
+              textAlign: 'left',
+              backgroundColor: themePreference === t.id ? 'var(--track-math)' : undefined,
+              color: themePreference === t.id ? '#FFFFFF' : 'var(--foreground)'
+            }}
           >
             <strong style={{ fontSize: '0.95rem' }}>
-              {themePreference === t.id && <BfaIcon name="checkSimple" size={14} style={{ marginRight: '6px' }} />}
+              {themePreference === t.id && '✓ '}
               {t.name}
             </strong>
             <span style={{ fontSize: '0.78rem', opacity: 0.8, marginTop: '0.2rem' }}>{t.desc}</span>
@@ -44,22 +52,20 @@ function AdminLogin() {
 
   if (isAuthenticated) {
     return (
-      <div className="bfa-section">
-        <div className="bfa-section__container bfa-text-center" style={{ maxWidth: '500px' }}>
-          <div className="bfa-card" style={{ padding: '2.5rem' }}>
-            <div style={{ margin: '0 auto 1rem auto', display: 'inline-flex', padding: '1rem', borderRadius: '50%', background: 'var(--color-verde-light)' }}>
-              <BfaIcon name="checkCircle" size={48} color="var(--color-verde)" />
-            </div>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-azul-dark)' }}>
-              Sessão Ativa: <strong>{adminUser.username}</strong>
-            </h2>
-            <p className="bfa-text-muted" style={{ margin: '0.75rem 0 1.5rem 0' }}>
-              Você está autenticado no Painel Admin do BFA.
-            </p>
-            <a href="#/admin" className="bfa-btn bfa-btn--verde bfa-btn--block">
-              Acessar Painel de Controle CMS ➔
-            </a>
+      <div className="bfa-container" style={{ padding: '4rem 1.5rem', maxWidth: '500px', margin: '0 auto' }}>
+        <div className="tool-card" style={{ padding: '2.5rem', textAlign: 'center' }}>
+          <div style={{ margin: '0 auto 1rem auto', display: 'inline-flex', padding: '1rem', borderRadius: '50%', background: 'rgba(52, 211, 153, 0.15)' }}>
+            <span style={{ fontSize: '2rem' }}>✓</span>
           </div>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--foreground)' }}>
+            Sessão Ativa: <strong>{adminUser.username}</strong>
+          </h2>
+          <p style={{ margin: '0.75rem 0 1.5rem 0', color: 'var(--muted-foreground)' }}>
+            Você está autenticado no Painel Admin do BFA.
+          </p>
+          <a href="#/admin" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+            Acessar Painel de Controle CMS ➔
+          </a>
         </div>
       </div>
     );
@@ -77,272 +83,98 @@ function AdminLogin() {
   };
 
   return (
-    <div className="bfa-section">
-      <div className="bfa-section__container" style={{ maxWidth: '480px' }}>
-        <div className="bfa-card" style={{ padding: '2.5rem' }}>
-          <div className="bfa-text-center" style={{ marginBottom: '2rem' }}>
-            <div style={{ width: '60px', height: '60px', background: 'var(--color-azul-light)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem auto' }}>
-              <BfaIcon name="lock" size={26} color="var(--color-azul)" />
-            </div>
-            <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--color-azul-dark)' }}>Área Restrita do Professor</h2>
-            <p className="bfa-text-muted" style={{ fontSize: '0.9rem' }}>Acesso de edição para corpo docente e NIF Dragão do Mar</p>
+    <div className="bfa-container" style={{ padding: '4rem 1.5rem', maxWidth: '480px', margin: '0 auto' }}>
+      <div className="tool-card" style={{ padding: '2.5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <div style={{ width: '56px', height: '56px', background: 'var(--surface-strong)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem auto' }}>
+            🔒
           </div>
-
-          {errorMsg && (
-            <div className="bfa-admonition bfa-admonition--danger" style={{ marginBottom: '1.25rem' }}>
-              {errorMsg}
-            </div>
-          )}
-
-          <form onSubmit={handleLoginSubmit}>
-            <div className="bfa-form-group">
-              <label style={{ fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.4rem', display: 'block' }}>Usuário:</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="bfa-input"
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}
-                placeholder="ex: admin"
-                required
-              />
-            </div>
-
-            <div className="bfa-form-group" style={{ marginTop: '1.25rem' }}>
-              <label style={{ fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.4rem', display: 'block' }}>Senha:</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="bfa-input"
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}
-                placeholder="••••••••"
-                required
-              />
-            </div>
-
-            <button type="submit" className="bfa-btn bfa-btn--verde bfa-btn--block" style={{ marginTop: '1.75rem' }}>
-              Entrar no CMS ➔
-            </button>
-          </form>
-
-          <div style={{ marginTop: '2rem', fontSize: '0.85rem', color: 'var(--text-secondary)', borderTop: '1px solid var(--border-color)', paddingTop: '1.25rem' }}>
-            <strong>Credenciais Estáticas de Teste:</strong>
-            <ul style={{ paddingLeft: '1.2rem', marginTop: '0.5rem', lineHeight: '1.6' }}>
-              <li><code>admin</code> / <code>bfa@2024</code></li>
-              <li><code>lucas</code> / <code>dragaodoomar</code></li>
-              <li><code>nif</code> / <code>investir123</code></li>
-              <li><code>professor</code> / <code>brhsic2024</code></li>
-            </ul>
-          </div>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--foreground)' }}>Área Restrita do Professor</h2>
+          <p style={{ fontSize: '0.875rem', color: 'var(--muted-foreground)' }}>Acesso de edição para corpo docente e NIF Dragão do Mar</p>
         </div>
+
+        {errorMsg && (
+          <div style={{ marginBottom: '1.25rem', padding: '0.75rem 1rem', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: 'var(--radius-md)', color: '#F87171', fontSize: '0.875rem' }}>
+            {errorMsg}
+          </div>
+        )}
+
+        <form onSubmit={handleLoginSubmit}>
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>Usuário:</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="admin"
+              style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.9rem' }}
+              required
+            />
+          </div>
+
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>Senha:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.9rem' }}
+              required
+            />
+          </div>
+
+          <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+            Entrar no Painel CMS ➔
+          </button>
+        </form>
       </div>
     </div>
   );
 }
 
 function AdminDashboard() {
-  const { isAuthenticated, adminUser, logout, updateLesson, addNews, cmsData, inlineEditActive, toggleInlineEdit } = useContext(AdminContext || createContext({}));
-  const [selectedLessonId, setSelectedLessonId] = useState('matematica-modulo-1-algebra-do-zero-aula-01-numeros-e-operacoes');
-  const [videoInput, setVideoInput] = useState('');
-  const [newsTitle, setNewsTitle] = useState('');
-  const [newsCategory, setNewsCategory] = useState('Macroeconomia');
-  const [newsSummary, setNewsSummary] = useState('');
-  const [savedSuccess, setSavedSuccess] = useState(false);
+  const { isAuthenticated, adminUser, logout } = useContext(AdminContext || createContext({}));
+  const { navigate } = useRouter();
+  const [showSyncModal, setShowSyncModal] = useState(false);
 
   if (!isAuthenticated) {
     return (
-      <div className="bfa-section">
-        <div className="bfa-section__container bfa-text-center" style={{ maxWidth: '500px' }}>
-          <div className="bfa-card" style={{ padding: '2.5rem' }}>
-            <div style={{ margin: '0 auto 1rem auto', display: 'inline-flex', padding: '1rem', borderRadius: '50%', background: 'var(--status-danger-bg)' }}>
-              <BfaIcon name="shield" size={48} color="var(--status-danger)" />
-            </div>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-azul-dark)' }}>Acesso Não Autorizado</h2>
-            <p className="bfa-text-muted" style={{ margin: '0.75rem 0 1.5rem 0' }}>Faça login para gerenciar os conteúdos e aulas do BFA.</p>
-            <a href="#/admin/login" className="bfa-btn bfa-btn--verde bfa-btn--block">
-              Ir para Login ➔
-            </a>
-          </div>
-        </div>
+      <div className="bfa-container" style={{ padding: '4rem 1.5rem', textAlign: 'center' }}>
+        <h2>Acesso não autorizado.</h2>
+        <a href="#/admin/login" className="btn-primary" style={{ marginTop: '1rem', display: 'inline-flex' }}>Fazer Login</a>
       </div>
     );
   }
 
-  const handleSaveVideo = (e) => {
-    e.preventDefault();
-    updateLesson(selectedLessonId, { videoUrl: videoInput.trim() });
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 3000);
-  };
-
-  const handleCreateNews = (e) => {
-    e.preventDefault();
-    if (!newsTitle.trim()) return;
-    addNews({
-      title: newsTitle.trim(),
-      category: newsCategory,
-      summary: newsSummary.trim(),
-      author: adminUser.username
-    });
-    setNewsTitle('');
-    setNewsSummary('');
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 3000);
-  };
-
   return (
-    <div className="bfa-section">
-      <div className="bfa-section__container">
-        {/* Header Bar */}
-        <div className="bfa-card" style={{ padding: '2rem', marginBottom: '2.5rem', background: 'linear-gradient(135deg, #0F243C 0%, #1B3A5C 100%)', color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-xl)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem' }}>
-            <div>
-              <span className="bfa-badge bfa-badge--ouro" style={{ marginBottom: '0.5rem' }}>Painel CMS Ativo</span>
-              <h1 style={{ fontSize: '2rem', fontWeight: 800, color: '#FFFFFF', margin: '0.25rem 0' }}>
-                Painel do Professor & Administrador
-              </h1>
-              <p style={{ fontSize: '0.95rem', color: '#CBD5E1' }}>
-                Usuário conectado: <strong>{adminUser.username}</strong> ({adminUser.role})
-              </p>
-            </div>
+    <div>
+      <section className="hero-gradient" style={{ padding: '3.5rem 0 2.5rem 0', position: 'relative' }}>
+        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.6 }} />
+        <div className="bfa-container" style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <span className="mono-tag" style={{ color: 'var(--gold)', background: 'rgba(251, 191, 36, 0.15)', padding: '0.25rem 0.65rem', borderRadius: 'var(--radius-full)' }}>Painel Administrativo</span>
+            <h1 style={{ fontSize: '2.25rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.75rem' }}>Painel CMS — {adminUser.name}</h1>
+          </div>
 
-            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-              <button
-                onClick={toggleInlineEdit}
-                className={`bfa-btn ${inlineEditActive ? 'bfa-btn--ouro' : 'bfa-btn--ghost'}`}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', ...(!inlineEditActive ? { color: '#FFFFFF', borderColor: 'rgba(255,255,255,0.3)' } : {}) }}
-              >
-                <BfaIcon name="pencil" size={16} /> Modo Edição In-Context: {inlineEditActive ? 'LIGADO' : 'DESLIGADO'}
-              </button>
-              <button onClick={logout} className="bfa-btn bfa-btn--ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#FFD1D1', borderColor: 'rgba(255,255,255,0.2)' }}>
-                Sair <BfaIcon name="logout" size={16} />
-              </button>
-            </div>
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <button onClick={() => setShowSyncModal(true)} className="btn-primary">
+              🚀 Publicar no GitHub
+            </button>
+            <button onClick={logout} className="btn-secondary">
+              Sair
+            </button>
           </div>
         </div>
+      </section>
 
-        {/* Theme Selector Component */}
+      <section className="bfa-container" style={{ padding: '3rem 1.5rem' }}>
         <ThemeSelector />
-
-        {inlineEditActive && (
-          <div className="bfa-admonition bfa-admonition--warning" style={{ marginBottom: '2rem' }}>
-            <div className="bfa-admonition__title" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <BfaIcon name="pencil" size={16} /> Modo In-Context Ativado:
-            </div>
-            Ao navegar pelas páginas de alunos (`/matematica`, `/financas`, `/aulas`), os textos editáveis mostrarão um indicador de edição do professor.
-          </div>
-        )}
-
-        {savedSuccess && (
-          <div className="bfa-admonition bfa-admonition--tip" style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <BfaIcon name="checkCircle" size={16} color="var(--color-verde)" /> Alterações salvas com sucesso e persistidas no LocalStorage!
-          </div>
-        )}
-
-        {/* CMS Controls Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '2rem' }}>
-          {/* Card 1: Videoaula Embed CMS */}
-          <div className="bfa-card" style={{ padding: '2rem' }}>
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--color-azul-dark)', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <BfaIcon name="video" size={20} color="var(--color-azul)" /> Cadastrar URL de Vídeo para Aula
-            </h3>
-            <form onSubmit={handleSaveVideo}>
-              <div className="bfa-form-group">
-                <label style={{ fontWeight: 700, fontSize: '0.88rem', marginBottom: '0.4rem', display: 'block' }}>Selecione a Aula:</label>
-                <select
-                  value={selectedLessonId}
-                  onChange={(e) => setSelectedLessonId(e.target.value)}
-                  className="bfa-input"
-                  style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}
-                >
-                  <option value="matematica-modulo-1-algebra-do-zero-aula-01-numeros-e-operacoes">
-                    Matemática — M1 Aula 1: Números e operações
-                  </option>
-                  <option value="matematica-modulo-1-algebra-do-zero-aula-02-fracoes-e-decimais">
-                    Matemática — M1 Aula 2: Frações e decimais
-                  </option>
-                  <option value="matematica-modulo-2-aplicada-aula-02-juros-simples-e-compostos">
-                    Matemática — M2 Aula 2: Juros simples e compostos
-                  </option>
-                  <option value="financas-modulo-1-fundamentos-aula-01-mercado-financeiro">
-                    Finanças — M1 Aula 1: Mercado financeiro
-                  </option>
-                </select>
-              </div>
-
-              <div className="bfa-form-group" style={{ marginTop: '1.25rem' }}>
-                <label style={{ fontWeight: 700, fontSize: '0.88rem', marginBottom: '0.4rem', display: 'block' }}>Link da Videoaula no YouTube:</label>
-                <input
-                  type="url"
-                  placeholder="https://www.youtube.com/watch?v=..."
-                  value={videoInput}
-                  onChange={(e) => setVideoInput(e.target.value)}
-                  className="bfa-input"
-                  style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}
-                />
-              </div>
-
-              <button type="submit" className="bfa-btn bfa-btn--verde bfa-btn--block" style={{ marginTop: '1.5rem' }}>
-                Salvar URL da Videoaula
-              </button>
-            </form>
-          </div>
-
-          {/* Card 2: Portal News Editor */}
-          <div className="bfa-card" style={{ padding: '2rem' }}>
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--color-azul-dark)', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <BfaIcon name="news" size={20} color="var(--color-azul)" /> Publicar Artigo no Portal de Notícias
-            </h3>
-            <form onSubmit={handleCreateNews}>
-              <div className="bfa-form-group">
-                <label style={{ fontWeight: 700, fontSize: '0.88rem', marginBottom: '0.4rem', display: 'block' }}>Título do Artigo:</label>
-                <input
-                  type="text"
-                  placeholder="ex: COPOM eleva taxa Selic"
-                  value={newsTitle}
-                  onChange={(e) => setNewsTitle(e.target.value)}
-                  className="bfa-input"
-                  style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}
-                  required
-                />
-              </div>
-
-              <div className="bfa-form-group" style={{ marginTop: '1.25rem' }}>
-                <label style={{ fontWeight: 700, fontSize: '0.88rem', marginBottom: '0.4rem', display: 'block' }}>Categoria:</label>
-                <select
-                  value={newsCategory}
-                  onChange={(e) => setNewsCategory(e.target.value)}
-                  className="bfa-input"
-                  style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}
-                >
-                  <option value="Macroeconomia">Macroeconomia</option>
-                  <option value="Competição">Competição BRHSIC</option>
-                  <option value="Investimentos">Investimentos</option>
-                  <option value="Análise de Empresas">Análise de Empresas</option>
-                </select>
-              </div>
-
-              <div className="bfa-form-group" style={{ marginTop: '1.25rem' }}>
-                <label style={{ fontWeight: 700, fontSize: '0.88rem', marginBottom: '0.4rem', display: 'block' }}>Resumo:</label>
-                <textarea
-                  rows="3"
-                  placeholder="Breve chamada..."
-                  value={newsSummary}
-                  onChange={(e) => setNewsSummary(e.target.value)}
-                  className="bfa-textarea"
-                  style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}
-                  required
-                ></textarea>
-              </div>
-
-              <button type="submit" className="bfa-btn bfa-btn--azul bfa-btn--block" style={{ marginTop: '1.5rem' }}>
-                Publicar Notícia
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
+        <GitHubSyncModal isOpen={showSyncModal} onClose={() => setShowSyncModal(false)} />
+      </section>
     </div>
   );
 }
+
+window.AdminLogin = AdminLogin;
+window.AdminDashboard = AdminDashboard;
