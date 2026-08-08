@@ -53,18 +53,6 @@ function Navbar() {
         </nav>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginLeft: '0.5rem' }}>
-          {/* Seletor de Tema */}
-          <select 
-            value={theme} 
-            onChange={(e) => setTheme(e.target.value)}
-            style={{ padding: '0.4rem 0.6rem', fontSize: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--card)', color: 'var(--foreground)' }}
-          >
-            <option value="">Classic Institucional</option>
-            <option value="theme-executive">Executive B3</option>
-            <option value="theme-minimal">Khan Minimalist</option>
-            <option value="dark-obsidian">Dark Obsidian</option>
-          </select>
-
           {adminUser ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <button
