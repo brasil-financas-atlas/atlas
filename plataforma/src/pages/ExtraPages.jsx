@@ -1,281 +1,59 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
 /* ==========================================================================
-   1. PORTAL DE NOTÍCIAS DO MERCADO
+   1. TRILHA ESPECIAL PREPARAÇÃO BRHSIC
    ========================================================================== */
-function Noticias() {
-  const { EXACT_CONTENT } = window;
-  const { cmsData, isAuthenticated, inlineEditActive, addNews } = useContext(AdminContext || createContext({}));
-  const [selectedCategory, setSelectedCategory] = useState('Todas');
-
-  // Modal State for News Publisher
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [newsTitle, setNewsTitle] = useState('');
-  const [newsCategory, setNewsCategory] = useState('Macroeconomia');
-  const [newsReadTime, setNewsReadTime] = useState('4 min de leitura');
-  const [newsAuthor, setNewsAuthor] = useState('NIF Dragão do Mar');
-  const [newsSummary, setNewsSummary] = useState('');
-  const [newsContent, setNewsContent] = useState('');
-  const [newsFeatured, setNewsFeatured] = useState(false);
-
-  const handlePublish = (e) => {
-    e.preventDefault();
-    if (!newsTitle.trim() || !newsSummary.trim()) return;
-
-    if (addNews) {
-      addNews({
-        title: newsTitle.trim(),
-        category: newsCategory,
-        readTime: newsReadTime.trim() || '4 min de leitura',
-        author: newsAuthor.trim() || 'NIF Dragão do Mar',
-        summary: newsSummary.trim(),
-        content: newsContent.trim() || newsSummary.trim(),
-        featured: newsFeatured
-      });
-    }
-
-    setNewsTitle('');
-    setNewsSummary('');
-    setNewsContent('');
-    setNewsFeatured(false);
-    setShowAddModal(false);
-  };
-
-  const defaultNews = [
-    {
-      id: "selic-e-o-estudante",
-      title: "O que a taxa Selic alta muda para quem investe no ensino médio?",
-      category: "Macroeconomia",
-      date: "2026-08-01",
-      readTime: "4 min de leitura",
-      author: "NIF Dragão do Mar",
-      featured: true,
-      summary: "Entenda por que juros mais altos favorecem quem está começando na renda fixa como Tesouro Selic e CDB de liquidez diária.",
-      content: `## O que aconteceu?\nO Banco Central mantém a taxa Selic em patamares que favorecem aplicações de renda fixa no Brasil.\n\n## Que conceito da trilha aparece aqui?\nNo **Módulo 2 de Matemática** e **Módulo 1 de Finanças**, aprendemos que a Selic é a taxa básica de juros da economia.\n\n## Quem ganha e quem perde?\n- **Ganha:** Quem tem dinheiro guardado em investimentos pós-fixados.\n- **Perde:** Quem precisa de empréstimo ou financiamento.`
-    },
-    {
-      id: "brhsic-2026-dicas",
-      title: "BRHSIC 2026: Guia prático de Valuation para a competição",
-      category: "Competição",
-      date: "2026-07-25",
-      readTime: "6 min de leitura",
-      author: "Equipe BFA",
-      featured: false,
-      summary: "Confira como utilizar o Módulo 2 de Finanças do BFA na preparação do seu relatório de Equity Research.",
-      content: "Dicas completas de análise fundamentalista..."
-    },
-    {
-      id: "analise-weg-2026",
-      title: "Análise Fundamentalista na prática: O caso WEG (WEGE3)",
-      category: "Análise de Empresas",
-      date: "2026-07-18",
-      readTime: "5 min de leitura",
-      author: "Professores NIF",
-      featured: false,
-      summary: "Por que a WEG é um exemplo clássico de alta rentabilidade (ROE elevado) e reinvestimento eficiente.",
-      content: "Estudo de caso WEGE3..."
-    }
-  ];
-
-  const allNews = cmsData && cmsData.news && cmsData.news.length > 0 ? cmsData.news : defaultNews;
-  const categories = ['Todas', 'Macroeconomia', 'Competição', 'Análise de Empresas', 'Investimentos'];
-
-  const filteredNews = selectedCategory === 'Todas' 
-    ? allNews 
-    : allNews.filter(n => n.category === selectedCategory || n.categoria === selectedCategory);
-
-  const featuredItem = allNews.find(n => n.featured) || allNews[0];
-
+function BrhsicPage() {
   return (
-    <div className="bfa-section">
-      <div className="bfa-section__container">
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <EditableBlock id="noticias-badge-tag" as="span" className="bfa-badge bfa-badge--ouro" style={{ marginBottom: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <BfaIcon name="news" size={14} color="var(--color-ouro-dark)" /> Conexão com o Mercado Real
+    <div>
+      <section className="hero-gradient" style={{ padding: '4rem 0 3rem 0', position: 'relative' }}>
+        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.6 }} />
+        <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
+          <span className="mono-tag" style={{ color: 'var(--gold)', background: 'rgba(217, 119, 6, 0.15)', padding: '0.25rem 0.65rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(251, 191, 36, 0.3)' }}>
+            Brazil High School Investment Competition
+          </span>
+          <EditableBlock id="brhsic-hero-title" as="h1" style={{ fontSize: '2.5rem', fontWeight: 700, color: '#FFFFFF', marginTop: '1rem' }}>
+            Guia de Preparação de Alta Performance BRHSIC
           </EditableBlock>
-          <EditableBlock id="noticias-header-title" as="h1" className="bfa-section__title">
-            Portal de Notícias & Análises
+          <EditableBlock id="brhsic-hero-sub" as="p" style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.75)', marginTop: '0.5rem', maxWidth: '700px' }}>
+            Técnicas profissionais de Equity Research, Valuation por Fluxo de Caixa Descontado (DCF) e estrutura de Pitch verbal para bancas examinadoras.
           </EditableBlock>
-          <EditableBlock id="noticias-header-subtitle" as="p" className="bfa-section__subtitle">
-            Artigos semanais conectando a teoria das trilhas aos acontecimentos do mundo financeiro
-          </EditableBlock>
-
-          {isAuthenticated && inlineEditActive && (
-            <div style={{ marginTop: '1.25rem' }}>
-              <button
-                type="button"
-                className="bfa-btn bfa-btn--ouro"
-                onClick={() => setShowAddModal(true)}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-              >
-                <BfaIcon name="pencil" size={16} /> ➕ Publicar Nova Notícia / Artigo (Admin)
-              </button>
-            </div>
-          )}
         </div>
+      </section>
 
-        {/* Featured Article Hero Card */}
-        {featuredItem && (
-          <div className="bfa-card" style={{ padding: '2.5rem', marginBottom: '3rem', background: 'linear-gradient(135deg, #0F243C 0%, #1B3A5C 100%)', color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-xl)' }}>
-            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
-              <EditableBlock id="noticias-featured-tag" as="span" className="bfa-badge bfa-badge--ouro">
-                Destaque da Semana
-              </EditableBlock>
-              <span style={{ fontSize: '0.85rem', color: '#CBD5E1', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                <BfaIcon name="calendar" size={14} color="#CBD5E1" /> {featuredItem.date || featuredItem.data}
-              </span>
-            </div>
-            <EditableBlock id={`noticias-feat-${featuredItem.id}-title`} as="h2" style={{ fontSize: '2rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '1rem' }}>
-              {featuredItem.title || featuredItem.titulo}
-            </EditableBlock>
-            <EditableBlock id={`noticias-feat-${featuredItem.id}-summary`} as="p" style={{ fontSize: '1.1rem', color: '#E2E8F0', marginBottom: '1.5rem', maxWidth: '800px', lineHeight: 1.6 }}>
-              {featuredItem.summary || featuredItem.resumo}
-            </EditableBlock>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-              <span style={{ fontSize: '0.9rem', color: '#94A3B8', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                <BfaIcon name="author" size={14} color="#94A3B8" /> Por {featuredItem.author || featuredItem.autor || 'NIF Dragão do Mar'} • <BfaIcon name="clock" size={14} color="#94A3B8" /> {featuredItem.readTime || featuredItem.tempoLeitura || '5 min'}
-              </span>
-              <a href="#/noticias" className="bfa-btn bfa-btn--ouro">
-                Ler Artigo Completo ➔
-              </a>
-            </div>
-          </div>
-        )}
+      <section className="bfa-container" style={{ padding: '4rem 1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+          <article className="module-card card-lift" style={{ borderTop: '4px solid var(--track-brhsic)', padding: '1.5rem' }}>
+            <span className="mono-tag" style={{ color: 'var(--track-brhsic)', background: 'var(--surface-strong)', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>PILAR 01</span>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginTop: '0.75rem', color: 'var(--foreground)' }}>Relatório de Equity Research</h3>
+            <p style={{ fontSize: '0.875rem', color: 'var(--muted-foreground)', marginTop: '0.5rem' }}>
+              Estruturação de tese de investimento, análise setorial, vantagens competitivas (Moat) e mapeamento de riscos operacionais.
+            </p>
+          </article>
 
-        {/* Category Filters */}
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '2.5rem' }}>
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`bfa-btn bfa-btn--sm ${selectedCategory === cat ? 'bfa-btn--azul' : 'bfa-btn--ghost'}`}
-            >
-              {cat}
-            </button>
-          ))}
+          <article className="module-card card-lift" style={{ borderTop: '4px solid var(--track-brhsic)', padding: '1.5rem' }}>
+            <span className="mono-tag" style={{ color: 'var(--track-brhsic)', background: 'var(--surface-strong)', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>PILAR 02</span>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginTop: '0.75rem', color: 'var(--foreground)' }}>Modelagem Financeira & Valuation</h3>
+            <p style={{ fontSize: '0.875rem', color: 'var(--muted-foreground)', marginTop: '0.5rem' }}>
+              Projeção de DRE, Balanço e DFC, cálculo do WACC, taxa de desconto e múltiplos comparativos (P/L, EV/EBITDA).
+            </p>
+          </article>
+
+          <article className="module-card card-lift" style={{ borderTop: '4px solid var(--track-brhsic)', padding: '1.5rem' }}>
+            <span className="mono-tag" style={{ color: 'var(--track-brhsic)', background: 'var(--surface-strong)', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>PILAR 03</span>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginTop: '0.75rem', color: 'var(--foreground)' }}>Pitch & Defesa Verbal</h3>
+            <p style={{ fontSize: '0.875rem', color: 'var(--muted-foreground)', marginTop: '0.5rem' }}>
+              Apresentação executiva em 5 minutos, respostas assertivas a questionamentos da banca examinadora e retórica.
+            </p>
+          </article>
         </div>
-
-        {/* News Grid */}
-        <div className="bfa-subject-grid">
-          {filteredNews.map((item) => (
-            <div key={item.id} className="bfa-card" style={{ display: 'flex', flexDirection: 'column' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                <span className="bfa-badge bfa-badge--azul">{item.category || item.categoria || 'Mercado'}</span>
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{item.date || item.data}</span>
-              </div>
-              <EditableBlock id={`noticia-${item.id}-title`} as="h3" className="bfa-card__title" style={{ fontSize: '1.2rem' }}>
-                {item.title || item.titulo}
-              </EditableBlock>
-              <EditableBlock id={`noticia-${item.id}-summary`} as="p" className="bfa-card__text" style={{ fontSize: '0.9rem' }}>
-                {item.summary || item.resumo}
-              </EditableBlock>
-              <div style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  <BfaIcon name="user" size={14} color="var(--text-secondary)" /> {item.author || item.autor || 'Equipe BFA'}
-                </span>
-                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-azul)' }}>Ler ➔</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Admin News Publisher Modal */}
-      {showAddModal && (
-        <div className="bfa-inline-editor-modal" onClick={() => setShowAddModal(false)}>
-          <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '650px' }}>
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--color-azul-dark)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <BfaIcon name="news" size={20} color="var(--color-azul)" /> Publicar Novo Artigo / Notícia (Modo Admin)
-            </h3>
-
-            <form onSubmit={handlePublish}>
-              <div className="bfa-form-group" style={{ marginBottom: '1rem' }}>
-                <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Título do Artigo:</label>
-                <input
-                  type="text"
-                  value={newsTitle}
-                  onChange={e => setNewsTitle(e.target.value)}
-                  placeholder="Ex: O impacto do corte da Selic nos fundos imobiliários"
-                  className="bfa-input"
-                  style={{ width: '100%', padding: '0.65rem' }}
-                  required
-                />
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
-                <div>
-                  <label style={{ fontWeight: 700, fontSize: '0.8rem' }}>Categoria:</label>
-                  <select value={newsCategory} onChange={e => setNewsCategory(e.target.value)} className="bfa-input" style={{ width: '100%', padding: '0.55rem' }}>
-                    <option value="Macroeconomia">Macroeconomia</option>
-                    <option value="Competição">Competição</option>
-                    <option value="Análise de Empresas">Análise de Empresas</option>
-                    <option value="Investimentos">Investimentos</option>
-                    <option value="Educação Financeira">Educação Financeira</option>
-                  </select>
-                </div>
-                <div>
-                  <label style={{ fontWeight: 700, fontSize: '0.8rem' }}>Tempo de Leitura:</label>
-                  <input type="text" value={newsReadTime} onChange={e => setNewsReadTime(e.target.value)} className="bfa-input" style={{ width: '100%', padding: '0.55rem' }} />
-                </div>
-                <div>
-                  <label style={{ fontWeight: 700, fontSize: '0.8rem' }}>Autor:</label>
-                  <input type="text" value={newsAuthor} onChange={e => setNewsAuthor(e.target.value)} className="bfa-input" style={{ width: '100%', padding: '0.55rem' }} />
-                </div>
-              </div>
-
-              <div className="bfa-form-group" style={{ marginBottom: '1rem' }}>
-                <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Resumo Curto:</label>
-                <textarea
-                  rows="2"
-                  value={newsSummary}
-                  onChange={e => setNewsSummary(e.target.value)}
-                  placeholder="Síntese de 2 linhas para exibição nos cards..."
-                  className="bfa-textarea"
-                  style={{ width: '100%', padding: '0.65rem' }}
-                  required
-                ></textarea>
-              </div>
-
-              <div className="bfa-form-group" style={{ marginBottom: '1rem' }}>
-                <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Conteúdo Completo (Markdown):</label>
-                <textarea
-                  rows="6"
-                  value={newsContent}
-                  onChange={e => setNewsContent(e.target.value)}
-                  placeholder="Escreva o artigo completo utilizando formatação Markdown..."
-                  className="bfa-textarea"
-                  style={{ width: '100%', padding: '0.65rem', fontFamily: 'var(--font-mono)' }}
-                ></textarea>
-              </div>
-
-              <div className="bfa-form-group" style={{ marginBottom: '1.25rem' }}>
-                <label style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}>
-                  <input
-                    type="checkbox"
-                    checked={newsFeatured}
-                    onChange={e => setNewsFeatured(e.target.checked)}
-                  />
-                  Marcar como Destaque da Semana (Hero Banner)
-                </label>
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
-                <button type="button" className="bfa-btn bfa-btn--ghost" onClick={() => setShowAddModal(false)}>Cancelar</button>
-                <button type="submit" className="bfa-btn bfa-btn--verde" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                  Publicar Notícia <BfaIcon name="save" size={14} />
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      </section>
     </div>
   );
 }
 
 /* ==========================================================================
-   2. HUB DE EXERCÍCIOS E PBLS
+   2. HUB DE EXERCÍCIOS & PROBLEMAS PRÁTICOS (PBL)
    ========================================================================== */
 function Exercicios() {
   const [activeTab, setActiveTab] = useState('fixacao');
@@ -283,397 +61,214 @@ function Exercicios() {
 
   const exerciseSets = {
     fixacao: [
-      { id: "e1", title: "Operações Básicas & Decimais", module: "Matemática M1", difficulty: "Fácil", qCount: 5, question: "Quanto representa R$ 150 com acréscimo de 18%?", answer: "R$ 150 × 1,18 = R$ 177,00" },
-      { id: "e2", title: "Conversão de Fração em Porcentagem", module: "Matemática M1", difficulty: "Fácil", qCount: 5, question: "Converta a fração 7/20 para formato percentual.", answer: "7 ÷ 20 = 0,35 = 35%" },
-      { id: "e3", title: "Diferença entre Porcentagem e Ponto Percentual", module: "Matemática M1", difficulty: "Médio", qCount: 5, question: "Se a Selic varia de 8% para 10%, qual a variação em porcentagem e em pontos percentuais?", answer: "Variação em pontos percentuais: 10 - 8 = +2 pp. Variação em porcentagem: 2 / 8 = 25% de aumento relativo." }
+      { id: 'f1', module: 'Álgebra do Zero', difficulty: 'Fácil', title: 'Calculando Porcentagem Real em Descontos', question: 'Um produto de R$ 250,00 recebeu um desconto sucessivo de 10% e depois mais 5%. Qual o valor final pagos pelo comprador?', answer: 'Primeiro desconto: R$ 250 * 0,90 = R$ 225,00. Segundo desconto: R$ 225 * 0,95 = R$ 213,75. O desconto total acumulado foi de 14,5%.' },
+      { id: 'f2', module: 'Matemática Financeira', difficulty: 'Médio', title: 'Equação de Fisher e Juros Reais', question: 'Se a taxa de juros nominal é de 12% ao ano e a inflação medida pelo IPCA foi de 4%, qual a rentabilidade real líquida aproximada?', answer: 'Usando a Equação de Fisher (1 + r_real) = (1 + r_nom) / (1 + i). (1,12 / 1,04) - 1 = 7,69% a.o. (Aproximação direta de 12% - 4% = 8% superestima a rentabilidade real).' }
     ],
     calculo: [
-      { id: "e4", title: "Cálculo de Juros Compostos em Longo Prazo", module: "Matemática M2", difficulty: "Médio", qCount: 3, question: "R$ 2.000 aplicados a 12% a.a. por 5 anos em juros compostos acumulam quanto?", answer: "VF = 2000 × (1,12)⁵ ≈ R$ 3.524,68" },
-      { id: "e5", title: "Rentabilidade Real descontando Inflação (Equação de Fisher)", module: "Matemática M2", difficulty: "Avançado", qCount: 3, question: "Um investimento rendeu 15% em um ano com inflação (IPCA) de 6%. Qual a taxa real de juros?", answer: "(1 + 0,15) / (1 + 0,06) - 1 = 1,15 / 1,06 - 1 ≈ 8,49% real" }
+      { id: 'c1', module: 'Juros Compostos', difficulty: 'Médio', title: 'Aporte Mensal vs Capital Inicial', question: 'Um investimento inicial de R$ 1.000,00 aplicado a 1% ao mês durante 24 meses acumula quanto de juros absolutos?', answer: 'VF = VP * (1 + i)^n. VF = 1000 * (1,01)^24 = R$ 1.269,73. Juros absolutos acumulados: R$ 269,73.' }
     ],
     pbl: [
-      { id: "e6", title: "Estudo de Caso: Reserva de Emergência de João", module: "Finanças M1", difficulty: "Prático", qCount: 1, question: "João guarda R$ 5.000 na poupança. A taxa Selic está em 13,25%. O que ele deve fazer?", answer: "Migrar para Tesouro Selic ou CDB com 100% do CDI com liquidez diária. A poupança perde significativamente para a taxa Selic alta." }
+      { id: 'p1', module: 'Análise Fundamentalista', difficulty: 'Avançado', title: 'Estudo de Caso: Análise de Margem e ROIC da WEG (WEGE3)', question: 'Por que um ROIC consistente acima de 20% demonstra vantagem competitiva sustentável (Moat) em empresas industriais?', answer: 'O ROIC (Retorno sobre o Capital Investido) mede a eficiência da empresa em gerar lucro operacional com o capital total alocado por acionistas e credores. Quando o ROIC é sistematicamente maior que o custo de capital (WACC), a empresa cria valor econômico real (EVA).' }
     ]
   };
 
   return (
-    <div className="bfa-section">
-      <div className="bfa-section__container">
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <EditableBlock id="exercicios-badge-tag" as="span" className="bfa-badge bfa-badge--verde" style={{ marginBottom: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <BfaIcon name="pencil" size={14} color="var(--color-verde-dark)" /> Treino & Resolução Passo a Passo
+    <div>
+      <section className="hero-gradient" style={{ padding: '3.5rem 0 2.5rem 0', position: 'relative' }}>
+        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.6 }} />
+        <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
+          <span className="mono-tag" style={{ color: 'var(--market)', background: 'rgba(52, 211, 153, 0.15)', padding: '0.25rem 0.65rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(52, 211, 153, 0.3)' }}>
+            Problem-Based Learning (PBL)
+          </span>
+          <EditableBlock id="ex-hero-title" as="h1" style={{ fontSize: '2.25rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.75rem' }}>
+            Hub de Exercícios & Problemas Práticos
           </EditableBlock>
-          <EditableBlock id="exercicios-header-title" as="h1" className="bfa-section__title">
-            Hub de Exercícios & Problemas (PBL)
-          </EditableBlock>
-          <EditableBlock id="exercicios-header-subtitle" as="p" className="bfa-section__subtitle">
-            Listas de fixação, questões de cálculo financeiro e casos reais para você dominar a matéria
+          <EditableBlock id="ex-hero-sub" as="p" style={{ fontSize: '1rem', color: 'rgba(255, 255, 255, 0.75)', marginTop: '0.5rem' }}>
+            Listas de fixação conceitual, cálculos financeiros passo a passo e resolução de casos reais.
           </EditableBlock>
         </div>
+      </section>
 
-        {/* Category Tabs */}
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '3rem', flexWrap: 'wrap' }}>
-          <button
-            onClick={() => setActiveTab('fixacao')}
-            className={`bfa-btn ${activeTab === 'fixacao' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-          >
-            <BfaIcon name="pin" size={16} /> <EditableBlock id="exercicios-tab-fixacao" as="span">Fixação (Conceitos)</EditableBlock>
+      <section className="bfa-container" style={{ padding: '3rem 1.5rem' }}>
+        {/* Tab Buttons */}
+        <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
+          <button onClick={() => setActiveTab('fixacao')} className={`btn-primary ${activeTab === 'fixacao' ? '' : 'btn-secondary'}`} style={{ backgroundColor: activeTab === 'fixacao' ? 'var(--track-finance)' : undefined, color: activeTab === 'fixacao' ? '#0D1117' : undefined }}>
+            Fixação Conceitual
           </button>
-          <button
-            onClick={() => setActiveTab('calculo')}
-            className={`bfa-btn ${activeTab === 'calculo' ? 'bfa-btn--azul' : 'bfa-btn--ghost'}`}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-          >
-            <BfaIcon name="calculator" size={16} /> <EditableBlock id="exercicios-tab-calculo" as="span">Cálculo Financeiro</EditableBlock>
+          <button onClick={() => setActiveTab('calculo')} className={`btn-primary ${activeTab === 'calculo' ? '' : 'btn-secondary'}`} style={{ backgroundColor: activeTab === 'calculo' ? 'var(--track-math)' : undefined, color: activeTab === 'calculo' ? '#0D1117' : undefined }}>
+            Cálculo Financeiro
           </button>
-          <button
-            onClick={() => setActiveTab('pbl')}
-            className={`bfa-btn ${activeTab === 'pbl' ? 'bfa-btn--ouro' : 'bfa-btn--ghost'}`}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-          >
-            <BfaIcon name="globe" size={16} /> <EditableBlock id="exercicios-tab-pbl" as="span">Casos Reais (PBL)</EditableBlock>
+          <button onClick={() => setActiveTab('pbl')} className={`btn-primary ${activeTab === 'pbl' ? '' : 'btn-secondary'}`} style={{ backgroundColor: activeTab === 'pbl' ? 'var(--gold-deep)' : undefined, color: activeTab === 'pbl' ? '#0D1117' : undefined }}>
+            Casos Reais (PBL)
           </button>
         </div>
 
-        {/* Exercises Accordion Grid */}
-        <div style={{ display: 'grid', gap: '1.5rem', maxWidth: '900px', margin: '0 auto' }}>
+        {/* Exercises List */}
+        <div style={{ display: 'grid', gap: '1.25rem', maxWidth: '900px', margin: '0 auto' }}>
           {exerciseSets[activeTab].map((ex) => {
             const isExpanded = expandedId === ex.id;
             return (
-              <div key={ex.id} className="bfa-card" style={{ padding: '1.75rem' }}>
+              <article key={ex.id} className="tool-card" style={{ padding: '1.5rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                  <span className="bfa-badge bfa-badge--verde">{ex.module}</span>
-                  <span className="bfa-badge bfa-badge--ouro">{ex.difficulty}</span>
+                  <span className="mono-tag" style={{ color: 'var(--track-finance)' }}>{ex.module}</span>
+                  <span className="mono-tag" style={{ color: 'var(--gold)' }}>{ex.difficulty}</span>
                 </div>
-                <EditableBlock id={`ex-${ex.id}-title`} as="h3" style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-azul-dark)', marginBottom: '0.75rem' }}>
-                  {ex.title}
-                </EditableBlock>
-                <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-                  <strong>Pergunta:</strong> <EditableBlock id={`ex-${ex.id}-question`} as="span">{ex.question}</EditableBlock>
-                </p>
 
-                <button
-                  onClick={() => setExpandedId(isExpanded ? null : ex.id)}
-                  className="bfa-btn bfa-btn--ghost bfa-btn--sm"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-                >
-                  {isExpanded ? (
-                    <><BfaIcon name="eyeOff" size={14} /> Ocultar Gabarito</>
-                  ) : (
-                    <><BfaIcon name="eye" size={14} /> Ver Resolução Passo a Passo</>
-                  )}
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.5rem' }}>{ex.title}</h3>
+                <p style={{ fontSize: '0.925rem', color: 'var(--muted-foreground)', marginBottom: '1.25rem' }}>{ex.question}</p>
+
+                <button onClick={() => setExpandedId(isExpanded ? null : ex.id)} className="btn-secondary" style={{ padding: '0.45rem 0.85rem', fontSize: '0.8rem', color: 'var(--foreground)' }}>
+                  {isExpanded ? 'Ocultar Resolução 👁️' : 'Ver Resolução Passo a Passo 👁️'}
                 </button>
 
                 {isExpanded && (
-                  <div className="bfa-admonition bfa-admonition--tip" style={{ marginTop: '1rem' }}>
-                    <div className="bfa-admonition__title">Gabarito & Explicação:</div>
-                    <EditableBlock id={`ex-${ex.id}-answer`} as="p" style={{ margin: 0, fontSize: '0.95rem', color: 'var(--color-verde-dark)' }}>
-                      {ex.answer}
-                    </EditableBlock>
+                  <div className="napkin-card" style={{ marginTop: '1rem', borderColor: 'var(--market)' }}>
+                    <div className="mono-tag" style={{ color: 'var(--market)', marginBottom: '0.35rem', fontWeight: 700 }}>Gabarito & Explicação:</div>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--foreground)' }}>{ex.answer}</p>
                   </div>
                 )}
-              </div>
+              </article>
             );
           })}
         </div>
-      </div>
+      </section>
     </div>
   );
 }
 
 /* ==========================================================================
-   3. PAINEL DE CRONOGRAMA DE ESTUDOS INTERATIVO
+   3. GERADOR DE CRONOGRAMA DE ESTUDOS
    ========================================================================== */
 function Cronograma() {
   const [deadline, setDeadline] = useState('2026-11-30');
-  const [subjects, setSubjects] = useState({ mat: true, fin: true });
-  const [scheduleData, setScheduleData] = useState(null);
 
-  useEffect(() => {
-    // Generate default initial schedule
-    const sel = ["Matemática Aplicada a Finanças", "Finanças & Investimentos"];
-    if (window.generateSchedule) {
-      setScheduleData(window.generateSchedule(deadline, sel));
-    }
-  }, []);
+  const daysLeft = useMemo(() => {
+    const target = new Date(deadline);
+    const today = new Date();
+    const diffTime = target - today;
+    return Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+  }, [deadline]);
 
-  const handleGenerate = (e) => {
-    e.preventDefault();
-    const sel = [];
-    if (subjects.mat) sel.push("Matemática Aplicada a Finanças");
-    if (subjects.fin) sel.push("Finanças & Investimentos");
-
-    const result = window.generateSchedule ? window.generateSchedule(deadline, sel) : null;
-    setScheduleData(result);
-  };
+  const lessonsPerDay = (55 / daysLeft).toFixed(1);
 
   return (
-    <div className="bfa-section">
-      <div className="bfa-section__container">
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <EditableBlock id="cronograma-badge-tag" as="span" className="bfa-badge bfa-badge--azul" style={{ marginBottom: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <BfaIcon name="calendar" size={14} color="var(--color-azul-dark)" /> Planejamento Inteligente
-          </EditableBlock>
-          <EditableBlock id="cronograma-header-title" as="h1" className="bfa-section__title">
-            Gerador de Cronograma de Estudos
-          </EditableBlock>
-          <EditableBlock id="cronograma-header-subtitle" as="p" className="bfa-section__subtitle">
-            Insira sua data limite e o sistema gera automaticamente uma distribuição equilibrada de aulas
-          </EditableBlock>
+    <div>
+      <section className="hero-gradient" style={{ padding: '3.5rem 0 2.5rem 0', position: 'relative' }}>
+        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.6 }} />
+        <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
+          <span className="mono-tag" style={{ color: 'var(--track-math)', background: 'rgba(96, 165, 250, 0.15)', padding: '0.25rem 0.65rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(96, 165, 250, 0.3)' }}>
+            Ferramenta Interativa
+          </span>
+          <h1 style={{ fontSize: '2.25rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.75rem' }}>
+            Gerador de Cronograma Inteligente
+          </h1>
+          <p style={{ fontSize: '1rem', color: 'rgba(255, 255, 255, 0.75)', marginTop: '0.5rem' }}>
+            Calcule sua meta diária de estudos até a data limite da sua avaliação ou competição.
+          </p>
         </div>
+      </section>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', marginBottom: '3rem' }}>
-          {/* Controls Card */}
-          <div className="bfa-card" style={{ padding: '2rem' }}>
-            <EditableBlock id="cronograma-card-params-title" as="h3" style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-azul-dark)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <BfaIcon name="gear" size={20} color="var(--color-azul)" /> Parâmetros do Seu Plano
-            </EditableBlock>
-            <form onSubmit={handleGenerate}>
-              <div className="bfa-form-group">
-                <EditableBlock id="cronograma-label-deadline" as="label" style={{ fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.5rem', display: 'block' }}>
-                  Data Limite de Conclusão:
-                </EditableBlock>
-                <input
-                  type="date"
-                  value={deadline}
-                  onChange={(e) => setDeadline(e.target.value)}
-                  className="bfa-input"
-                  style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}
-                  required
-                />
-              </div>
+      <section className="bfa-container" style={{ padding: '3rem 1.5rem', maxWidth: '800px' }}>
+        <div className="tool-card" style={{ padding: '2rem' }}>
+          <label className="mono-tag" style={{ color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.5rem' }}>Selecione a Data Limite da Sua Meta:</label>
+          <input
+            type="date"
+            value={deadline}
+            onChange={(e) => setDeadline(e.target.value)}
+            style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '1rem', marginBottom: '2rem' }}
+          />
 
-              <div className="bfa-form-group" style={{ margin: '1.5rem 0' }}>
-                <EditableBlock id="cronograma-label-subjects" as="label" style={{ fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.5rem', display: 'block' }}>
-                  Trilhas Desejadas:
-                </EditableBlock>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.95rem' }}>
-                    <input
-                      type="checkbox"
-                      checked={subjects.mat}
-                      onChange={(e) => setSubjects({ ...subjects, mat: e.target.checked })}
-                    />
-                    <BfaIcon name="math" size={16} color="var(--color-verde)" /> Matemática Aplicada (4 Módulos)
-                  </label>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.95rem' }}>
-                    <input
-                      type="checkbox"
-                      checked={subjects.fin}
-                      onChange={(e) => setSubjects({ ...subjects, fin: e.target.checked })}
-                    />
-                    <BfaIcon name="finance" size={16} color="var(--color-azul)" /> Finanças & Investimentos (3 Módulos)
-                  </label>
-                </div>
-              </div>
-
-              <button type="submit" className="bfa-btn bfa-btn--verde bfa-btn--block" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-                <BfaIcon name="zap" size={16} /> Recalcular Cronograma
-              </button>
-            </form>
-          </div>
-
-          {/* Stats Summary Card */}
-          {scheduleData && (
-            <div className="bfa-card" style={{ padding: '2rem', background: 'linear-gradient(135deg, #1B3A5C 0%, #0F243C 100%)', color: '#FFFFFF' }}>
-              <EditableBlock id="cronograma-stats-card-title" as="h3" style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <BfaIcon name="chart" size={20} color="#FDE68A" /> Resumo da Sua Meta
-              </EditableBlock>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
-                <div style={{ background: 'rgba(255,255,255,0.08)', padding: '1rem', borderRadius: '12px', textAlign: 'center' }}>
-                  <span style={{ fontSize: '2rem', fontWeight: 800, color: '#FDE68A', display: 'block' }}>{scheduleData.totalDays}</span>
-                  <EditableBlock id="cronograma-stat-days-label" as="span" style={{ fontSize: '0.8rem', color: '#CBD5E1' }}>Dias Disponíveis</EditableBlock>
-                </div>
-                <div style={{ background: 'rgba(255,255,255,0.08)', padding: '1rem', borderRadius: '12px', textAlign: 'center' }}>
-                  <span style={{ fontSize: '2rem', fontWeight: 800, color: '#6EE7B7', display: 'block' }}>{scheduleData.totalSubjects}</span>
-                  <EditableBlock id="cronograma-stat-trilhas-label" as="span" style={{ fontSize: '0.8rem', color: '#CBD5E1' }}>Trilhas Ativas</EditableBlock>
-                </div>
-              </div>
-
-              <EditableBlock id="cronograma-stats-desc" as="p" style={{ fontSize: '0.9rem', color: '#E2E8F0', lineHeight: 1.6 }}>
-                Estudar com regularidade diária garante absorção de longo prazo sem sobrecarregar a rotina escolar.
-              </EditableBlock>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)' }}>
+            <div>
+              <span className="mono-tag" style={{ color: 'var(--muted-foreground)' }}>Dias Disponíveis</span>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '2rem', fontWeight: 700, color: 'var(--foreground)' }}>{daysLeft} dias</div>
             </div>
-          )}
-        </div>
-
-        {/* Schedule Timetable */}
-        {scheduleData && (
-          <div className="bfa-card" style={{ padding: '2rem' }}>
-            <EditableBlock id="cronograma-table-title" as="h3" style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--color-azul-dark)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <BfaIcon name="paper" size={20} color="var(--color-azul)" /> Tabela Diária de Estudos
-            </EditableBlock>
-            <div style={{ overflowX: 'auto' }}>
-              <table className="bfa-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                  <tr style={{ background: 'var(--color-slate-100)', textAlign: 'left' }}>
-                    <th style={{ padding: '0.85rem 1rem' }}>Dia</th>
-                    <th style={{ padding: '0.85rem 1rem' }}>Data</th>
-                    <th style={{ padding: '0.85rem 1rem' }}>Dia da Semana</th>
-                    <th style={{ padding: '0.85rem 1rem' }}>Foco do Estudo</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {scheduleData.schedule.slice(0, 20).map((row) => (
-                    <tr key={row.dayIndex} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                      <td style={{ padding: '0.85rem 1rem', fontWeight: 700 }}>Dia {row.dayIndex}</td>
-                      <td style={{ padding: '0.85rem 1rem' }}>{row.date}</td>
-                      <td style={{ padding: '0.85rem 1rem', textTransform: 'capitalize' }}>{row.dayOfWeek}</td>
-                      <td style={{ padding: '0.85rem 1rem' }}>
-                        <span className="bfa-badge bfa-badge--verde">{row.subject}</span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div>
+              <span className="mono-tag" style={{ color: 'var(--muted-foreground)' }}>Meta Diária Recomendada</span>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '2rem', fontWeight: 700, color: 'var(--market)' }}>~{lessonsPerDay} aulas/dia</div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      </section>
     </div>
   );
 }
 
 /* ==========================================================================
-   4. PORTAL DE PREPARAÇÃO BRHSIC
+   4. PORTAL DE NOTÍCIAS MACROECONÔMICAS
    ========================================================================== */
-function BrhsicPage() {
+function Noticias() {
+  const articles = [
+    { title: 'Copom Mantém Taxa Selic: Como o Juro Nominal Afeta o CDB e o Tesouro Direto', date: '05 de Agosto, 2026', category: 'Macroeconomia', summary: 'Entenda a relação entre a decisão do Banco Central e o cálculo de rentabilidade real dos títulos públicos negociados por pessoas físicas.' },
+    { title: 'Análise de Múltiplos e Margens Operacionais: O Caso da WEG no Mercado Global', date: '01 de Agosto, 2026', category: 'Equity Research', summary: 'Estudo de caso aplicando conceitos de ROIC, Margem Ebitda e múltiplos de Valuation na prática corporativa.' }
+  ];
+
   return (
-    <div className="bfa-section">
-      <div className="bfa-section__container">
-        {/* Banner */}
-        <div className="bfa-card" style={{ padding: '3rem', background: 'linear-gradient(135deg, #C8963E 0%, #976F2B 100%)', color: '#FFFFFF', textAlign: 'center', marginBottom: '3rem', border: 'none', borderRadius: 'var(--radius-xl)' }}>
-          <EditableBlock id="brhsic-banner-badge" as="span" className="bfa-badge" style={{ background: '#FFFFFF', color: '#976F2B', marginBottom: '1rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <BfaIcon name="trophy" size={14} color="#976F2B" /> Maior Competição de Investimentos do Ensino Médio
-          </EditableBlock>
-          <EditableBlock id="brhsic-banner-title" as="h1" style={{ fontSize: '2.5rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '1rem' }}>
-            Trilha Especial de Preparação BRHSIC
-          </EditableBlock>
-          <EditableBlock id="brhsic-banner-text" as="p" style={{ fontSize: '1.15rem', color: '#FDF6EC', maxWidth: '750px', margin: '0 auto', lineHeight: 1.6 }}>
-            Treino direcionado para a competição nacional: elaboração do relatório de Equity Research, valuation e apresentação de pitch para a banca examinadora.
-          </EditableBlock>
+    <div>
+      <section className="hero-gradient" style={{ padding: '3.5rem 0 2.5rem 0', position: 'relative' }}>
+        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.6 }} />
+        <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
+          <span className="mono-tag" style={{ color: 'var(--gold)', background: 'rgba(251, 191, 36, 0.15)', padding: '0.25rem 0.65rem', borderRadius: 'var(--radius-full)' }}>Portal de Análises</span>
+          <h1 style={{ fontSize: '2.25rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.75rem' }}>Notícias & Macroeconomia Aplicada</h1>
         </div>
+      </section>
 
-        {/* 3 Pillars Grid */}
-        <EditableBlock id="brhsic-pillars-title" as="h2" className="bfa-section__title">
-          Os 3 Pilares da Competição
-        </EditableBlock>
-        <EditableBlock id="brhsic-pillars-subtitle" as="p" className="bfa-section__subtitle">
-          Como as trilhas do BFA cobrem exatamente o conteúdo exigido
-        </EditableBlock>
-
-        <div className="bfa-steps-grid" style={{ marginBottom: '3rem' }}>
-          <div className="bfa-step-card">
-            <span className="bfa-step-card__icon" style={{ display: 'inline-flex', padding: '0.75rem', borderRadius: '50%', background: 'var(--color-ouro-light)' }}>
-              <BfaIcon name="paper" size={26} color="var(--color-ouro-dark)" />
-            </span>
-            <EditableBlock id="brhsic-step1-title" as="h4">1. Relatório de Análise (Equity Research)</EditableBlock>
-            <EditableBlock id="brhsic-step1-text" as="p">Análise setorial, vantagem competitiva (moat), tese de investimento e recomendação (Compra/Venda).</EditableBlock>
-          </div>
-
-          <div className="bfa-step-card">
-            <span className="bfa-step-card__icon" style={{ display: 'inline-flex', padding: '0.75rem', borderRadius: '50%', background: 'var(--color-azul-light)' }}>
-              <BfaIcon name="chart" size={26} color="var(--color-azul)" />
-            </span>
-            <EditableBlock id="brhsic-step2-title" as="h4">2. Valuation (DCF & Múltiplos)</EditableBlock>
-            <EditableBlock id="brhsic-step2-text" as="p">Modelagem de Fluxo de Caixa Descontado e comparação de múltiplos (P/L, EV/EBITDA, P/VP) ensinados no Módulo 2 de Finanças.</EditableBlock>
-          </div>
-
-          <div className="bfa-step-card">
-            <span className="bfa-step-card__icon" style={{ display: 'inline-flex', padding: '0.75rem', borderRadius: '50%', background: 'var(--color-verde-light)' }}>
-              <BfaIcon name="mic" size={26} color="var(--color-verde)" />
-            </span>
-            <EditableBlock id="brhsic-step3-title" as="h4">3. Pitch para a Banca</EditableBlock>
-            <EditableBlock id="brhsic-step3-text" as="p">Apresentação oral de 5 minutos sintetizando os principais riscos e catalisadores da empresa analisada.</EditableBlock>
-          </div>
+      <section className="bfa-container" style={{ padding: '3rem 1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+          {articles.map((art) => (
+            <article key={art.title} className="module-card card-lift" style={{ padding: '1.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                <span className="mono-tag" style={{ color: 'var(--track-finance)' }}>{art.category}</span>
+                <span className="mono-tag" style={{ color: 'var(--muted-foreground)' }}>{art.date}</span>
+              </div>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.5rem' }}>{art.title}</h3>
+              <p style={{ fontSize: '0.875rem', color: 'var(--muted-foreground)' }}>{art.summary}</p>
+            </article>
+          ))}
         </div>
-
-        {/* Roadmap Card */}
-        <div className="bfa-napkin-card">
-          <EditableBlock id="brhsic-napkin-tag" as="span" className="bfa-napkin-card__tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <BfaIcon name="lightbulb" size={14} color="#FFFFFF" /> Atalho de Estudo
-          </EditableBlock>
-          <EditableBlock id="brhsic-napkin-title" as="div" className="bfa-napkin-card__title">
-            Caminho de Preparação Recomendado
-          </EditableBlock>
-          <EditableBlock id="brhsic-napkin-text" as="p" style={{ color: 'var(--text-secondary)', lineHeight: 1.7 }}>
-            Comece concluindo o Módulo 2 de Finanças (Análise Fundamentalista). Todas as aulas sobre Balanço Patrimonial, DRE, Fluxo de Caixa e Valuation por DCF possuem formulários e exemplos diretamente aplicáveis ao modelo de relatório da BRHSIC.
-          </EditableBlock>
-        </div>
-      </div>
+      </section>
     </div>
   );
 }
 
 /* ==========================================================================
-   5. PÁGINA SOBRE O BFA (INSTITUCIONAL)
+   5. PÁGINA SOBRE O PROJETO NIF DRAGÃO DO MAR
    ========================================================================== */
 function Sobre() {
   return (
-    <div className="bfa-section">
-      <div className="bfa-section__container">
-        {/* Hero Header */}
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <EditableBlock id="sobre-hero-badge" as="span" className="bfa-badge bfa-badge--verde" style={{ marginBottom: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <BfaIcon name="mapPin" size={14} color="var(--color-verde-dark)" /> NIF Dragão do Mar — Fortaleza, CE
-          </EditableBlock>
-          <EditableBlock id="sobre-hero-title" as="h1" className="bfa-section__title">
-            Nossa História & Propósito
-          </EditableBlock>
-          <EditableBlock id="sobre-hero-subtitle" as="p" className="bfa-section__subtitle">
-            Conheça a origem do Brasil Finanças Atlas e como estamos democratizando o conhecimento sobre dinheiro
-          </EditableBlock>
+    <div>
+      <section className="hero-gradient" style={{ padding: '4rem 0 3rem 0', position: 'relative' }}>
+        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.6 }} />
+        <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
+          <span className="mono-tag" style={{ color: '#FFFFFF', background: 'rgba(255, 255, 255, 0.15)', padding: '0.25rem 0.65rem', borderRadius: 'var(--radius-full)' }}>Institucional</span>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#FFFFFF', marginTop: '1rem' }}>Brasil Finanças Atlas (BFA)</h1>
+          <p style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.8)', marginTop: '0.5rem', maxWidth: '700px' }}>
+            Nascido no Núcleo de Inteligência Financeira (NIF) da escola pública EEMTI Dragão do Mar em Fortaleza, CE.
+          </p>
         </div>
+      </section>
 
-        {/* Narrative Card */}
-        <div className="bfa-card" style={{ padding: '3rem', marginBottom: '3rem' }}>
-          <EditableBlock id="sobre-narrative-title" as="h2" style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--color-azul-dark)', marginBottom: '1.25rem' }}>
-            Por que o Brasil Finanças Atlas nasceu?
-          </EditableBlock>
-          <EditableBlock id="sobre-narrative-p1" as="p" style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: '1.5rem' }}>
-            O Brasil Finanças Atlas (BFA) nasceu no Núcleo de Inteligência Financeira (NIF) da escola pública Dragão do Mar, em Fortaleza. A ideia central é simples: o conhecimento que prepara alguém para cuidar do próprio dinheiro — e competir de igual para igual em olimpíadas de investimentos — não deveria depender de escola particular cara.
-          </EditableBlock>
-          <EditableBlock id="sobre-narrative-p2" as="p" style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
-            Criamos uma plataforma 100% gratuita, sem jargões de banco e dividida em módulos progressivos que começam do zero absoluto da matemática básica até a análise completa de empresas negociadas na B3.
-          </EditableBlock>
-        </div>
+      <section className="bfa-container" style={{ padding: '4rem 1.5rem', maxWidth: '850px' }}>
+        <article className="tool-card" style={{ padding: '2rem', fontSize: '1rem', lineHeight: 1.7 }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--foreground)' }}>Nossa Missão</h2>
+          <p style={{ color: 'var(--muted-foreground)', marginBottom: '1.5rem' }}>
+            Universalizar o ensino de matemática aplicada e finanças de alto nível para estudantes do ensino médio em todo o Brasil, combinando rigor acadêmico com intuição prática.
+          </p>
 
-        {/* Methodology Pillars */}
-        <EditableBlock id="sobre-principles-title" as="h2" className="bfa-section__title">
-          Nossos Princípios Pedagógicos
-        </EditableBlock>
-        <div className="bfa-steps-grid">
-          <div className="bfa-step-card">
-            <span className="bfa-step-card__icon" style={{ display: 'inline-flex', padding: '0.75rem', borderRadius: '50%', background: 'var(--color-ouro-light)' }}>
-              <BfaIcon name="lightbulb" size={26} color="var(--color-ouro-dark)" />
-            </span>
-            <EditableBlock id="sobre-step1-title" as="h4">Intuição em Primeiro Lugar</EditableBlock>
-            <EditableBlock id="sobre-step1-text" as="p">Usamos a metodologia Napkin Finance para que o aluno compreenda o conceito visualmente antes de ver qualquer fórmula complexa.</EditableBlock>
-          </div>
-
-          <div className="bfa-step-card">
-            <span className="bfa-step-card__icon" style={{ display: 'inline-flex', padding: '0.75rem', borderRadius: '50%', background: 'var(--color-verde-light)' }}>
-              <BfaIcon name="ruler" size={26} color="var(--color-verde)" />
-            </span>
-            <EditableBlock id="sobre-step2-title" as="h4">Matemática Sem Travar</EditableBlock>
-            <EditableBlock id="sobre-step2-text" as="p">Não estudamos matemática por matemática. Cada conceito existe para resolver um problema financeiro da vida real.</EditableBlock>
-          </div>
-
-          <div className="bfa-step-card">
-            <span className="bfa-step-card__icon" style={{ display: 'inline-flex', padding: '0.75rem', borderRadius: '50%', background: 'var(--color-azul-light)' }}>
-              <BfaIcon name="globe" size={26} color="var(--color-azul)" />
-            </span>
-            <EditableBlock id="sobre-step3-title" as="h4">Totalmente Aberto</EditableBlock>
-            <EditableBlock id="sobre-step3-text" as="p">Material público, sem mensalidade, sem pegadinhas e com acesso irrestrito para estudantes e professores do Brasil inteiro.</EditableBlock>
-          </div>
-        </div>
-
-      </div>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--foreground)' }}>Principios do Projeto</h2>
+          <ul style={{ paddingLeft: '1.25rem', color: 'var(--muted-foreground)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <li><strong>100% Gratuito e Aberto:</strong> Conteúdo pedagógico livre de qualquer mensalidade.</li>
+            <li><strong>Intuição Antes da Fórmula:</strong> Explicações visuais claras antes dos desenvolvimentos algébricos.</li>
+            <li><strong>Tecnologia Custo Zero:</strong> Arquitetura distribuída em Git, Cloudflare e Supabase para sustentabilidade permanente.</li>
+          </ul>
+        </article>
+      </section>
     </div>
   );
 }
 
+window.BrhsicPage = BrhsicPage;
+window.Exercicios = Exercicios;
+window.Cronograma = Cronograma;
+window.Noticias = Noticias;
+window.Sobre = Sobre;
