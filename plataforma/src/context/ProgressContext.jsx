@@ -41,13 +41,31 @@ function ProgressProvider({ children }) {
   }, [comments]);
 
   const toggleLessonComplete = (lessonId) => {
-    setCompletedLessons(prev =>
-      prev.includes(lessonId) ? prev.filter(id => id !== lessonId) : [...prev, lessonId]
-    );
+    setCompletedLessons(prev => {
+      const isCompleted = !prev.includes(lessonId);
+      const next = isCompleted ? [...prev, lessonId] : prev.filter(id => id !== lessonId);
+      
+      if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
+        const user = window.BfaSupabase.client?.auth?.user();
+        if (user) {
+          window.BfaSupabase.syncLessonProgress(user.id, lessonId, isCompleted);
+        }
+      }
+      return next;
+    });
   };
 
   const saveQuizScore = (lessonId, score, maxScore) => {
-    setQuizScores(prev => ({ ...prev, [lessonId]: Math.max(prev[lessonId] || 0, score) }));
+    setQuizScores(prev => {
+      const newScore = Math.max(prev[lessonId] || 0, score);
+      if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
+        const user = window.BfaSupabase.client?.auth?.user();
+        if (user) {
+          window.BfaSupabase.saveQuizAttempt(user.id, lessonId, score, maxScore);
+        }
+      }
+      return { ...prev, [lessonId]: newScore };
+    });
   };
 
   const getQuizScore = (lessonId) => quizScores[lessonId] ?? null;
