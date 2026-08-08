@@ -115,6 +115,107 @@ async function fetchUserProgress(userId) {
   }
 }
 
+/**
+ * Autentica o colaborador ou Admin Chief no Supabase Auth.
+ */
+async function signInUser(email, password) {
+  if (!supabaseClient) return { success: false, error: 'Supabase não conectado' };
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+
+    // Busca perfil com role
+    const { data: profile } = await supabaseClient
+      .from('profiles')
+      .select('*')
+      .eq('id', data.user.id)
+      .single();
+
+    return {
+      success: true,
+      user: {
+        id: data.user.id,
+        email: data.user.email,
+        name: profile?.full_name || data.user.email,
+        role: profile?.role || 'collaborator'
+      }
+    };
+  } catch (err) {
+    console.error('[BFA Supabase Auth Error]:', err);
+    return { success: false, error: err.message || 'Erro na autenticação' };
+  }
+}
+
+/**
+ * Envia uma edição realizada por colaborador para a fila de aprovação.
+ */
+async function submitPendingEdit(resourceType, resourceId, changesJson, authorName = 'Colaborador') {
+  if (!supabaseClient) return false;
+  try {
+    const user = (await supabaseClient.auth.getUser())?.data?.user;
+    const { error } = await supabaseClient
+      .from('pending_edits')
+      .insert({
+        author_id: user?.id || null,
+        author_name: authorName,
+        resource_type: resourceType,
+        resource_id: resourceId,
+        changes_json: changesJson,
+        status: 'pending'
+      });
+
+    if (error) throw error;
+    return true;
+  } catch (err) {
+    console.error('[BFA Supabase Pending Edit Error]:', err);
+    return false;
+  }
+}
+
+/**
+ * Busca todas as edições pendentes para o Admin Chief revisar.
+ */
+async function fetchPendingEdits() {
+  if (!supabaseClient) return [];
+  try {
+    const { data, error } = await supabaseClient
+      .from('pending_edits')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error('[BFA Supabase Fetch Pending Error]:', err);
+    return [];
+  }
+}
+
+/**
+ * Atualiza o status de aprovação de uma edição pendente.
+ */
+async function updatePendingEditStatus(editId, status, notes = '') {
+  if (!supabaseClient) return false;
+  try {
+    const user = (await supabaseClient.auth.getUser())?.data?.user;
+    const { error } = await supabaseClient
+      .from('pending_edits')
+      .update({
+        status: status, // 'approved' | 'rejected'
+        reviewed_by: user?.id || null,
+        review_notes: notes,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', editId);
+
+    if (error) throw error;
+    return true;
+  } catch (err) {
+    console.error('[BFA Supabase Update Pending Error]:', err);
+    return false;
+  }
+}
+
 window.BfaSupabase = {
   get client() { return supabaseClient; },
   initSupabase,
@@ -122,5 +223,9 @@ window.BfaSupabase = {
   isConfigured: isSupabaseConfigured,
   syncLessonProgress,
   saveQuizAttempt,
-  fetchUserProgress
+  fetchUserProgress,
+  signInUser,
+  submitPendingEdit,
+  fetchPendingEdits,
+  updatePendingEditStatus
 };
