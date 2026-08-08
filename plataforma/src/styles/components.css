@@ -1,329 +1,170 @@
 /* ==========================================================================
-   Brasil Finanças Atlas (BFA) — Component Styles & Lovable Design System
+   Brasil Finanças Atlas (BFA) — Component Design System (From Scratch)
+   Inspirado 100% em lovable-project-2bcdc0ac
    ========================================================================== */
 
-/* ── 1. Buttons ─────────────────────────────────────────────────────────── */
-.bfa-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  font-family: var(--font-sans);
-  font-size: 0.875rem;
-  font-weight: 600;
-  border-radius: var(--radius-md);
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: all 200ms cubic-bezier(0.22, 1, 0.36, 1);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.bfa-btn:hover {
-  transform: translateY(-1px);
-}
-
-.bfa-btn:active {
-  transform: translateY(0);
-}
-
-.bfa-btn--primary {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
-  border-color: var(--primary);
-  box-shadow: var(--shadow-sm);
-}
-
-.bfa-btn--primary:hover {
-  opacity: 0.92;
-  box-shadow: var(--shadow-md);
-}
-
-.bfa-btn--secondary {
-  background-color: var(--secondary);
-  color: var(--secondary-foreground);
-  border-color: var(--border);
-}
-
-.bfa-btn--secondary:hover {
-  background-color: var(--accent);
-  border-color: var(--border-color-hover);
-}
-
-.bfa-btn--ghost {
-  background-color: transparent;
-  color: var(--text-primary);
-  border-color: var(--border);
-}
-
-.bfa-btn--ghost:hover {
-  background-color: var(--secondary);
-  border-color: var(--border-color-hover);
-}
-
-.bfa-btn--gold {
-  background-color: var(--gold);
-  color: var(--gold-foreground);
-  border-color: var(--gold-deep);
-}
-
-.bfa-btn--gold:hover {
-  background-color: var(--gold-deep);
-}
-
-.bfa-btn--verde {
-  background-color: var(--track-finance);
-  color: #FFFFFF;
-  border-color: var(--track-finance);
-}
-
-.bfa-btn--verde:hover {
-  background-color: var(--color-verde-dark);
-}
-
-.bfa-btn--azul {
-  background-color: var(--track-math);
-  color: #FFFFFF;
-  border-color: var(--track-math);
-}
-
-.bfa-btn--azul:hover {
-  background-color: var(--color-azul-dark);
-}
-
-.bfa-btn--sm {
-  padding: 0.4rem 0.85rem;
-  font-size: 0.8rem;
-  border-radius: var(--radius-sm);
-}
-
-.bfa-btn--lg {
-  padding: 0.85rem 1.75rem;
-  font-size: 1rem;
-  border-radius: var(--radius-lg);
-}
-
-/* ── 2. Cards ───────────────────────────────────────────────────────────── */
-.bfa-card {
-  background-color: var(--card);
-  color: var(--card-foreground);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  box-shadow: var(--shadow-sm);
-  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.bfa-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-elevated);
-  border-color: var(--border-color-hover);
-}
-
-.bfa-card--interactive {
-  cursor: pointer;
-}
-
-.bfa-card--financas {
-  border-top: 4px solid var(--track-finance);
-}
-
-.bfa-card--matematica {
-  border-top: 4px solid var(--track-math);
-}
-
-.bfa-card--brhsic {
-  border-top: 4px solid var(--track-brhsic);
-}
-
-/* Napkin Card (Intuition Briefing) */
-.bfa-napkin-card {
-  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-strong) 100%);
-  border: 1px dashed var(--gold);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem 1.5rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-}
-
-.bfa-napkin-card::before {
-  content: '💡 INTUIÇÃO RÁPIDA';
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--gold-deep);
-  letter-spacing: 0.08em;
-  margin-bottom: 0.5rem;
-}
-
-/* ── 3. Badges & Tags ────────────────────────────────────────────────────── */
-.bfa-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.25rem 0.65rem;
-  font-family: var(--font-mono);
-  font-size: 0.725rem;
-  font-weight: 600;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--border);
-  background-color: var(--secondary);
-  color: var(--secondary-foreground);
-  white-space: nowrap;
-}
-
-.bfa-badge--verde {
-  background-color: var(--color-verde-light);
-  color: var(--track-finance);
-  border-color: rgba(27, 107, 58, 0.25);
-}
-
-.bfa-badge--azul {
-  background-color: var(--color-azul-light);
-  color: var(--track-math);
-  border-color: rgba(27, 58, 92, 0.25);
-}
-
-.bfa-badge--ouro {
-  background-color: var(--color-ouro-light);
-  color: var(--gold-deep);
-  border-color: rgba(200, 150, 62, 0.3);
-}
-
-/* ── 4. Header & Navbar ──────────────────────────────────────────────────── */
-.bfa-navbar {
+/* ── 1. Header & Navigation ──────────────────────────────────────────────── */
+.site-header {
   position: sticky;
   top: 0;
   z-index: 50;
+  border-bottom: 1px solid var(--border);
   background-color: rgba(248, 250, 252, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  height: 4rem;
 }
 
-[data-theme="dark-obsidian"] .bfa-navbar,
-.dark .bfa-navbar {
+[data-theme="dark-obsidian"] .site-header,
+.dark .site-header {
   background-color: rgba(13, 17, 23, 0.85);
 }
 
-.bfa-navbar__container {
-  max-width: 1350px;
-  height: 100%;
+.site-header__container {
   margin: 0 auto;
-  padding: 0 1.5rem;
   display: flex;
+  height: 4rem;
+  max-width: 1400px;
   align-items: center;
-  justify-content: space-between;
   gap: 1.5rem;
+  padding: 0 1.5rem;
 }
 
-.bfa-navbar__logo {
+.site-logo {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-weight: 700;
-  color: var(--text-primary);
 }
 
-.bfa-navbar__logo-badge {
+.site-logo__badge {
   display: flex;
+  height: 2.25rem;
+  width: 2.25rem;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  background-color: var(--primary);
-  color: var(--primary-foreground);
   border-radius: var(--radius-md);
+  background-color: var(--primary);
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: var(--primary-foreground);
 }
 
-.bfa-navbar__nav {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.bfa-navbar__link {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+.nav-link {
   border-radius: var(--radius-md);
-  transition: all 0.15s ease;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.bfa-navbar__link:hover,
-.bfa-navbar__link--active {
-  color: var(--text-primary);
+.nav-link:hover,
+.nav-link.active {
   background-color: var(--secondary);
+  color: var(--foreground);
 }
 
-/* ── 5. Admonitions & Callouts ───────────────────────────────────────────── */
-.bfa-admonition {
-  border-left: 4px solid var(--color-azul);
-  background-color: var(--color-azul-light);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: 1rem 1.25rem;
-  margin: 1.5rem 0;
+/* ── 2. Cards & Modules ──────────────────────────────────────────────────── */
+.module-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  padding: 1.25rem;
 }
 
-.bfa-admonition__title {
-  font-weight: 700;
-  font-size: 0.9rem;
-  margin-bottom: 0.35rem;
-  color: var(--color-azul-dark);
+.tool-card {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  padding: 1.25rem;
+  transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
-.bfa-admonition--tip {
-  border-left-color: var(--track-finance);
-  background-color: var(--color-verde-light);
+.tool-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-elevated);
 }
 
-.bfa-admonition--warning {
-  border-left-color: var(--gold);
-  background-color: var(--color-ouro-light);
+/* ── 3. Buttons ─────────────────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-md);
+  background-color: var(--gold);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gold-foreground);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  border: none;
+  cursor: pointer;
 }
 
-/* ── 6. Section Headers & Layout ────────────────────────────────────────── */
-.bfa-section {
-  padding: 4rem 0;
+.btn-primary:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
 }
 
-.bfa-section__title {
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  transition: background-color 0.15s ease;
+  background: transparent;
+  cursor: pointer;
 }
 
-.bfa-section__subtitle {
-  font-size: 1.05rem;
-  color: var(--text-secondary);
-  max-width: 700px;
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* ── 7. Footer ──────────────────────────────────────────────────────────── */
-.bfa-footer {
+/* ── 4. Badges ──────────────────────────────────────────────────────────── */
+.badge-market {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+}
+
+.dot-market {
+  height: 0.375rem;
+  width: 0.375rem;
+  border-radius: 50%;
+  background-color: var(--market);
+}
+
+/* ── 5. Napkin Briefing Card ────────────────────────────────────────────── */
+.napkin-card {
+  border: 1px dashed var(--gold);
+  background-color: rgba(217, 119, 6, 0.05);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── 6. Footer ──────────────────────────────────────────────────────────── */
+.site-footer {
   border-top: 1px solid var(--border);
   background-color: var(--card);
-  padding: 3rem 0;
+  padding: 4rem 0 2rem 0;
   margin-top: 4rem;
-}
-
-.bfa-footer__container {
-  max-width: 1350px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 2rem;
 }
