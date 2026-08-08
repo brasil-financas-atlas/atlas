@@ -7,7 +7,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- 1. TIPOS ENUM
 DO $$ BEGIN
-    CREATE TYPE user_role AS ENUM ('student', 'teacher', 'admin');
+    CREATE TYPE user_role AS ENUM ('student', 'teacher', 'collaborator', 'admin_chief', 'admin');
 EXCEPTION
     WHEN duplicate_object THEN null;
 END $$;

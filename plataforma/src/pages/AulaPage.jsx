@@ -136,10 +136,98 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           </p>
         </div>
 
-        {/* Video Player */}
+        {/* Video Player & Admin Controls */}
         <div style={{ marginBottom: '2.5rem' }}>
+          {isAuthenticated && inlineEditActive && (
+            <div className="bfa-admin-video-box" style={{ marginBottom: '1rem', padding: '0.85rem 1.25rem', background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <BfaIcon name="video" size={18} color="var(--color-azul)" />
+                <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                  🎬 Gerenciador de Vídeo da Aula (Admin)
+                </span>
+                <span className="mono-tag" style={{ color: videoUrl ? 'var(--market)' : 'var(--muted-foreground)', background: 'var(--card)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
+                  {videoUrl ? '✓ Vídeo Ativo' : 'Sem vídeo'}
+                </span>
+              </div>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button
+                  type="button"
+                  className="bfa-btn bfa-btn--sm bfa-btn--ouro"
+                  onClick={() => {
+                    setInputVideoUrl(videoUrl || '');
+                    setShowVideoModal(true);
+                  }}
+                  style={{ fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                >
+                  <BfaIcon name="pencil" size={13} /> {videoUrl ? 'Alterar Vídeo' : '+ Adicionar Vídeo'}
+                </button>
+                {videoUrl && (
+                  <button
+                    type="button"
+                    className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+                    onClick={() => {
+                      if (window.confirm("Remover o vídeo desta aula?")) {
+                        updateLesson(lessonId, { videoUrl: '' });
+                      }
+                    }}
+                    style={{ fontSize: '0.8rem', color: 'var(--status-danger)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                  >
+                    <BfaIcon name="trash" size={13} /> Remover Vídeo
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
           <VideoPlayer videoUrl={videoUrl} />
         </div>
+
+        {/* Modal Admin para Adicionar / Editar Vídeo */}
+        {showVideoModal && (
+          <div className="bfa-inline-editor-modal" onClick={() => setShowVideoModal(false)}>
+            <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-azul-dark)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <BfaIcon name="video" size={20} color="var(--color-azul)" /> {videoUrl ? 'Editar Vídeo da Aula' : 'Adicionar Vídeo da Aula'}
+                </h3>
+                <button type="button" className="bfa-btn-icon" onClick={() => setShowVideoModal(false)}>✕</button>
+              </div>
+
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+                Cole a URL completa do vídeo no YouTube (ex: <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code> ou <code>https://youtu.be/dQw4w9WgXcQ</code>).
+              </p>
+
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                updateLesson(lessonId, { videoUrl: inputVideoUrl.trim() });
+                setShowVideoModal(false);
+              }}>
+                <div className="bfa-form-group" style={{ marginBottom: '1.25rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.35rem', display: 'block' }}>Link do YouTube:</label>
+                  <input
+                    type="url"
+                    value={inputVideoUrl}
+                    onChange={(e) => setInputVideoUrl(e.target.value)}
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    className="bfa-input"
+                    style={{ width: '100%', padding: '0.65rem' }}
+                    required
+                    autoFocus
+                  />
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                  <button type="button" className="bfa-btn bfa-btn--ghost" onClick={() => setShowVideoModal(false)}>
+                    Cancelar
+                  </button>
+                  <button type="submit" className="bfa-btn bfa-btn--verde" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                    Salvar Vídeo 💾
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
 
         {/* Markdown Theory Article */}
         <article className="bfa-lesson-article" style={{ fontSize: '1rem', lineHeight: 1.7 }}>
