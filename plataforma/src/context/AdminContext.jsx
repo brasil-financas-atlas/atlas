@@ -342,6 +342,8 @@ function AdminProvider({ children }) {
     setInlineEditActive,
     toggleInlineEdit,
     saveOverride,
+    approvePendingEdit,
+    rejectPendingEdit,
     currentTheme,
     setTheme,
     availableThemes: AVAILABLE_THEMES,
