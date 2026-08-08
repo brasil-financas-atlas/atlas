@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Brasil Finanças Atlas (BFA) — Global Design System & CSS Variables
-   Inspirado no Lovable High-End Financial Terminal & Academic Portal
+   Brasil Finanças Atlas (BFA) — Premium Design System (From Scratch)
+   Inspirado 100% em lovable-project-2bcdc0ac (Estética Bloomberg / Academic Portal)
    ========================================================================== */
 
 @import url('./typography.css');
@@ -10,17 +10,14 @@
 @import url('./themes.css');
 
 :root {
-  /* OKLCH Color Tokens (Default Light Mode) */
   --radius: 0.5rem;
-  --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 24px;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
   --radius-full: 9999px;
 
-  /* Color Palette (Financial Slate & Executive Navy) */
+  /* Color System (OKLCH Precision Palette) */
   --background: #F8FAFC;
   --foreground: #0F172A;
   --card: #FFFFFF;
@@ -35,42 +32,35 @@
   --muted-foreground: #64748B;
   --accent: #F1F5F9;
   --accent-foreground: #0F172A;
-  --destructive: #DC2626;
-  --destructive-foreground: #FFFFFF;
   --border: #E2E8F0;
   --input: #E2E8F0;
   --ring: #3B82F6;
 
-  /* Custom Functional Colors */
-  --market: #059669; /* Verde Mercado B3 */
+  /* Domain Specific Colors */
+  --market: #059669;            /* Verde Esmeralda Mercado */
   --market-foreground: #ECFDF5;
-  --gold: #D97706; /* Dourado Editorial */
+  --gold: #D97706;              /* Dourado Amber Editorial */
   --gold-deep: #B45309;
   --gold-foreground: #FFFBEB;
 
-  /* Track Spec Colors */
-  --track-finance: #1B6B3A; /* Verde Finanças */
-  --track-math: #1B3A5C;    /* Azul Matemática */
-  --track-brhsic: #C8963E;  /* Dourado BRHSIC */
+  /* Track Brand Colors */
+  --track-finance: #1B6B3A;      /* Verde Floresta Finanças */
+  --track-math: #1B3A5C;         /* Azul Marinho Matemática */
+  --track-brhsic: #C8963E;       /* Dourado Ocre BRHSIC */
 
   --surface: #FFFFFF;
   --surface-strong: #F1F5F9;
 
-  /* Backward Compatibility Tokens */
+  /* Backward Compatibility Aliases */
   --color-verde: var(--track-finance);
   --color-verde-light: #E8F5ED;
   --color-verde-dark: #124827;
-  --color-verde-glow: rgba(27, 107, 58, 0.18);
-
   --color-ouro: var(--track-brhsic);
   --color-ouro-light: #FDF6EC;
   --color-ouro-dark: #976F2B;
-  --color-ouro-glow: rgba(200, 150, 62, 0.22);
-
   --color-azul: var(--track-math);
   --color-azul-light: #EBF2FA;
   --color-azul-dark: #10243C;
-  --color-azul-glow: rgba(27, 58, 92, 0.18);
 
   --color-slate-50: #F8FAFC;
   --color-slate-100: #F1F5F9;
@@ -83,19 +73,11 @@
   --color-slate-800: #1E293B;
   --color-slate-900: #0F172A;
 
-  --status-success: #166534;
-  --status-success-bg: #DCFCE7;
-  --status-warning: #92400E;
-  --status-warning-bg: #FEF3C7;
-  --status-danger: #DC2626;
-  --status-danger-bg: #FEE2E2;
-
   --bg-app: var(--background);
   --bg-surface: var(--card);
   --text-primary: var(--foreground);
   --text-secondary: var(--muted-foreground);
   --text-muted: #94A3B8;
-  --text-inverse: #FFFFFF;
 
   --border-color: var(--border);
   --border-color-hover: #CBD5E1;
@@ -104,22 +86,15 @@
   --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
   --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
   --shadow-lg: 0 12px 24px rgba(15, 23, 42, 0.12);
-  --shadow-xl: 0 20px 32px rgba(15, 23, 42, 0.16);
   --shadow-elevated: 0 1px 2px rgba(15, 23, 42, 0.05), 0 12px 32px -12px rgba(15, 23, 42, 0.16);
   --shadow-terminal: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -28px rgba(15, 23, 42, 0.55);
 
-  /* Typography Families */
+  /* Typography */
   --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --font-family-base: var(--font-sans);
-  --font-family-heading: var(--font-sans);
-  --font-family-mono: var(--font-mono);
-
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Dark Theme Variables (Dark Obsidian Pro) */
+/* Dark Obsidian Theme */
 [data-theme="dark-obsidian"],
 .dark {
   --background: #0D1117;
@@ -135,12 +110,7 @@
   --muted: #21262D;
   --muted-foreground: #8B949E;
   --accent: #30363D;
-  --accent-foreground: #F0F6FC;
-  --destructive: #F87171;
-  --destructive-foreground: #FFFFFF;
   --border: #30363D;
-  --input: #30363D;
-  --ring: #38BDF8;
 
   --market: #10B981;
   --gold: #F59E0B;
@@ -156,22 +126,14 @@
   --color-slate-50: #161B22;
   --color-slate-100: #21262D;
   --color-slate-200: #30363D;
-  --color-slate-300: #484F58;
-  --color-slate-400: #6E7681;
   --color-slate-500: #8B949E;
-  --color-slate-600: #C9D1D9;
-  --color-slate-700: #E6EDF3;
-  --color-slate-800: #F0F6FC;
   --color-slate-900: #FFFFFF;
 
   --bg-app: #0D1117;
   --bg-surface: #161B22;
   --text-primary: #F0F6FC;
   --text-secondary: #8B949E;
-  --text-muted: #6E7681;
-
   --border-color: #30363D;
-  --border-color-hover: #484F58;
 }
 
 *, *::before, *::after {
@@ -192,7 +154,6 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 a {
@@ -211,54 +172,54 @@ a {
 }
 
 /* Utilitários Visuais Lovable */
-.bfa-hero-gradient {
+.hero-gradient {
   background: linear-gradient(135deg, #0F172A 0%, #1E293B 45%, #0284C7 100%);
   color: #FFFFFF;
 }
 
-.bfa-grid-ledger {
+.grid-ledger {
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
+    linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
 }
 
-.bfa-mono-tag {
+.mono-tag {
   font-family: var(--font-mono);
-  font-size: 0.725rem;
+  font-size: 0.6875rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.bfa-card-lift {
+.card-lift {
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms ease;
 }
 
-.bfa-card-lift:hover {
+.card-lift:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-elevated);
   border-color: var(--color-slate-300);
 }
 
-.bfa-formula-block {
+.formula-block {
   font-family: var(--font-mono);
-  border-left: 4px solid var(--color-azul);
+  border-left: 4px solid var(--primary);
   background-color: var(--surface-strong);
   padding: 1rem 1.25rem;
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
   overflow-x: auto;
 }
 
-.bfa-formula-inline {
+.formula-inline {
   font-family: var(--font-mono);
   background-color: var(--surface-strong);
-  border-bottom: 2px solid rgba(27, 58, 92, 0.35);
-  padding: 0.1em 0.35em;
-  border-radius: 4px;
+  border-bottom: 2px solid rgba(15, 23, 42, 0.35);
+  padding: 0.05em 0.3em;
+  border-radius: 3px;
 }
 
 .bfa-container {
-  max-width: 1280px;
+  max-width: 1350px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
