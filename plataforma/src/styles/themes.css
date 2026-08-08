@@ -1,55 +1,105 @@
 /* ==========================================================================
-   Brasil Finanças Atlas (BFA) — Theme Selector Definitions
+   Brasil Finanças Atlas (BFA) — Theme Definitions & WCAG AAA Dark Contrast
    ========================================================================== */
 
-/* 1. Theme Classic (Default) */
+/* 1. Theme Classic Institucional (Default Light) */
+:root,
 [data-theme="brasil-atlas"] {
   --background: #F8FAFC;
   --foreground: #0F172A;
   --card: #FFFFFF;
   --primary: #0F172A;
-  --gold: #C8963E;
+  --primary-foreground: #F8FAFC;
+  --secondary: #F1F5F9;
+  --muted-foreground: #64748B;
+  --border: #E2E8F0;
+
+  --market: #059669;
+  --gold: #D97706;
+  --gold-deep: #B45309;
+
   --track-finance: #1B6B3A;
   --track-math: #1B3A5C;
   --track-brhsic: #C8963E;
 }
 
-/* 2. Theme Executive B3 */
+/* 2. Theme Executive B3 Corporate */
 [data-theme="b3-corporate"],
 .theme-executive {
   --background: #F1F5F9;
-  --foreground: #0F172A;
+  --foreground: #0A2540;
   --card: #FFFFFF;
   --primary: #0A2540;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EBF1F8;
+  --muted-foreground: #4E5978;
+  --border: #D8E0E8;
+
+  --market: #00D4B2;
   --gold: #00D4B2;
+  --gold-deep: #008F77;
+
   --track-finance: #008F77;
   --track-math: #0A2540;
   --track-brhsic: #00D4B2;
 }
 
-/* 3. Theme Khan Minimalist */
+/* 3. Theme Khan Minimalist Academy */
 [data-theme="khan-minimalist"],
 .theme-minimal {
   --background: #FFFFFF;
-  --foreground: #18181B;
+  --foreground: #212529;
   --card: #FFFFFF;
   --primary: #0056B3;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F1F3F5;
+  --muted-foreground: #6C757D;
+  --border: #DEE2E6;
+
+  --market: #108548;
   --gold: #E0A800;
+
   --track-finance: #108548;
   --track-math: #0056B3;
   --track-brhsic: #E0A800;
   --radius: 0.875rem;
 }
 
-/* 4. Theme Dark Obsidian Pro */
+/* 4. Theme Dark Obsidian Pro (WCAG AAA High Contrast) */
 [data-theme="dark-obsidian"],
 .dark {
   --background: #0D1117;
-  --foreground: #F0F6FC;
-  --card: #161B22;
+  --foreground: #F0F6FC; /* 17.38:1 AAA vs #0D1117 */
+  --card: #161B22;       /* Surface */
+  --card-foreground: #F0F6FC;
+  --popover: #161B22;
+  --popover-foreground: #F0F6FC;
+
   --primary: #F0F6FC;
-  --gold: #F59E0B;
-  --track-finance: #34D399;
-  --track-math: #60A5FA;
-  --track-brhsic: #FBBF24;
+  --primary-foreground: #0D1117;
+  --secondary: #21262D;
+  --secondary-foreground: #F0F6FC;
+
+  --muted: #21262D;
+  --muted-foreground: #94A3B8; /* 6.75:1 AA/AAA vs #161B22 */
+  --accent: #30363D;
+  --accent-foreground: #F0F6FC;
+
+  --border: #30363D;
+  --input: #30363D;
+  --ring: #60A5FA;
+
+  /* Domain Accent Colors - Luminance Adjusted for Dark Mode */
+  --market: #34D399;        /* Emerald 400 (9.0:1 AAA) */
+  --market-foreground: #0D1117;
+  --gold: #FBBF24;          /* Amber 400 (10.37:1 AAA) */
+  --gold-deep: #F59E0B;
+  --gold-foreground: #0D1117;
+
+  --track-finance: #34D399; /* Finance Track Accent */
+  --track-math: #60A5FA;    /* Math Track Accent (6.8:1 AA) */
+  --track-brhsic: #FBBF24;  /* BRHSIC Track Accent */
+
+  --surface: #161B22;
+  --surface-strong: #21262D;
 }
