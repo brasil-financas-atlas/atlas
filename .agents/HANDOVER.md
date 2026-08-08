@@ -10,11 +10,12 @@ Redesign and maintain the Brasil Finanças Atlas (BFA) educational platform UI/U
   - Rebuilt `plataforma/src/styles/` (`globals.css`, `components.css`, `typography.css`, `themes.css`) using the Lovable design system.
   - Refactored `NavbarFooter.jsx`, `Home.jsx`, `DisciplinaOverview.jsx`, `AulaPage.jsx`, `ExtraPages.jsx`, and `AdminPages.jsx` to remove conflicting inline styles and implement WCAG AAA high-contrast dark mode.
   - Integrated Supabase SDK (`@supabase/supabase-js` v2), created [`plataforma/src/utils/supabaseClient.js`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/utils/supabaseClient.js) with LocalStorage fallback, updated [`ProgressContext.jsx`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/context/ProgressContext.jsx), and saved PostgreSQL schema to [`plataforma/src/data/schema.sql`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/data/schema.sql).
+  - Deployed static frontend to Cloudflare Pages successfully.
   - Cleaned working tree and ensured git state is ready for seamless resumption.
 - **In-Progress:**
-  - Cloudflare Pages deployment configuration update (Root directory -> `plataforma`).
+  - Supabase environment variable configuration and testing (Production database connection).
 - **Blockers:**
-  - Cloudflare build requires `Root directory` setting to be changed to `plataforma` in the dashboard to avoid build script collision with root `requirements.txt`.
+  - None.
 
 ## Decisions Made (Locked)
 - **Supabase Free Tier (BaaS)**: Chosen as the zero-cost PostgreSQL database (R$ 0/mês up to 50k MAU) with native Auth & RLS policies.
