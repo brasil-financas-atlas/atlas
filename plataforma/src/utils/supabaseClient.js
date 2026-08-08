@@ -116,7 +116,9 @@ async function fetchUserProgress(userId) {
 }
 
 window.BfaSupabase = {
-  client: supabaseClient,
+  get client() { return supabaseClient; },
+  initSupabase,
+  setCredentials,
   isConfigured: isSupabaseConfigured,
   syncLessonProgress,
   saveQuizAttempt,
