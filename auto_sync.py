@@ -46,13 +46,14 @@ IGNORED_PATTERNS = [
 
 # Configuração do sistema de logs
 LOG_FILE = os.path.join(REPO_DIR, "auto_sync.log")
+log_handlers = [logging.FileHandler(LOG_FILE, encoding="utf-8")]
+if sys.stdout is not None:
+    log_handlers.append(logging.StreamHandler(sys.stdout))
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[
-        logging.FileHandler(LOG_FILE, encoding="utf-8"),
-        logging.StreamHandler(sys.stdout)
-    ]
+    handlers=log_handlers
 )
 
 class GitAutoSync:
