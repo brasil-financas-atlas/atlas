@@ -49,10 +49,10 @@ function DisciplinaOverview({ subjectKey }) {
           <div style={{ marginTop: '2rem', maxWidth: '500px', background: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(8px)', padding: '1rem 1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: '#FFFFFF', marginBottom: '0.5rem' }}>
               <span>SEU PROGRESSO: {doneCount} DE {totalLessons} AULAS</span>
-              <span className="mono-tag" style={{ color: 'var(--market)' }}>{progressPct}%</span>
+              <span className="mono-tag" style={{ color: '#34D399', fontWeight: 700 }}>{progressPct}%</span>
             </div>
             <div style={{ height: '6px', width: '100%', background: 'rgba(255, 255, 255, 0.15)', borderRadius: '999px', overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: `${progressPct}%`, background: 'var(--market)', transition: 'width 0.3s ease' }} />
+              <div style={{ height: '100%', width: `${progressPct}%`, background: '#34D399', transition: 'width 0.3s ease' }} />
             </div>
           </div>
         </div>
