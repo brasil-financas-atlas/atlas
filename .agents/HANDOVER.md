@@ -33,4 +33,4 @@ Redesign and maintain the Brasil Finanças Atlas (BFA) educational platform UI/U
 - Keep `.env` populated with `GITHUB_PAT` having `repo` and `workflow` permissions for `auto_sync.py`.
 
 ## Immediate Next Step
-- In Cloudflare Pages Dashboard -> `atlas` project -> **Settings** -> **Builds & deployments**, edit settings to set **Root directory: `plataforma`**, leave **Build command** blank, and click **Retry deployment**.
+- Add Supabase credentials (`VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`) to Cloudflare Pages Environment Variables or `.env` and verify user progress sync.
