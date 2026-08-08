@@ -1,1582 +1,329 @@
 /* ==========================================================================
-   Brasil Finanças Atlas (BFA) - Complete Component System & Theme Rules
+   Brasil Finanças Atlas (BFA) — Component Styles & Lovable Design System
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. Navbar & Header
-   -------------------------------------------------------------------------- */
-.bfa-navbar {
-  height: 76px;
-  background-color: var(--bg-surface);
-  border-bottom: 1px solid var(--border-color);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+/* ── 1. Buttons ─────────────────────────────────────────────────────────── */
+.bfa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.bfa-btn:hover {
+  transform: translateY(-1px);
+}
+
+.bfa-btn:active {
+  transform: translateY(0);
+}
+
+.bfa-btn--primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
   box-shadow: var(--shadow-sm);
 }
 
+.bfa-btn--primary:hover {
+  opacity: 0.92;
+  box-shadow: var(--shadow-md);
+}
+
+.bfa-btn--secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  border-color: var(--border);
+}
+
+.bfa-btn--secondary:hover {
+  background-color: var(--accent);
+  border-color: var(--border-color-hover);
+}
+
+.bfa-btn--ghost {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+.bfa-btn--ghost:hover {
+  background-color: var(--secondary);
+  border-color: var(--border-color-hover);
+}
+
+.bfa-btn--gold {
+  background-color: var(--gold);
+  color: var(--gold-foreground);
+  border-color: var(--gold-deep);
+}
+
+.bfa-btn--gold:hover {
+  background-color: var(--gold-deep);
+}
+
+.bfa-btn--verde {
+  background-color: var(--track-finance);
+  color: #FFFFFF;
+  border-color: var(--track-finance);
+}
+
+.bfa-btn--verde:hover {
+  background-color: var(--color-verde-dark);
+}
+
+.bfa-btn--azul {
+  background-color: var(--track-math);
+  color: #FFFFFF;
+  border-color: var(--track-math);
+}
+
+.bfa-btn--azul:hover {
+  background-color: var(--color-azul-dark);
+}
+
+.bfa-btn--sm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+}
+
+.bfa-btn--lg {
+  padding: 0.85rem 1.75rem;
+  font-size: 1rem;
+  border-radius: var(--radius-lg);
+}
+
+/* ── 2. Cards ───────────────────────────────────────────────────────────── */
+.bfa-card {
+  background-color: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.bfa-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
+  border-color: var(--border-color-hover);
+}
+
+.bfa-card--interactive {
+  cursor: pointer;
+}
+
+.bfa-card--financas {
+  border-top: 4px solid var(--track-finance);
+}
+
+.bfa-card--matematica {
+  border-top: 4px solid var(--track-math);
+}
+
+.bfa-card--brhsic {
+  border-top: 4px solid var(--track-brhsic);
+}
+
+/* Napkin Card (Intuition Briefing) */
+.bfa-napkin-card {
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-strong) 100%);
+  border: 1px dashed var(--gold);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.bfa-napkin-card::before {
+  content: '💡 INTUIÇÃO RÁPIDA';
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--gold-deep);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+/* ── 3. Badges & Tags ────────────────────────────────────────────────────── */
+.bfa-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.725rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  white-space: nowrap;
+}
+
+.bfa-badge--verde {
+  background-color: var(--color-verde-light);
+  color: var(--track-finance);
+  border-color: rgba(27, 107, 58, 0.25);
+}
+
+.bfa-badge--azul {
+  background-color: var(--color-azul-light);
+  color: var(--track-math);
+  border-color: rgba(27, 58, 92, 0.25);
+}
+
+.bfa-badge--ouro {
+  background-color: var(--color-ouro-light);
+  color: var(--gold-deep);
+  border-color: rgba(200, 150, 62, 0.3);
+}
+
+/* ── 4. Header & Navbar ──────────────────────────────────────────────────── */
+.bfa-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: rgba(248, 250, 252, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  height: 4rem;
+}
+
+[data-theme="dark-obsidian"] .bfa-navbar,
+.dark .bfa-navbar {
+  background-color: rgba(13, 17, 23, 0.85);
+}
+
 .bfa-navbar__container {
-  max-width: 1320px;
-  margin: 0 auto;
+  max-width: 1350px;
   height: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.5rem;
+  gap: 1.5rem;
 }
 
 .bfa-navbar__logo {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-}
-
-.bfa-logo__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.bfa-logo__title {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: var(--color-azul-dark);
-  display: block;
-}
-
-.bfa-logo__subtitle {
-  font-size: 0.75rem;
-  color: var(--color-verde);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.bfa-navbar__links {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.bfa-nav__link {
-  padding: 0.55rem 0.9rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  transition: all 0.2s ease;
-  border-bottom: 2px solid transparent;
-}
-
-.bfa-nav__link:hover, .bfa-nav__link.active {
-  color: var(--color-azul-dark);
-  background-color: var(--color-slate-100);
-}
-
-.bfa-nav__link--admin {
-  color: var(--color-slate-600);
-  background: var(--color-slate-100);
-}
-
-.bfa-nav__admin-badge {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.bfa-navbar__toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
+  gap: 0.75rem;
+  font-weight: 700;
   color: var(--text-primary);
 }
 
-/* --------------------------------------------------------------------------
-   2. Hero & Section Layouts
-   -------------------------------------------------------------------------- */
-.bfa-hero {
-  background: linear-gradient(135deg, #0F243C 0%, #1B3A5C 50%, #124827 100%);
-  color: #FFFFFF;
-  padding: 4.5rem 1.5rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.bfa-hero__container {
-  max-width: 900px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
-}
-
-.bfa-hero__badge {
-  display: inline-block;
-  background: rgba(200, 150, 62, 0.2);
-  border: 1px solid var(--color-ouro);
-  color: #FDE68A;
-  padding: 0.4rem 1.2rem;
-  border-radius: var(--radius-full);
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  backdrop-filter: blur(4px);
-}
-
-.bfa-hero__title {
-  font-size: 2.75rem;
-  font-weight: 800;
-  line-height: 1.25;
-  margin-bottom: 1.25rem;
-  letter-spacing: -0.02em;
-}
-
-.bfa-text-highlight {
-  background: linear-gradient(120deg, #FDE68A 0%, #C8963E 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.bfa-hero__sub {
-  font-size: 1.15rem;
-  color: #CBD5E1;
-  max-width: 750px;
-  margin: 0 auto 2rem auto;
-  line-height: 1.7;
-}
-
-.bfa-hero__ctas {
+.bfa-navbar__logo-badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.bfa-section {
-  padding: 4rem 1.5rem;
-}
-
-.bfa-section--alt {
-  background-color: var(--bg-surface);
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.bfa-section__container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.bfa-section__title {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--color-azul-dark);
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-
-.bfa-section__subtitle {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-/* --------------------------------------------------------------------------
-   3. Subject Cards (Matemática & Finanças Grid)
-   -------------------------------------------------------------------------- */
-.bfa-subject-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 2rem;
-}
-
-.bfa-card {
-  background-color: var(--bg-surface);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border-color);
-  padding: 2rem;
-  box-shadow: var(--shadow-md);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-}
-
-.bfa-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-xl);
-}
-
-/* Subject Specific Card Modifiers */
-.bfa-card--matematica {
-  border-top: 5px solid var(--color-verde);
-}
-
-.bfa-card--matematica:hover {
-  box-shadow: 0 16px 32px var(--color-verde-glow);
-  border-top-color: var(--color-verde-dark);
-}
-
-.bfa-card--matematica .bfa-card__title {
-  color: var(--color-verde-dark);
-}
-
-.bfa-card--financas {
-  border-top: 5px solid var(--color-azul);
-}
-
-.bfa-card--financas:hover {
-  box-shadow: 0 16px 32px var(--color-azul-glow);
-  border-top-color: var(--color-azul-dark);
-}
-
-.bfa-card--financas .bfa-card__title {
-  color: var(--color-azul-dark);
-}
-
-.bfa-card__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.25rem;
-}
-
-.bfa-card__icon {
-  font-size: 2.5rem;
-}
-
-.bfa-card__title {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--color-azul-dark);
-  margin-bottom: 0.75rem;
-}
-
-.bfa-card__text {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-  flex: 1;
-}
-
-.bfa-card__bullets {
-  list-style: none;
-  margin-bottom: 2rem;
-}
-
-.bfa-card__bullets li {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  padding: 0.4rem 0;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.bfa-card__bullets li::before {
-  content: "✓";
-  color: var(--color-verde);
-  font-weight: 800;
-}
-
-/* --------------------------------------------------------------------------
-   4. Disciplina Overview Page (.bfa-overview)
-   -------------------------------------------------------------------------- */
-.bfa-overview {
-  min-height: calc(100vh - 76px);
-  background-color: var(--bg-app);
-}
-
-.bfa-overview__hero {
-  background: linear-gradient(135deg, #0F243C 0%, #1B3A5C 50%, #124827 100%);
-  color: #FFFFFF;
-  padding: 3.5rem 1.5rem;
-  box-shadow: var(--shadow-md);
-}
-
-/* Subject Specific Overview Modifiers */
-.bfa-overview--matematica .bfa-overview__hero {
-  background: linear-gradient(135deg, #0F243C 0%, #124827 50%, #1B6B3A 100%);
-}
-
-.bfa-overview--matematica .bfa-progress-fill {
-  background: linear-gradient(90deg, #1B6B3A 0%, #2ED573 100%);
-}
-
-.bfa-overview--matematica .bfa-module-card {
-  border-top: 4px solid var(--color-verde);
-}
-
-.bfa-overview--matematica .bfa-module-card__num {
-  background-color: var(--color-verde-light);
-  color: var(--color-verde-dark);
-}
-
-.bfa-overview--matematica .bfa-module-card__lesson-item:hover {
-  background-color: var(--color-verde-light);
-  color: var(--color-verde-dark);
-}
-
-.bfa-overview--financas .bfa-overview__hero {
-  background: linear-gradient(135deg, #0F243C 0%, #1B3A5C 50%, #10243C 100%);
-}
-
-.bfa-overview--financas .bfa-progress-fill {
-  background: linear-gradient(90deg, #1B3A5C 0%, #3B82F6 100%);
-}
-
-.bfa-overview--financas .bfa-module-card {
-  border-top: 4px solid var(--color-azul);
-}
-
-.bfa-overview--financas .bfa-module-card__num {
-  background-color: var(--color-azul-light);
-  color: var(--color-azul-dark);
-}
-
-.bfa-overview--financas .bfa-module-card__lesson-item:hover {
-  background-color: var(--color-azul-light);
-  color: var(--color-azul-dark);
-}
-
-.bfa-overview__container {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.bfa-overview__hero h1 {
-  font-size: 2.3rem;
-  font-weight: 800;
-  color: #FFFFFF;
-  margin: 0.75rem 0 0.5rem 0;
-}
-
-.bfa-overview__meta {
-  font-size: 0.95rem;
-  color: #CBD5E1;
-  margin-bottom: 1.5rem;
-}
-
-.bfa-overview__progress {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  padding: 1.25rem 1.5rem;
-  border-radius: var(--radius-lg);
-  max-width: 600px;
-}
-
-.bfa-overview__progress-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin-bottom: 0.6rem;
-  color: #F8FAFC;
-}
-
-.bfa-progress-bar {
-  width: 100%;
-  height: 10px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-}
-
-.bfa-progress-fill {
-  height: 100%;
-  background-color: var(--color-verde);
-  border-radius: var(--radius-full);
-  transition: width 0.4s ease;
-}
-
-.bfa-modules-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.bfa-module-card {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-xl);
-  padding: 2rem;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.2s ease;
-}
-
-.bfa-module-card:hover {
-  box-shadow: var(--shadow-md);
-}
-
-.bfa-module-card__header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.bfa-module-card__num {
-  padding: 0.3rem 0.8rem;
-  border-radius: var(--radius-full);
-  font-size: 0.8rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background-color: var(--color-slate-100);
-  color: var(--color-slate-700);
-}
-
-.bfa-module-card__header h3 {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--color-azul-dark);
-  margin: 0;
-  flex: 1;
-}
-
-.bfa-module-card__lessons {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.bfa-module-card__lesson-item {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 0.85rem 1.1rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
   border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-surface);
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  transition: all 0.2s ease;
-  text-decoration: none;
-}
-
-.bfa-module-card__lesson-item:hover {
-  transform: translateX(4px);
-  border-color: var(--border-color-hover);
-}
-
-.bfa-module-card__lesson-item.completed {
-  background-color: var(--color-slate-50);
-  border-color: var(--color-slate-200);
-}
-
-.bfa-lesson-status {
-  font-size: 1rem;
-}
-
-.bfa-lesson-num {
-  color: var(--text-muted);
-  font-weight: 700;
-}
-
-.bfa-lesson-title {
-  flex: 1;
-}
-
-.bfa-lesson-arrow {
-  color: var(--text-muted);
-  transition: transform 0.2s ease;
-}
-
-.bfa-module-card__lesson-item:hover .bfa-lesson-arrow {
-  transform: translateX(3px);
-  color: var(--color-azul-dark);
-}
-
-/* --------------------------------------------------------------------------
-   5. Lesson Page (.bfa-lesson-layout) & Subject Themes
-   -------------------------------------------------------------------------- */
-.bfa-lesson-layout {
-  display: flex;
-  min-height: calc(100vh - 76px);
-  background-color: var(--bg-app);
-}
-
-/* Math Theme Rules */
-.bfa-theme--math .bfa-lesson-sidebar__back,
-.bfa-theme--matematica .bfa-lesson-sidebar__back {
-  color: var(--color-verde);
-}
-
-.bfa-theme--math .bfa-lesson-sidebar__back:hover,
-.bfa-theme--matematica .bfa-lesson-sidebar__back:hover {
-  color: var(--color-verde-dark);
-}
-
-.bfa-theme--math .bfa-sidebar-aula-item.active,
-.bfa-theme--matematica .bfa-sidebar-aula-item.active {
-  background-color: var(--color-verde-light);
-  color: var(--color-verde-dark);
-  font-weight: 700;
-  border-left: 3px solid var(--color-verde);
-}
-
-.bfa-theme--math .bfa-sidebar-aula-item.done .bfa-sidebar-status,
-.bfa-theme--matematica .bfa-sidebar-aula-item.done .bfa-sidebar-status {
-  color: var(--color-verde);
-}
-
-.bfa-theme--math .bfa-napkin-card,
-.bfa-theme--matematica .bfa-napkin-card {
-  border-color: var(--color-verde);
-}
-
-.bfa-theme--math .bfa-napkin-card__tag,
-.bfa-theme--matematica .bfa-napkin-card__tag {
-  background-color: var(--color-verde);
-}
-
-.bfa-theme--math .bfa-napkin-card__title,
-.bfa-theme--matematica .bfa-napkin-card__title {
-  color: var(--color-verde-dark);
-}
-
-/* Finance Theme Rules */
-.bfa-theme--finance .bfa-lesson-sidebar__back,
-.bfa-theme--financas .bfa-lesson-sidebar__back {
-  color: var(--color-azul);
-}
-
-.bfa-theme--finance .bfa-lesson-sidebar__back:hover,
-.bfa-theme--financas .bfa-lesson-sidebar__back:hover {
-  color: var(--color-azul-dark);
-}
-
-.bfa-theme--finance .bfa-sidebar-aula-item.active,
-.bfa-theme--financas .bfa-sidebar-aula-item.active {
-  background-color: var(--color-azul-light);
-  color: var(--color-azul-dark);
-  font-weight: 700;
-  border-left: 3px solid var(--color-azul);
-}
-
-.bfa-theme--finance .bfa-sidebar-aula-item.done .bfa-sidebar-status,
-.bfa-theme--financas .bfa-sidebar-aula-item.done .bfa-sidebar-status {
-  color: var(--color-azul);
-}
-
-.bfa-theme--finance .bfa-napkin-card,
-.bfa-theme--financas .bfa-napkin-card {
-  border-color: var(--color-azul);
-}
-
-.bfa-theme--finance .bfa-napkin-card__tag,
-.bfa-theme--financas .bfa-napkin-card__tag {
-  background-color: var(--color-azul);
-}
-
-.bfa-theme--finance .bfa-napkin-card__title,
-.bfa-theme--financas .bfa-napkin-card__title {
-  color: var(--color-azul-dark);
-}
-
-.bfa-lesson-sidebar {
-  width: 320px;
-  background-color: var(--bg-surface);
-  border-right: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-}
-
-.bfa-lesson-sidebar.closed {
-  width: 0;
-  overflow: hidden;
-  border-right: none;
-}
-
-.bfa-lesson-sidebar__header {
-  padding: 1.25rem;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.bfa-lesson-sidebar__back {
-  font-size: 0.85rem;
-  font-weight: 700;
-}
-
-.bfa-lesson-sidebar__nav {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem;
-}
-
-.bfa-sidebar-module {
-  margin-bottom: 1.5rem;
-}
-
-.bfa-sidebar-module__title {
-  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   font-weight: 800;
-  color: var(--color-slate-500);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.75rem;
-  padding-left: 0.5rem;
 }
 
-.bfa-sidebar-module__list {
-  list-style: none;
-}
-
-.bfa-sidebar-aula-item {
+.bfa-navbar__nav {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.65rem 0.85rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.88rem;
-  color: var(--text-secondary);
+  gap: 0.25rem;
+}
+
+.bfa-navbar__link {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
   font-weight: 500;
-  margin-bottom: 0.25rem;
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
   transition: all 0.15s ease;
-  text-decoration: none;
 }
 
-.bfa-sidebar-aula-item:hover {
-  background-color: var(--color-slate-100);
+.bfa-navbar__link:hover,
+.bfa-navbar__link--active {
   color: var(--text-primary);
+  background-color: var(--secondary);
 }
 
-.bfa-sidebar-status {
-  font-size: 0.85rem;
-}
-
-.bfa-sidebar-title {
-  flex: 1;
-  line-height: 1.3;
-}
-
-.bfa-lesson-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--bg-app);
-  min-width: 0;
-}
-
-.bfa-lesson-topbar {
-  background-color: var(--bg-surface);
-  border-bottom: 1px solid var(--border-color);
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.bfa-lesson-topbar__breadcrumbs {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-}
-
-.bfa-lesson-content-container {
-  max-width: 960px;
-  margin: 2rem auto;
-  padding: 0 1.5rem 4rem 1.5rem;
-  width: 100%;
-}
-
-.bfa-lesson-article {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-xl);
-  padding: 2.5rem;
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 2rem;
-}
-
-.bfa-lesson-nav-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 2rem;
-  gap: 1rem;
-}
-
-/* --------------------------------------------------------------------------
-   6. Napkin Finance Card
-   -------------------------------------------------------------------------- */
-.bfa-napkin-card {
-  background: #FFFDF9;
-  border: 2px dashed var(--color-ouro);
-  border-radius: var(--radius-lg);
-  padding: 1.75rem;
-  margin: 1.5rem 0 2rem 0;
-  box-shadow: 0 4px 12px rgba(200, 150, 62, 0.1);
-  position: relative;
-}
-
-.bfa-napkin-card__tag {
-  position: absolute;
-  top: -12px;
-  left: 20px;
-  background: var(--color-ouro);
-  color: #FFFFFF;
-  font-size: 0.75rem;
-  font-weight: 800;
-  padding: 0.2rem 0.75rem;
-  border-radius: var(--radius-sm);
-  text-transform: uppercase;
-}
-
-.bfa-napkin-card__title {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--color-ouro-dark);
-  margin-bottom: 0.75rem;
-}
-
-/* --------------------------------------------------------------------------
-   7. Quiz Engine (.bfa-quiz)
-   -------------------------------------------------------------------------- */
-.bfa-quiz {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-xl);
-  padding: 2rem;
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 2rem;
-}
-
-.bfa-quiz--empty {
-  text-align: center;
-  color: var(--text-secondary);
-}
-
-.bfa-quiz__header {
-  margin-bottom: 1.5rem;
-}
-
-.bfa-quiz__title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: var(--color-azul-dark);
-  margin-bottom: 0.75rem;
-}
-
-.bfa-quiz__progress-text {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.bfa-quiz__bar {
-  height: 8px;
-  background-color: var(--color-slate-100);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-}
-
-.bfa-quiz__bar-fill {
-  height: 100%;
-  background-color: var(--color-verde);
-  border-radius: var(--radius-full);
-  transition: width 0.3s ease;
-}
-
-.bfa-quiz__question h4 {
-  font-size: 1.15rem;
-  margin-bottom: 1.25rem;
-  color: var(--text-primary);
-}
-
-.bfa-quiz__options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.bfa-quiz__option {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
-  border-radius: var(--radius-md);
-  border: 2px solid var(--border-color);
-  background-color: var(--bg-surface);
-  font-size: 0.95rem;
-  font-weight: 500;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  width: 100%;
-  color: var(--text-primary);
-}
-
-.bfa-quiz__option:hover:not(:disabled) {
-  border-color: var(--color-azul);
-  background-color: var(--color-azul-light);
-}
-
-.bfa-quiz__option.selected {
-  border-color: var(--color-azul);
-  background-color: var(--color-azul-light);
-  font-weight: 700;
-}
-
-.bfa-quiz__option.correct {
-  border-color: var(--color-verde);
-  background-color: var(--color-verde-light);
-  color: var(--color-verde-dark);
-  font-weight: 700;
-}
-
-.bfa-quiz__option.wrong {
-  border-color: var(--status-danger);
-  background-color: var(--status-danger-bg);
-  color: var(--status-danger);
-}
-
-.bfa-quiz__option-letter {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background-color: var(--color-slate-100);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 0.85rem;
-  flex-shrink: 0;
-}
-
-.bfa-quiz__option-text {
-  flex: 1;
-}
-
-.bfa-quiz__feedback {
-  padding: 1.25rem;
-  border-radius: var(--radius-md);
-  margin-bottom: 1.5rem;
-}
-
-.bfa-quiz__feedback.success {
-  background-color: var(--color-verde-light);
-  border: 1px solid var(--color-verde);
-  color: var(--color-verde-dark);
-}
-
-.bfa-quiz__feedback.error {
-  background-color: var(--status-danger-bg);
-  border: 1px solid var(--status-danger);
-  color: var(--status-danger);
-}
-
-.bfa-quiz__feedback-title {
-  font-weight: 800;
-  margin-bottom: 0.4rem;
-}
-
-.bfa-quiz__explanation {
-  font-size: 0.92rem;
-  line-height: 1.6;
-}
-
-.bfa-quiz__actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.bfa-quiz--finished {
-  text-align: center;
-  padding: 3rem 1.5rem;
-}
-
-.bfa-quiz__result-icon {
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
-}
-
-.bfa-quiz__score-display {
-  margin: 1.5rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.bfa-quiz__score-num {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: var(--color-azul-dark);
-}
-
-.bfa-quiz__score-pct {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  font-weight: 600;
-}
-
-.bfa-quiz__badge {
-  background-color: var(--color-ouro-light);
-  border: 1px solid var(--color-ouro);
-  color: var(--color-ouro-dark);
-  padding: 0.75rem 1.25rem;
-  border-radius: var(--radius-md);
-  font-weight: 700;
-  display: inline-block;
-  margin-bottom: 1rem;
-}
-
-/* --------------------------------------------------------------------------
-   8. Video Player (.bfa-video-wrapper)
-   -------------------------------------------------------------------------- */
-.bfa-video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 Aspect */
-  height: 0;
-  overflow: hidden;
-  border-radius: var(--radius-xl);
-  margin-bottom: 2rem;
-  box-shadow: var(--shadow-md);
-  background-color: #000000;
-}
-
-.bfa-video-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-.bfa-video-placeholder {
-  background: linear-gradient(135deg, #0F243C 0%, #1B3A5C 100%);
-  border-radius: var(--radius-xl);
-  padding: 3.5rem 2rem;
-  text-align: center;
-  color: #FFFFFF;
-  margin-bottom: 2rem;
-  box-shadow: var(--shadow-md);
-}
-
-.bfa-video-placeholder__icon {
-  font-size: 3rem;
-  margin-bottom: 0.75rem;
-}
-
-.bfa-video-placeholder h3 {
-  color: #FFFFFF;
-  font-size: 1.4rem;
-  margin-bottom: 0.5rem;
-}
-
-.bfa-video-placeholder p {
-  color: #CBD5E1;
-  max-width: 500px;
-  margin: 0 auto 1.5rem auto;
-  font-size: 0.95rem;
-}
-
-/* --------------------------------------------------------------------------
-   9. Forum Timestamps (.bfa-forum)
-   -------------------------------------------------------------------------- */
-.bfa-forum {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-xl);
-  padding: 2rem;
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 2rem;
-}
-
-.bfa-forum__header {
-  margin-bottom: 1.75rem;
-}
-
-.bfa-forum__header h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.25rem;
-  color: var(--color-azul-dark);
-}
-
-.bfa-forum__header p {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  margin: 0;
-}
-
-.bfa-forum__form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.bfa-forum__form-row {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.bfa-timestamp-picker {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--text-secondary);
-}
-
-.bfa-input {
-  padding: 0.65rem 0.9rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  font-family: var(--font-sans);
-  font-size: 0.92rem;
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
-.bfa-input:focus {
-  border-color: var(--color-azul);
-}
-
-.bfa-input--num {
-  width: 60px;
-  text-align: center;
-}
-
-.bfa-textarea {
-  padding: 0.75rem 1rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  font-family: var(--font-sans);
-  font-size: 0.95rem;
-  outline: none;
-  resize: vertical;
-  transition: border-color 0.2s ease;
-}
-
-.bfa-textarea:focus {
-  border-color: var(--color-azul);
-}
-
-.bfa-forum__threads {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.bfa-forum__empty {
-  text-align: center;
-  padding: 2rem;
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-.bfa-forum__card {
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem;
-  background-color: var(--color-slate-50);
-}
-
-.bfa-forum__card-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 0.85rem;
-  margin-bottom: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.bfa-forum__author {
-  font-weight: 700;
-  color: var(--color-azul-dark);
-}
-
-.bfa-forum__timestamp {
-  background-color: var(--color-ouro-light);
-  color: var(--color-ouro-dark);
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-sm);
-  font-weight: 700;
-}
-
-.bfa-forum__date {
-  color: var(--text-muted);
-  margin-left: auto;
-}
-
-.bfa-forum__card-text {
-  font-size: 0.95rem;
-  margin-bottom: 0.75rem;
-  color: var(--text-primary);
-}
-
-.bfa-btn-link {
-  background: none;
-  border: none;
-  color: var(--color-azul);
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  padding: 0;
-}
-
-.bfa-forum__replies {
-  margin-top: 1rem;
-  padding-left: 1.25rem;
-  border-left: 2px solid var(--color-slate-300);
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.bfa-forum__reply {
-  background-color: var(--bg-surface);
-  padding: 0.85rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-}
-
-.bfa-forum__reply-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-bottom: 0.3rem;
-}
-
-.bfa-forum__reply-form {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  background: var(--bg-surface);
-  padding: 1rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-}
-
-.bfa-btn-group {
-  display: flex;
-  gap: 0.5rem;
-}
-
-/* --------------------------------------------------------------------------
-   10. Admonitions & Callouts
-   -------------------------------------------------------------------------- */
+/* ── 5. Admonitions & Callouts ───────────────────────────────────────────── */
 .bfa-admonition {
-  padding: 1.25rem 1.5rem;
-  border-radius: var(--radius-lg);
-  border-left: 5px solid var(--color-azul);
-  background-color: var(--color-slate-100);
-  margin: 1.5rem 0;
-  box-shadow: var(--shadow-sm);
-}
-
-.bfa-admonition__header {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-weight: 800;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.bfa-admonition--note {
-  border-left-color: var(--color-azul);
+  border-left: 4px solid var(--color-azul);
   background-color: var(--color-azul-light);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.bfa-admonition__title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
   color: var(--color-azul-dark);
 }
 
 .bfa-admonition--tip {
-  border-left-color: var(--color-verde);
+  border-left-color: var(--track-finance);
   background-color: var(--color-verde-light);
-  color: var(--color-verde-dark);
 }
 
 .bfa-admonition--warning {
-  border-left-color: var(--color-ouro);
+  border-left-color: var(--gold);
   background-color: var(--color-ouro-light);
-  color: var(--color-ouro-dark);
 }
 
-.bfa-admonition--important {
-  border-left-color: #8B5CF6;
-  background-color: #F3E8FF;
-  color: #6B21A8;
+/* ── 6. Section Headers & Layout ────────────────────────────────────────── */
+.bfa-section {
+  padding: 4rem 0;
 }
 
-.bfa-admonition--danger {
-  border-left-color: var(--status-danger);
-  background-color: var(--status-danger-bg);
-  color: var(--status-danger);
-}
-
-.bfa-admonition--construcao {
-  border-left-color: #F59E0B;
-  background-color: #FEF3C7;
-  color: #92400E;
-}
-
-/* --------------------------------------------------------------------------
-   11. Buttons & Badges
-   -------------------------------------------------------------------------- */
-.bfa-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.8rem 1.5rem;
-  border-radius: var(--radius-md);
+.bfa-section__title {
+  font-size: 2rem;
   font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  line-height: 1.2;
-}
-
-.bfa-btn--lg {
-  padding: 1rem 2rem;
-  font-size: 1.05rem;
-}
-
-.bfa-btn--sm {
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-}
-
-.bfa-btn--verde {
-  background-color: var(--color-verde);
-  color: #FFFFFF;
-}
-
-.bfa-btn--verde:hover {
-  background-color: var(--color-verde-dark);
-  box-shadow: 0 4px 12px var(--color-verde-glow);
-}
-
-.bfa-btn--azul {
-  background-color: var(--color-azul);
-  color: #FFFFFF;
-}
-
-.bfa-btn--azul:hover {
-  background-color: var(--color-azul-dark);
-  box-shadow: 0 4px 12px var(--color-azul-glow);
-}
-
-.bfa-btn--ouro {
-  background-color: var(--color-ouro);
-  color: #FFFFFF;
-}
-
-.bfa-btn--ouro:hover {
-  background-color: var(--color-ouro-dark);
-  box-shadow: 0 4px 12px var(--color-ouro-glow);
-}
-
-.bfa-btn--block {
-  width: 100%;
-}
-
-.bfa-btn--ghost {
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-color);
-}
-
-.bfa-btn--ghost:hover {
-  background: var(--color-slate-100);
+  letter-spacing: -0.02em;
   color: var(--text-primary);
-}
-
-.bfa-btn-icon {
-  background: none;
-  border: 1px solid var(--border-color);
-  padding: 0.4rem 0.6rem;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-size: 0.85rem;
-
-  transition: all 0.2s ease;
-}
-
-.bfa-btn-icon:hover {
-  background: var(--color-slate-100);
-}
-
-.bfa-badge {
-  display: inline-block;
-  padding: 0.3rem 0.75rem;
-  border-radius: var(--radius-full);
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.bfa-badge--verde {
-  background-color: var(--color-verde-light);
-  color: var(--color-verde-dark);
-}
-
-.bfa-badge--azul {
-  background-color: var(--color-azul-light);
-  color: var(--color-azul-dark);
-}
-
-.bfa-badge--ouro, .bfa-badge--gold {
-  background-color: var(--color-ouro-light);
-  color: var(--color-ouro-dark);
-}
-
-.bfa-badge--gray {
-  background-color: var(--color-slate-100);
-  color: var(--color-slate-700);
-}
-
-/* --------------------------------------------------------------------------
-   12. Steps Grid & Footer
-   -------------------------------------------------------------------------- */
-.bfa-steps-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-}
-
-.bfa-step-card {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  position: relative;
-  box-shadow: var(--shadow-sm);
-}
-
-.bfa-step-card__num {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: var(--color-slate-100);
-  color: var(--color-slate-600);
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.bfa-step-card__icon {
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
-  display: block;
-}
-
-.bfa-step-card h4 {
-  font-size: 1.2rem;
-  font-weight: 800;
   margin-bottom: 0.5rem;
-  color: var(--color-azul-dark);
 }
 
-.bfa-step-card p {
-  font-size: 0.95rem;
+.bfa-section__subtitle {
+  font-size: 1.05rem;
   color: var(--text-secondary);
+  max-width: 700px;
 }
 
+/* ── 7. Footer ──────────────────────────────────────────────────────────── */
 .bfa-footer {
-  background-color: #0F172A;
-  color: #94A3B8;
-  padding: 4rem 1.5rem 2rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background-color: var(--card);
+  padding: 3rem 0;
+  margin-top: 4rem;
 }
 
 .bfa-footer__container {
-  max-width: 1200px;
+  max-width: 1350px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 3rem;
-  margin-bottom: 3rem;
-}
-
-.bfa-footer__desc {
-  font-size: 0.9rem;
-  margin-top: 1rem;
-  line-height: 1.6;
-}
-
-.bfa-footer__links {
+  padding: 0 1.5rem;
   display: flex;
-  gap: 3rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
 }
-
-.bfa-footer__links h4 {
-  color: #FFFFFF;
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.bfa-footer__links ul {
-  list-style: none;
-}
-
-.bfa-footer__links li {
-  margin-bottom: 0.5rem;
-}
-
-.bfa-footer__links a {
-  font-size: 0.9rem;
-  color: #94A3B8;
-  transition: color 0.2s ease;
-}
-
-.bfa-footer__links a:hover {
-  color: #FFFFFF;
-}
-
-.bfa-footer__bottom {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-top: 2rem;
-  border-top: 1px solid #1E293B;
-  text-align: center;
-  font-size: 0.85rem;
-}
-
-/* --------------------------------------------------------------------------
-   13. Responsive Breakpoints
-   -------------------------------------------------------------------------- */
-@media (max-width: 768px) {
-  .bfa-navbar__links { display: none; }
-  .bfa-navbar__links.open {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 76px;
-    left: 0;
-    right: 0;
-    background-color: var(--bg-surface);
-    border-bottom: 1px solid var(--border-color);
-    padding: 1.5rem;
-    box-shadow: var(--shadow-md);
-  }
-  .bfa-navbar__toggle { display: block; }
-  .bfa-hero__title { font-size: 2rem; }
-  .bfa-footer__container { grid-template-columns: 1fr; }
-  .bfa-footer__links { flex-direction: column; gap: 1.5rem; }
-  .bfa-lesson-sidebar { position: fixed; z-index: 100; height: 100vh; }
-}
-/* Editable Block & Admin Edit Pencil Button Positioning */
-.bfa-editable-wrapper {
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.bfa-editable-wrapper.can-edit {
-  padding-right: 34px;
-}
-
-.bfa-editable-content {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.bfa-edit-pencil-btn {
-  position: absolute !important;
-  top: 2px !important;
-  right: 0 !important;
-  flex-shrink: 0 !important;
-  background: var(--color-ouro) !important;
-  color: #FFFFFF !important;
-  border: none !important;
-  border-radius: 50% !important;
-  width: 28px !important;
-  height: 28px !important;
-  font-size: 0.85rem !important;
-  cursor: pointer !important;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  z-index: 50 !important;
-  opacity: 0.85 !important;
-  transition: opacity 0.2s ease, transform 0.2s ease !important;
-  line-height: 1 !important;
-}
-
-.bfa-edit-pencil-btn:hover {
-  opacity: 1 !important;
-  transform: scale(1.1) !important;
-  background: var(--color-ouro-dark) !important;
-}
-
-/* KaTeX Display Math Formatting */
-.bfa-markdown-body .katex-display {
-  display: block;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 1.25rem 1.5rem;
-  margin: 1.5rem 0;
-  background-color: var(--color-azul-light);
-  border-left: 4px solid var(--color-azul);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  text-align: center;
-  max-width: 100%;
-}
-
-.bfa-markdown-body .katex-display > .katex {
-  display: inline-block;
-  text-align: center;
-  background-color: transparent;
-  padding: 0;
-  border-radius: 0;
-}
-
-/* --------------------------------------------------------------------------
-   Media Print Styles for Digital Certificate
-   -------------------------------------------------------------------------- */
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  .bfa-no-print, .bfa-navbar, .bfa-footer, .bfa-lesson-sidebar, .bfa-lesson-topbar {
-    display: none !important;
-  }
-  #bfa-printable-certificate, #bfa-printable-certificate * {
-    visibility: visible;
-  }
-  #bfa-printable-certificate {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100% !important;
-    margin: 0 !important;
-    box-shadow: none !important;
-    page-break-inside: avoid;
-  }
-}
-
