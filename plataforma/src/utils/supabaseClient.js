@@ -3,20 +3,40 @@
    Fallback gracioso para LocalStorage caso o Supabase não esteja configurado.
    ========================================================================== */
 
-const SUPABASE_URL = (typeof process !== 'undefined' && process.env?.VITE_SUPABASE_URL) || window?.VITE_SUPABASE_URL || '';
-const SUPABASE_ANON_KEY = (typeof process !== 'undefined' && process.env?.VITE_SUPABASE_ANON_KEY) || window?.VITE_SUPABASE_ANON_KEY || '';
+let SUPABASE_URL = (typeof process !== 'undefined' && process.env?.VITE_SUPABASE_URL) || window?.VITE_SUPABASE_URL || localStorage.getItem('BFA_VITE_SUPABASE_URL') || '';
+let SUPABASE_ANON_KEY = (typeof process !== 'undefined' && process.env?.VITE_SUPABASE_ANON_KEY) || window?.VITE_SUPABASE_ANON_KEY || localStorage.getItem('BFA_VITE_SUPABASE_ANON_KEY') || '';
 
 let supabaseClient = null;
 
-if (typeof window !== 'undefined' && window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY) {
-  try {
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    console.log('[BFA Supabase] Backend Supabase conectado com sucesso!');
-  } catch (err) {
-    console.warn('[BFA Supabase] Erro ao inicializar cliente Supabase:', err);
+function initSupabase(url, key) {
+  if (typeof window !== 'undefined' && window.supabase && url && key) {
+    try {
+      supabaseClient = window.supabase.createClient(url, key);
+      console.log('[BFA Supabase] Backend Supabase conectado com sucesso!');
+      return true;
+    } catch (err) {
+      console.warn('[BFA Supabase] Erro ao inicializar cliente Supabase:', err);
+    }
   }
-} else {
+  return false;
+}
+
+if (!initSupabase(SUPABASE_URL, SUPABASE_ANON_KEY)) {
   console.log('[BFA Supabase] Supabase não configurado ou CDN indisponível. Utilizando armazenamento local (LocalStorage).');
+}
+
+/**
+ * Define novas credenciais e salva no localStorage para persistência.
+ */
+function setCredentials(url, key) {
+  if (url && key) {
+    localStorage.setItem('BFA_VITE_SUPABASE_URL', url);
+    localStorage.setItem('BFA_VITE_SUPABASE_ANON_KEY', key);
+    window.VITE_SUPABASE_URL = url;
+    window.VITE_SUPABASE_ANON_KEY = key;
+    return initSupabase(url, key);
+  }
+  return false;
 }
 
 /**
