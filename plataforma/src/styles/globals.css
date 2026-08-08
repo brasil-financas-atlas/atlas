@@ -1,33 +1,77 @@
 /* ==========================================================================
-   Brasil Finanças Atlas (BFA) - Global Design Tokens & Variables
+   Brasil Finanças Atlas (BFA) — Global Design System & CSS Variables
+   Inspirado no Lovable High-End Financial Terminal & Academic Portal
    ========================================================================== */
+
 @import url('./typography.css');
 @import url('./components.css');
 @import url('./animations.css');
 @import url('./admin.css');
+@import url('./themes.css');
 
-/* --------------------------------------------------------------------------
-   1. Theme 1: Brasil Atlas Classic (Default)
-   -------------------------------------------------------------------------- */
-:root,
-[data-theme="brasil-atlas"] {
-  /* Brand Palette - Brasil Atlas Classic (#1B6B3A, #1B3A5C, #C8963E) */
-  --color-verde: #1B6B3A;
+:root {
+  /* OKLCH Color Tokens (Default Light Mode) */
+  --radius: 0.5rem;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* Color Palette (Financial Slate & Executive Navy) */
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F172A;
+  --primary: #0F172A;
+  --primary-foreground: #F8FAFC;
+  --secondary: #F1F5F9;
+  --secondary-foreground: #0F172A;
+  --muted: #F8FAFC;
+  --muted-foreground: #64748B;
+  --accent: #F1F5F9;
+  --accent-foreground: #0F172A;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #3B82F6;
+
+  /* Custom Functional Colors */
+  --market: #059669; /* Verde Mercado B3 */
+  --market-foreground: #ECFDF5;
+  --gold: #D97706; /* Dourado Editorial */
+  --gold-deep: #B45309;
+  --gold-foreground: #FFFBEB;
+
+  /* Track Spec Colors */
+  --track-finance: #1B6B3A; /* Verde Finanças */
+  --track-math: #1B3A5C;    /* Azul Matemática */
+  --track-brhsic: #C8963E;  /* Dourado BRHSIC */
+
+  --surface: #FFFFFF;
+  --surface-strong: #F1F5F9;
+
+  /* Backward Compatibility Tokens */
+  --color-verde: var(--track-finance);
   --color-verde-light: #E8F5ED;
   --color-verde-dark: #124827;
   --color-verde-glow: rgba(27, 107, 58, 0.18);
 
-  --color-ouro: #C8963E;
+  --color-ouro: var(--track-brhsic);
   --color-ouro-light: #FDF6EC;
   --color-ouro-dark: #976F2B;
   --color-ouro-glow: rgba(200, 150, 62, 0.22);
 
-  --color-azul: #1B3A5C;
+  --color-azul: var(--track-math);
   --color-azul-light: #EBF2FA;
   --color-azul-dark: #10243C;
   --color-azul-glow: rgba(27, 58, 92, 0.18);
 
-  /* Slate Scale */
   --color-slate-50: #F8FAFC;
   --color-slate-100: #F1F5F9;
   --color-slate-200: #E2E8F0;
@@ -39,7 +83,6 @@
   --color-slate-800: #1E293B;
   --color-slate-900: #0F172A;
 
-  /* Status & Messaging Colors */
   --status-success: #166534;
   --status-success-bg: #DCFCE7;
   --status-warning: #92400E;
@@ -47,155 +90,68 @@
   --status-danger: #DC2626;
   --status-danger-bg: #FEE2E2;
 
-  /* Surfaces & Text */
-  --bg-app: #F4F6F9;
-  --bg-surface: #FFFFFF;
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
+  --bg-app: var(--background);
+  --bg-surface: var(--card);
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
   --text-muted: #94A3B8;
   --text-inverse: #FFFFFF;
 
-  /* Borders & Radii */
-  --border-color: #E2E8F0;
+  --border-color: var(--border);
   --border-color-hover: #CBD5E1;
 
-  --radius-xs: 4px;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-2xl: 32px;
-  --radius-full: 9999px;
+  /* High-End Shadows */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 24px rgba(15, 23, 42, 0.12);
+  --shadow-xl: 0 20px 32px rgba(15, 23, 42, 0.16);
+  --shadow-elevated: 0 1px 2px rgba(15, 23, 42, 0.05), 0 12px 32px -12px rgba(15, 23, 42, 0.16);
+  --shadow-terminal: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -28px rgba(15, 23, 42, 0.55);
 
-  /* Shadows */
-  --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.04);
-  --shadow-md: 0 6px 12px rgba(15, 23, 42, 0.06);
-  --shadow-lg: 0 12px 24px rgba(15, 23, 42, 0.08);
-  --shadow-xl: 0 20px 32px rgba(15, 23, 42, 0.12);
-
-  /* Typography Families & Aliases */
-  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Typography Families */
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --font-family-base: var(--font-sans);
-  --font-family-heading: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  --font-family-heading: var(--font-sans);
   --font-family-mono: var(--font-mono);
 
-  /* Animation Timings */
   --transition-fast: 0.15s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
+  --transition-normal: 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* --------------------------------------------------------------------------
-   2. Theme 2: Executive Financial / B3 Corporate (#0A2540, #1A1F36, #00D4B2)
-   -------------------------------------------------------------------------- */
-[data-theme="b3-corporate"] {
-  --color-verde: #00D4B2;
-  --color-verde-light: #E0FAF5;
-  --color-verde-dark: #008F77;
-  --color-verde-glow: rgba(0, 212, 178, 0.2);
+/* Dark Theme Variables (Dark Obsidian Pro) */
+[data-theme="dark-obsidian"],
+.dark {
+  --background: #0D1117;
+  --foreground: #F0F6FC;
+  --card: #161B22;
+  --card-foreground: #F0F6FC;
+  --popover: #161B22;
+  --popover-foreground: #F0F6FC;
+  --primary: #F0F6FC;
+  --primary-foreground: #0D1117;
+  --secondary: #21262D;
+  --secondary-foreground: #F0F6FC;
+  --muted: #21262D;
+  --muted-foreground: #8B949E;
+  --accent: #30363D;
+  --accent-foreground: #F0F6FC;
+  --destructive: #F87171;
+  --destructive-foreground: #FFFFFF;
+  --border: #30363D;
+  --input: #30363D;
+  --ring: #38BDF8;
 
-  --color-ouro: #00D4B2;
-  --color-ouro-light: #E0FAF5;
-  --color-ouro-dark: #008F77;
-  --color-ouro-glow: rgba(0, 212, 178, 0.2);
+  --market: #10B981;
+  --gold: #F59E0B;
+  --gold-deep: #D97706;
 
-  --color-azul: #0A2540;
-  --color-azul-light: #EBF1F8;
-  --color-azul-dark: #1A1F36;
-  --color-azul-glow: rgba(10, 37, 64, 0.18);
+  --track-finance: #34D399;
+  --track-math: #60A5FA;
+  --track-brhsic: #FBBF24;
 
-  --color-slate-50: #F8FAFC;
-  --color-slate-100: #EEF2F6;
-  --color-slate-200: #D8E0E8;
-  --color-slate-300: #BAC8D8;
-  --color-slate-400: #8D99AE;
-  --color-slate-500: #6B7B95;
-  --color-slate-600: #4E5978;
-  --color-slate-700: #323B54;
-  --color-slate-800: #1A1F36;
-  --color-slate-900: #0A2540;
-
-  --bg-app: #F0F3F7;
-  --bg-surface: #FFFFFF;
-  --text-primary: #1A1F36;
-  --text-secondary: #4E5978;
-  --text-muted: #8D99AE;
-  --text-inverse: #FFFFFF;
-
-  --border-color: #D8E0E8;
-  --border-color-hover: #BAC8D8;
-
-  --shadow-sm: 0 2px 4px rgba(10, 37, 64, 0.04);
-  --shadow-md: 0 6px 12px rgba(10, 37, 64, 0.06);
-  --shadow-lg: 0 12px 24px rgba(10, 37, 64, 0.08);
-  --shadow-xl: 0 20px 32px rgba(10, 37, 64, 0.12);
-}
-
-/* --------------------------------------------------------------------------
-   3. Theme 3: Khan Minimalist Academy (#212529, #0056B3, #FFFFFF)
-   -------------------------------------------------------------------------- */
-[data-theme="khan-minimalist"] {
-  --color-verde: #0056B3;
-  --color-verde-light: #E6F0FA;
-  --color-verde-dark: #003A78;
-  --color-verde-glow: rgba(0, 86, 179, 0.18);
-
-  --color-ouro: #0056B3;
-  --color-ouro-light: #E6F0FA;
-  --color-ouro-dark: #003A78;
-  --color-ouro-glow: rgba(0, 86, 179, 0.18);
-
-  --color-azul: #212529;
-  --color-azul-light: #F1F3F5;
-  --color-azul-dark: #121416;
-  --color-azul-glow: rgba(33, 37, 41, 0.15);
-
-  --color-slate-50: #F8F9FA;
-  --color-slate-100: #F1F3F5;
-  --color-slate-200: #E9ECEF;
-  --color-slate-300: #DEE2E6;
-  --color-slate-400: #CED4DA;
-  --color-slate-500: #ADB5BD;
-  --color-slate-600: #6C757D;
-  --color-slate-700: #495057;
-  --color-slate-800: #343A40;
-  --color-slate-900: #212529;
-
-  --bg-app: #F8F9FA;
-  --bg-surface: #FFFFFF;
-  --text-primary: #212529;
-  --text-secondary: #495057;
-  --text-muted: #868E96;
-  --text-inverse: #FFFFFF;
-
-  --border-color: #DEE2E6;
-  --border-color-hover: #CED4DA;
-
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.08);
-  --shadow-xl: 0 16px 24px rgba(0, 0, 0, 0.10);
-}
-
-/* --------------------------------------------------------------------------
-   4. Theme 4: Dark Obsidian Pro (#0D1117, #10B981, #D97706)
-   -------------------------------------------------------------------------- */
-[data-theme="dark-obsidian"] {
-  --color-verde: #10B981;
-  --color-verde-light: rgba(16, 185, 129, 0.15);
-  --color-verde-dark: #34D399;
-  --color-verde-glow: rgba(16, 185, 129, 0.25);
-
-  --color-ouro: #D97706;
-  --color-ouro-light: rgba(217, 119, 6, 0.15);
-  --color-ouro-dark: #F59E0B;
-  --color-ouro-glow: rgba(217, 119, 6, 0.25);
-
-  --color-azul: #3B82F6;
-  --color-azul-light: rgba(59, 130, 246, 0.15);
-  --color-azul-dark: #60A5FA;
-  --color-azul-glow: rgba(59, 130, 246, 0.25);
+  --surface: #161B22;
+  --surface-strong: #21262D;
 
   --color-slate-50: #161B22;
   --color-slate-100: #21262D;
@@ -208,27 +164,14 @@
   --color-slate-800: #F0F6FC;
   --color-slate-900: #FFFFFF;
 
-  --status-success: #34D399;
-  --status-success-bg: rgba(16, 185, 129, 0.2);
-  --status-warning: #F59E0B;
-  --status-warning-bg: rgba(217, 119, 6, 0.2);
-  --status-danger: #F87171;
-  --status-danger-bg: rgba(239, 68, 68, 0.2);
-
   --bg-app: #0D1117;
   --bg-surface: #161B22;
   --text-primary: #F0F6FC;
   --text-secondary: #8B949E;
   --text-muted: #6E7681;
-  --text-inverse: #0D1117;
 
   --border-color: #30363D;
   --border-color-hover: #484F58;
-
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 6px 12px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6);
-  --shadow-xl: 0 20px 32px rgba(0, 0, 0, 0.7);
 }
 
 *, *::before, *::after {
@@ -248,20 +191,8 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Dark theme specific tweaks */
-[data-theme="dark-obsidian"] input,
-[data-theme="dark-obsidian"] select,
-[data-theme="dark-obsidian"] textarea {
-  background-color: #21262D;
-  color: #F0F6FC;
-  border-color: #30363D;
-}
-
-[data-theme="dark-obsidian"] .bfa-napkin-card {
-  background-color: #21262D;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 a {
@@ -279,10 +210,55 @@ a {
   flex: 1;
 }
 
-.bfa-text-center { text-align: center; }
-.bfa-text-left { text-align: left; }
-.bfa-text-right { text-align: right; }
-.bfa-text-muted { color: var(--text-muted); }
-.bfa-py-5 { padding-top: 3rem; padding-bottom: 3rem; }
-.bfa-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+/* Utilitários Visuais Lovable */
+.bfa-hero-gradient {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 45%, #0284C7 100%);
+  color: #FFFFFF;
+}
 
+.bfa-grid-ledger {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.bfa-mono-tag {
+  font-family: var(--font-mono);
+  font-size: 0.725rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bfa-card-lift {
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms ease;
+}
+
+.bfa-card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
+  border-color: var(--color-slate-300);
+}
+
+.bfa-formula-block {
+  font-family: var(--font-mono);
+  border-left: 4px solid var(--color-azul);
+  background-color: var(--surface-strong);
+  padding: 1rem 1.25rem;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  overflow-x: auto;
+}
+
+.bfa-formula-inline {
+  font-family: var(--font-mono);
+  background-color: var(--surface-strong);
+  border-bottom: 2px solid rgba(27, 58, 92, 0.35);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+.bfa-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
