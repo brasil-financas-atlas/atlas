@@ -1,36 +1,34 @@
 # Handoff Briefing
 
 ## Goal
-Redesign and maintain the Brasil Finanças Atlas (BFA) educational platform frontend UI/UX, implement interactive features (video player, timestamped forum, quiz engine, admin CMS), and ensure direct Git-as-a-CMS synchronization back to GitHub (`brasil-financas-atlas/atlas`).
+Redesign and maintain the Brasil Finanças Atlas (BFA) educational platform UI/UX with the Lovable design system, integrate Supabase PostgreSQL backend BaaS (R$ 0/mês), and deploy to Cloudflare Pages with local auto-sync daemon.
 
 ## Current Status
-- **Completed:** 
-  - Updated git remote `origin` to `https://github.com/brasil-financas-atlas/atlas.git`.
-  - Updated `githubSync.js` and `GitHubSyncModal.jsx` default repository target to `brasil-financas-atlas/atlas` and fixed nested try-block syntax.
-  - Re-implemented `auto_sync.py` with `watchdog` real-time monitoring, 3s debouncing, non-interactive `GIT_TERMINAL_PROMPT=0` safety, `fetch` + `rebase FETCH_HEAD` logic, and `.env` PAT token support.
-  - Added `.env` and `auto_sync.log` to `.gitignore` and untracked `auto_sync.log` from git index.
-  - Reconciled local and remote branches (`allow-unrelated-histories`, `--ours`) into a clean state.
-  - Created test file `ARQUIVO_TESTE_SINCRONIZACAO_AUTOMATICA_GITHUB_BRASIL_FINANCAS_ATLAS.md` in root directory.
-  - Added `AGENTS.md` specifying `/session-start` auto-sync protocol.
-  - Expanded `README.md` with ultra-detailed step-by-step Auto-Sync setup guide.
+- **Completed:**
+  - Initialized Git repository, pointed `origin` to `https://github.com/brasil-financas-atlas/atlas.git`, and created `.env` template.
+  - Generated project documentation: [`DOC_PROJETO_DESIGN_REFERENCIAS.md`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/DOC_PROJETO_DESIGN_REFERENCIAS.md), [`.agents/PLANO_BACKEND_MINIMO_CUSTO.md`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/.agents/PLANO_BACKEND_MINIMO_CUSTO.md), [`.agents/PLANO_BACKEND_BANCO_DADOS.md`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/.agents/PLANO_BACKEND_BANCO_DADOS.md), [`.agents/PASSO_A_PASSO_CLOUDFLARE_SUPABASE_FREE.md`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/.agents/PASSO_A_PASSO_CLOUDFLARE_SUPABASE_FREE.md), and [`.agents/GUIA_MESTRE_CONFIGURACAO_COMPLETA.md`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/.agents/GUIA_MESTRE_CONFIGURACAO_COMPLETA.md).
+  - Rebuilt `plataforma/src/styles/` (`globals.css`, `components.css`, `typography.css`, `themes.css`) from scratch using the Lovable design system (`lovable-project-2bcdc0ac`).
+  - Refactored `NavbarFooter.jsx`, `Home.jsx`, `DisciplinaOverview.jsx`, `AulaPage.jsx`, `ExtraPages.jsx`, and `AdminPages.jsx` to remove conflicting inline styles and implement WCAG AAA high-contrast dark mode (`#F0F6FC` primary text, `#94A3B8` secondary text, `#34D399` emerald, `#60A5FA` math blue, `#FBBF24` BRHSIC gold).
+  - Integrated Supabase SDK (`@supabase/supabase-js` v2), created [`plataforma/src/utils/supabaseClient.js`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/utils/supabaseClient.js) with LocalStorage fallback, updated [`ProgressContext.jsx`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/context/ProgressContext.jsx), and saved PostgreSQL schema to [`plataforma/src/data/schema.sql`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/data/schema.sql).
+  - Local HTTP server actively running on `http://localhost:8080`.
 - **In-Progress:**
-  - Ready for final `git push` once user enables `workflow` scope on their GitHub PAT.
+  - Cloudflare Pages initial deployment setup: Setting `Root directory: plataforma` in Cloudflare Settings -> Builds & deployments to fix the root directory build error.
 - **Blockers:**
-  - Token in `.env` requires the **`workflow`** permission scope checked on GitHub because the repository contains GitHub Actions workflows in `.github/workflows/`.
+  - First Cloudflare build failed because `Root directory` was set to `/`, causing Cloudflare to run `pip install -r requirements.txt` from the python documentation root instead of serving the `plataforma` static files.
 
 ## Decisions Made (Locked)
-- **Session Start Protocol:** Every `/session-start` MUST automatically run `auto_sync.py` check (`python -c "import auto_sync; syncer = auto_sync.GitAutoSync(auto_sync.REPO_DIR, auto_sync.BRANCH, pat=auto_sync.GITHUB_PAT); syncer.sync()"`) and check for PAT requirements.
-- **Default Repository Targets:** Owner `brasil-financas-atlas` and Repo `atlas` set as primary defaults across `githubSync.js`, `GitHubSyncModal.jsx`, `auto_sync.py`, `AGENTS.md`, and `README.md`.
-- **PAT Scopes Required:** Personal Access Tokens for this repository MUST have both **`repo`** (Full control of private repositories) AND **`workflow`** (Update GitHub Action workflows) scopes enabled on GitHub.
+- **Supabase Free Tier (BaaS)**: Chosen as the zero-cost PostgreSQL database (R$ 0/mês up to 50k MAU) with native Auth & RLS policies.
+- **Hybrid Auth Model**: Open reading for all students without mandatory login; optional login for cross-device sync & verifiable certificate issuance.
+- **Cloudflare Pages Hosting**: Chosen for unlimited free bandwidth and edge deployment in Fortaleza-CE.
+- **Cloudflare Build Settings**: `Root directory` MUST be set to `plataforma`, `Build output directory` to `.`, and `Build command` left blank.
 
 ## Failed Approaches / Dead Ends (Do Not Retry)
-- **PAT without `workflow` scope:** Pushing commits to a repository containing `.github/workflows/*.yml` with a PAT that lacks `workflow` scope causes GitHub API rejection: `refusing to allow a Personal Access Token to create or update workflow ... without workflow scope`.
-- **Tracking `auto_sync.log` in Git:** Allowing `auto_sync.log` to be tracked by Git causes `git pull --rebase` to fail with "You have unstaged changes" whenever python writes to the log. Keep `auto_sync.log` in `.gitignore` and untracked.
-- **Personal Fine-Grained PAT without Organization Resource Owner:** Using a Fine-Grained PAT created under a personal account without selecting `brasil-financas-atlas` as Resource Owner results in `HTTP 403 Write access to repository not granted`. Always use a **Classic PAT (`repo` + `workflow` scopes)** or authorize Fine-Grained PAT under Organization Settings.
+- **Setting Cloudflare Root Directory to `/`**: Causes Cloudflare to auto-detect `requirements.txt` in the root and fail while attempting Python MkDocs installation. Always set `Root directory` to `plataforma`.
+- **Relying on Inline Styles in React Components**: Hardcoded inline styles (`style={{ background: '...' }}`) override CSS stylesheets and prevent theme switching. Keep styles in `globals.css` / `components.css`.
 
 ## Extracted Memories & Preferences
-- Always declare React hook destructurings (`const { useState, ... } = React;`) at the top of all component files.
-- Always set `sys.stdout.reconfigure(encoding='utf-8')` or avoid emojis in Windows CMD Python logging to prevent `UnicodeEncodeError`.
+- Always test React component JSX with Babel Standalone CDN parser to verify syntax compatibility.
+- Ensure dark mode primary text is `#F0F6FC` and secondary text is `#94A3B8` for WCAG AAA compliance.
 
 ## Immediate Next Step
-- Run `python -c "import auto_sync; syncer = auto_sync.GitAutoSync(auto_sync.REPO_DIR, auto_sync.BRANCH, pat=auto_sync.GITHUB_PAT); syncer.sync()"` (or execute `/session-start`) to push all local changes once the `workflow` scope is enabled on the PAT.
+- In Cloudflare Pages Dashboard -> `atlas` project -> **Settings** -> **Builds & deployments**, edit settings to set **Root directory: `plataforma`**, leave **Build command** blank, and click **Retry deployment**.
