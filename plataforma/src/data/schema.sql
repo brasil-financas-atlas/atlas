@@ -85,12 +85,28 @@ CREATE TABLE IF NOT EXISTS public.certificates (
     CONSTRAINT unique_user_subject_module UNIQUE (user_id, subject_key, module_slug)
 );
 
--- 7. REGRAS DE ROW LEVEL SECURITY (RLS)
+-- 7. TABELA DE EDIÇÕES PENDENTES (FLUXO DE APROVAÇÃO COLABORADOR -> ADMIN CHIEF)
+CREATE TABLE IF NOT EXISTS public.pending_edits (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    author_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    author_name TEXT NOT NULL,
+    resource_type TEXT NOT NULL, -- 'lesson', 'quiz', 'video', 'news', 'override'
+    resource_id TEXT NOT NULL,
+    changes_json JSONB NOT NULL,
+    status TEXT DEFAULT 'pending' NOT NULL, -- 'pending', 'approved', 'rejected'
+    reviewed_by UUID REFERENCES public.profiles(id),
+    review_notes TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+
+-- 8. REGRAS DE ROW LEVEL SECURITY (RLS)
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.lesson_progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.quiz_attempts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.comments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.certificates ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.pending_edits ENABLE ROW LEVEL SECURITY;
 
 -- Políticas Profiles
 DROP POLICY IF EXISTS "Leitura pública de perfis básicos" ON public.profiles;
@@ -120,8 +136,19 @@ CREATE POLICY "Aluno cria comentário autenticado" ON public.comments FOR INSERT
 DROP POLICY IF EXISTS "Validação pública de certificado via código" ON public.certificates;
 CREATE POLICY "Validação pública de certificado via código" ON public.certificates FOR SELECT USING (true);
 
+-- Políticas Pending Edits
+DROP POLICY IF EXISTS "Colaboradores criam edições pendentes" ON public.pending_edits;
+CREATE POLICY "Colaboradores criam edições pendentes" ON public.pending_edits FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+
+DROP POLICY IF EXISTS "Leitura de edições pendentes para autenticados" ON public.pending_edits;
+CREATE POLICY "Leitura de edições pendentes para autenticados" ON public.pending_edits FOR SELECT USING (auth.role() = 'authenticated');
+
+DROP POLICY IF EXISTS "Admin Chief atualiza status de aprovação" ON public.pending_edits;
+CREATE POLICY "Admin Chief atualiza status de aprovação" ON public.pending_edits FOR UPDATE USING (auth.role() = 'authenticated');
+
 -- ÍNDICES DE DESEMPENHO
 CREATE INDEX IF NOT EXISTS idx_lesson_progress_user ON public.lesson_progress(user_id);
 CREATE INDEX IF NOT EXISTS idx_quiz_attempts_user_lesson ON public.quiz_attempts(user_id, lesson_id);
 CREATE INDEX IF NOT EXISTS idx_comments_lesson ON public.comments(lesson_id);
 CREATE INDEX IF NOT EXISTS idx_certificates_code ON public.certificates(verification_code);
+CREATE INDEX IF NOT EXISTS idx_pending_edits_status ON public.pending_edits(status);
