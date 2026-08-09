@@ -281,6 +281,70 @@ function AdminProvider({ children }) {
     });
   };
 
+  const addModule = (subjectKey, moduleObj) => {
+    const modItem = { slug: `modulo-${Date.now()}`, title: moduleObj.title || moduleObj.titulo, aulas: [], ...moduleObj };
+
+    if (isCollaborator) {
+      if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
+        window.BfaSupabase.submitPendingEdit('module', `${subjectKey}-${modItem.slug}`, modItem, currentUser.name);
+      }
+      setCmsData(prev => comHorario({
+        ...prev,
+        pendingEdits: [{ id: `edit_${Date.now()}`, authorName: currentUser.name, resourceType: 'module', resourceId: `${subjectKey}-${modItem.slug}`, changesJson: { subjectKey, module: modItem }, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
+      }));
+      alert("ℹ️ Novo módulo enviado para aprovação do Admin Chief!");
+      return;
+    }
+
+    setCmsData(prev => {
+      const currentMods = prev.modules || [];
+      return comHorario({ ...prev, modules: [...currentMods, { subjectKey, ...modItem }] });
+    });
+  };
+
+  const addExercise = (exObj) => {
+    const item = { id: `ex_${Date.now()}`, module: exObj.module || 'Geral', difficulty: exObj.difficulty || 'Médio', title: exObj.title, question: exObj.question, answer: exObj.answer, category: exObj.category || 'fixacao' };
+
+    if (isCollaborator) {
+      if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
+        window.BfaSupabase.submitPendingEdit('exercise', item.id, item, currentUser.name);
+      }
+      setCmsData(prev => comHorario({
+        ...prev,
+        pendingEdits: [{ id: item.id, authorName: currentUser.name, resourceType: 'exercise', resourceId: item.id, changesJson: item, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
+      }));
+      alert("ℹ️ Exercício enviado para aprovação do Admin Chief!");
+      return;
+    }
+
+    setCmsData(prev => {
+      const currentExs = prev.exercises || [];
+      return comHorario({ ...prev, exercises: [item, ...currentExs] });
+    });
+  };
+
+  const deleteExercise = (exId) => {
+    if (isCollaborator) {
+      alert("ℹ️ Exclusões devem ser solicitadas diretamente ao Admin Chief.");
+      return;
+    }
+    setCmsData(prev => comHorario({
+      ...prev,
+      exercises: (prev.exercises || []).filter(e => e.id !== exId)
+    }));
+  };
+
+  const deleteNews = (newsId) => {
+    if (isCollaborator) {
+      alert("ℹ️ Exclusões devem ser solicitadas diretamente ao Admin Chief.");
+      return;
+    }
+    setCmsData(prev => comHorario({
+      ...prev,
+      news: (prev.news || []).filter(n => n.id !== newsId)
+    }));
+  };
+
   // Funções exclusivas do Admin Chief para aprovar/rejeitar edições
   const approvePendingEdit = (editId) => {
     const targetEdit = (cmsData.pendingEdits || []).find(e => e.id === editId || e._id === editId);
@@ -297,6 +361,8 @@ function AdminProvider({ children }) {
       let updatedLessons = { ...prev.lessons };
       let updatedOverrides = { ...(prev.overrides || {}) };
       let updatedNews = [...(prev.news || [])];
+      let updatedExercises = [...(prev.exercises || [])];
+      let updatedModules = [...(prev.modules || [])];
 
       if (targetEdit.resourceType === 'lesson') {
         updatedLessons[targetEdit.resourceId] = {
@@ -307,6 +373,10 @@ function AdminProvider({ children }) {
         updatedOverrides[targetEdit.resourceId] = targetEdit.changesJson?.text;
       } else if (targetEdit.resourceType === 'news') {
         updatedNews = [targetEdit.changesJson, ...updatedNews];
+      } else if (targetEdit.resourceType === 'exercise') {
+        updatedExercises = [targetEdit.changesJson, ...updatedExercises];
+      } else if (targetEdit.resourceType === 'module') {
+        updatedModules = [...updatedModules, targetEdit.changesJson?.module];
       }
 
       return comHorario({
@@ -314,6 +384,8 @@ function AdminProvider({ children }) {
         lessons: updatedLessons,
         overrides: updatedOverrides,
         news: updatedNews,
+        exercises: updatedExercises,
+        modules: updatedModules,
         pendingEdits: remainingPending
       });
     });
@@ -337,7 +409,11 @@ function AdminProvider({ children }) {
     logout,
     cmsData,
     updateLesson,
+    addModule,
     addNews,
+    deleteNews,
+    addExercise,
+    deleteExercise,
     inlineEditActive,
     setInlineEditActive,
     toggleInlineEdit,
