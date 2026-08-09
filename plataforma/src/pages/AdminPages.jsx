@@ -175,20 +175,24 @@ function AdminDashboard() {
   if (EXACT_CONTENT) {
     Object.keys(EXACT_CONTENT).forEach(subjKey => {
       const subj = EXACT_CONTENT[subjKey];
-      subj.modulos.forEach(mod => {
-        mod.aulas.forEach(aula => {
-          const lessonId = `${subjKey}-${mod.slug}-${aula.slug}`;
-          const cmsOverride = cmsData?.lessons?.[lessonId];
-          const currentVideo = cmsOverride?.videoUrl !== undefined ? cmsOverride.videoUrl : (aula.videoUrl || '');
-          allLessons.push({
-            id: lessonId,
-            title: aula.titulo,
-            subject: subjKey === 'matematica' ? 'Matemática' : 'Finanças',
-            module: mod.titulo,
-            videoUrl: currentVideo
-          });
+      if (subj && Array.isArray(subj.modulos)) {
+        subj.modulos.forEach(mod => {
+          if (mod && Array.isArray(mod.aulas)) {
+            mod.aulas.forEach(aula => {
+              const lessonId = `${subjKey}-${mod.slug}-${aula.slug}`;
+              const cmsOverride = cmsData?.lessons?.[lessonId];
+              const currentVideo = cmsOverride?.videoUrl !== undefined ? cmsOverride.videoUrl : (aula.videoUrl || '');
+              allLessons.push({
+                id: lessonId,
+                title: aula.titulo,
+                subject: subjKey === 'matematica' ? 'Matemática' : 'Finanças',
+                module: mod.titulo,
+                videoUrl: currentVideo
+              });
+            });
+          }
         });
-      });
+      }
     });
   }
 
