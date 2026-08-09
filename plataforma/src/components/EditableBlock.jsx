@@ -51,15 +51,15 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
     <div className={`bfa-editable-wrapper ${canEdit ? 'can-edit' : ''}`} style={style}>
       <div className="bfa-editable-content" style={{ flex: 1, minWidth: 0 }}>
         {hasOverride ? (
-          <Component className={className}>{currentText}</Component>
+          <Component className={className} style={style}>{currentText}</Component>
         ) : children ? (
           typeof children === 'string' || typeof children === 'number' ? (
-            <Component className={className}>{children}</Component>
+            <Component className={className} style={style}>{children}</Component>
           ) : (
             children
           )
         ) : (
-          <Component className={className}>{currentText}</Component>
+          <Component className={className} style={style}>{currentText}</Component>
         )}
       </div>
 
