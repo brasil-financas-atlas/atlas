@@ -134,11 +134,29 @@ function AdminLogin() {
 }
 
 function AdminDashboard() {
-  const { isAuthenticated, adminUser, logout, cmsData, approvePendingEdit, rejectPendingEdit, updateLesson } = useContext(AdminContext || createContext({}));
+  const { isAuthenticated, adminUser, logout, cmsData, approvePendingEdit, rejectPendingEdit, updateLesson, addModule, addNews, addExercise, deleteNews, deleteExercise } = useContext(AdminContext || createContext({}));
   const { EXACT_CONTENT } = window;
   const [showSyncModal, setShowSyncModal] = useState(false);
   const [editingVideoLessonId, setEditingVideoLessonId] = useState(null);
   const [videoUrlInput, setVideoUrlInput] = useState('');
+
+  // Modals for creation
+  const [showAddModuleModal, setShowAddModuleModal] = useState(false);
+  const [modSubjKey, setModSubjKey] = useState('financas');
+  const [modTitle, setModTitle] = useState('');
+
+  const [showAddNewsModal, setShowAddNewsModal] = useState(false);
+  const [newsTitle, setNewsTitle] = useState('');
+  const [newsCat, setNewsCat] = useState('Macroeconomia');
+  const [newsSummary, setNewsSummary] = useState('');
+
+  const [showAddExModal, setShowAddExModal] = useState(false);
+  const [exTitle, setExTitle] = useState('');
+  const [exCategory, setExCategory] = useState('fixacao');
+  const [exModule, setExModule] = useState('Matemática Financeira');
+  const [exDifficulty, setExDifficulty] = useState('Médio');
+  const [exQuestion, setExQuestion] = useState('');
+  const [exAnswer, setExAnswer] = useState('');
 
   if (!isAuthenticated) {
     return (
@@ -174,6 +192,40 @@ function AdminDashboard() {
     });
   }
 
+  const handleCreateModule = (e) => {
+    e.preventDefault();
+    if (!modTitle.trim()) return;
+    addModule(modSubjKey, { titulo: modTitle.trim() });
+    setModTitle('');
+    setShowAddModuleModal(false);
+  };
+
+  const handleCreateNews = (e) => {
+    e.preventDefault();
+    if (!newsTitle.trim() || !newsSummary.trim()) return;
+    addNews({ title: newsTitle.trim(), category: newsCat, summary: newsSummary.trim() });
+    setNewsTitle('');
+    setNewsSummary('');
+    setShowAddNewsModal(false);
+  };
+
+  const handleCreateExercise = (e) => {
+    e.preventDefault();
+    if (!exTitle.trim() || !exQuestion.trim() || !exAnswer.trim()) return;
+    addExercise({
+      title: exTitle.trim(),
+      category: exCategory,
+      module: exModule.trim(),
+      difficulty: exDifficulty,
+      question: exQuestion.trim(),
+      answer: exAnswer.trim()
+    });
+    setExTitle('');
+    setExQuestion('');
+    setExAnswer('');
+    setShowAddExModal(false);
+  };
+
   return (
     <div>
       <section className="hero-gradient" style={{ padding: '3.5rem 0 2.5rem 0', position: 'relative' }}>
@@ -201,6 +253,25 @@ function AdminDashboard() {
       </section>
 
       <section className="bfa-container" style={{ padding: '3rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+
+        {/* Quick Action Bar for Admins to Add Content */}
+        <div className="tool-card" style={{ padding: '1.5rem', background: 'var(--surface-strong)', border: '1px solid var(--border)' }}>
+          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            ⚡ Ações Rápidas de Cadastro (Admin)
+          </h3>
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <button onClick={() => setShowAddModuleModal(true)} className="bfa-btn bfa-btn--azul">
+              + Criar Módulo
+            </button>
+            <button onClick={() => setShowAddNewsModal(true)} className="bfa-btn bfa-btn--ouro">
+              + Publicar Notícia
+            </button>
+            <button onClick={() => setShowAddExModal(true)} className="bfa-btn bfa-btn--verde">
+              + Cadastrar Exercício
+            </button>
+          </div>
+        </div>
+
         {/* Painel de Aprovações Pendentes (Visível para Admin Chief / Admin) */}
         {isChief && (
           <div className="tool-card" style={{ padding: '2rem' }}>
@@ -347,6 +418,124 @@ function AdminDashboard() {
 
         {/* Personalização & Seleção de Tema Visual */}
         <ThemeSelector />
+
+        {/* Modal: Add Module */}
+        {showAddModuleModal && (
+          <div className="bfa-inline-editor-modal" onClick={() => setShowAddModuleModal(false)}>
+            <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '480px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1rem' }}>
+                📁 Criar Novo Módulo
+              </h3>
+              <form onSubmit={handleCreateModule}>
+                <div style={{ marginBottom: '1rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Trilha / Disciplina:</label>
+                  <select value={modSubjKey} onChange={e => setModSubjKey(e.target.value)} className="bfa-input" style={{ width: '100%' }}>
+                    <option value="financas">Finanças & Investimentos</option>
+                    <option value="matematica">Matemática Aplicada</option>
+                  </select>
+                </div>
+                <div style={{ marginBottom: '1.25rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Título do Módulo:</label>
+                  <input type="text" value={modTitle} onChange={e => setModTitle(e.target.value)} placeholder="Ex: Mercado de Derivativos e Opções" className="bfa-input" style={{ width: '100%' }} required autoFocus />
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                  <button type="button" className="bfa-btn bfa-btn--ghost" onClick={() => setShowAddModuleModal(false)}>Cancelar</button>
+                  <button type="submit" className="bfa-btn bfa-btn--azul">Salvar Módulo 💾</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Modal: Add News */}
+        {showAddNewsModal && (
+          <div className="bfa-inline-editor-modal" onClick={() => setShowAddNewsModal(false)}>
+            <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1rem' }}>
+                📰 Publicar Notícia Macro
+              </h3>
+              <form onSubmit={handleCreateNews}>
+                <div style={{ marginBottom: '1rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Título da Notícia:</label>
+                  <input type="text" value={newsTitle} onChange={e => setNewsTitle(e.target.value)} placeholder="Ex: Banco Central Altera Metodologia de Cálculo..." className="bfa-input" style={{ width: '100%' }} required autoFocus />
+                </div>
+                <div style={{ marginBottom: '1rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Categoria:</label>
+                  <select value={newsCat} onChange={e => setNewsCat(e.target.value)} className="bfa-input" style={{ width: '100%' }}>
+                    <option value="Macroeconomia">Macroeconomia</option>
+                    <option value="Equity Research">Equity Research</option>
+                    <option value="Mercado Financeiro">Mercado Financeiro</option>
+                    <option value="Educação Financeira">Educação Financeira</option>
+                  </select>
+                </div>
+                <div style={{ marginBottom: '1.25rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Resumo executivo:</label>
+                  <textarea value={newsSummary} onChange={e => setNewsSummary(e.target.value)} rows="3" className="bfa-textarea" style={{ width: '100%' }} required></textarea>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                  <button type="button" className="bfa-btn bfa-btn--ghost" onClick={() => setShowAddNewsModal(false)}>Cancelar</button>
+                  <button type="submit" className="bfa-btn bfa-btn--ouro">Publicar Notícia 🚀</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Modal: Add Exercise */}
+        {showAddExModal && (
+          <div className="bfa-inline-editor-modal" onClick={() => setShowAddExModal(false)}>
+            <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '580px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1rem' }}>
+                ✏️ Cadastrar Exercício (PBL)
+              </h3>
+              <form onSubmit={handleCreateExercise}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
+                  <div>
+                    <label style={{ fontWeight: 700, fontSize: '0.8rem', display: 'block', marginBottom: '0.3rem' }}>Aba do Hub:</label>
+                    <select value={exCategory} onChange={e => setExCategory(e.target.value)} className="bfa-input" style={{ width: '100%' }}>
+                      <option value="fixacao">Fixação Conceitual</option>
+                      <option value="calculo">Cálculo Financeiro</option>
+                      <option value="pbl">Casos Reais (PBL)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style={{ fontWeight: 700, fontSize: '0.8rem', display: 'block', marginBottom: '0.3rem' }}>Dificuldade:</label>
+                    <select value={exDifficulty} onChange={e => setExDifficulty(e.target.value)} className="bfa-input" style={{ width: '100%' }}>
+                      <option value="Fácil">Fácil</option>
+                      <option value="Médio">Médio</option>
+                      <option value="Avançado">Avançado</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div style={{ marginBottom: '1rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Módulo Relacionado:</label>
+                  <input type="text" value={exModule} onChange={e => setExModule(e.target.value)} className="bfa-input" style={{ width: '100%' }} required />
+                </div>
+
+                <div style={{ marginBottom: '1rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Título do Exercício:</label>
+                  <input type="text" value={exTitle} onChange={e => setExTitle(e.target.value)} placeholder="Ex: Análise da Taxa de Retorno Real..." className="bfa-input" style={{ width: '100%' }} required />
+                </div>
+
+                <div style={{ marginBottom: '1rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Enunciado da Questão:</label>
+                  <textarea value={exQuestion} onChange={e => setExQuestion(e.target.value)} rows="3" className="bfa-textarea" style={{ width: '100%' }} required></textarea>
+                </div>
+
+                <div style={{ marginBottom: '1.25rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Resolução Passo a Passo (Gabarito):</label>
+                  <textarea value={exAnswer} onChange={e => setExAnswer(e.target.value)} rows="3" className="bfa-textarea" style={{ width: '100%' }} required></textarea>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                  <button type="button" className="bfa-btn bfa-btn--ghost" onClick={() => setShowAddExModal(false)}>Cancelar</button>
+                  <button type="submit" className="bfa-btn bfa-btn--verde">Cadastrar Exercício 💾</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
 
         <GitHubSyncModal isOpen={showSyncModal} onClose={() => setShowSyncModal(false)} />
       </section>
