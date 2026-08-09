@@ -236,7 +236,18 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
         {/* Quiz Engine */}
         <div style={{ marginTop: '3.5rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
-          <QuizEngine questions={aulaObj.quiz || []} lessonId={lessonId} />
+          {(() => {
+            const richData = subjectKey === 'financas' ? window.financasData : (subjectKey === 'matematica' ? window.matematicaData : null);
+            let richAula = null;
+            if (richData && richData.modulos) {
+              const rMod = richData.modulos.find(m => m.slug === moduloSlug);
+              if (rMod && rMod.aulas) {
+                richAula = rMod.aulas.find(a => a.slug === aulaSlug);
+              }
+            }
+            const lessonQuestions = richAula?.miniQuiz || aulaObj?.miniQuiz || aulaObj?.quiz || [];
+            return <QuizEngine questions={lessonQuestions} lessonId={lessonId} />;
+          })()}
         </div>
 
         {/* Timestamps Forum */}
