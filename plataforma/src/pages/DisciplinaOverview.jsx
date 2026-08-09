@@ -42,7 +42,7 @@ function DisciplinaOverview({ subjectKey }) {
             {isMatematica ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}
           </EditableBlock>
 
-          <div className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.6)', marginTop: '0.5rem' }}>
+          <div className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.95)', marginTop: '0.5rem', fontWeight: 600 }}>
             {subjectData.modulos.length} MÓDULOS · {totalLessons} AULAS TOTAL
           </div>
 
