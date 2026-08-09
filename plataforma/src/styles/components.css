@@ -648,3 +648,119 @@
   color: var(--muted-foreground);
   margin-bottom: 1rem;
 }
+
+/* ── 10. Modals & Overlays (Admin & Interactive Editors) ─────────────────── */
+.bfa-inline-editor-modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.bfa-inline-editor-card {
+  background-color: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  width: 100%;
+  max-width: 640px;
+  box-shadow: var(--shadow-elevated);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.bfa-btn-icon {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--muted-foreground);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s ease;
+}
+
+.bfa-btn-icon:hover {
+  background-color: var(--secondary);
+  color: var(--foreground);
+}
+
+.bfa-btn-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+/* ── 11. Khan Academy Style Fixation Quiz Controls ───────────────────────── */
+.bfa-quiz__pills {
+  display: flex;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.bfa-quiz__pill {
+  width: 24px;
+  height: 6px;
+  border-radius: 999px;
+  background-color: var(--border);
+  transition: all 0.2s ease;
+}
+
+.bfa-quiz__pill.active {
+  background-color: var(--ring);
+  width: 36px;
+}
+
+.bfa-quiz__pill.correct {
+  background-color: var(--market);
+}
+
+.bfa-quiz__pill.wrong {
+  background-color: var(--status-danger);
+}
+
+/* ── 12. Tab Buttons ─────────────────────────────────────────────────────── */
+.bfa-tab-btn {
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.bfa-tab-btn:hover {
+  background-color: var(--secondary);
+}
+
+.bfa-tab-btn.active-fixacao {
+  background-color: var(--track-finance);
+  color: #FFFFFF !important;
+  border-color: var(--track-finance);
+}
+
+.bfa-tab-btn.active-calculo {
+  background-color: var(--track-math);
+  color: #FFFFFF !important;
+  border-color: var(--track-math);
+}
+
+.bfa-tab-btn.active-pbl {
+  background-color: var(--gold-deep);
+  color: #FFFFFF !important;
+  border-color: var(--gold-deep);
+}
+
