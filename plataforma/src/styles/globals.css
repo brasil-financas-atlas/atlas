@@ -51,6 +51,14 @@
   --surface: #FFFFFF;
   --surface-strong: #F1F5F9;
 
+  /* Status Colors (WCAG Compliant) */
+  --status-success: #059669;
+  --status-success-bg: #ECFDF5;
+  --status-warning: #D97706;
+  --status-warning-bg: #FFFBEB;
+  --status-danger: #DC2626;
+  --status-danger-bg: #FEF2F2;
+
   /* Backward Compatibility Aliases */
   --color-verde: var(--track-finance);
   --color-verde-light: #E8F5ED;
