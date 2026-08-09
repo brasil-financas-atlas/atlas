@@ -47,7 +47,7 @@ function Home() {
               <div key={s.label} style={{ background: 'rgba(15, 23, 42, 0.65)', backdropFilter: 'blur(8px)', padding: '1.25rem 1.5rem' }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.85rem', fontWeight: 700, color: '#FFFFFF' }}>{s.value}</div>
                 <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'rgba(255, 255, 255, 0.85)', marginTop: '0.2rem' }}>{s.label}</div>
-                <div className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.5)', marginTop: '0.25rem' }}>{s.note}</div>
+                <div className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.85)', marginTop: '0.25rem', fontWeight: 600 }}>{s.note}</div>
               </div>
             ))}
           </div>
