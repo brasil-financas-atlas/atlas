@@ -1,36 +1,32 @@
 # Handoff Briefing
 
 ## Goal
-Redesign and maintain the Brasil Finanças Atlas (BFA) educational platform UI/UX with the Lovable design system, integrate Supabase PostgreSQL backend BaaS (Auth, RLS, and Collaborator/Admin Chief approval workflow), and deploy to Cloudflare Pages with local auto-sync daemon.
+Implement admin capabilities for editing/adding content (modules, lessons, news, exercises, quizzes), transform the mini-quiz into a Khan Academy-style fixation quiz with lesson-specific questions, fix forum CSS, and solve dark-on-dark contrast issues across the site.
 
 ## Current Status
 - **Completed:**
-  - Removed theme selector from public header navigation ([`NavbarFooter.jsx`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/components/NavbarFooter.jsx)); restricted theme customization exclusively to Admin Dashboard ([`AdminPages.jsx`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/pages/AdminPages.jsx)).
-  - Upgraded student comments/forum UI ([`VideoAndForum.jsx`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/components/VideoAndForum.jsx)) and interactive quiz options ([`QuizEngine.jsx`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/components/QuizEngine.jsx)) with comprehensive CSS in [`components.css`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/styles/components.css).
-  - Fixed dark-on-dark color contrast ratios (WCAG AAA compliant) in track headers and progress badges ([`DisciplinaOverview.jsx`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/pages/DisciplinaOverview.jsx) and [`globals.css`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/styles/globals.css)).
-  - Added Lesson Video Management (add/edit/remove YouTube URL) for Admins in [`AulaPage.jsx`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/pages/AulaPage.jsx) and Central Video Manager in [`AdminPages.jsx`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/pages/AdminPages.jsx).
-  - Updated PostgreSQL schema ([`schema.sql`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/data/schema.sql)) with `admin_chief` and `collaborator` roles and created `pending_edits` table with RLS policies.
-  - Implemented Supabase Auth and Collaborator-to-Admin Chief approval workflow in [`supabaseClient.js`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/utils/supabaseClient.js) and [`AdminContext.jsx`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/context/AdminContext.jsx).
-  - Generated Supabase setup documentation in [`.agents/GUIA_CADASTRO_SUPABASE.md`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/.agents/GUIA_CADASTRO_SUPABASE.md).
-  - Verified local auto-sync daemon (`auto_sync.py`) running in background and synced all commits to GitHub `main` branch.
-- **In-Progress:**
-  - Supabase production project user creation and environment variable configuration (`VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in Cloudflare Pages).
-- **Blockers:**
-  - None.
+  - Extended `AdminContext.jsx` with `addModule`, `addNews`, `deleteNews`, `addExercise`, `deleteExercise` and collaborator pending edits workflow.
+  - Added Quick Action Bar and modals in `AdminPages.jsx` for creating modules, news, and exercises, and fixed the `undefined.forEach` crash when iterating `EXACT_CONTENT`.
+  - Transformed `QuizEngine.jsx` into a Khan Academy Fixation Quiz with progress pills, instant feedback, and normalized property mapping for `miniQuiz` arrays.
+  - Included `financasData.js` and `matematicaData.js` in `index.html` and updated `AulaPage.jsx` so every lesson dynamically loads its specific 5-question fixation quiz.
+  - Added CSS rules for `.bfa-forum`, `.bfa-inline-editor-modal`, `.bfa-inline-editor-card`, `.bfa-btn-group`, and `.bfa-tab-btn` in `components.css`.
+  - Solved page title illegibility (dark blue on dark blue) by passing `style={style}` directly to `<Component>` in `EditableBlock.jsx` and enforcing `.hero-gradient * { color: #FFFFFF !important; }` in `globals.css`.
+  - Verified local dev server running on `http://localhost:3000`.
+- **In-Progress:** None. All user requests fully shipped and tested.
+- **Blockers:** None.
 
 ## Decisions Made (Locked)
-- **Single Login / BaaS Auth**: Collaborators use individual Supabase Auth logins (email/password) instead of separate GitHub Personal Access Tokens (PATs).
-- **Collaborator Edit Approval Workflow**: Changes submitted by `collaborator` role enter a `pending_edits` queue; an `admin_chief` must review and approve/reject them in the Admin Dashboard before they go live.
-- **Theme Customization Access**: Theme selector is hidden from main navbar and restricted to the Admin area.
-- **Cloudflare Build Settings**: `Root directory` set to `plataforma`, `Build output directory` set to `.`, and `Build command` left blank.
+- **Khan Academy Quiz Engine:** Quizzes use a 5-question step-by-step layout with visual status pills (`.bfa-quiz__pills`), instant answer verification, explanation cards, and mastery badges.
+- **Dynamic Lesson Mini-Quiz Resolution:** `AulaPage.jsx` checks `window.financasData` and `window.matematicaData` for rich `miniQuiz` data per lesson before falling back to default questions.
+- **Title Color Enforcement:** `EditableBlock.jsx` applies `style={style}` directly onto the rendered `<Component>` element to ensure inline styles override `typography.css` global element rules.
 
 ## Failed Approaches / Dead Ends (Do Not Retry)
-- **Running `logging.StreamHandler(sys.stdout)` under `pythonw.exe` without checking `sys.stdout is not None`**: `sys.stdout` is `None` under `pythonw.exe`, causing logging calls to crash background processes. Always check `if sys.stdout is not None` before adding `StreamHandler`.
-- **Setting Cloudflare Root Directory to `/`**: Causes Cloudflare to auto-detect `requirements.txt` in the root and fail while attempting Python MkDocs installation. Always set `Root directory` to `plataforma`.
+- **Applying `color: #FFFFFF` only to parent containers of `EditableBlock`**: Failed because `h1, h2, h3` element selectors in `typography.css` have higher specificity than CSS inheritance, forcing dark blue text on dark blue gradients. Solved by passing `style` directly onto `<Component style={style}>` and using `.hero-gradient h1 { color: #FFFFFF !important; }`.
+- **Assuming `EXACT_CONTENT` keys all contain `.modulos`**: Failed in `AdminPages.jsx` because top-level keys like `"index"`, `"sobre"`, `"exercicios"` are strings or objects without `.modulos`. Solved with defensive check `if (subj && Array.isArray(subj.modulos))`.
 
 ## Extracted Memories & Preferences
-- Always ensure dark mode primary text is `#F0F6FC` or `#FFFFFF` and accent colors are high-luminance (e.g., `#34D399`, `#FBBF24`, `#60A5FA`) for dark background contrast.
-- Keep `.env` populated with `GITHUB_PAT` having `repo` and `workflow` permissions for `auto_sync.py`.
+- **Single-page Babel SPA Architecture:** Project uses React 18 + Babel Standalone loaded directly in `index.html`. All data scripts (`contentData.js`, `financasData.js`, `matematicaData.js`) must be included in `index.html`.
+- **Background Auto-Sync Protocol:** `AGENTS.md` mandates auto-syncing commits via `python auto_sync.py` running in background.
 
 ## Immediate Next Step
-- Configure Supabase credentials (`VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`) in Cloudflare Pages Environment Variables and create collaborator accounts in Supabase Authentication UI.
+- Continue developing new lesson content or adding interactive features to the platform as requested by the user.
