@@ -182,7 +182,20 @@ a {
 /* Utilitários Visuais Lovable */
 .hero-gradient {
   background: linear-gradient(135deg, #0F172A 0%, #1E293B 45%, #0284C7 100%);
-  color: #FFFFFF;
+  color: #FFFFFF !important;
+}
+
+.hero-gradient h1,
+.hero-gradient h2,
+.hero-gradient h3,
+.hero-gradient h4,
+.hero-gradient h5,
+.hero-gradient h6,
+.hero-gradient p,
+.hero-gradient span,
+.hero-gradient .bfa-editable-content,
+.hero-gradient .bfa-editable-content * {
+  color: #FFFFFF !important;
 }
 
 .grid-ledger {
