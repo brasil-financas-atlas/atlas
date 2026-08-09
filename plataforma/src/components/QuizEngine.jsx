@@ -63,16 +63,23 @@ function QuizEngine({ questions, lessonId }) {
   const { saveQuizScore, getQuizScore } = useContext(ProgressContext || createContext({}));
 
   const quizQuestions = useMemo(() => {
+    let rawList = null;
     if (cmsData?.lessons?.[lessonId]?.customQuiz && cmsData.lessons[lessonId].customQuiz.length > 0) {
-      return cmsData.lessons[lessonId].customQuiz;
+      rawList = cmsData.lessons[lessonId].customQuiz;
+    } else if (cmsData?.quizzes?.[lessonId] && cmsData.quizzes[lessonId].length > 0) {
+      rawList = cmsData.quizzes[lessonId];
+    } else if (questions && questions.length > 0) {
+      rawList = questions;
+    } else {
+      rawList = DEFAULT_FIXATION_QUESTIONS;
     }
-    if (cmsData?.quizzes?.[lessonId] && cmsData.quizzes[lessonId].length > 0) {
-      return cmsData.quizzes[lessonId];
-    }
-    if (questions && questions.length > 0) {
-      return questions;
-    }
-    return DEFAULT_FIXATION_QUESTIONS;
+
+    return rawList.map(q => ({
+      pergunta: q.pergunta || q.question || '',
+      alternativas: q.alternativas || q.opcoes || q.options || [],
+      correta: q.correta !== undefined ? q.correta : (q.respostaCorreta !== undefined ? q.respostaCorreta : 0),
+      explicacao: q.explicacao || q.explanation || ''
+    }));
   }, [cmsData, lessonId, questions]);
 
   const [currentIdx, setCurrentIdx] = useState(0);
