@@ -102,4 +102,14 @@
 
   --surface: #161B22;
   --surface-strong: #21262D;
+
+  --status-success: #34D399;
+  --status-success-bg: rgba(52, 211, 153, 0.15);
+  --status-warning: #FBBF24;
+  --status-warning-bg: rgba(251, 191, 36, 0.15);
+  --status-danger: #F87171;
+  --status-danger-bg: rgba(248, 113, 113, 0.15);
+
+  --color-azul-dark: #F0F6FC;
+  --color-azul: #60A5FA;
 }
