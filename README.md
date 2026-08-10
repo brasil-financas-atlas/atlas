@@ -12,6 +12,10 @@ Trilha aberta de educação financeira e matemática aplicada para estudantes do
 
 ## ✅ Próximos passos
 
+> Se você está voltando ao projeto depois de alguns dias, leia primeiro
+> **[MUDANCAS.md](MUDANCAS.md)** — o que mudou em agosto, por quê, e o que
+> depende de você.
+
 Roteiro do que falta, na ordem. **A ordem importa** — há um passo que depende dos anteriores e, se for antecipado, derruba o acesso de administrador.
 
 ### ~~1. Consertar a renderização de matemática~~ ✅ feito
