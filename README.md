@@ -46,164 +46,109 @@ python -m http.server 8080 --directory plataforma
 
 ---
 
-## 🔒 Acesso à Área Restrita de Professores (Admin CMS)
+## 🔒 Área do Professor (Admin)
 
-Para acessar o painel de administração e testar a edição in-context das aulas, acesse no navegador a rota `/#/admin/login` e utilize um dos usuários cadastrados:
+O acesso é por **conta de verdade**, criada no Supabase. Não existe usuário nem
+senha escritos no código — e não existe token para colar em lugar nenhum.
 
-- **Usuário:** `admin` | **Senha:** `bfa@2024`
-- **Usuário:** `lucas` | **Senha:** `dragaodoomar`
-- **Usuário:** `nif` | **Senha:** `investir123`
-- **Usuário:** `professor` | **Senha:** `brhsic2024`
+Antes valia o contrário: quatro pares usuário/senha viviam dentro do
+`AdminContext.jsx`, e publicar exigia colar um Personal Access Token do GitHub
+na tela. Como este site é servido como arquivo estático, qualquer pessoa podia
+ler as senhas; e o token ficava guardado no navegador de quem o digitasse. As
+duas coisas foram removidas.
 
----
+### Como funciona hoje
 
-## ⚙️ Pré-requisitos & Configuração Prévia do Git / GitHub (Sincronização)
+1. **Entrar:** `/#/admin/login`, com o e-mail e a senha da sua conta do
+   Supabase.
+2. **Editar:** com o modo de edição ligado, clique no texto e altere.
+3. **Publicar:** botão **🚀 Publicar alterações**. Não pede credencial: a
+   permissão é verificada pelo próprio banco, pela política
+   `Somente admin altera conteúdo`. Se a conta não for administradora, a
+   gravação é recusada lá — e não por uma checagem no navegador, que qualquer
+   pessoa poderia burlar.
 
-Para permitir que a edição in-context de textos, videoaulas e quizzes seja salva diretamente no repositório do GitHub e publicada automaticamente no Netlify, siga as configurações prévias abaixo:
+O conteúdo publicado vai para a tabela `site_content` e todo visitante o
+recebe no carregamento da página.
 
-### 1. Configurar Usuário e E-mail no Git Local
-Abra o seu terminal/cmd e garanta que o Git está identificado:
-```bash
-git config --global user.name "Seu Nome"
-git config --global user.email "seu-email@exemplo.com"
+### Primeira configuração (uma vez só)
+
+**1. Criar o banco.** No painel do Supabase, abra o **SQL Editor**, cole todo o
+conteúdo de `plataforma/src/data/schema.sql` e execute. Pode rodar de novo
+quando quiser: o arquivo é idempotente.
+
+**2. Ligar o site ao banco.** Em *Project Settings → API*, copie a **Project
+URL** e a chave **anon public**, e preencha as duas constantes no topo de
+`plataforma/src/utils/env.js`.
+
+> A chave `anon` é pública por natureza — ela vai no navegador de todo
+> visitante em qualquer aplicação Supabase, e não concede permissão por si só.
+> Quem controla o que cada pessoa lê e escreve são as políticas de RLS do
+> `schema.sql`. A chave que **nunca** pode entrar no repositório é a
+> `service_role`, que ignora o RLS inteiro.
+
+**3. Criar o primeiro administrador.** Ninguém nasce admin, e não existe botão
+para virar admin — de propósito, senão isso seria um caminho para escalar
+privilégio. Então o primeiro é promovido à mão:
+
+- *Authentication → Users → Add user*, com "Auto Confirm User" marcado.
+- No SQL Editor:
+
+```sql
+UPDATE public.profiles SET role = 'admin' WHERE email = 'seu-email@exemplo.com';
 ```
 
-### 2. Gerar o Token Seguro de Acesso Granular (Fine-Grained Token)
-Para garantir **100% de segurança** e **impedir qualquer acesso a outros repositórios privados** da sua conta:
-
-1. Acesse no GitHub: **Settings ➔ Developer Settings ➔ Personal Access Tokens ➔ Fine-grained tokens**.
-2. Clique no botão **Generate new token**.
-3. Em **Token name**, digite `BFA Sync Token`.
-4. Em **Repository access**, marque a opção **`Only select repositories`** e selecione exclusivamente o repositório **`atlas`** (ou o repositório da plataforma).
-5. Na seção **Permissions ➔ Repository permissions**, procure por **Contents** e altere para **`Read and write`**.
-6. Clique em **Generate token** no final da página e copie a chave gerada (ela começa com `github_pat_...`).
-
-> 🔒 **Segurança Total**: Com este token granular, a plataforma BFA terá acesso **exclusivamente ao repositório do BFA**, ficando **totalmente bloqueada** de visualizar ou acessar qualquer outro repositório privado da sua conta.
-
-### 3. Vincular o Token na Plataforma
-1. Faça login na plataforma como Admin.
-2. Clique no botão **`🚀 Publicar no GitHub`** no menu superior.
-3. Cole a sua chave `github_pat_...` (o Dono vem preenchido como `brasil-financas-atlas` e o Repositório como `atlas`).
-4. Pronto! Suas alterações serão salvas diretamente no repositório do GitHub e o Netlify atualizará o site em ~30 segundos.
+Daí em diante, promover alguém é sempre por aqui.
 
 ---
 
-## 🔄 Guia Completo de Sincronização (Site e Arquivos Locais do PC)
+## 🔄 Sincronizar arquivos do seu PC com o GitHub
 
-A plataforma conta com um sistema de **Git-as-a-CMS** para sincronizar as edições pedagógicas (`plataforma/src/data/overrides.json`) e alterações de código com o repositório oficial no GitHub (`https://github.com/brasil-financas-atlas/atlas`).
+Para editar **conteúdo** (as unidades em Markdown), o caminho normal é o
+repositório de conteúdo — veja
+[brasil-financas-atlas/bfa](https://github.com/brasil-financas-atlas/bfa), que
+tem um botão de lápis em cada página do site.
 
----
+Para mexer no **código** da plataforma, use git direto:
 
-## ☁️ Guia de Deploy Contínuo e Gratuito Sincronizado com GitHub
-
-Com o fluxo de **Auto-Sync** ativo (PC ➔ GitHub), qualquer alteração salva no seu computador é enviada para a branch `main` do repositório no GitHub. Para ter o site publicado na web automaticamente e de graça, você pode conectar o repositório a uma das plataformas cloud recomendadas:
-
-### 1. Opção Recomendada: Netlify (Free Tier)
-> 📌 *Atualmente utilizado nos links da plataforma (`brasil-financas-atlas.netlify.app`).*
-
-1. **Criar Conta**: Acesse [netlify.com](https://www.netlify.com/) e faça login usando a sua conta do GitHub.
-2. **Importar Repositório**:
-   - Clique em **Add new site ➔ Import an existing project**.
-   - Escolha o provedor **GitHub**.
-   - Selecione a organização **`brasil-financas-atlas`** e o repositório **`atlas`**.
-3. **Configurações de Build**:
-   - **Branch de deploy**: `main`
-   - **Publish directory**: `plataforma` *(ou `.` dependendo da estrutura do app)*
-   - **Build command**: Deixe em branco (para sites HTML/JS estáticos) ou `npm run build` (caso use Vite/React).
-4. **Deploy Automático**: Clique em **Deploy atlas**.
-   - A partir deste momento, sempre que o `auto_sync.py` ou a área Admin enviarem um commit para o GitHub, o Netlify atualizará a URL do site em **~30 segundos**.
-
----
-
-### 2. Opção Alternativa: Vercel (Free Hobby Tier)
-
-1. Acesse [vercel.com](https://vercel.com/) e faça login com o GitHub.
-2. Clique em **Add New... ➔ Project**.
-3. Selecione o repositório `brasil-financas-atlas/atlas`.
-4. Defina a pasta raiz do projeto em **Root Directory** como `plataforma` (se aplicável).
-5. Clique em **Deploy**. As atualizações serão publicadas automaticamente a cada `git push`.
-
----
-
-### 3. Opção de Altíssima Performance: Cloudflare Pages (Free Tier)
-
-1. Acesse [dash.cloudflare.com](https://dash.cloudflare.com/) ➔ **Workers & Pages**.
-2. Clique em **Create Application ➔ Pages ➔ Connect to Git**.
-3. Escolha o repositório `brasil-financas-atlas/atlas`.
-4. Defina o **Build output directory** como `plataforma`.
-5. Clique em **Save and Deploy**. Oferece 100.000 requisições diárias sem taxa de tráfego.
-
----
-
-
-### 🌐 1. Sincronização pelo Site (Área Admin / Navegador)
-
-Para salvar edições de aulas, vídeos e quizzes feitas diretamente na interface web e atualizar a nuvem:
-
-1. Faça login na plataforma em `/#/admin/login` (ex: usuário `admin` e senha `bfa@2024`).
-2. Faça as edições desejadas nas aulas (textos, vídeos, questões).
-3. No topo da página, clique no botão verde **`🚀 Publicar no GitHub`**.
-4. Insira o seu **Personal Access Token (PAT)** do GitHub (o dono `brasil-financas-atlas` e repositório `atlas` já vêm preenchidos).
-5. Clique em **Publicar**. As alterações serão gravadas diretamente no repositório GitHub e o Netlify atualizará o site público automaticamente.
-
----
-
-### 💻 2. Sincronização Automática de Arquivos Locais do seu PC (Passo a Passo Detalhado)
-
-Se você edita os arquivos do projeto no seu computador (via VS Code, bloco de notas ou edita scripts de aula diretamente no PC), o serviço **Auto-Sync (`auto_sync.py`)** envia todas as suas alterações em tempo real para o GitHub sem travar ou pedir senha.
-
-#### 📌 Passo 1: Instalar a Biblioteca de Monitoramento (Executar uma única vez)
-Abra o Terminal / CMD na pasta do projeto e execute:
 ```bash
-pip install watchdog
-```
-
-#### 📌 Passo 2: Configurar o seu Token de Acesso (PAT) no arquivo `.env`
-Para que o script faça `git push` automaticamente em segundo plano para o repositório privado da organização (`brasil-financas-atlas/atlas`):
-
-1. Na raiz da pasta do projeto, crie um arquivo chamado **`.env`** (ou abra o `.env` existente).
-2. Adicione a linha abaixo substituindo pela sua chave Personal Access Token do GitHub:
-   ```env
-   GITHUB_PAT=github_pat_seu_token_aqui
-   ```
-   *(Como gerar o PAT: GitHub Settings ➔ Developer Settings ➔ Personal Access Tokens ➔ Tokens classic com escopo `repo`, ou Fine-Grained Token apontando para a org `brasil-financas-atlas`)*.
-
-#### 📌 Passo 3: Iniciar o Sincronizador Automático
-No terminal da pasta do projeto (`C:\codigos\bfa-main`), execute:
-```bash
-python auto_sync.py
-```
-
-- **Como funciona:** O script ativa o detector nativo de alterações em tempo real no Windows (`watchdog`). Sempre que você editar e salvar qualquer arquivo no PC, o script aguarda 3 segundos de inatividade (debounce) e executa automaticamente:
-  1. `git pull --rebase origin main` (para fundir edições feitas no site sem conflitos).
-  2. `git add -A` e `git commit -m "chore(auto-sync): atualiza arquivos locais [data/hora]"`.
-  3. `git push` direto para a branch `main` do GitHub `brasil-financas-atlas/atlas`.
-
-#### 📌 Passo 4: Como Rodar em Background Silencioso no Windows (Opcional)
-Se você não quiser manter a janela do prompt de comando aberta:
-- Execute via `pythonw` (sem janela de terminal):
-  ```cmd
-  pythonw auto_sync.py
-  ```
-- Todas as mensagens de sucesso ou erros serão gravadas no arquivo de log **`auto_sync.log`** na pasta do projeto.
-
----
-
-#### 🛠️ Opção Alternativa: Sincronização Manual via Comandos Git
-Caso prefira fazer commits manuais sem o script automático:
-```bash
-# 1. Atualizar o repositório remoto para a organização:
-git remote set-url origin https://github.com/brasil-financas-atlas/atlas.git
-
-# 2. Adicionar alterações e commitar:
+git pull origin main
 git add .
-git commit -m "chore: sincroniza alterações locais do PC com o GitHub"
-
-# 3. Enviar para o GitHub:
+git commit -m "descreva o que mudou"
 git push origin main
 ```
 
+Existe também o `auto_sync.py`, que observa a pasta e publica sozinho a cada
+arquivo salvo. Ele é conveniente e perigoso na mesma medida: já sobrescreveu
+correções que estavam no repositório porque publicou uma cópia local
+desatualizada. Se for usar, rode `git pull` antes de ligar.
+
 ---
+
+
+## Deploy
+
+O site vai ao ar pelo **Cloudflare Pages**, a partir da branch `main` deste
+repositorio. Nao ha etapa de build: o `plataforma/` e publicado como esta.
+
+| Configuracao | Valor |
+|---|---|
+| Build command | *(vazio)* |
+| Build output directory | `plataforma` |
+| Branch de producao | `main` |
+
+O arquivo `plataforma/_redirects` (`/* /index.html 200`) faz o Cloudflare
+devolver o `index.html` para qualquer caminho, o que a aplicacao precisa por
+ser de pagina unica.
+
+**Por que Cloudflare e nao Netlify:** a Netlify passou a exigir plano pago para
+conectar repositorio privado pertencente a uma organizacao do GitHub, que e
+exatamente o caso deste repo. No Cloudflare Pages isso entra no plano gratuito.
+
+Cada push na `main` gera um deploy novo automaticamente.
+
+---
+
 
 ## 📚 Estrutura das Trilhas de Estudo
 

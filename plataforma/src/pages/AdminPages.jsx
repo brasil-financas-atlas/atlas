@@ -134,9 +134,8 @@ function AdminLogin() {
 }
 
 function AdminDashboard() {
-  const { isAuthenticated, adminUser, logout, cmsData, approvePendingEdit, rejectPendingEdit, updateLesson, addModule, addNews, addExercise, deleteNews, deleteExercise } = useContext(AdminContext || createContext({}));
+  const { isAuthenticated, adminUser, isAdmin, logout, cmsData, publicarConteudo, statusPublicacao, erroPublicacao, approvePendingEdit, rejectPendingEdit, updateLesson, addModule, addNews, addExercise, deleteNews, deleteExercise } = useContext(AdminContext || createContext({}));
   const { EXACT_CONTENT } = window;
-  const [showSyncModal, setShowSyncModal] = useState(false);
   const [editingVideoLessonId, setEditingVideoLessonId] = useState(null);
   const [videoUrlInput, setVideoUrlInput] = useState('');
 
@@ -245,14 +244,30 @@ function AdminDashboard() {
             </p>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
-            <button onClick={() => setShowSyncModal(true)} className="btn-primary">
-              🚀 Publicar no GitHub
-            </button>
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            {/* Sem token: a permissão de publicar vem do papel da conta,
+                verificado pelo banco. */}
+            {isAdmin && (
+              <button
+                onClick={publicarConteudo}
+                className="btn-primary"
+                disabled={statusPublicacao === 'publicando'}
+              >
+                {statusPublicacao === 'publicando' && 'Publicando...'}
+                {statusPublicacao === 'publicado' && '✓ Publicado para todos'}
+                {statusPublicacao === 'erro' && '⚠ Erro ao publicar'}
+                {(statusPublicacao === 'idle' || !statusPublicacao) && '🚀 Publicar alterações'}
+              </button>
+            )}
             <button onClick={logout} className="btn-secondary">
               Sair
             </button>
           </div>
+          {statusPublicacao === 'erro' && erroPublicacao && (
+            <p style={{ color: '#FCA5A5', fontSize: '0.8rem', marginTop: '0.5rem', width: '100%' }}>
+              {erroPublicacao}
+            </p>
+          )}
         </div>
       </section>
 
@@ -541,7 +556,6 @@ function AdminDashboard() {
           </div>
         )}
 
-        <GitHubSyncModal isOpen={showSyncModal} onClose={() => setShowSyncModal(false)} />
       </section>
     </div>
   );

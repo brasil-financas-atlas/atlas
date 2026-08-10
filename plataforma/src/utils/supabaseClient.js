@@ -147,12 +147,124 @@ async function signInUser(email, password) {
 }
 
 /**
+ * Encerra a sessão. Sem isto o "sair" só limpava a tela, e o token de acesso
+ * continuava válido no navegador.
+ */
+async function signOutUser() {
+  if (!supabaseClient) return false;
+  try {
+    await supabaseClient.auth.signOut();
+    return true;
+  } catch (err) {
+    console.error('[BFA Supabase] Erro ao encerrar sessão:', err);
+    return false;
+  }
+}
+
+/**
+ * Recupera a sessão já existente no navegador, se houver.
+ *
+ * É o que faz o login sobreviver a um F5 sem que o app guarde usuário por
+ * conta própria: quem mantém a sessão é o Supabase, e o papel vem do banco a
+ * cada carregamento — não de algo salvo no navegador, que o usuário poderia
+ * editar à mão para se declarar admin.
+ */
+async function restoreSession() {
+  if (!supabaseClient) return null;
+  try {
+    const { data } = await supabaseClient.auth.getSession();
+    const user = data?.session?.user;
+    if (!user) return null;
+
+    const { data: profile } = await supabaseClient
+      .from('profiles')
+      .select('full_name, role')
+      .eq('id', user.id)
+      .single();
+
+    return {
+      id: user.id,
+      email: user.email,
+      name: profile?.full_name || user.email,
+      role: profile?.role || 'student'
+    };
+  } catch (err) {
+    console.warn('[BFA Supabase] Não foi possível recuperar a sessão:', err);
+    return null;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   CONTEÚDO DO SITE — substitui o overrides.json e o token do GitHub
+
+   Leitura é pública (qualquer visitante precisa ver o conteúdo editado).
+   Escrita é barrada no banco pela política "Somente admin altera conteúdo".
+   Ou seja: a permissão de publicar não depende de nada que o navegador
+   carregue — depende do papel gravado no banco.
+   -------------------------------------------------------------------------- */
+
+async function fetchSiteContent() {
+  if (!supabaseClient) return null;
+  try {
+    const { data, error } = await supabaseClient
+      .from('site_content')
+      .select('data, updated_at')
+      .eq('id', 1)
+      .maybeSingle();
+
+    if (error) throw error;
+    if (!data) return null;
+
+    // O updated_at do banco vira o lastUpdated que o app usa para decidir
+    // quem está mais atual: o publicado ou o rascunho deste navegador.
+    return { ...(data.data || {}), lastUpdated: data.updated_at || null };
+  } catch (err) {
+    console.warn('[BFA Supabase] Não foi possível ler o conteúdo do site:', err);
+    return null;
+  }
+}
+
+async function saveSiteContent(conteudo) {
+  if (!supabaseClient) return { success: false, error: 'Supabase não conectado' };
+  try {
+    const user = (await supabaseClient.auth.getUser())?.data?.user;
+    if (!user) return { success: false, error: 'Faça login para publicar' };
+
+    const { error } = await supabaseClient
+      .from('site_content')
+      .update({ data: conteudo, updated_by: user.id, updated_at: new Date().toISOString() })
+      .eq('id', 1);
+
+    // Erro 42501 é a política do banco recusando: quem tentou não é admin.
+    if (error) {
+      const semPermissao = error.code === '42501' || /policy|permission/i.test(error.message || '');
+      return {
+        success: false,
+        error: semPermissao
+          ? 'Sua conta não tem permissão de administrador para publicar.'
+          : (error.message || 'Erro ao publicar')
+      };
+    }
+    return { success: true };
+  } catch (err) {
+    console.error('[BFA Supabase] Erro ao gravar conteúdo:', err);
+    return { success: false, error: err.message || 'Erro ao publicar' };
+  }
+}
+
+/**
  * Envia uma edição realizada por colaborador para a fila de aprovação.
  */
 async function submitPendingEdit(resourceType, resourceId, changesJson, authorName = 'Colaborador') {
   if (!supabaseClient) return false;
   try {
     const user = (await supabaseClient.auth.getUser())?.data?.user;
+    // Sem usuário a política do banco recusa (ela exige author_id = auth.uid()),
+    // então é melhor parar aqui do que gravar um pedido órfão que vai falhar.
+    if (!user) {
+      console.warn('[BFA Supabase] Sugestão de edição sem sessão ativa — ignorada.');
+      return false;
+    }
     const { error } = await supabaseClient
       .from('pending_edits')
       .insert({
@@ -225,6 +337,10 @@ window.BfaSupabase = {
   saveQuizAttempt,
   fetchUserProgress,
   signInUser,
+  signOutUser,
+  restoreSession,
+  fetchSiteContent,
+  saveSiteContent,
   submitPendingEdit,
   fetchPendingEdits,
   updatePendingEditStatus

@@ -22,32 +22,16 @@ Este é o **passo a passo único e ultra-detalhado** contendo todas as ações q
 
 Como o projeto possui fluxos automatizados do GitHub Actions na pasta `.github/workflows/`, o seu token de acesso no GitHub **DEVE obrigatoriamente** ter a permissão de `workflow`.
 
-### 1.1 Gerar o Personal Access Token (PAT)
-1. Acesse o GitHub e entre com sua conta: [https://github.com/](https://github.com/)
-2. No canto superior direito, clique na sua foto de perfil ➔ **Settings** (Configurações).
-3. No menu lateral esquerdo (role até o final), clique em **Developer Settings**.
-4. Clique em **Personal Access Tokens** ➔ selecione **Tokens (classic)**.
-   - *Link direto*: [https://github.com/settings/tokens](https://github.com/settings/tokens)
-5. Clique no botão **Generate new token** ➔ selecione **Generate new token (classic)**.
-6. Preencha os campos:
-   - **Note**: Digite `BFA Token - Producao`
-   - **Expiration**: Escolha `No expiration` (ou 90 dias).
-7. **Marque obrigatoriamente estas duas caixas de seleção**:
-   - [x] **`repo`** (Full control of private repositories).
-   - [x] **`workflow`** (Update GitHub Action workflows).
-8. Role a página até o final e clique no botão verde **Generate token**.
-9. **Copie imediatamente a chave gerada** (formato: `ghp_xxxxxxxxxxxxxxxxxxxx`). *Atenção: Ela não será mostrada novamente!*
-
-### 1.2 Configurar o Arquivo `.env` Local
-1. No seu computador, abra a pasta raiz do projeto (`D:\Users\LuisFerro\Downloads\atlas-main\atlas-main`).
-2. Abra ou crie o arquivo chamado [`.env`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/.env).
-3. Cole a linha abaixo substituindo pelo seu token copiado:
-   ```env
-   GITHUB_PAT=ghp_ColeSeuTokenAqui
-   ```
-4. Salve o arquivo. *(O `.env` já está no `.gitignore` e não será enviado publicamente)*.
-
----
+> **Esta etapa foi removida.**
+>
+> O fluxo por Personal Access Token nao existe mais na plataforma. Antes era
+> preciso gerar um token classico com escopo `repo` total e sem expiracao, e
+> cola-lo na tela do site — o token acabava guardado no navegador, e uma vez
+> foi commitado junto com o `.env`.
+>
+> Hoje quem publica conteudo entra com **conta do Supabase** e clica em
+> "Publicar alteracoes". A permissao e verificada pelo banco, pelo papel da
+> conta. Ver a secao "Area do Professor" no `README.md`.
 
 ## ETAPA 2: Banco de Dados PostgreSQL & Auth no Supabase (Free Tier)
 
@@ -133,7 +117,7 @@ Para que qualquer alteração que você fizer no seu computador seja enviada aut
 2. Vá no final da URL e digite `/#/admin/login` (ou clique no botão **🔒 Admin** no topo do site).
 3. Faça login com as credenciais padrão de professores:
    - **Usuário**: `admin`
-   - **Senha**: `bfa@2024`
+   - **Senha**: `(senha da conta no Supabase)`
 4. Após o login, você verá a barra de ferramentas do Admin ativa no topo do site.
 5. Navegue por qualquer aula: você poderá editar textos de aulas, alterar vídeos do YouTube e cadastrar novas perguntas de quizzes diretamente na página!
 6. Para salvar e enviar suas edições para todos os alunos na web, clique no botão **🚀 Publicar no GitHub** no topo da tela.
@@ -147,12 +131,12 @@ Verifique se todas as etapas estão com **[X] OK**:
 | # | Etapa / Item | Status |
 | :- | :--- | :---: |
 | **01** | Token GitHub PAT gerado com permissões **`repo`** e **`workflow`**. | [ ] |
-| **02** | Arquivo [`.env`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/.env) criado com a linha `GITHUB_PAT=ghp_...`. | [ ] |
+| **02** | Arquivo [`.env`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/.env) criado com a linha (removido). | [ ] |
 | **03** | Banco de dados Supabase criado em São Paulo e script [`schema.sql`](file:///D:/Users/LuisFerro/Downloads/atlas-main/atlas-main/plataforma/src/data/schema.sql) executado. | [ ] |
 | **04** | Cloudflare Pages conectado ao GitHub com Root/Output `plataforma` e variáveis do Supabase ativas. | [ ] |
 | **05** | Teste de conexão `python auto_sync.py` executado com mensagem de SUCESSO. | [ ] |
 | **06** | Site público acessível na URL `.pages.dev` com certificado SSL HTTPS ativo. | [ ] |
-| **07** | Login de Admin (`admin` / `bfa@2024`) funcionando com publicação direta via navegador. | [ ] |
+| **07** | Login de Admin (conta do Supabase com papel admin) funcionando com publicação direta via navegador. | [ ] |
 | **08** | **Fatura Total de Custos**: Confirmada em **R$ 0,00/mês**. | [ ] |
 
 ---

@@ -1,11 +1,11 @@
-const INITIAL_ADMIN_USERS = [
-  { id: 'user_1', username: 'admin', password: 'bfa@2024', name: 'Administrador Chief BFA', role: 'admin_chief' },
-  { id: 'user_2', username: 'lucas', password: 'dragaodoomar', name: 'Lucas (Colaborador)', role: 'collaborator' },
-  { id: 'user_3', username: 'nif', password: 'investir123', name: 'NIF (Colaborador)', role: 'collaborator' },
-  { id: 'user_4', username: 'professor', password: 'brhsic2024', name: 'Professor BFA', role: 'teacher' }
-];
+/* Não existe lista de usuários aqui, e isso é de propósito.
+   Antes havia quatro pares usuário/senha escritos no código — e como este site
+   é servido como arquivo estático, "escrito no código" significa "publicado na
+   internet". Quem autentica agora é o Supabase Auth, e o papel (aluno/admin) é
+   lido do banco a cada carregamento.
+   Para criar o primeiro admin, veja a seção 11 de src/data/schema.sql. */
 
-const LOCAL_STORAGE_USER_KEY = 'bfa_admin_user';
+const PAPEIS_ADMIN = ['admin', 'admin_chief'];
 const LOCAL_STORAGE_CMS_KEY = 'bfa_cms_overrides';
 const LOCAL_STORAGE_INLINE_EDIT_KEY = 'bfa_inline_edit_mode';
 const LOCAL_STORAGE_THEME_KEY = 'bfa_theme_preference';
@@ -65,14 +65,13 @@ const AVAILABLE_THEMES = [
 const AdminContext = React.createContext(null);
 
 function AdminProvider({ children }) {
-  const [currentUser, setCurrentUser] = React.useState(() => {
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_USER_KEY);
-      return saved ? JSON.parse(saved) : null;
-    } catch (e) {
-      return null;
-    }
-  });
+  // A sessão não é lida do localStorage de propósito: se o papel viesse de lá,
+  // bastaria editar o navegador para se declarar admin. Quem guarda a sessão é
+  // o Supabase; o papel vem do banco.
+  const [currentUser, setCurrentUser] = React.useState(null);
+  const [carregandoSessao, setCarregandoSessao] = React.useState(true);
+  const [statusPublicacao, setStatusPublicacao] = React.useState('idle'); // idle | publicando | publicado | erro
+  const [erroPublicacao, setErroPublicacao] = React.useState('');
 
   const [cmsData, setCmsData] = React.useState(() => {
     try {
@@ -83,30 +82,56 @@ function AdminProvider({ children }) {
     }
   });
 
+  // Recupera a sessão e carrega o conteúdo publicado.
+  //
+  // Ordem de preferência: banco primeiro, `overrides.json` como reserva. A
+  // reserva existe para o site não regredir enquanto o Supabase não estiver
+  // configurado, e deixa de ser usada sozinha quando estiver.
   React.useEffect(() => {
     let cancelado = false;
-    fetch(`${CMS_PUBLICADO_URL}?v=${Date.now()}`, { cache: 'no-store' })
-      .then(res => (res.ok ? res.json() : null))
-      .then(publicado => {
-        if (cancelado || !publicado) return;
-        setCmsData(local => (
-          paraTempo(publicado.lastUpdated) >= paraTempo(local.lastUpdated)
-            ? normalizarCms(publicado)
-            : local
-        ));
-      })
-      .catch(erro => {
+
+    const adotarSeMaisNovo = (publicado) => {
+      if (cancelado || !publicado) return;
+      setCmsData(local => (
+        paraTempo(publicado.lastUpdated) >= paraTempo(local.lastUpdated)
+          ? normalizarCms(publicado)
+          : local
+      ));
+    };
+
+    const carregar = async () => {
+      const sp = window.BfaSupabase;
+
+      if (sp && sp.isConfigured()) {
+        const sessao = await sp.restoreSession();
+        if (!cancelado && sessao) setCurrentUser(sessao);
+
+        const doBanco = await sp.fetchSiteContent();
+        if (doBanco) {
+          adotarSeMaisNovo(doBanco);
+          if (!cancelado) setCarregandoSessao(false);
+          return;
+        }
+      }
+
+      try {
+        const res = await fetch(`${CMS_PUBLICADO_URL}?v=${Date.now()}`, { cache: 'no-store' });
+        if (res.ok) adotarSeMaisNovo(await res.json());
+      } catch (erro) {
         console.warn('Nao foi possivel carregar o conteudo publicado:', erro);
-      });
+      }
+      if (!cancelado) setCarregandoSessao(false);
+    };
+
+    carregar();
     return () => { cancelado = true; };
   }, []);
 
+  // Começa desligado. Quando a sessão do Supabase é recuperada, o efeito que
+  // observa `currentUser` liga de volta se a pessoa deixou ligado antes.
   const [inlineEditActive, setInlineEditActiveState] = React.useState(() => {
     try {
-      const savedMode = localStorage.getItem(LOCAL_STORAGE_INLINE_EDIT_KEY);
-      const savedUser = localStorage.getItem(LOCAL_STORAGE_USER_KEY);
-      if (savedMode !== null) return savedMode === 'true';
-      return !!savedUser;
+      return localStorage.getItem(LOCAL_STORAGE_INLINE_EDIT_KEY) === 'true';
     } catch (e) {
       return false;
     }
@@ -133,14 +158,12 @@ function AdminProvider({ children }) {
 
   React.useEffect(() => {
     if (currentUser) {
-      localStorage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(currentUser));
       const savedMode = localStorage.getItem(LOCAL_STORAGE_INLINE_EDIT_KEY);
       if (savedMode === null || savedMode === 'true') {
         setInlineEditActiveState(true);
         localStorage.setItem(LOCAL_STORAGE_INLINE_EDIT_KEY, 'true');
       }
     } else {
-      localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
       setInlineEditActiveState(false);
     }
   }, [currentUser]);
@@ -169,34 +192,58 @@ function AdminProvider({ children }) {
     }
   };
 
-  const login = async (username, password) => {
-    // 1. Tenta Supabase Auth se disponível
-    if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-      const spRes = await window.BfaSupabase.signInUser(username, password);
-      if (spRes.success) {
-        setCurrentUser(spRes.user);
-        setInlineEditActive(true);
-        return { success: true, user: spRes.user };
-      }
+  // Login por e-mail e senha do Supabase Auth. Não existe caminho alternativo:
+  // se o banco não estiver configurado, ninguém entra. É melhor assim do que
+  // manter uma senha de emergência escrita num arquivo público.
+  const login = async (email, password) => {
+    const sp = window.BfaSupabase;
+    if (!sp || !sp.isConfigured()) {
+      return { success: false, error: 'Banco de dados não configurado. Fale com quem administra o site.' };
     }
 
-    // 2. Fallback para lista local de usuários
-    const user = INITIAL_ADMIN_USERS.find(
-      u => (u.username.toLowerCase() === username.trim().toLowerCase() || u.id === username.trim()) && u.password === password
-    );
-
-    if (user) {
-      const session = { id: user.id, username: user.username, name: user.name, role: user.role };
-      setCurrentUser(session);
+    const res = await sp.signInUser(String(email).trim(), password);
+    if (res.success) {
+      setCurrentUser(res.user);
       setInlineEditActive(true);
-      return { success: true, user: session };
+      return res;
     }
-    return { success: false, error: 'Usuário ou senha incorretos' };
+    return { success: false, error: res.error || 'E-mail ou senha incorretos' };
   };
 
-  const logout = () => {
+  const logout = async () => {
+    const sp = window.BfaSupabase;
+    // Encerrar de verdade importa: sem isto o token de acesso continua válido
+    // no navegador depois de "sair".
+    if (sp && sp.isConfigured()) await sp.signOutUser();
     setCurrentUser(null);
     setInlineEditActive(false);
+    setStatusPublicacao('idle');
+  };
+
+  // Publicar é o que substituiu o botão de token. Não pede credencial nenhuma:
+  // quem verifica a permissão é o banco, pela política "Somente admin altera
+  // conteúdo". Se a conta não for admin, a gravação é recusada lá — e não por
+  // uma checagem no navegador, que qualquer pessoa poderia burlar.
+  const publicarConteudo = async () => {
+    const sp = window.BfaSupabase;
+    if (!sp || !sp.isConfigured()) {
+      setStatusPublicacao('erro');
+      setErroPublicacao('Banco de dados não configurado.');
+      return { success: false };
+    }
+
+    setStatusPublicacao('publicando');
+    setErroPublicacao('');
+
+    const res = await sp.saveSiteContent(cmsData);
+    if (res.success) {
+      setStatusPublicacao('publicado');
+      setTimeout(() => setStatusPublicacao('idle'), 4000);
+    } else {
+      setStatusPublicacao('erro');
+      setErroPublicacao(res.error || 'Erro ao publicar');
+    }
+    return res;
   };
 
   // Se o usuário for colaborador, a edição vai para a fila de aprovação (Pending Edit)
@@ -405,8 +452,13 @@ function AdminProvider({ children }) {
   const value = {
     adminUser: currentUser,
     isAuthenticated: !!currentUser,
+    isAdmin: PAPEIS_ADMIN.includes(currentUser && currentUser.role),
+    carregandoSessao,
     login,
     logout,
+    publicarConteudo,
+    statusPublicacao,
+    erroPublicacao,
     cmsData,
     updateLesson,
     addModule,
