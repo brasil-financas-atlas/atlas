@@ -4,23 +4,28 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
   const containerRef = useRef(null);
   const { cmsData, saveOverride } = useContext(AdminContext || createContext({}));
 
-  useEffect(() => {
-    if (containerRef.current && window.renderMathInElement) {
-      try {
-        window.renderMathInElement(containerRef.current, {
-          delimiters: [
-            { left: "$$", right: "$$", display: true },
-            { left: "$", right: "$", display: false },
-            { left: "\\(", right: "\\)", display: false },
-            { left: "\\[", right: "\\]", display: true }
-          ],
-          throwOnError: false
-        });
-      } catch (err) {
-        console.warn("KaTeX rendering warning:", err);
-      }
+  /* Não existe mais uma varredura de KaTeX no DOM depois da renderização.
+     Antes havia um renderMathInElement aqui com "$" como delimitador inline —
+     e em texto brasileiro isso é fatal: cada "R$" abre uma fórmula, então o
+     texto entre dois "R$" era renderizado como matemática. O aluno lia coisas
+     como "a cada R100𝑣𝑒𝑛𝑑𝑖𝑑𝑜𝑠,𝑅100vendidos,R 40 sobram".
+
+     Agora a matemática é convertida em HTML dentro de renderSingleBlock, antes
+     de chegar ao DOM. Nenhum "$" de dinheiro sobrevive para ser interpretado. */
+
+  const renderizarTex = (tex, emDestaque) => {
+    if (!(window.katex && window.katex.renderToString)) return tex;
+    try {
+      return window.katex.renderToString(tex.trim(), {
+        displayMode: emDestaque,
+        throwOnError: false,
+        strict: false
+      });
+    } catch (err) {
+      console.warn('KaTeX não conseguiu renderizar:', tex, err);
+      return tex;
     }
-  }, [markdownContent, cmsData]);
+  };
 
   // Parse markdown into granular editable blocks
   const blocks = useMemo(() => {
@@ -79,29 +84,55 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       }
     );
 
-    // Protect math expressions from marked parser mangling
-    const mathTokens = [];
-    // Protect display math ($$...$$ or \[...\])
-    formatted = formatted.replace(/(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\])/g, (match) => {
-      const idx = mathTokens.length;
-      mathTokens.push(match);
-      return `___MATH_TOK_${idx}___`;
-    });
-    // Protect inline math ($...$ or \(...\))
-    formatted = formatted.replace(/(\$[^$\n]+?\$|\\\([\s\S]*?\\\))/g, (match) => {
-      const idx = mathTokens.length;
-      mathTokens.push(match);
-      return `___MATH_TOK_${idx}___`;
-    });
+    /* ----------------------------------------------------------------------
+       Retira a matemática do caminho do Markdown, guarda cada fórmula, e só
+       recoloca já como HTML no fim. Três detalhes aqui não são estilo, são
+       correção de bug:
+
+       1. O marcador é `@@BFAMATHn@@`, não `___MATH_TOK_n___`. Em Markdown,
+          `___texto___` é negrito com itálico — o marcador antigo virava
+          `<em><strong>MATH_TOK_0</strong></em>`, a string original deixava de
+          existir, e o replace no fim falhava calado. Resultado: 511
+          "MATH_TOK_0" apareciam como texto cru nas unidades.
+
+       2. A recolocação usa FUNÇÃO como segundo argumento do replace. Com
+          string, `$$` significa "um $ literal" — então toda fórmula em
+          destaque era rebaixada para fórmula em linha. Havia 84 blocos `$$`
+          no conteúdo e zero renderizados em destaque no site.
+
+       3. O padrão inline recusa abrir depois de `R` e antes de espaço, senão
+          casa com o `R$` de dinheiro e transforma prosa em fórmula.
+       ---------------------------------------------------------------------- */
+
+    const formulas = [];
+    const guardar = (tex, emDestaque) => {
+      formulas.push({ tex, emDestaque });
+      return `@@BFAMATH${formulas.length - 1}@@`;
+    };
+
+    formatted = formatted
+      // Destaque primeiro: senão o padrão inline abriria dentro de um `$$`.
+      .replace(/\$\$([\s\S]*?)\$\$/g, (m, tex) => guardar(tex, true))
+      .replace(/\\\[([\s\S]*?)\\\]/g, (m, tex) => guardar(tex, true))
+      .replace(/\\\(([\s\S]*?)\\\)/g, (m, tex) => guardar(tex, false))
+      // Inline: `$` não precedido de `R` nem de `\`, e não seguido de espaço.
+      // O corpo aceita `\$` escapado, que o conteúdo usa para cifrão dentro
+      // de fórmula.
+      .replace(/(?<![\\R])\$(?!\s)((?:[^$\n\\]|\\[\s\S])+?)\$/g, (m, tex) => guardar(tex, false));
 
     let parsedHtml = (window.marked && window.marked.parse) ? window.marked.parse(formatted) : formatted;
 
-    // Restore math expressions
-    mathTokens.forEach((tok, idx) => {
-      parsedHtml = parsedHtml.replace(`___MATH_TOK_${idx}___`, tok);
-    });
+    // Sanitiza ANTES de injetar o KaTeX: o HTML das fórmulas é gerado por nós,
+    // não vem do usuário, e passar por aqui só arriscaria o DOMPurify remover
+    // parte da marcação matemática.
+    if (window.DOMPurify && window.DOMPurify.sanitize) {
+      parsedHtml = window.DOMPurify.sanitize(parsedHtml);
+    }
 
-    return (window.DOMPurify && window.DOMPurify.sanitize) ? window.DOMPurify.sanitize(parsedHtml) : parsedHtml;
+    return parsedHtml.replace(/@@BFAMATH(\d+)@@/g, (marcador, i) => {
+      const f = formulas[Number(i)];
+      return f ? renderizarTex(f.tex, f.emDestaque) : marcador;
+    });
   };
 
   return (
