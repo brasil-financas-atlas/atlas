@@ -5,7 +5,7 @@ window.brhsicData = {
   titulo: "Preparação para a BRHSIC 2024",
   subtitulo: "Guia completo de Equity Research, estrutura de relatório, critérios de avaliação e dicas de apresentação para a maior competição de investimentos do ensino médio do Brasil.",
   edicaoAtual: "BRHSIC 2024",
-  organizacao: "NIF Dragão do Mar / BFA Platform",
+  organizacao: "BFA Platform / NIF",
   cronograma: [
     { fase: "Inscrições e Abertura", data: "Maio de 2024", descricao: "Divulgação dos casos e empresas elegíveis para a cobertura." },
     { fase: "Entrega do Relatório (Equity Report)", data: "Julho de 2024", descricao: "Submissão do relatório impresso/digital completo em PDF." },
