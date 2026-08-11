@@ -263,14 +263,26 @@ function QuizEngine({ questions, lessonId }) {
   }
 
   return (
-    <div className="bfa-quiz">
+      <div className="bfa-quiz__progress-bar-wrap" style={{ height: '6px', background: 'var(--surface-strong)', borderRadius: '999px', overflow: 'hidden', marginBottom: '1rem' }}>
+        <div
+          className="bfa-quiz__progress-bar-fill"
+          style={{
+            height: '100%',
+            width: `${Math.round(((currentIdx + (submitted ? 1 : 0)) / quizQuestions.length) * 100)}%`,
+            background: 'linear-gradient(90deg, var(--track-finance) 0%, var(--gold) 100%)',
+            borderRadius: '999px',
+            transition: 'width 350ms cubic-bezier(0.4, 0, 0.2, 1)'
+          }}
+        />
+      </div>
+
       <div className="bfa-quiz__header">
         <div className="bfa-quiz__title">
           <span style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--foreground)', fontWeight: 700 }}>
             <BfaIcon name="target" size={20} color="var(--track-math)" /> Quiz de Fixação (Khan Academy Style)
           </span>
           <span className="bfa-quiz__progress-text" style={{ color: 'var(--muted-foreground)' }}>
-            Questão {currentIdx + 1} de {quizQuestions.length}
+            Questão {currentIdx + 1} de {quizQuestions.length} ({Math.round(((currentIdx + 1) / quizQuestions.length) * 100)}%)
           </span>
         </div>
 
