@@ -245,7 +245,15 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 richAula = rMod.aulas.find(a => a.slug === aulaSlug);
               }
             }
-            const lessonQuestions = richAula?.miniQuiz || aulaObj?.miniQuiz || aulaObj?.quiz || [];
+            let lessonQuestions = [];
+            if (richAula) {
+              const mq = richAula.miniQuiz || richAula.quiz || [];
+              const lp = richAula.listaProblemas || [];
+              lessonQuestions = [...mq, ...lp];
+            }
+            if (lessonQuestions.length === 0) {
+              lessonQuestions = aulaObj?.miniQuiz || aulaObj?.quiz || aulaObj?.listaProblemas || [];
+            }
             return <QuizEngine questions={lessonQuestions} lessonId={lessonId} />;
           })()}
         </div>
