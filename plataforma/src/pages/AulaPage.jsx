@@ -45,18 +45,10 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const trackColor = isMatematica ? 'var(--track-math)' : 'var(--track-finance)';
 
   return (
-    <div style={{ display: 'flex', minHeight: 'calc(100vh - 4rem)' }}>
+  return (
+    <div className="aula-layout">
       {/* Sidebar - Curriculum Tree */}
-      <aside style={{
-        width: sidebarOpen ? '320px' : '0px',
-        transition: 'all 0.25s cubic-bezier(0.22, 1, 0.36, 1)',
-        overflow: 'hidden',
-        borderRight: '1px solid var(--border)',
-        background: 'var(--card)',
-        display: 'flex',
-        flexDirection: 'column',
-        flexShrink: 0
-      }}>
+      <aside className={`aula-sidebar ${!sidebarOpen ? 'closed' : ''}`}>
         <div style={{ padding: '1rem 1.25rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <a href={`#/${subjectKey}`} className="mono-tag" style={{ color: trackColor, fontWeight: 700 }}>
             ← Voltar para {isMatematica ? 'Matemática' : 'Finanças'}
@@ -104,7 +96,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
       </aside>
 
       {/* Main Classroom Canvas */}
-      <main style={{ flex: 1, padding: '2rem 2.5rem', maxWidth: '1050px', margin: '0 auto' }}>
+      <main className="aula-main">
         {/* Top Breadcrumb & Actions */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', paddingBottom: '1rem', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
