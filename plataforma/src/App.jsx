@@ -159,7 +159,6 @@ function App() {
       </div>
       {!isAulaRoute && <Footer />}
       <CookieConsent />
-      <GlassmorphismToggle />
     </div>
   );
 }
