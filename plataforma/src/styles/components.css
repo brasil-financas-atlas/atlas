@@ -267,7 +267,19 @@
   font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: transform 140ms cubic-bezier(0.2, 0, 0, 1), box-shadow 140ms ease, background-color 140ms ease, opacity 140ms ease;
+  user-select: none;
+}
+
+.bfa-btn:hover, .btn-primary:hover, .btn-secondary:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+}
+
+.bfa-btn:active, .btn-primary:active, .btn-secondary:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+  opacity: 0.95;
 }
 
 .bfa-btn--verde {
@@ -276,8 +288,7 @@
 }
 
 .bfa-btn--verde:hover {
-  opacity: 0.92;
-  transform: translateY(-1px);
+  background-color: #12572e;
 }
 
 .bfa-btn--ouro {
@@ -286,8 +297,7 @@
 }
 
 .bfa-btn--ouro:hover {
-  opacity: 0.92;
-  transform: translateY(-1px);
+  background-color: var(--gold-deep);
 }
 
 .bfa-btn--azul {
@@ -298,7 +308,48 @@
 .bfa-btn--ghost {
   background-color: transparent;
   color: var(--muted-foreground);
-  border: 1px solid var(--border);
+}
+
+/* Glassmorphism Optional Preview Mode */
+.bfa-glassmorphism-active .site-header {
+  background-color: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .site-header,
+.dark.bfa-glassmorphism-active .site-header {
+  background-color: rgba(13, 17, 23, 0.72) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+}
+
+.bfa-glassmorphism-active .bfa-card,
+.bfa-glassmorphism-active .module-card,
+.bfa-glassmorphism-active .tool-card,
+.bfa-glassmorphism-active .bfa-quiz,
+.bfa-glassmorphism-active .bfa-forum,
+.bfa-glassmorphism-active .bfa-inline-editor-card {
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 10px 30px 0 rgba(31, 38, 135, 0.08) !important;
+}
+
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .bfa-card,
+.dark.bfa-glassmorphism-active .bfa-card,
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .module-card,
+.dark.bfa-glassmorphism-active .module-card,
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .tool-card,
+.dark.bfa-glassmorphism-active .tool-card,
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .bfa-quiz,
+.dark.bfa-glassmorphism-active .bfa-quiz,
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .bfa-forum,
+.dark.bfa-glassmorphism-active .bfa-forum {
+  background-color: rgba(22, 27, 34, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
 
 .bfa-btn--ghost:hover {
