@@ -1,32 +1,43 @@
 # Handoff Briefing
 
 ## Goal
-Redesign the frontend UI/UX of the Brasil Finanças Atlas (BFA) educational platform with a premium Brazilian-themed aesthetic, implement interactive features (video player, timestamped forum threads, quiz engine, admin CMS), and establish a direct Git-as-a-CMS synchronization system back to GitHub.
+Redesign and maintain the Brasil Finanças Atlas (BFA) educational platform frontend UI/UX, implement interactive features (Khan Academy-style quiz engine, video player, timestamped forum, admin CMS), integrate zero-cost secure backend architecture (Supabase Auth / Turso / Cloudflare Workers), and maintain automated local-to-GitHub auto-sync using PAT token in a public-safe repository setup.
 
 ## Current Status
 - **Completed:** 
-  - Premium UI/UX overhaul of the platform using a modern Brazil-themed color palette (refined green, blue, gold) and responsive layout.
-  - Interactive components including a video lesson player, a forum with comment threads tied to specific video timestamps, a quiz engine, and a compound interest calculator.
-  - Hardcoded CMS panel allowing administrators to modify lessons, videos, and questions.
-  - Direct API-based sync client (`githubSync.js`) and modal (`GitHubSyncModal.jsx`) that commits `overrides.json` state directly to the GitHub repo using Fine-Grained Personal Access Tokens.
-  - Automated deployment workflow via GitHub Actions (`content-sync-deploy.yml`) to rebuild dataset references.
-  - Resolved blank screen issues caused by script loading order and Babel parsing anomalies on CDN React scripts.
+  - Verified and updated local workspace to latest GitHub `origin/main` (`b50c0f4..0d5dbaf`), integrating Supabase RLS schema rewrite, math rendering KaTeX fixes, and security cleanups.
+  - Confirmed `.env` and `auto_sync.log` are strictly ignored in [.gitignore](file:///C:/codigos/bfa-main/.gitignore), guaranteeing secret tokens are never pushed to GitHub (safe for public repository).
+  - Created local [.env](file:///C:/codigos/bfa-main/.env) with user's GitHub Personal Access Token (`GITHUB_PAT`).
+  - Tested initial `GitAutoSync` sync with GitHub via `python auto_sync.py`, successfully authenticating and pushing commits.
+  - Started background auto-sync process [`auto_sync.py`](file:///C:/codigos/bfa-main/auto_sync.py) with real-time Watchdog monitoring active.
+  - Extended `AdminContext.jsx` with `addModule`, `addNews`, `deleteNews`, `addExercise`, `deleteExercise` and collaborator pending edits workflow.
+  - Added Quick Action Bar and modals in `AdminPages.jsx` for creating modules, news, and exercises.
+  - Transformed `QuizEngine.jsx` into a Khan Academy Fixation Quiz with progress pills, instant feedback, and normalized property mapping for `miniQuiz` arrays.
+  - Solved page title illegibility (dark blue on dark blue) by passing `style={style}` directly to `<Component>` in `EditableBlock.jsx` and enforcing `.hero-gradient * { color: #FFFFFF !important; }` in `globals.css`.
+  - Added step-by-step GitHub continuous deployment guide (Netlify, Vercel, Cloudflare Pages) to `README.md`.
+  - Conducted deep-dive research into zero-cost / free-tier backend infrastructure (Turso / Cloudflare D1 + Workers + Supabase Auth + Cloudflare R2 + YouTube Unlisted).
 - **In-Progress:**
-  - Testing real-time deployments on Netlify following GitHub sync actions.
+  - Zero-cost backend integration and Cloudflare / Supabase setup.
 - **Blockers:**
   - None.
 
 ## Decisions Made (Locked)
-- **CDN-based React + Babel Standalone:** Chosen to avoid local build environments (Node/npm), making it easy for the student/teacher team to run the server using python's built-in `http.server`.
-- **Git-as-a-CMS Sync:** Storing overrides as a JSON file in the repository to bypass database hosting costs and complex API servers.
-- **Strict script sequence in `index.html`:** Ensures global state and libraries load before component logic runs.
+- **Public Repo Security via `.gitignore`:** [.env](file:///C:/codigos/bfa-main/.env) stores `GITHUB_PAT` locally for background `auto_sync.py` process, strictly ignored by `.gitignore` so the repository can be made public without leaking secrets.
+- **PAT Scopes:** Personal Access Tokens must include both `repo` and `workflow` scopes to allow updating GitHub Actions workflows in `.github/workflows/`.
+- **Deployment Stack:** Netlify / Vercel / Cloudflare Pages connected to GitHub `main` branch for automatic 30s builds.
+- **Khan Academy Quiz Engine:** Quizzes use a 5-question step-by-step layout with visual status pills (`.bfa-quiz__pills`), instant answer verification, explanation cards, and mastery badges.
+- **Dynamic Lesson Mini-Quiz Resolution:** `AulaPage.jsx` checks `window.financasData` and `window.matematicaData` for rich `miniQuiz` data per lesson before falling back to default questions.
+- **Title Color Enforcement:** `EditableBlock.jsx` applies `style={style}` directly onto the rendered `<Component>` element to ensure inline styles override `typography.css` global element rules.
 
 ## Failed Approaches / Dead Ends (Do Not Retry)
-- **ES Module imports/exports in Babel scripts:** Fails on the local filesystem (`file://`) due to CORS policies. All shared utilities must be explicitly bound to the global `window` object instead of using standard `import`/`export` syntax.
+- **Tool calls without `TargetFile`:** Calling `replace_file_content` without specifying `TargetFile` explicitly causes JSON validation failure. Always include `TargetFile`.
+- **PAT without `workflow` scope:** Pushing commits to a repository containing `.github/workflows/*.yml` with a PAT that lacks `workflow` scope causes GitHub API rejection.
+- **Tracking `auto_sync.log` or `.env` in Git:** Keeping `auto_sync.log` or `.env` in Git causes rebase conflicts or leaks private secrets. Keep both in `.gitignore`.
+- **Applying `color: #FFFFFF` only to parent containers of `EditableBlock`**: Failed because `h1, h2, h3` element selectors in `typography.css` have higher specificity than CSS inheritance.
 
 ## Extracted Memories & Preferences
-- Always declare React hook destructurings (`const { useState, ... } = React;`) at the top of all component files to prevent Babel compile crashes.
-- Do not add standard packaging configurations (Vite, Webpack) unless explicitly requested, as the project target is single-command deployment.
+- **Single-page Babel SPA Architecture:** Project uses React 18 + Babel Standalone loaded directly in `index.html`. All data scripts (`contentData.js`, `financasData.js`, `matematicaData.js`) must be included in `index.html`.
+- **Background Auto-Sync Protocol:** `AGENTS.md` mandates auto-syncing commits via `python auto_sync.py` running in background.
 
 ## Immediate Next Step
-- Run `python -m http.server 8080 --directory plataforma` to inspect the latest frontend layout, log in using the credentials in `README.md`, and verify the "Publicar no GitHub" modal sync workflow.
+- Continue developing new lesson content, backend integration, or interactive features for the platform as requested by the user, with `auto_sync.py` running in the background.
