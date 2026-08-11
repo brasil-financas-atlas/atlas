@@ -58,7 +58,7 @@ function CertificadoGenerator() {
               Gerador de Certificado de Conclusão
             </h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.3rem' }}>
-              Gere o certificado oficial do NIF Dragão do Mar com código de verificação e QR Code autêntico.
+              Gere o certificado oficial do Brasil Finanças Atlas com código de verificação e QR Code autêntico.
             </p>
           </div>
 
@@ -175,7 +175,7 @@ function CertificadoGenerator() {
                   BRASIL FINANÇAS ATLAS
                 </span>
                 <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#1B6B3A', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                  Núcleo de Inteligência Financeira — EEMTI Dragão do Mar
+                  Núcleo de Inteligência Financeira
                 </span>
               </div>
             </div>
@@ -209,7 +209,7 @@ function CertificadoGenerator() {
 
           {/* Body Text */}
           <div style={{ textAlign: 'center', maxWidth: '750px', margin: '0 auto 3rem auto', fontSize: '1.05rem', lineHeight: 1.8, color: '#334155', position: 'relative', zIndex: 1 }}>
-            Concluiu com pleno aproveitamento o <strong>{moduleObj?.titulo || 'Módulo de Estudos'}</strong> pertencente à trilha educacional de <strong>{selectedSubjectKey === 'matematica' ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}</strong>, cobrindo os conceitos teóricos e exercícios práticos em conformidade com as diretrizes do NIF Dragão do Mar.
+            Concluiu com aproveitamento o <strong>{moduleObj?.titulo || 'Módulo de Estudos'}</strong> pertencente à trilha educacional de <strong>{selectedSubjectKey === 'matematica' ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}</strong>, cobrindo os conceitos teóricos e exercícios práticos em conformidade com as diretrizes do NIF.
           </div>
 
           {/* Signatures and QR Code Validation Footer */}
@@ -217,13 +217,13 @@ function CertificadoGenerator() {
             {/* Signature Left */}
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontFamily: 'monospace', fontSize: '1rem', color: '#1B3A5C', marginBottom: '0.25rem', fontWeight: 700, fontStyle: 'italic' }}>
-                Professores do NIF
+                Equipe NIF
               </div>
               <div style={{ height: '1px', background: '#94A3B8', width: '80%', margin: '0.4rem auto' }} />
               <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748B', display: 'block' }}>
                 Coordenação Pedagógica
               </span>
-              <span style={{ fontSize: '0.72rem', color: '#94A3B8' }}>NIF Dragão do Mar</span>
+              <span style={{ fontSize: '0.72rem', color: '#94A3B8' }}>NIF</span>
             </div>
 
             {/* QR Code Verification Box */}
