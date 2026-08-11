@@ -1,17 +1,85 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
+const DEFAULT_FIXATION_QUESTIONS = [
+  {
+    pergunta: "Qual instituição define a taxa Selic?",
+    alternativas: [
+      "Banco Central do Brasil (COPOM)",
+      "Comissão de Valores Mobiliários (CVM)",
+      "Ministério da Fazenda",
+      "B3 - Brasil, Bolsa, Balcão"
+    ],
+    correta: 0,
+    explicacao: "O COPOM (Comitê de Política Monetária do Banco Central) é a autoridade monetária responsável por definir a meta da taxa Selic a cada 45 dias."
+  },
+  {
+    pergunta: "O que é o COPOM?",
+    alternativas: [
+      "Conselho Operacional de Proteção à Moeda",
+      "Comitê de Política Monetária do Banco Central do Brasil",
+      "Comissão de Planejamento Orçamentário",
+      "Conselho Privado de Operadores de Mercado"
+    ],
+    correta: 1,
+    explicacao: "O COPOM é o órgão do Banco Central que estabelece a diretriz da taxa básica de juros e analisa o relatório de inflação no Brasil."
+  },
+  {
+    pergunta: "Qual a diferença entre B3 e corretora?",
+    alternativas: [
+      "A B3 cobra juros e a corretora empresta dinheiro",
+      "A B3 é a bolsa oficial onde os ativos são liquidados e custodiados; a corretora é a intermediária que conecta o investidor à B3",
+      "Não há diferença, ambas são bancos comerciais",
+      "A corretora emite ações e a B3 regula os impostos"
+    ],
+    correta: 1,
+    explicacao: "A B3 é o mercado organizado onde ocorrem as negociações e a custódia centralizada dos ativos, enquanto a corretora atua como ponte credenciada de acesso para os investidores."
+  },
+  {
+    pergunta: "Se uma empresa listada fraudar seus resultados, qual instituição investiga?",
+    alternativas: [
+      "Fundo Garantidor de Créditos (FGC)",
+      "Comissão de Valores Mobiliários (CVM)",
+      "Secretaria da Receita Federal apenas",
+      "Banco Interamericano de Desenvolvimento (BID)"
+    ],
+    correta: 1,
+    explicacao: "A CVM (Comissão de Valores Mobiliários) é a autarquia vinculada ao Ministério da Fazenda que disciplina, fiscaliza e pune irregularidades praticadas por companhias abertas no mercado de valores mobiliários."
+  },
+  {
+    pergunta: "O que o FGC garante ao investidor?",
+    alternativas: [
+      "Garante lucro fixo em ações e fundos de investimento",
+      "Garante a devolução de até R$ 250 mil por CPF e instituição financeira em caso de liquidação/falência bancária de títulos elegíveis (ex: CDB, LCI, LCA)",
+      "Garante isenção permanente de Imposto de Renda em operações de Day Trade",
+      "Garante reembolso de perdas causadas por volatilidade na bolsa"
+    ],
+    correta: 1,
+    explicacao: "O Fundo Garantidor de Créditos (FGC) protege o correntista/investidor contra insolvência de instituições financeiras associadas, até o limite de R$ 250 mil por CPF/CNPJ por instituição (teto global de R$ 1 milhão a cada 4 anos)."
+  }
+];
+
 function QuizEngine({ questions, lessonId }) {
   const { isAuthenticated, inlineEditActive, cmsData, updateLesson } = useContext(AdminContext || createContext({}));
   const { saveQuizScore, getQuizScore } = useContext(ProgressContext || createContext({}));
 
   const quizQuestions = useMemo(() => {
+    let rawList = null;
     if (cmsData?.lessons?.[lessonId]?.customQuiz && cmsData.lessons[lessonId].customQuiz.length > 0) {
-      return cmsData.lessons[lessonId].customQuiz;
+      rawList = cmsData.lessons[lessonId].customQuiz;
+    } else if (cmsData?.quizzes?.[lessonId] && cmsData.quizzes[lessonId].length > 0) {
+      rawList = cmsData.quizzes[lessonId];
+    } else if (questions && questions.length > 0) {
+      rawList = questions;
+    } else {
+      rawList = DEFAULT_FIXATION_QUESTIONS;
     }
-    if (cmsData?.quizzes?.[lessonId] && cmsData.quizzes[lessonId].length > 0) {
-      return cmsData.quizzes[lessonId];
-    }
-    return questions || [];
+
+    return rawList.map(q => ({
+      pergunta: q.pergunta || q.question || '',
+      alternativas: q.alternativas || q.opcoes || q.options || [],
+      correta: q.correta !== undefined ? q.correta : (q.respostaCorreta !== undefined ? q.respostaCorreta : 0),
+      explicacao: q.explicacao || q.explanation || ''
+    }));
   }, [cmsData, lessonId, questions]);
 
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -98,11 +166,11 @@ function QuizEngine({ questions, lessonId }) {
 
   if (!quizQuestions || quizQuestions.length === 0) {
     return (
-      <div className="bfa-quiz bfa-quiz--empty" style={{ padding: '2rem', textAlign: 'center', background: '#F8FAFC', borderRadius: '12px', border: '1px dashed var(--border-color)' }}>
-        <h4 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '0.5rem' }}>
-          <BfaIcon name="target" size={20} color="var(--color-azul)" /> Quiz de Fixação
+      <div className="bfa-quiz bfa-quiz--empty" style={{ padding: '2rem', textAlign: 'center', background: 'var(--surface-strong)', borderRadius: '12px', border: '1px dashed var(--border)' }}>
+        <h4 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '0.5rem', color: 'var(--foreground)' }}>
+          <BfaIcon name="target" size={20} color="var(--color-azul)" /> Quiz de Fixação (Khan Academy Style)
         </h4>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>Esta aula ainda não possui questões interativas cadastradas.</p>
+        <p style={{ color: 'var(--muted-foreground)', marginBottom: '1rem' }}>Esta aula ainda não possui questões interativas cadastradas.</p>
         {isAuthenticated && inlineEditActive && (
           <button
             type="button"
@@ -166,29 +234,29 @@ function QuizEngine({ questions, lessonId }) {
 
     return (
       <div className="bfa-quiz bfa-quiz--finished">
-        <div className="bfa-quiz__result-icon" style={{ display: 'inline-flex', padding: '1rem', borderRadius: '50%', background: 'var(--color-ouro-light)', margin: '0 auto 1rem auto' }}>
-          <BfaIcon name={pct >= 80 ? "trophy" : pct >= 50 ? "thumbsUp" : "book"} size={48} color="var(--color-ouro-dark)" />
+        <div className="bfa-quiz__result-icon" style={{ display: 'inline-flex', padding: '1rem', borderRadius: '50%', background: 'var(--surface-strong)', margin: '0 auto 1rem auto' }}>
+          <BfaIcon name={pct >= 80 ? "trophy" : pct >= 50 ? "thumbsUp" : "book"} size={48} color="var(--gold-deep)" />
         </div>
-        <h3>Resultado do Quiz</h3>
+        <h3 style={{ color: 'var(--foreground)' }}>Resultado do Quiz de Fixação</h3>
         <div className="bfa-quiz__score-display">
           <span className="bfa-quiz__score-num">{finalScore} / {quizQuestions.length}</span>
           <span className="bfa-quiz__score-pct">{pct}% de acertos</span>
         </div>
 
         {pct >= 80 && (
-          <div className="bfa-quiz__badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <BfaIcon name="sparkles" size={16} color="var(--color-ouro-dark)" /> Excelente! Você dominou os conceitos desta aula.
+          <div className="bfa-quiz__badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--gold-deep)', fontWeight: 700 }}>
+            <BfaIcon name="sparkles" size={16} color="var(--gold-deep)" /> Dominado! Você assimilou perfeitamente os conceitos.
           </div>
         )}
 
         {previousHighScore !== null && (
-          <p className="bfa-quiz__prev-score">
+          <p className="bfa-quiz__prev-score" style={{ color: 'var(--muted-foreground)' }}>
             Sua melhor pontuação anterior: {previousHighScore} acertos
           </p>
         )}
 
         <button onClick={handleRestart} className="bfa-btn bfa-btn--ouro" style={{ marginTop: '1rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-          <BfaIcon name="refresh" size={16} /> Tentar Novamente
+          <BfaIcon name="refresh" size={16} /> Reiniciar Fixação
         </button>
       </div>
     );
@@ -198,18 +266,23 @@ function QuizEngine({ questions, lessonId }) {
     <div className="bfa-quiz">
       <div className="bfa-quiz__header">
         <div className="bfa-quiz__title">
-          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <BfaIcon name="target" size={20} color="var(--color-azul)" /> Quiz Interativo
+          <span style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--foreground)', fontWeight: 700 }}>
+            <BfaIcon name="target" size={20} color="var(--track-math)" /> Quiz de Fixação (Khan Academy Style)
           </span>
-          <span className="bfa-quiz__progress-text">
+          <span className="bfa-quiz__progress-text" style={{ color: 'var(--muted-foreground)' }}>
             Questão {currentIdx + 1} de {quizQuestions.length}
           </span>
         </div>
-        <div className="bfa-quiz__bar">
-          <div
-            className="bfa-quiz__bar-fill"
-            style={{ width: `${((currentIdx + 1) / quizQuestions.length) * 100}%` }}
-          ></div>
+
+        {/* Visual Progress Pills Khan Academy */}
+        <div className="bfa-quiz__pills">
+          {quizQuestions.map((_, i) => {
+            const ans = answers.find(a => a.question === i);
+            let pClass = '';
+            if (i === currentIdx) pClass = 'active';
+            else if (ans) pClass = ans.isCorrect ? 'correct' : 'wrong';
+            return <div key={i} className={`bfa-quiz__pill ${pClass}`} />;
+          })}
         </div>
       </div>
 

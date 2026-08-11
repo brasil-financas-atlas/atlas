@@ -10,28 +10,26 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
   const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
   if (!subjectData) {
-    return <div className="bfa-container bfa-py-5">Disciplina não encontrada.</div>;
+    return <div className="bfa-container" style={{ padding: '4rem 1.5rem' }}>Disciplina não encontrada.</div>;
   }
 
   const moduloObj = subjectData.modulos.find(m => m.slug === moduloSlug);
   if (!moduloObj) {
-    return <div className="bfa-container bfa-py-5">Módulo não encontrado.</div>;
+    return <div className="bfa-container" style={{ padding: '4rem 1.5rem' }}>Módulo não encontrado.</div>;
   }
 
   const aulaObj = moduloObj.aulas.find(a => a.slug === aulaSlug);
   if (!aulaObj) {
-    return <div className="bfa-container bfa-py-5">Aula não encontrada.</div>;
+    return <div className="bfa-container" style={{ padding: '4rem 1.5rem' }}>Aula não encontrada.</div>;
   }
 
   const lessonId = `${subjectKey}-${moduloSlug}-${aulaSlug}`;
   const isDone = completedLessons && completedLessons.includes(lessonId);
 
-  // Check CMS override for video URL or extra content
   const cmsOverride = cmsData && cmsData.lessons && cmsData.lessons[lessonId];
   const videoUrl = cmsOverride && cmsOverride.videoUrl ? cmsOverride.videoUrl : (aulaObj.videoUrl || "");
   const markdownContent = cmsOverride && cmsOverride.content ? cmsOverride.content : aulaObj.content;
 
-  // Find next/prev lesson for navigation
   const allAulas = [];
   subjectData.modulos.forEach(m => {
     m.aulas.forEach(a => {
@@ -44,236 +42,236 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const nextAula = currentIdx < allAulas.length - 1 ? allAulas[currentIdx + 1] : null;
 
   const isMatematica = subjectKey === 'matematica';
-  const themeClass = isMatematica ? 'bfa-theme--math' : 'bfa-theme--finance';
+  const trackColor = isMatematica ? 'var(--track-math)' : 'var(--track-finance)';
 
   return (
-    <div className={`bfa-lesson-layout ${themeClass}`}>
-      {/* Collapsible Sidebar - Khan Academy Style */}
-      <aside className={`bfa-lesson-sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
-        <div className="bfa-lesson-sidebar__header">
-          <a href={`#/${subjectKey}`} className="bfa-lesson-sidebar__back">
-            ← {isMatematica ? 'Matemática' : 'Finanças'}
+    <div style={{ display: 'flex', minHeight: 'calc(100vh - 4rem)' }}>
+      {/* Sidebar - Curriculum Tree */}
+      <aside style={{
+        width: sidebarOpen ? '320px' : '0px',
+        transition: 'all 0.25s cubic-bezier(0.22, 1, 0.36, 1)',
+        overflow: 'hidden',
+        borderRight: '1px solid var(--border)',
+        background: 'var(--card)',
+        display: 'flex',
+        flexDirection: 'column',
+        flexShrink: 0
+      }}>
+        <div style={{ padding: '1rem 1.25rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <a href={`#/${subjectKey}`} className="mono-tag" style={{ color: trackColor, fontWeight: 700 }}>
+            ← Voltar para {isMatematica ? 'Matemática' : 'Finanças'}
           </a>
-          <button
-            className="bfa-btn-icon"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            title="Recolher menu"
-          >
-            {sidebarOpen ? '◀' : '▶'}
-          </button>
         </div>
 
-        <div className="bfa-lesson-sidebar__nav">
-          {subjectData.modulos.map((m) => (
-            <div key={m.slug} className="bfa-sidebar-module">
-              <div className="bfa-sidebar-module__title">{m.titulo}</div>
-              <ul className="bfa-sidebar-module__list">
+        <div style={{ flex: 1, overflowY: 'auto', padding: '1rem' }}>
+          {subjectData.modulos.map((m, idx) => (
+            <div key={m.slug} style={{ marginBottom: '1.25rem' }}>
+              <div className="mono-tag" style={{ color: 'var(--muted-foreground)', marginBottom: '0.4rem', fontSize: '0.6875rem' }}>
+                MÓDULO {idx + 1} · {m.titulo}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
                 {m.aulas.map((a) => {
                   const itemLessonId = `${subjectKey}-${m.slug}-${a.slug}`;
                   const itemDone = completedLessons && completedLessons.includes(itemLessonId);
                   const isCurrent = a.slug === aulaSlug && m.slug === moduloSlug;
 
                   return (
-                    <li key={a.slug}>
-                      <a
-                        href={`#/${subjectKey}/${m.slug}/${a.slug}`}
-                        className={`bfa-sidebar-aula-item ${isCurrent ? 'active' : ''} ${itemDone ? 'done' : ''}`}
-                      >
-                        <span className="bfa-sidebar-status">{itemDone ? '✓' : '•'}</span>
-                        <span className="bfa-sidebar-title">{a.titulo}</span>
-                      </a>
-                    </li>
+                    <a
+                      key={a.slug}
+                      href={`#/${subjectKey}/${m.slug}/${a.slug}`}
+                      className="nav-link"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        fontSize: '0.85rem',
+                        fontWeight: isCurrent ? 700 : 500,
+                        backgroundColor: isCurrent ? 'var(--secondary)' : 'transparent',
+                        borderLeft: isCurrent ? `3px solid ${trackColor}` : 'none',
+                        color: isCurrent ? 'var(--foreground)' : 'var(--muted-foreground)',
+                        padding: '0.45rem 0.65rem'
+                      }}
+                    >
+                      <span>{a.titulo}</span>
+                      {itemDone && <span className="mono-tag" style={{ color: 'var(--market)', fontSize: '0.65rem' }}>✓</span>}
+                    </a>
                   );
                 })}
-              </ul>
+              </div>
             </div>
           ))}
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className="bfa-lesson-main">
-        {/* Top Navbar */}
-        <div className="bfa-lesson-topbar">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <button
-              className="bfa-btn bfa-btn--ghost bfa-btn--sm"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-            >
-              ☰ {sidebarOpen ? 'Ocultar Trilha' : 'Ver Trilha'}
+      {/* Main Classroom Canvas */}
+      <main style={{ flex: 1, padding: '2rem 2.5rem', maxWidth: '1050px', margin: '0 auto' }}>
+        {/* Top Breadcrumb & Actions */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', paddingBottom: '1rem', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="nav-link" style={{ cursor: 'pointer', border: '1px solid var(--border)' }}>
+              {sidebarOpen ? '◀ Ocultar Trilha' : '▶ Ver Trilha'}
             </button>
-            <div className="bfa-lesson-topbar__breadcrumbs">
-              <span>{isMatematica ? 'Matemática Aplicada' : 'Finanças'}</span> / 
-              <span>{moduloObj.titulo}</span> / 
-              <strong>{aulaObj.titulo}</strong>
-            </div>
+            <span className="mono-tag" style={{ color: 'var(--muted-foreground)' }}>
+              {isMatematica ? 'Matemática' : 'Finanças'} / {moduloObj.titulo} / <strong style={{ color: 'var(--foreground)' }}>{aulaObj.titulo}</strong>
+            </span>
           </div>
 
           <button
             onClick={() => toggleLessonComplete(lessonId)}
-            className={`bfa-btn bfa-btn--sm ${isDone ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+            className="btn-primary"
+            style={{ backgroundColor: isDone ? 'var(--market)' : 'var(--secondary)', color: isDone ? '#FFFFFF' : 'var(--foreground)', border: '1px solid var(--border)' }}
           >
-            {isDone ? <><BfaIcon name="checkSimple" size={14} style={{ marginRight: '6px' }} /> Concluída</> : 'Marcar como Concluída'}
+            {isDone ? '✓ Concluída' : 'Marcar como Concluída'}
           </button>
         </div>
 
-        <div className="bfa-lesson-content-container">
-          {/* Audio Reader Text-to-Speech Accessibility Widget */}
-          <AudioReader markdownContent={markdownContent} lessonTitle={aulaObj.titulo} />
+        {/* Audio Reader Accessibility */}
+        <AudioReader markdownContent={markdownContent} lessonTitle={aulaObj.titulo} />
 
-          {/* Visual Summary Card */}
-          <div className="bfa-napkin-card">
-            <span className="bfa-napkin-card__tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-              <BfaIcon name="lightbulb" size={14} color="#FFFFFF" /> RESUMO DA AULA
-            </span>
-            <EditableBlock id={`${lessonId}-summary-title`} as="div" className="bfa-napkin-card__title">
-              {aulaObj.titulo}
-            </EditableBlock>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem', marginTop: '0.75rem' }}>
-              <div style={{ background: '#FFFFFF', padding: '0.85rem', borderRadius: '10px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                <EditableBlock id={`${lessonId}-foco-title`} as="strong" style={{ color: isMatematica ? 'var(--color-verde)' : 'var(--color-azul)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                  <BfaIcon name="target" size={16} color={isMatematica ? "var(--color-verde)" : "var(--color-azul)"} /> Foco da Aula
-                </EditableBlock>
-                <EditableBlock id={`${lessonId}-foco-desc`} as="p" style={{ fontSize: '0.88rem', margin: '0.3rem 0 0 0', color: 'var(--text-secondary)' }}>
-                  Aprenda de forma intuitiva antes dos exemplos numéricos.
-                </EditableBlock>
-              </div>
-              <div style={{ background: '#FFFFFF', padding: '0.85rem', borderRadius: '10px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                <EditableBlock id={`${lessonId}-app-title`} as="strong" style={{ color: 'var(--color-ouro-dark)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                  <BfaIcon name="zap" size={16} color="var(--color-ouro-dark)" /> Aplicação Real
-                </EditableBlock>
-                <EditableBlock id={`${lessonId}-app-desc`} as="p" style={{ fontSize: '0.88rem', margin: '0.3rem 0 0 0', color: 'var(--text-secondary)' }}>
-                  Casos práticos de investimentos e tomada de decisão.
-                </EditableBlock>
-              </div>
-            </div>
-          </div>
+        {/* Napkin Briefing Card */}
+        <div className="napkin-card">
+          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>{aulaObj.titulo}</h3>
+          <p style={{ fontSize: '0.875rem', color: 'var(--muted-foreground)' }}>
+            Estudo guiado de matemática aplicada e tomada de decisão financeira para estudantes do ensino médio.
+          </p>
+        </div>
 
-          
-          {/* Video Player Section with In-Context Admin Video URL Editor */}
-          <div className="bfa-lesson-video-section" style={{ position: 'relative' }}>
-            {isAuthenticated && inlineEditActive && (
-              <div style={{ marginBottom: '1rem', padding: '0.75rem 1rem', background: 'var(--color-ouro-light)', border: '1px dashed var(--color-ouro)', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-ouro-dark)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                  <BfaIcon name="video" size={16} color="var(--color-ouro-dark)" /> Gerenciador In-Context de Vídeo (Modo Admin)
+        {/* Video Player & Admin Controls */}
+        <div style={{ marginBottom: '2.5rem' }}>
+          {isAuthenticated && inlineEditActive && (
+            <div className="bfa-admin-video-box" style={{ marginBottom: '1rem', padding: '0.85rem 1.25rem', background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <BfaIcon name="video" size={18} color="var(--color-azul)" />
+                <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                  🎬 Gerenciador de Vídeo da Aula (Admin)
                 </span>
+                <span className="mono-tag" style={{ color: videoUrl ? 'var(--market)' : 'var(--muted-foreground)', background: 'var(--card)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
+                  {videoUrl ? '✓ Vídeo Ativo' : 'Sem vídeo'}
+                </span>
+              </div>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
                 <button
                   type="button"
-                  className="bfa-btn bfa-btn--ouro bfa-btn--sm"
+                  className="bfa-btn bfa-btn--sm bfa-btn--ouro"
                   onClick={() => {
                     setInputVideoUrl(videoUrl || '');
                     setShowVideoModal(true);
                   }}
+                  style={{ fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                 >
-                  <BfaIcon name="pencil" size={14} style={{ marginRight: '4px' }} /> {videoUrl ? 'Alterar Link do Vídeo' : 'Adicionar Vídeo a esta Aula'}
+                  <BfaIcon name="pencil" size={13} /> {videoUrl ? 'Alterar Vídeo' : '+ Adicionar Vídeo'}
                 </button>
+                {videoUrl && (
+                  <button
+                    type="button"
+                    className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+                    onClick={() => {
+                      if (window.confirm("Remover o vídeo desta aula?")) {
+                        updateLesson(lessonId, { videoUrl: '' });
+                      }
+                    }}
+                    style={{ fontSize: '0.8rem', color: 'var(--status-danger)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                  >
+                    <BfaIcon name="trash" size={13} /> Remover Vídeo
+                  </button>
+                )}
               </div>
-            )}
+            </div>
+          )}
 
-            <VideoPlayer videoUrl={videoUrl} />
-          </div>
+          <VideoPlayer videoUrl={videoUrl} />
+        </div>
 
-          {showVideoModal && (
-            <div className="bfa-inline-editor-modal" onClick={() => setShowVideoModal(false)}>
-              <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-azul-dark)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <BfaIcon name="video" size={18} color="var(--color-azul)" /> In-Context Video Editor (YouTube)
-                  </h3>
-                  <span className="bfa-badge bfa-badge--ouro">{aulaObj.titulo}</span>
-                </div>
+        {/* Modal Admin para Adicionar / Editar Vídeo */}
+        {showVideoModal && (
+          <div className="bfa-inline-editor-modal" onClick={() => setShowVideoModal(false)}>
+            <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-azul-dark)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <BfaIcon name="video" size={20} color="var(--color-azul)" /> {videoUrl ? 'Editar Vídeo da Aula' : 'Adicionar Vídeo da Aula'}
+                </h3>
+                <button type="button" className="bfa-btn-icon" onClick={() => setShowVideoModal(false)}>✕</button>
+              </div>
 
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-                  Insira o link ou URL do YouTube para vincular diretamente a esta aula (ex: <code>https://www.youtube.com/watch?v=...</code> ou <code>https://youtu.be/...</code>).
-                </p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+                Cole a URL completa do vídeo no YouTube (ex: <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code> ou <code>https://youtu.be/dQw4w9WgXcQ</code>).
+              </p>
 
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                updateLesson(lessonId, { videoUrl: inputVideoUrl.trim() });
+                setShowVideoModal(false);
+              }}>
                 <div className="bfa-form-group" style={{ marginBottom: '1.25rem' }}>
-                  <label style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.4rem', display: 'block' }}>URL da Videoaula:</label>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.35rem', display: 'block' }}>Link do YouTube:</label>
                   <input
                     type="url"
                     value={inputVideoUrl}
                     onChange={(e) => setInputVideoUrl(e.target.value)}
                     placeholder="https://www.youtube.com/watch?v=..."
                     className="bfa-input"
-                    style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.9rem' }}
+                    style={{ width: '100%', padding: '0.65rem' }}
+                    required
                     autoFocus
                   />
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <button
-                    type="button"
-                    className="bfa-btn bfa-btn--ghost bfa-btn--sm"
-                    onClick={() => {
-                      if (updateLesson) {
-                        updateLesson(lessonId, { videoUrl: '' });
-                      }
-                      setShowVideoModal(false);
-                    }}
-                    title="Remover vídeo desta aula"
-                  >
-                    <BfaIcon name="trash" size={14} /> Remover Vídeo
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                  <button type="button" className="bfa-btn bfa-btn--ghost" onClick={() => setShowVideoModal(false)}>
+                    Cancelar
                   </button>
-
-                  <div style={{ display: 'flex', gap: '0.75rem' }}>
-                    <button
-                      type="button"
-                      className="bfa-btn bfa-btn--ghost"
-                      onClick={() => setShowVideoModal(false)}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      type="button"
-                      className="bfa-btn bfa-btn--verde"
-                      onClick={() => {
-                        if (updateLesson) {
-                          updateLesson(lessonId, { videoUrl: inputVideoUrl.trim() });
-                        }
-                        setShowVideoModal(false);
-                      }}
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-                    >
-                      Salvar URL <BfaIcon name="save" size={14} />
-                    </button>
-                  </div>
+                  <button type="submit" className="bfa-btn bfa-btn--verde" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                    Salvar Vídeo 💾
+                  </button>
                 </div>
-              </div>
+              </form>
             </div>
-          )}
-
-
-          {/* Exact Markdown Theory Content */}
-          <article className="bfa-lesson-article">
-            <LessonContent markdownContent={markdownContent} lessonId={lessonId} />
-          </article>
-
-          {/* Interactive Quiz Engine */}
-          <div className="bfa-lesson-quiz-section">
-            <QuizEngine questions={aulaObj.quiz || []} lessonId={lessonId} />
           </div>
+        )}
 
-          {/* Timestamp Forum */}
-          <div className="bfa-lesson-forum-section">
-            <ForumTimestamps lessonId={lessonId} />
-          </div>
+        {/* Markdown Theory Article */}
+        <article className="bfa-lesson-article" style={{ fontSize: '1rem', lineHeight: 1.7 }}>
+          <LessonContent markdownContent={markdownContent} lessonId={lessonId} />
+        </article>
 
-          {/* Navigation Footer */}
-          <div className="bfa-lesson-nav-footer">
-            {prevAula ? (
-              <a href={`#/${subjectKey}/${prevAula.moduloSlug}/${prevAula.slug}`} className="bfa-btn bfa-btn--ghost">
-                ← Aula Anterior
-              </a>
-            ) : <div />}
+        {/* Quiz Engine */}
+        <div style={{ marginTop: '3.5rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
+          {(() => {
+            const richData = subjectKey === 'financas' ? window.financasData : (subjectKey === 'matematica' ? window.matematicaData : null);
+            let richAula = null;
+            if (richData && richData.modulos) {
+              const rMod = richData.modulos.find(m => m.slug === moduloSlug);
+              if (rMod && rMod.aulas) {
+                richAula = rMod.aulas.find(a => a.slug === aulaSlug);
+              }
+            }
+            const lessonQuestions = richAula?.miniQuiz || aulaObj?.miniQuiz || aulaObj?.quiz || [];
+            return <QuizEngine questions={lessonQuestions} lessonId={lessonId} />;
+          })()}
+        </div>
 
-            {nextAula ? (
-              <a href={`#/${subjectKey}/${nextAula.moduloSlug}/${nextAula.slug}`} className={`bfa-btn ${isMatematica ? 'bfa-btn--verde' : 'bfa-btn--azul'}`}>
-                Próxima Aula →
-              </a>
-            ) : <div />}
-          </div>
+        {/* Timestamps Forum */}
+        <div style={{ marginTop: '3.5rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
+          <ForumTimestamps lessonId={lessonId} />
+        </div>
+
+        {/* Bottom Lesson Navigation */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border)' }}>
+          {prevAula ? (
+            <a href={`#/${subjectKey}/${prevAula.moduloSlug}/${prevAula.slug}`} className="nav-link" style={{ border: '1px solid var(--border)', padding: '0.65rem 1.15rem' }}>
+              ← Aula Anterior
+            </a>
+          ) : <div />}
+
+          {nextAula ? (
+            <a href={`#/${subjectKey}/${nextAula.moduloSlug}/${nextAula.slug}`} className="btn-primary">
+              Próxima Aula →
+            </a>
+          ) : <div />}
         </div>
       </main>
     </div>
   );
 }
+
+window.AulaPage = AulaPage;

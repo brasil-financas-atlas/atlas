@@ -7,13 +7,11 @@ function DisciplinaOverview({ subjectKey }) {
   const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
 
   if (!subjectData) {
-    return <div className="bfa-container bfa-py-5">Disciplina não encontrada.</div>;
+    return <div className="bfa-container" style={{ padding: '4rem 1.5rem' }}>Disciplina não encontrada.</div>;
   }
 
   const isMatematica = subjectKey === 'matematica';
-  const colorClass = isMatematica ? 'matematica' : 'financas';
-  const badgeColor = isMatematica ? 'bfa-badge--verde' : 'bfa-badge--azul';
-  const btnColor = isMatematica ? 'bfa-btn--verde' : 'bfa-btn--azul';
+  const trackColor = isMatematica ? 'var(--track-math)' : 'var(--track-finance)';
 
   let totalLessons = 0;
   let doneCount = 0;
@@ -31,85 +29,85 @@ function DisciplinaOverview({ subjectKey }) {
   const progressPct = totalLessons > 0 ? Math.round((doneCount / totalLessons) * 100) : 0;
 
   return (
-    <div className={`bfa-overview bfa-overview--${colorClass}`}>
-      <div className="bfa-overview__hero">
-        <div className="bfa-overview__container">
-          <span className={`bfa-badge ${badgeColor}`}>Trilha de Aprendizado</span>
-          <EditableBlock id={`overview-${subjectKey}-hero-title`} as="h1">
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
-              <BfaIcon name={isMatematica ? "math" : "finance"} size={32} color="#FFFFFF" />
-              {isMatematica ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}
-            </span>
+    <div>
+      {/* Hero */}
+      <section className="hero-gradient" style={{ padding: '4rem 0 3rem 0', position: 'relative' }}>
+        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.6 }} />
+        <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
+          <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.7)', background: 'rgba(255, 255, 255, 0.1)', padding: '0.25rem 0.65rem', borderRadius: 'var(--radius-full)' }}>
+            Trilha de Aprendizado
+          </span>
+
+          <EditableBlock id={`overview-${subjectKey}-hero-title`} as="h1" style={{ fontSize: '2.5rem', fontWeight: 700, color: '#FFFFFF', marginTop: '1rem' }}>
+            {isMatematica ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}
           </EditableBlock>
-          <div className="bfa-overview__meta">
-            <span>{subjectData.modulos.length} Módulos</span> • <span>{totalLessons} Aulas no total</span>
+
+          <div className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.95)', marginTop: '0.5rem', fontWeight: 600 }}>
+            {subjectData.modulos.length} MÓDULOS · {totalLessons} AULAS TOTAL
           </div>
 
-          <div className="bfa-overview__progress">
-            <div className="bfa-overview__progress-info">
-              <EditableBlock id={`overview-${subjectKey}-progress-label`} as="span">
-                Seu Progresso: {doneCount} de {totalLessons} aulas concluídas
-              </EditableBlock>
-              <span>{progressPct}%</span>
+          <div style={{ marginTop: '2rem', maxWidth: '500px', background: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(8px)', padding: '1rem 1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: '#FFFFFF', marginBottom: '0.5rem' }}>
+              <span>SEU PROGRESSO: {doneCount} DE {totalLessons} AULAS</span>
+              <span className="mono-tag" style={{ color: '#34D399', fontWeight: 700 }}>{progressPct}%</span>
             </div>
-            <div className="bfa-progress-bar">
-              <div className="bfa-progress-fill" style={{ width: `${progressPct}%` }}></div>
+            <div style={{ height: '6px', width: '100%', background: 'rgba(255, 255, 255, 0.15)', borderRadius: '999px', overflow: 'hidden' }}>
+              <div style={{ height: '100%', width: `${progressPct}%`, background: '#34D399', transition: 'width 0.3s ease' }} />
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="bfa-section">
-        <div className="bfa-section__container">
-          <div className="bfa-markdown-body" style={{ marginBottom: '2rem' }}>
-            <LessonContent markdownContent={subjectData.index} lessonId={`overview-${subjectKey}`} />
-          </div>
-
-          <EditableBlock id={`overview-${subjectKey}-modules-title`} as="h2" className="bfa-section__title">
-            Módulos de Estudo
-          </EditableBlock>
-          <div className="bfa-modules-list">
-            {subjectData.modulos.map((mod, idx) => (
-              <div key={mod.slug} className="bfa-module-card">
-                <div className="bfa-module-card__header">
-                  <span className="bfa-module-card__num">Módulo {idx + 1}</span>
-                  <EditableBlock id={`overview-${subjectKey}-mod-${mod.slug}-title`} as="h3">
-                    {mod.titulo}
-                  </EditableBlock>
-                  <span className="bfa-badge bfa-badge--gray">{mod.aulas.length} Aulas</span>
-                </div>
-                <div className="bfa-module-card__lessons">
-                  {mod.aulas.map((aula, aIdx) => {
-                    const lessonId = `${subjectKey}-${mod.slug}-${aula.slug}`;
-                    const isDone = completedLessons && completedLessons.includes(lessonId);
-
-                    return (
-                      <a
-                        key={aula.slug}
-                        href={`#/${subjectKey}/${mod.slug}/${aula.slug}`}
-                        className={`bfa-module-card__lesson-item ${isDone ? 'completed' : ''}`}
-                      >
-                        <span className="bfa-lesson-status" style={{ display: 'inline-flex', alignItems: 'center' }}>
-                          {isDone ? (
-                            <BfaIcon name="checkCircle" size={18} color="var(--color-verde)" />
-                          ) : (
-                            <BfaIcon name="circle" size={18} color="var(--color-slate-300)" />
-                          )}
-                        </span>
-                        <span className="bfa-lesson-num">{aIdx + 1}.</span>
-                        <EditableBlock id={`overview-${subjectKey}-aula-${aula.slug}-title`} as="span" className="bfa-lesson-title">
-                          {aula.titulo}
-                        </EditableBlock>
-                        <span className="bfa-lesson-arrow">➔</span>
-                      </a>
-                    );
-                  })}
-                </div>
+      {/* Modules List */}
+      <section className="bfa-container" style={{ padding: '4rem 1.5rem' }}>
+        <div style={{ display: 'grid', gap: '2rem' }}>
+          {subjectData.modulos.map((mod, idx) => (
+            <article key={mod.slug} className="module-card card-lift" style={{ borderTop: `4px solid ${trackColor}`, padding: '1.75rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                <span className="mono-tag" style={{ color: trackColor, background: 'var(--surface-strong)', padding: '0.25rem 0.5rem', borderRadius: '4px', fontWeight: 700 }}>
+                  MÓDULO {idx + 1}
+                </span>
+                <span className="mono-tag" style={{ color: 'var(--muted-foreground)' }}>{mod.aulas.length} Aulas</span>
               </div>
-            ))}
-          </div>
+
+              <EditableBlock id={`overview-${subjectKey}-mod-${mod.slug}-title`} as="h3" style={{ fontSize: '1.35rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                {mod.titulo}
+              </EditableBlock>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.75rem', marginTop: '1.25rem' }}>
+                {mod.aulas.map((aula) => {
+                  const lessonId = `${subjectKey}-${mod.slug}-${aula.slug}`;
+                  const isDone = completedLessons && completedLessons.includes(lessonId);
+
+                  return (
+                    <a
+                      key={aula.slug}
+                      href={`#/${subjectKey}/${mod.slug}/${aula.slug}`}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '0.85rem 1rem',
+                        borderRadius: 'var(--radius-md)',
+                        border: '1px solid var(--border)',
+                        background: isDone ? 'var(--surface-strong)' : 'var(--card)',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--foreground)' }}>
+                        {aula.titulo}
+                      </span>
+                      {isDone && <span className="mono-tag" style={{ color: 'var(--market)' }}>✓ Concluída</span>}
+                    </a>
+                  );
+                })}
+              </div>
+            </article>
+          ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }
+
+window.DisciplinaOverview = DisciplinaOverview;

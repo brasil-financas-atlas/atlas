@@ -2,11 +2,131 @@
 
 Trilha aberta de educação financeira e matemática aplicada para estudantes do ensino médio — do zero absoluto até análise de investimentos e valuation.
 
-**🌐 Site oficial:** https://brasil-financas-atlas.netlify.app/ — deploy do Guima, publicado deste repositório.
+**🌐 Site oficial:** https://atlas-c2i.pages.dev — Cloudflare Pages, publica automaticamente a cada push na `main`.
 
-**🔧 Deploy do David:** https://helpful-elf-ca3f18.netlify.app/ — ambiente de desenvolvimento dele, do mesmo código.
+**📖 Versão MkDocs:** https://brasil-financas-atlas.github.io/bfa/ — mesma trilha em formato de documentação, gerada de [brasil-financas-atlas/bfa](https://github.com/brasil-financas-atlas/bfa), que é onde o conteúdo em Markdown é escrito.
 
-**📖 Versão MkDocs:** https://brasil-financas-atlas.github.io/bfa/ — mesma trilha em formato de documentação, gerada de [brasil-financas-atlas/bfa](https://github.com/brasil-financas-atlas/bfa).
+> ⚠️ O endereço `brasil-financas-atlas.netlify.app` **está desatualizado.** Ele foi um envio manual de pasta, não está ligado a este repositório e por isso não recebe as correções — inclusive não tem o conserto da matemática. Não divulgue esse link; ver o passo 7 abaixo.
+
+---
+
+## ✅ Próximos passos
+
+> Se você está voltando ao projeto depois de alguns dias, leia primeiro
+> **[MUDANCAS.md](MUDANCAS.md)** — o que mudou em agosto, por quê, e o que
+> depende de você.
+
+Roteiro do que falta, na ordem. **A ordem importa** — há um passo que depende dos anteriores e, se for antecipado, derruba o acesso de administrador.
+
+### ~~1. Consertar a renderização de matemática~~ ✅ feito
+
+Mergeado no PR #3 e confirmado no ar. Eram três bugs somados que quebravam a
+matemática em 43 das 55 unidades sem gerar um único erro no console: o marcador
+de proteção das fórmulas era comido pelo Markdown (511 `MATH_TOK_0` apareciam
+como texto para o aluno), as fórmulas em destaque eram rebaixadas para
+fórmulas em linha (84 no conteúdo, zero renderizadas), e o `$` como
+delimitador colidia com o `R$` de dinheiro, transformando prosa em fórmula.
+
+### 2. Criar as tabelas no Supabase
+
+1. Abra o painel do Supabase → barra lateral → **SQL Editor** (ícone `>_`).
+2. Copie **todo** o conteúdo de [`plataforma/src/data/schema.sql`](plataforma/src/data/schema.sql) — o botão "Copy raw file" fica no canto superior direito da caixa de código no GitHub.
+3. Cole e clique em **Run** (ou `Ctrl+Enter`).
+
+**Cuidados:**
+
+- **Não deixe texto selecionado.** Com uma seleção ativa, o Supabase executa apenas a seleção e o schema entra pela metade. Em dúvida, `Ctrl+A` antes.
+- Vai aparecer aviso de operação destrutiva — é esperado, o arquivo remove as políticas antigas para pôr as corrigidas no lugar. Confirme.
+- Terminar com "Success. No rows returned" **é sucesso**: o arquivo cria estrutura, não devolve dados.
+- Pode rodar quantas vezes quiser; é idempotente.
+- **Não apague nada antes.** O arquivo corrige por cima e preserva os dados existentes.
+
+### 3. Ligar o site ao banco
+
+No Supabase, em **Project Settings → API**, copie:
+
+- **Project URL** → cole em `BFA_SUPABASE_URL`
+- chave **anon public** → cole em `BFA_SUPABASE_ANON_KEY`
+
+As duas constantes ficam no topo de `plataforma/src/utils/env.js` (o arquivo já
+existe na branch do passo 5; até lá, o campo é o mesmo).
+
+> A chave `anon` **pode** ficar no repositório: ela é pública por natureza, vai
+> no navegador de todo visitante em qualquer aplicação Supabase, e não concede
+> permissão por si só. Quem controla o que cada pessoa lê e escreve são as
+> políticas de RLS criadas no passo 2. A chave que **nunca** pode entrar aqui é
+> a `service_role`, que ignora o RLS inteiro.
+
+Antes disso, as credenciais só existiam no navegador de quem as digitava — por
+isso o banco aparecia como desconectado em produção.
+
+### 4. Criar o primeiro administrador
+
+Ninguém nasce administrador e **não existe tela para virar administrador** — de
+propósito, senão isso seria um caminho para escalar privilégio. O primeiro é
+promovido à mão, uma única vez:
+
+1. Supabase → **Authentication → Users → Add user**, com "Auto Confirm User" marcado.
+2. No SQL Editor:
+
+```sql
+UPDATE public.profiles SET role = 'admin' WHERE email = 'seu-email@exemplo.com';
+```
+
+3. Confira:
+
+```sql
+SELECT email, role FROM public.profiles ORDER BY created_at;
+```
+
+### 5. Mergear o PR `sem-token-e-rls`
+
+**Só depois dos passos 2, 3 e 4.** Este PR remove as senhas que estavam
+escritas no código, então se ele entrar antes de existir uma conta no Supabase,
+ninguém consegue entrar na área do professor.
+
+O que ele traz: o schema corrigido, o login por conta real e a publicação de
+conteúdo sem token — o botão "Publicar" passa a gravar no banco, e quem
+autoriza é a política de RLS, não uma checagem no navegador.
+
+### 6. Testar o fluxo inteiro
+
+Com o PR mergeado e o deploy publicado, no site oficial:
+
+1. Entre em `/#/admin/login` com a conta criada no passo 4.
+2. Ligue o modo de edição e altere um texto qualquer.
+3. Clique em **🚀 Publicar alterações**.
+4. Abra o site em uma janela anônima e confirme que a alteração aparece **sem estar logado**.
+
+O passo 4 é o teste que importa. Ele é exatamente o que nunca funcionou antes:
+a edição ficava só no navegador de quem editou e o público continuava vendo o
+texto original.
+
+### 7. Desligar o site antigo da Netlify
+
+O `brasil-financas-atlas.netlify.app` é uma cópia congelada e já mostra
+conteúdo errado. Duas opções no painel da Netlify: apagar o site, ou trocar o
+conteúdo por uma página de redirecionamento para o endereço oficial. A segunda
+é melhor se o link já foi enviado para alguém.
+
+### 8. Mergear o PR `protege-auto-sync`
+
+Conserta o `auto_sync.py`, que hoje publica mesmo quando o rebase falha — foi
+assim que ele sobrescreveu correções que já estavam na `main`. Independente do
+merge: **rode `git pull` antes de ligar o script.**
+
+### 9. Revogar o token do GitHub
+
+O `.env` com um `GITHUB_PAT` real foi commitado. O arquivo já saiu do
+rastreamento, mas **isso não invalida o token** — ele continua no histórico do
+git. A única coisa que resolve é revogar em *Settings → Developer settings →
+Personal access tokens* e gerar outro. Ação do David, dono da conta.
+
+### 10. Domínio próprio
+
+Deixe para o fim. O Cloudflare vende a preço de custo e é barato, mas domínio é
+o que transforma "link de teste" em "site que aluno usa" — não vale comprar
+antes de o cadastro funcionar de ponta a ponta (passo 6).
 
 ---
 
