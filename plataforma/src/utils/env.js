@@ -37,21 +37,39 @@
     const BFA_SUPABASE_ANON_KEY =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2Y2pqd3ZhdWlic2N1bG1xaHhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyMTUyMjQsImV4cCI6MjEwMTc5MTIyNH0.xz3GQidAn0T2_SkkvygmOvsHW9em_YgMHpfukXTmCHw';
 
-    /* A partir daqui não precisa mexer.
-       A ordem de precedência permite sobrepor os valores acima no navegador
-       (localStorage) quando alguém quiser testar contra outro projeto Supabase,
-       sem editar arquivo. */
-    window.VITE_SUPABASE_URL =
-      window.VITE_SUPABASE_URL ||
-      localStorage.getItem('BFA_VITE_SUPABASE_URL') ||
-      BFA_SUPABASE_URL ||
-      '';
+    // Helper de sanitização de URL (remove /rest/v1/ e barras finais acidentais)
+    function sanitizeSupabaseUrl(url) {
+      if (!url || typeof url !== 'string') return '';
+      let clean = url.trim();
+      clean = clean.replace(/\/rest\/v1\/?$/i, '');
+      clean = clean.replace(/\/+$/, '');
+      return clean;
+    }
 
-    window.VITE_SUPABASE_ANON_KEY =
-      window.VITE_SUPABASE_ANON_KEY ||
-      localStorage.getItem('BFA_VITE_SUPABASE_ANON_KEY') ||
-      BFA_SUPABASE_ANON_KEY ||
-      '';
+    // Helper de sanitização de Key (remove quebras de linha e espaços)
+    function sanitizeSupabaseKey(key) {
+      if (!key || typeof key !== 'string') return '';
+      return key.trim().replace(/[\r\n\s]+/g, '');
+    }
+
+    /* Sanitização e resolução final com fallback seguro */
+    const rawUrl = window.VITE_SUPABASE_URL || localStorage.getItem('BFA_VITE_SUPABASE_URL') || BFA_SUPABASE_URL || '';
+    const rawKey = window.VITE_SUPABASE_ANON_KEY || localStorage.getItem('BFA_VITE_SUPABASE_ANON_KEY') || BFA_SUPABASE_ANON_KEY || '';
+
+    window.VITE_SUPABASE_URL = sanitizeSupabaseUrl(rawUrl);
+    window.VITE_SUPABASE_ANON_KEY = sanitizeSupabaseKey(rawKey);
+
+    // Se o localStorage continha um valor com /rest/v1/ ou quebra de linha, limpa para não estragar navegações futuras
+    if (typeof localStorage !== 'undefined') {
+      const storedUrl = localStorage.getItem('BFA_VITE_SUPABASE_URL');
+      if (storedUrl && storedUrl !== window.VITE_SUPABASE_URL) {
+        localStorage.setItem('BFA_VITE_SUPABASE_URL', window.VITE_SUPABASE_URL);
+      }
+      const storedKey = localStorage.getItem('BFA_VITE_SUPABASE_ANON_KEY');
+      if (storedKey && storedKey !== window.VITE_SUPABASE_ANON_KEY) {
+        localStorage.setItem('BFA_VITE_SUPABASE_ANON_KEY', window.VITE_SUPABASE_ANON_KEY);
+      }
+    }
 
     if (!window.VITE_SUPABASE_URL || !window.VITE_SUPABASE_ANON_KEY) {
       console.warn(
