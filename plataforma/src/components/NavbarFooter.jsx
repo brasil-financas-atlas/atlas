@@ -78,7 +78,7 @@ function Navbar() {
         </a>
 
         {/* Global Search Bar with Autocomplete */}
-        <div style={{ position: 'relative', marginLeft: '1rem', flex: '0 1 240px' }}>
+        <div className="navbar-search">
           <input
             type="text"
             placeholder="Buscar aula ou conceito..."
@@ -140,7 +140,7 @@ function Navbar() {
           )}
         </div>
 
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginLeft: 'auto' }}>
+        <nav className="navbar-nav">
           {navLinks.map((link) => {
             const isActive = currentPath === link.path || (link.path !== '/' && currentPath.startsWith(link.path));
             return (
@@ -163,7 +163,7 @@ function Navbar() {
           })}
         </nav>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginLeft: '0.5rem' }}>
+        <div className="navbar-actions">
           {adminUser ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               {/* Publicar não pede credencial nenhuma: quem autoriza é a
