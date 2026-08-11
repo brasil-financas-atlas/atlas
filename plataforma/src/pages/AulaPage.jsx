@@ -45,7 +45,6 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const trackColor = isMatematica ? 'var(--track-math)' : 'var(--track-finance)';
 
   return (
-  return (
     <div className="aula-layout">
       {/* Sidebar - Curriculum Tree */}
       <aside className={`aula-sidebar ${!sidebarOpen ? 'closed' : ''}`}>
