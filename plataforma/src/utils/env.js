@@ -31,7 +31,7 @@
        ========================================================================== */
 
     // URL principal do projeto Supabase (SEM "/rest/v1/" no final)
-    const BFA_SUPABASE_URL = 'https://wvcjjwvauibsculmqhxi.supabase.co';
+    const BFA_SUPABASE_URL = 'https://wvcjjwvauibsculmqhxi.supabase.co/rest/v1/';
 
     // Chave pública "anon public"
     const BFA_SUPABASE_ANON_KEY =
