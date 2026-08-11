@@ -34,8 +34,8 @@
     const BFA_SUPABASE_URL = 'https://wvcjjwvauibsculmqhxi.supabase.co';
 
     // Chave pública "anon public"
-    const BFA_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2Y2pqd3ZhdWlic2N1bG1xaHhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyMTUyMjQsImV4cCI6MjEwMTc5MTIyNH0.
-  xz3GQidAn0T2_SkkvygmOvsHW9em_YgMHpfukXTmCHw';
+    const BFA_SUPABASE_ANON_KEY =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2Y2pqd3ZhdWlic2N1bG1xaHhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyMTUyMjQsImV4cCI6MjEwMTc5MTIyNH0.xz3GQidAn0T2_SkkvygmOvsHW9em_YgMHpfukXTmCHw';
 
     /* A partir daqui não precisa mexer.
        A ordem de precedência permite sobrepor os valores acima no navegador
