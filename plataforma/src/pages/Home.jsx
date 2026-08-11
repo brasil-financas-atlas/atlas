@@ -77,7 +77,7 @@ function Home() {
         </div>
 
         {/* Bento Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(330px, 1fr))', gap: '1.75rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.75rem' }}>
           {/* Card 1: Matemática */}
           <article className="bfa-bento-card" style={{ borderTop: '4px solid var(--track-math)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

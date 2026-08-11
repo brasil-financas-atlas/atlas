@@ -76,7 +76,7 @@ function DisciplinaOverview({ subjectKey }) {
                 {mod.titulo}
               </EditableBlock>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '0.85rem', marginTop: '1.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '0.85rem', marginTop: '1.5rem' }}>
                 {mod.aulas.map((aula) => {
                   const lessonId = `${subjectKey}-${mod.slug}-${aula.slug}`;
                   const isDone = completedLessons && completedLessons.includes(lessonId);
