@@ -2,8 +2,8 @@ const { useState, useEffect, useContext, createContext, useMemo, useRef } = Reac
 
 function Navbar() {
   const { currentPath } = useRouter();
-  const { adminUser, logout } = useContext(AdminContext || createContext({}));
-  const [showSyncModal, setShowSyncModal] = useState(false);
+  const { adminUser, isAdmin, logout, publicarConteudo, statusPublicacao, erroPublicacao } =
+    useContext(AdminContext || createContext({}));
   const [theme, setTheme] = useState("");
 
   useEffect(() => {
@@ -55,16 +55,25 @@ function Navbar() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginLeft: '0.5rem' }}>
           {adminUser ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <button
-                type="button"
-                className="btn-primary"
-                onClick={() => setShowSyncModal(true)}
-                style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem' }}
-              >
-                🚀 Publicar
-              </button>
+              {/* Publicar não pede credencial nenhuma: quem autoriza é a
+                  política do banco, com base no papel da conta logada. */}
+              {isAdmin && (
+                <button
+                  type="button"
+                  className="btn-primary"
+                  onClick={publicarConteudo}
+                  disabled={statusPublicacao === 'publicando'}
+                  title={erroPublicacao || 'Publicar as alterações para todos os visitantes'}
+                  style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem' }}
+                >
+                  {statusPublicacao === 'publicando' && 'Publicando...'}
+                  {statusPublicacao === 'publicado' && '✓ Publicado'}
+                  {statusPublicacao === 'erro' && '⚠ Erro ao publicar'}
+                  {(statusPublicacao === 'idle' || !statusPublicacao) && '🚀 Publicar'}
+                </button>
+              )}
               <a href="#/admin" className="nav-link active">
-                Admin ({adminUser.username})
+                Admin ({adminUser.name || adminUser.email})
               </a>
               <button onClick={logout} className="nav-link" title="Sair">
                 ✕
@@ -77,7 +86,6 @@ function Navbar() {
           )}
         </div>
 
-        <GitHubSyncModal isOpen={showSyncModal} onClose={() => setShowSyncModal(false)} />
       </div>
     </header>
   );
