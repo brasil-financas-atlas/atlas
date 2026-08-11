@@ -74,12 +74,27 @@ function QuizEngine({ questions, lessonId }) {
       rawList = DEFAULT_FIXATION_QUESTIONS;
     }
 
-    return rawList.map(q => ({
-      pergunta: q.pergunta || q.question || '',
-      alternativas: q.alternativas || q.opcoes || q.options || [],
-      correta: q.correta !== undefined ? q.correta : (q.respostaCorreta !== undefined ? q.respostaCorreta : 0),
-      explicacao: q.explicacao || q.explanation || ''
-    }));
+    return rawList.map(q => {
+      if (q.questao && !q.alternativas && !q.opcoes && !q.options) {
+        return {
+          pergunta: q.questao,
+          alternativas: [
+            q.resposta,
+            "Requer dados adicionais para determinação exata.",
+            "Nenhuma das alternativas anteriores.",
+            "O resultado depende de variação cambial não informada."
+          ],
+          correta: 0,
+          explicacao: q.resposta ? `Resolução oficial: ${q.resposta}` : 'Gabarito oficial de resolução.'
+        };
+      }
+      return {
+        pergunta: q.pergunta || q.question || q.questao || '',
+        alternativas: q.alternativas || q.opcoes || q.options || [],
+        correta: q.correta !== undefined ? q.correta : (q.respostaCorreta !== undefined ? q.respostaCorreta : 0),
+        explicacao: q.explicacao || q.explanation || q.resposta || ''
+      };
+    });
   }, [cmsData, lessonId, questions]);
 
   const [currentIdx, setCurrentIdx] = useState(0);
