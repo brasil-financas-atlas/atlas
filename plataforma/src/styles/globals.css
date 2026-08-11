@@ -309,3 +309,12 @@ a {
     padding: 1rem 1.25rem;
   }
 }
+
+/* Responsive Tables */
+.bfa-lesson-article table,
+.bfa-table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
