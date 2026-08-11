@@ -5,6 +5,8 @@ function Navbar() {
   const { adminUser, isAdmin, logout, publicarConteudo, statusPublicacao, erroPublicacao } =
     useContext(AdminContext || createContext({}));
   const [theme, setTheme] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -12,13 +14,51 @@ function Navbar() {
     if (theme) root.classList.add(theme);
   }, [theme]);
 
+  const allLessonsIndex = useMemo(() => {
+    const index = [];
+    const content = window.EXACT_CONTENT;
+    if (!content) return index;
+
+    ['matematica', 'financas'].forEach((subjKey) => {
+      const subj = content[subjKey];
+      if (subj && subj.modulos) {
+        subj.modulos.forEach((mod) => {
+          if (mod.aulas) {
+            mod.aulas.forEach((aula) => {
+              index.push({
+                subjectKey: subjKey,
+                subjectTitle: subjKey === 'matematica' ? 'Matemática' : 'Finanças',
+                moduloTitle: mod.titulo,
+                moduloSlug: mod.slug,
+                aulaTitle: aula.titulo,
+                aulaSlug: aula.slug,
+                url: `#/${subjKey}/${mod.slug}/${aula.slug}`
+              });
+            });
+          }
+        });
+      }
+    });
+
+    return index;
+  }, []);
+
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+    const q = searchQuery.toLowerCase().trim();
+    return allLessonsIndex.filter(item =>
+      item.aulaTitle.toLowerCase().includes(q) ||
+      item.moduloTitle.toLowerCase().includes(q) ||
+      item.subjectTitle.toLowerCase().includes(q)
+    ).slice(0, 6);
+  }, [searchQuery, allLessonsIndex]);
+
   const navLinks = [
     { label: "Matemática Aplicada", path: "/matematica" },
     { label: "Finanças & Investimentos", path: "/financas" },
     { label: "Preparação BRHSIC", path: "/preparacao-brhsic" },
-    { label: "Simuladores", path: "/cronograma" },
+    { label: "Recursos & Cronograma", path: "/cronograma" },
     { label: "Exercícios", path: "/exercicios" },
-    { label: "Notícias", path: "/noticias" },
     { label: "Sobre", path: "/sobre" },
   ];
 
@@ -36,6 +76,69 @@ function Navbar() {
             </span>
           </div>
         </a>
+
+        {/* Global Search Bar with Autocomplete */}
+        <div style={{ position: 'relative', marginLeft: '1rem', flex: '0 1 240px' }}>
+          <input
+            type="text"
+            placeholder="Buscar aula ou conceito..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setSearchOpen(true);
+            }}
+            onFocus={() => setSearchOpen(true)}
+            onBlur={() => setTimeout(() => setSearchOpen(false), 200)}
+            style={{
+              width: '100%',
+              padding: '0.4rem 0.75rem',
+              fontSize: '0.82rem',
+              borderRadius: '9999px',
+              border: '1px solid var(--border)',
+              backgroundColor: 'var(--card)',
+              color: 'var(--foreground)',
+              outline: 'none'
+            }}
+          />
+          {searchOpen && searchResults.length > 0 && (
+            <div style={{
+              position: 'absolute',
+              top: 'calc(100% + 6px)',
+              left: 0,
+              right: 0,
+              backgroundColor: 'var(--card)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius-lg)',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+              zIndex: 9999,
+              overflow: 'hidden',
+              padding: '0.4rem 0'
+            }}>
+              {searchResults.map((item) => (
+                <a
+                  key={item.url}
+                  href={item.url}
+                  onClick={() => setSearchOpen(false)}
+                  style={{
+                    display: 'block',
+                    padding: '0.5rem 0.85rem',
+                    textDecoration: 'none',
+                    borderBottom: '1px solid var(--border)',
+                    fontSize: '0.82rem',
+                    color: 'var(--foreground)',
+                    transition: 'background 0.15s ease'
+                  }}
+                  className="search-item-link"
+                >
+                  <span style={{ fontWeight: 700, display: 'block' }}>{item.aulaTitle}</span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)' }}>
+                    {item.subjectTitle} · {item.moduloTitle}
+                  </span>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
 
         <nav style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginLeft: 'auto' }}>
           {navLinks.map((link) => {
