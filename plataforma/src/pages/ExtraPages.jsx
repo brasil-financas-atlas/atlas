@@ -295,7 +295,7 @@ function Sobre() {
             Brasil Finanças Atlas (BFA)
           </EditableBlock>
           <EditableBlock id="sobre-hero-sub" as="p" style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.85)', marginTop: '0.5rem', maxWidth: '700px' }}>
-            Nascido no Núcleo de Inteligência Financeira (NIF) da escola pública EEMTI Dragão do Mar em Fortaleza, CE.
+            Iniciativa educacional do Núcleo de Inteligência Financeira (NIF).
           </EditableBlock>
         </div>
       </section>
