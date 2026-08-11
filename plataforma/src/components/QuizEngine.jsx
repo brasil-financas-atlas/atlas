@@ -263,6 +263,7 @@ function QuizEngine({ questions, lessonId }) {
   }
 
   return (
+    <div className="bfa-quiz">
       <div className="bfa-quiz__progress-bar-wrap" style={{ height: '6px', background: 'var(--surface-strong)', borderRadius: '999px', overflow: 'hidden', marginBottom: '1rem' }}>
         <div
           className="bfa-quiz__progress-bar-fill"
