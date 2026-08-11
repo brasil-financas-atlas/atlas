@@ -30,51 +30,53 @@ function DisciplinaOverview({ subjectKey }) {
 
   return (
     <div>
-      {/* Hero */}
-      <section className="hero-gradient" style={{ padding: '4rem 0 3rem 0', position: 'relative' }}>
-        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.6 }} />
+      {/* Hero UI/UX Pro Max */}
+      <section className="hero-gradient" style={{ padding: '4.5rem 0 3.5rem 0', position: 'relative', overflow: 'hidden' }}>
+        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.5 }} />
         <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
-          <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.7)', background: 'rgba(255, 255, 255, 0.1)', padding: '0.25rem 0.65rem', borderRadius: 'var(--radius-full)' }}>
-            Trilha de Aprendizado
-          </span>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.75rem', borderRadius: '9999px', background: 'rgba(255, 255, 255, 0.12)', border: '1px solid rgba(255, 255, 255, 0.2)', color: '#FFFFFF' }}>
+            <span className="mono-tag" style={{ fontWeight: 700, fontSize: '0.7rem' }}>
+              TRILHA DE CONHECIMENTO ABERTA
+            </span>
+          </div>
 
-          <EditableBlock id={`overview-${subjectKey}-hero-title`} as="h1" style={{ fontSize: '2.5rem', fontWeight: 700, color: '#FFFFFF', marginTop: '1rem' }}>
+          <EditableBlock id={`overview-${subjectKey}-hero-title`} as="h1" style={{ fontSize: '3rem', fontWeight: 800, color: '#FFFFFF', marginTop: '1rem', letterSpacing: '-0.03em' }}>
             {isMatematica ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}
           </EditableBlock>
 
-          <div className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.95)', marginTop: '0.5rem', fontWeight: 600 }}>
-            {subjectData.modulos.length} MÓDULOS · {totalLessons} AULAS TOTAL
+          <div className="mono-tag" style={{ color: 'rgba(241, 245, 249, 0.85)', marginTop: '0.5rem', fontWeight: 700 }}>
+            {subjectData.modulos.length} MÓDULOS ESTRUTURADOS · {totalLessons} AULAS COM FIXAÇÃO
           </div>
 
-          <div style={{ marginTop: '2rem', maxWidth: '500px', background: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(8px)', padding: '1rem 1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: '#FFFFFF', marginBottom: '0.5rem' }}>
-              <span>SEU PROGRESSO: {doneCount} DE {totalLessons} AULAS</span>
-              <span className="mono-tag" style={{ color: '#34D399', fontWeight: 700 }}>{progressPct}%</span>
+          <div style={{ marginTop: '2.25rem', maxWidth: '540px', background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(12px)', padding: '1.25rem 1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid rgba(255, 255, 255, 0.15)', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: '#FFFFFF', marginBottom: '0.6rem', fontWeight: 600 }}>
+              <span>SEU PROGRESSO: {doneCount} DE {totalLessons} AULAS CONCLUÍDAS</span>
+              <span className="mono-tag" style={{ color: '#10B981', fontWeight: 800 }}>{progressPct}%</span>
             </div>
-            <div style={{ height: '6px', width: '100%', background: 'rgba(255, 255, 255, 0.15)', borderRadius: '999px', overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: `${progressPct}%`, background: '#34D399', transition: 'width 0.3s ease' }} />
+            <div style={{ height: '8px', width: '100%', background: 'rgba(255, 255, 255, 0.15)', borderRadius: '999px', overflow: 'hidden' }}>
+              <div style={{ height: '100%', width: `${progressPct}%`, background: 'linear-gradient(90deg, #10B981 0%, #34D399 100%)', borderRadius: '999px', transition: 'width 0.4s ease' }} />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Modules List */}
-      <section className="bfa-container" style={{ padding: '4rem 1.5rem' }}>
-        <div style={{ display: 'grid', gap: '2rem' }}>
+      {/* Modules List Bento Grid */}
+      <section className="bfa-container" style={{ padding: '4.5rem 1.5rem' }}>
+        <div style={{ display: 'grid', gap: '2.25rem' }}>
           {subjectData.modulos.map((mod, idx) => (
-            <article key={mod.slug} className="module-card card-lift" style={{ borderTop: `4px solid ${trackColor}`, padding: '1.75rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                <span className="mono-tag" style={{ color: trackColor, background: 'var(--surface-strong)', padding: '0.25rem 0.5rem', borderRadius: '4px', fontWeight: 700 }}>
+            <article key={mod.slug} className="bfa-bento-card" style={{ borderTop: `4px solid ${trackColor}`, padding: '2rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
+                <span className="mono-tag" style={{ color: trackColor, background: 'rgba(15, 23, 42, 0.06)', padding: '0.3rem 0.65rem', borderRadius: '6px', fontWeight: 800 }}>
                   MÓDULO {idx + 1}
                 </span>
-                <span className="mono-tag" style={{ color: 'var(--muted-foreground)' }}>{mod.aulas.length} Aulas</span>
+                <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>{mod.aulas.length} Aulas Didáticas</span>
               </div>
 
-              <EditableBlock id={`overview-${subjectKey}-mod-${mod.slug}-title`} as="h3" style={{ fontSize: '1.35rem', fontWeight: 700, color: 'var(--foreground)' }}>
+              <EditableBlock id={`overview-${subjectKey}-mod-${mod.slug}-title`} as="h3" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.02em' }}>
                 {mod.titulo}
               </EditableBlock>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.75rem', marginTop: '1.25rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '0.85rem', marginTop: '1.5rem' }}>
                 {mod.aulas.map((aula) => {
                   const lessonId = `${subjectKey}-${mod.slug}-${aula.slug}`;
                   const isDone = completedLessons && completedLessons.includes(lessonId);
@@ -87,17 +89,23 @@ function DisciplinaOverview({ subjectKey }) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        padding: '0.85rem 1rem',
-                        borderRadius: 'var(--radius-md)',
-                        border: '1px solid var(--border)',
-                        background: isDone ? 'var(--surface-strong)' : 'var(--card)',
-                        transition: 'all 0.15s ease'
+                        padding: '0.95rem 1.1rem',
+                        borderRadius: 'var(--radius-lg)',
+                        border: isDone ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border)',
+                        background: isDone ? 'rgba(16, 185, 129, 0.06)' : 'var(--card)',
+                        transition: 'all 0.2s ease',
+                        boxShadow: '0 2px 8px rgba(15, 23, 42, 0.03)'
                       }}
+                      className="card-lift"
                     >
-                      <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--foreground)' }}>
+                      <span style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--foreground)' }}>
                         {aula.titulo}
                       </span>
-                      {isDone && <span className="mono-tag" style={{ color: 'var(--market)' }}>✓ Concluída</span>}
+                      {isDone ? (
+                        <span className="mono-tag" style={{ color: '#059669', background: '#ECFDF5', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 800 }}>✓ Concluída</span>
+                      ) : (
+                        <span style={{ color: 'var(--muted-foreground)', fontSize: '0.85rem' }}>➔</span>
+                      )}
                     </a>
                   );
                 })}
