@@ -359,29 +359,69 @@ function CalculadoraJurosCompostos() {
         </div>
 
         {activeTab === 'chart' ? (
-          <div style={{ background: '#FFFFFF', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', overflowX: 'auto' }}>
-            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '220px', paddingBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', minWidth: `${calculations.yearlyBreakdown.length * 28}px` }}>
-              {calculations.yearlyBreakdown.map((item) => {
-                const heightPct = Math.max(5, (item.compound / maxVal) * 100);
-                const investedHeightPct = (item.invested / item.compound) * 100;
+          <div style={{ background: '#FFFFFF', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
+            {/* Interactive SVG Yield Curve Chart */}
+            <div style={{ position: 'relative', width: '100%', height: '260px', marginBottom: '1rem' }}>
+              {(() => {
+                const width = 700;
+                const height = 220;
+                const padding = 35;
+                const points = calculations.yearlyBreakdown;
+
+                if (!points || points.length === 0) return null;
+
+                const getX = (i) => padding + (i / Math.max(1, points.length - 1)) * (width - 2 * padding);
+                const getY = (val) => height - padding - (val / maxVal) * (height - 2 * padding);
+
+                const pathCompound = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${getX(i)} ${getY(p.compound)}`).join(' ');
+                const pathSimple = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${getX(i)} ${getY(p.simple)}`).join(' ');
+                const pathInvested = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${getX(i)} ${getY(p.invested)}`).join(' ');
+
+                const areaCompound = `${pathCompound} L ${getX(points.length - 1)} ${height - padding} L ${getX(0)} ${height - padding} Z`;
+
                 return (
-                  <div key={item.year} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'flex-end' }} title={`Ano ${item.year}: Total ${formatCurrency(item.compound)} (Investido: ${formatCurrency(item.invested)})`}>
-                    <div style={{ width: '100%', height: `${heightPct}%`, background: 'var(--color-verde-light)', borderTopLeftRadius: '4px', borderTopRightRadius: '4px', position: 'relative', overflow: 'hidden', border: '1px solid var(--color-verde)' }}>
-                      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: `${investedHeightPct}%`, background: 'var(--color-slate-300)' }} />
-                    </div>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '4px', fontWeight: 600 }}>
-                      A{item.year}
-                    </span>
-                  </div>
+                  <svg viewBox={`0 0 ${width} ${height}`} style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+                    <defs>
+                      <linearGradient id="compoundAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#10B981" stopOpacity="0.25" />
+                        <stop offset="100%" stopColor="#10B981" stopOpacity="0.0" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Area fill under compound curve */}
+                    <path d={areaCompound} fill="url(#compoundAreaGrad)" />
+
+                    {/* Grid horizontal lines */}
+                    {[0.25, 0.5, 0.75, 1].map((ratio, idx) => (
+                      <line key={idx} x1={padding} y1={getY(maxVal * ratio)} x2={width - padding} y2={getY(maxVal * ratio)} stroke="rgba(148, 163, 184, 0.2)" strokeDasharray="4 4" />
+                    ))}
+
+                    {/* Curve Lines */}
+                    <path d={pathInvested} fill="none" stroke="#64748B" strokeWidth="2" strokeDasharray="3 3" />
+                    <path d={pathSimple} fill="none" stroke="#2563EB" strokeWidth="2.5" />
+                    <path d={pathCompound} fill="none" stroke="#10B981" strokeWidth="3.5" />
+
+                    {/* Data Points */}
+                    {points.map((p, i) => (
+                      <g key={i}>
+                        <circle cx={getX(i)} cy={getY(p.compound)} r="4" fill="#10B981" stroke="#FFFFFF" strokeWidth="2" />
+                        <title>{`Ano ${p.year}\nJuros Compostos: ${formatCurrency(p.compound)}\nJuros Simples: ${formatCurrency(p.simple)}\nInvestido: ${formatCurrency(p.invested)}`}</title>
+                      </g>
+                    ))}
+                  </svg>
                 );
-              })}
+              })()}
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginTop: '1rem', fontSize: '0.8rem' }}>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ width: '12px', height: '12px', background: 'var(--color-slate-300)', borderRadius: '2px' }} /> Capital Investido
+
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginTop: '1rem', fontSize: '0.85rem', flexWrap: 'wrap' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 600, color: '#64748B' }}>
+                <span style={{ width: '12px', height: '3px', background: '#64748B', display: 'inline-block' }} /> Capital Investido
               </span>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ width: '12px', height: '12px', background: 'var(--color-verde)', borderRadius: '2px' }} /> Juros Compostos Acumulados
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700, color: '#2563EB' }}>
+                <span style={{ width: '12px', height: '3px', background: '#2563EB', display: 'inline-block' }} /> Juros Simples
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 800, color: '#10B981' }}>
+                <span style={{ width: '12px', height: '4px', background: '#10B981', display: 'inline-block' }} /> Juros Compostos (Bola de Neve)
               </span>
             </div>
           </div>
