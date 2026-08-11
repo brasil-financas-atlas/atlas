@@ -32,7 +32,7 @@ function Navbar() {
               Brasil Finanças Atlas
             </span>
             <span className="mono-tag" style={{ color: 'var(--track-finance)', fontWeight: 700, fontSize: '0.68rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10B981', display: 'inline-block' }} /> NIF · EEMTI Dragão do Mar
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10B981', display: 'inline-block' }} /> Plataforma Aberta NIF
             </span>
           </div>
         </a>
@@ -77,7 +77,7 @@ function Navbar() {
                   {statusPublicacao === 'publicando' && 'Publicando...'}
                   {statusPublicacao === 'publicado' && '✓ Publicado'}
                   {statusPublicacao === 'erro' && '⚠ Erro ao publicar'}
-                  {(statusPublicacao === 'idle' || !statusPublicacao) && '🚀 Publicar'}
+                  {(statusPublicacao === 'idle' || !statusPublicacao) && 'Publicar'}
                 </button>
               )}
               <a href="#/admin" className="nav-link active">
@@ -89,7 +89,7 @@ function Navbar() {
             </div>
           ) : (
             <a href="#/admin/login" className="btn-primary" style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem', backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)' }}>
-              🔒 Admin
+              Admin
             </a>
           )}
         </div>
@@ -109,7 +109,7 @@ function Footer() {
             <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>Brasil Finanças Atlas</span>
           </div>
           <p style={{ fontSize: '0.875rem', color: 'var(--muted-foreground)', lineHeight: 1.6 }}>
-            A infraestrutura aberta de conhecimento financeiro e matemática aplicada. Iniciativa pedagógica pública da escola EEMTI Dragão do Mar em Fortaleza, CE.
+            Plataforma aberta de ensino de matemática aplicada e finanças corporativas.
           </p>
         </div>
 
