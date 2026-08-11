@@ -369,15 +369,22 @@ function QuizEngine({ questions, lessonId }) {
       </div>
 
       {submitted && (
-        <div className={`bfa-quiz__feedback ${selectedOption === currentQ.correta ? 'success' : 'error'}`}>
-          <div className="bfa-quiz__feedback-title" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div className={`bfa-quiz__feedback ${selectedOption === currentQ.correta ? 'success' : 'error'}`} style={{ marginTop: '1.25rem', padding: '1.25rem', borderRadius: 'var(--radius-lg)', background: selectedOption === currentQ.correta ? 'rgba(16, 185, 129, 0.08)' : 'rgba(239, 68, 68, 0.08)', border: selectedOption === currentQ.correta ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid rgba(239, 68, 68, 0.3)' }}>
+          <div className="bfa-quiz__feedback-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1rem', fontWeight: 800 }}>
             {selectedOption === currentQ.correta ? (
-              <><BfaIcon name="checkCircle" size={18} color="var(--color-verde)" /> Resposta Correta!</>
+              <><BfaIcon name="checkCircle" size={20} color="#059669" /> Resposta Correta!</>
             ) : (
-              <><BfaIcon name="close" size={18} color="var(--status-danger)" /> Resposta Incorreta</>
+              <><BfaIcon name="close" size={20} color="#DC2626" /> Resposta Incorreta</>
             )}
           </div>
-          <p className="bfa-quiz__explanation">{currentQ.explicacao}</p>
+          <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid rgba(15, 23, 42, 0.1)' }}>
+            <span style={{ fontWeight: 800, fontSize: '0.85rem', color: 'var(--foreground)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '0.35rem' }}>
+              <BfaIcon name="book" size={14} color="var(--track-math)" /> Gabarito Comentado (Alternativa {String.fromCharCode(65 + currentQ.correta)}):
+            </span>
+            <p className="bfa-quiz__explanation" style={{ margin: 0, fontSize: '0.92rem', lineHeight: 1.6, color: 'var(--foreground)' }}>
+              {currentQ.explicacao}
+            </p>
+          </div>
         </div>
       )}
 
