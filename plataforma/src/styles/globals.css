@@ -102,6 +102,27 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+  .bfa-container {
+    padding: 0 1.25rem;
+  }
+  .bfa-bento-card {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+  .bfa-container {
+    padding: 0 1rem;
+  }
+}
+
 /* Dark Obsidian Theme */
 [data-theme="dark-obsidian"],
 .dark {
@@ -280,4 +301,11 @@ a {
   background: rgba(15, 23, 42, 0.85);
   border-color: rgba(16, 185, 129, 0.4);
   transform: translateY(-2px);
+}
+
+/* Fluid touch target sizes */
+@media (max-width: 768px) {
+  .bfa-stat-spotlight {
+    padding: 1rem 1.25rem;
+  }
 }
