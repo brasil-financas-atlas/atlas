@@ -1,7 +1,86 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
+function GlassmorphismToggle() {
+  const [enabled, setEnabled] = useState(() => {
+    return localStorage.getItem('bfa_glassmorphism_preview') === 'true';
+  });
+
+  useEffect(() => {
+    if (enabled) {
+      document.documentElement.classList.add('bfa-glassmorphism-active');
+    } else {
+      document.documentElement.classList.remove('bfa-glassmorphism-active');
+    }
+    localStorage.setItem('bfa_glassmorphism_preview', enabled ? 'true' : 'false');
+  }, [enabled]);
+
+  return (
+    <div style={{
+      position: 'fixed',
+      bottom: '1.5rem',
+      right: '1.5rem',
+      zIndex: 99999,
+      backgroundColor: enabled ? 'rgba(15, 23, 42, 0.92)' : '#0F172A',
+      color: '#FFFFFF',
+      padding: '0.55rem 0.95rem',
+      borderRadius: '9999px',
+      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255,255,255,0.2)',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.75rem',
+      fontFamily: 'var(--font-sans)',
+      fontSize: '0.82rem',
+      fontWeight: 600,
+      backdropFilter: 'blur(10px)',
+      userSelect: 'none',
+      transition: 'all 0.2s ease'
+    }}>
+      <span>✨ Efeito 4 (Vidro Fosco):</span>
+      <button
+        type="button"
+        onClick={() => setEnabled(!enabled)}
+        style={{
+          backgroundColor: enabled ? '#10B981' : '#475569',
+          color: '#FFFFFF',
+          border: 'none',
+          padding: '0.25rem 0.65rem',
+          borderRadius: '9999px',
+          fontWeight: 700,
+          cursor: 'pointer',
+          fontSize: '0.75rem',
+          transition: 'all 0.2s ease'
+        }}
+      >
+        {enabled ? 'ON (Ativo)' : 'OFF (Desativado)'}
+      </button>
+    </div>
+  );
+}
+
 function App() {
   const { currentPath } = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('bfa-visible');
+          }
+        });
+      }, { threshold: 0.05 });
+
+      const targets = document.querySelectorAll('.module-card, .tool-card, .bfa-card, .bfa-quiz, .bfa-forum, .bfa-reveal');
+      targets.forEach(el => {
+        el.classList.add('bfa-reveal');
+        observer.observe(el);
+      });
+
+      return () => observer.disconnect();
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [currentPath]);
 
   // Match Routes
   const renderCurrentPage = () => {
@@ -79,6 +158,7 @@ function App() {
         {renderCurrentPage()}
       </div>
       {!isAulaRoute && <Footer />}
+      <GlassmorphismToggle />
     </div>
   );
 }
