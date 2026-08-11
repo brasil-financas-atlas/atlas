@@ -21,7 +21,7 @@ function VideoPlayer({ videoUrl, onTimeUpdate, playerRef }) {
           </div>
           <h3>Videoaula em Breve</h3>
           <p>Esta aula possui material completo em texto e quiz interativo abaixo.</p>
-          <span className="bfa-badge bfa-badge--gold">NIF Dragão do Mar</span>
+          <span className="bfa-badge bfa-badge--gold">NIF / BFA</span>
         </div>
       </div>
     );
