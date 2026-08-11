@@ -122,11 +122,13 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
 
     let parsedHtml = (window.marked && window.marked.parse) ? window.marked.parse(formatted) : formatted;
 
-    // Sanitiza ANTES de injetar o KaTeX: o HTML das fórmulas é gerado por nós,
-    // não vem do usuário, e passar por aqui só arriscaria o DOMPurify remover
-    // parte da marcação matemática.
+    // Hard-fail de segurança: Se o DOMPurify estiver disponível, sanitiza o HTML renderizado.
+    // Caso o script CDN do DOMPurify falhe ou seja bloqueado, lança um aviso e sanitiza tags por segurança.
     if (window.DOMPurify && window.DOMPurify.sanitize) {
       parsedHtml = window.DOMPurify.sanitize(parsedHtml);
+    } else {
+      console.error('[Security Warning] DOMPurify não carregado! Ignorando injeção bruta de HTML.');
+      parsedHtml = parsedHtml.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
     return parsedHtml.replace(/@@BFAMATH(\d+)@@/g, (marcador, i) => {
