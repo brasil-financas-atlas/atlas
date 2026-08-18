@@ -158,7 +158,14 @@ function App() {
         {renderCurrentPage()}
       </div>
       {!isAulaRoute && <Footer />}
-      <CookieConsent />
+      {/* A checagem nao e paranoia: como o Babel roda no navegador e cada
+          componente e um <script> separado, QUALQUER script que nao carregue
+          derruba a aplicacao toda com "X is not defined" — e bloqueador de
+          anuncio derruba script por causa do NOME do arquivo. Ja aconteceu
+          aqui: o arquivo se chamava CookieConsent.jsx, o Brave recusou a
+          requisicao, e o site inteiro virou tela de erro.
+          Com a checagem, o pior caso passa a ser "o aviso nao aparece". */}
+      {typeof AvisoPrivacidade !== 'undefined' && <AvisoPrivacidade />}
     </div>
   );
 }

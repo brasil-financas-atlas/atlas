@@ -1,6 +1,6 @@
 const { useState, useEffect } = React;
 
-function CookieConsent() {
+function AvisoPrivacidade() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -72,4 +72,4 @@ function CookieConsent() {
   );
 }
 
-window.CookieConsent = CookieConsent;
+window.AvisoPrivacidade = AvisoPrivacidade;

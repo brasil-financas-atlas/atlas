@@ -58,7 +58,7 @@ function AdminLogin() {
             <span style={{ fontSize: '2rem' }}>✓</span>
           </div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--foreground)' }}>
-            Sessão Ativa: <strong>{adminUser.username}</strong>
+            Sessão Ativa: <strong>{adminUser.name || adminUser.email}</strong>
           </h2>
           <p style={{ margin: '0.75rem 0 1.5rem 0', color: 'var(--muted-foreground)' }}>
             Você está autenticado no Painel Admin do BFA.
@@ -71,14 +71,24 @@ function AdminLogin() {
     );
   }
 
-  const handleLoginSubmit = (e) => {
+  const [entrando, setEntrando] = useState(false);
+
+  // `login` e assincrono (fala com o Supabase Auth), entao precisa de await.
+  // Sem ele, `res` era a Promise, `res.success` era undefined, e o login
+  // correto tambem caia no ramo de erro.
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg('');
-    const res = login(username, password);
-    if (res.success) {
-      navigate('/admin');
-    } else {
-      setErrorMsg(res.error || 'Credenciais inválidas.');
+    setEntrando(true);
+    try {
+      const res = await login(username, password);
+      if (res && res.success) {
+        navigate('/admin');
+      } else {
+        setErrorMsg((res && res.error) || 'Credenciais inválidas.');
+      }
+    } finally {
+      setEntrando(false);
     }
   };
 
@@ -98,12 +108,12 @@ function AdminLogin() {
 
         <form onSubmit={handleLoginSubmit}>
           <div style={{ marginBottom: '1rem' }}>
-            <label style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>Usuário:</label>
+            <label style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>E-mail:</label>
             <input
-              type="text"
+              type="email"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="admin"
+              placeholder="seu-email@exemplo.com"
               style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.9rem' }}
               required
             />
@@ -121,8 +131,8 @@ function AdminLogin() {
             />
           </div>
 
-          <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-            Entrar no Painel CMS ➔
+          <button type="submit" className="btn-primary" disabled={entrando} style={{ width: '100%', justifyContent: 'center' }}>
+            {entrando ? 'Entrando...' : 'Entrar no Painel CMS ➔'}
           </button>
         </form>
       </div>
