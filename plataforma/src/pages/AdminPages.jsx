@@ -163,7 +163,7 @@ function AdminDashboard() {
     );
   }
 
-  const isChief = adminUser?.role === 'admin_chief' || adminUser?.role === 'admin';
+  const isChief = adminUser?.role === 'admin_chief';
   const pendingEdits = cmsData?.pendingEdits || [];
 
   // Agrupa todas as aulas para o gerenciador de vídeos
