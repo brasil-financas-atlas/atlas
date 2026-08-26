@@ -233,9 +233,9 @@ function AdminDashboard() {
         <div className="bfa-container" style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <span className="mono-tag" style={{ color: isChief ? 'var(--gold)' : 'var(--market)', background: 'rgba(255, 255, 255, 0.15)', padding: '0.25rem 0.65rem', borderRadius: 'var(--radius-full)' }}>
-              {isChief ? '👑 Admin Chief (Aprovador)' : '✍️ Colaborador CMS'}
+              {isChief ? '👑 Admin Chief (Aprovador)' : adminUser?.role === 'admin' ? '✍️ Administrador (Editor)' : '✍️ Colaborador CMS'}
             </span>
-            <h1 style={{ fontSize: '2.25rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.75rem' }}>Painel CMS — {adminUser.name}</h1>
+            <h1 style={{ fontSize: '2.25rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.75rem' }}>Painel CMS — {adminUser.name || adminUser.email}</h1>
             <p style={{ color: 'rgba(255, 255, 255, 0.75)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
               Nível de permissão: <strong>{adminUser.role}</strong>
             </p>
