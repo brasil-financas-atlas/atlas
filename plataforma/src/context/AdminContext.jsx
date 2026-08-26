@@ -246,14 +246,15 @@ function AdminProvider({ children }) {
     return res;
   };
 
-  // Se o usuário for colaborador, a edição vai para a fila de aprovação (Pending Edit)
-  const isCollaborator = currentUser?.role === 'collaborator';
+  // Se o usuário não for Admin Chief (ou seja, for admin, teacher ou colaborador), a edição vai para a fila de aprovação (Pending Edit)
+  const isChief = currentUser?.role === 'admin_chief';
+  const needsApproval = !isChief;
 
   const updateLesson = (lessonId, updatedData) => {
-    if (isCollaborator) {
+    if (needsApproval) {
       const pendingObj = {
         id: `edit_${Date.now()}`,
-        authorName: currentUser.name || currentUser.username,
+        authorName: currentUser.name || currentUser.username || currentUser.email,
         resourceType: 'lesson',
         resourceId: lessonId,
         changesJson: updatedData,
@@ -262,7 +263,7 @@ function AdminProvider({ children }) {
       };
 
       if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-        window.BfaSupabase.submitPendingEdit('lesson', lessonId, updatedData, currentUser.name);
+        window.BfaSupabase.submitPendingEdit('lesson', lessonId, updatedData, currentUser.name || currentUser.email);
       }
 
       setCmsData(prev => comHorario({
@@ -274,7 +275,7 @@ function AdminProvider({ children }) {
       return;
     }
 
-    // Caso seja Admin Chief ou Admin, aplica imediatamente
+    // Caso seja Admin Chief, aplica imediatamente
     setCmsData(prev => comHorario({
       ...prev,
       lessons: { ...prev.lessons, [lessonId]: { ...(prev.lessons?.[lessonId] || {}), ...updatedData } }
@@ -284,13 +285,13 @@ function AdminProvider({ children }) {
   const addNews = (newsItem) => {
     const item = { id: `news_${Date.now()}`, date: new Date().toISOString().split('T')[0], ...newsItem };
 
-    if (isCollaborator) {
+    if (needsApproval) {
       if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-        window.BfaSupabase.submitPendingEdit('news', item.id, newsItem, currentUser.name);
+        window.BfaSupabase.submitPendingEdit('news', item.id, newsItem, currentUser.name || currentUser.email);
       }
       setCmsData(prev => comHorario({
         ...prev,
-        pendingEdits: [{ id: item.id, authorName: currentUser.name, resourceType: 'news', resourceId: item.id, changesJson: newsItem, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
+        pendingEdits: [{ id: item.id, authorName: currentUser.name || currentUser.email, resourceType: 'news', resourceId: item.id, changesJson: newsItem, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
       }));
       alert("ℹ️ Notícia enviada para aprovação do Admin Chief!");
       return;
@@ -300,13 +301,13 @@ function AdminProvider({ children }) {
   };
 
   const saveOverride = (id, newContent) => {
-    if (isCollaborator) {
+    if (needsApproval) {
       if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-        window.BfaSupabase.submitPendingEdit('override', id, { text: newContent }, currentUser.name);
+        window.BfaSupabase.submitPendingEdit('override', id, { text: newContent }, currentUser.name || currentUser.email);
       }
       setCmsData(prev => comHorario({
         ...prev,
-        pendingEdits: [{ id: `edit_${Date.now()}`, authorName: currentUser.name, resourceType: 'override', resourceId: id, changesJson: { text: newContent }, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
+        pendingEdits: [{ id: `edit_${Date.now()}`, authorName: currentUser.name || currentUser.email, resourceType: 'override', resourceId: id, changesJson: { text: newContent }, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
       }));
       alert("ℹ️ Alteração de texto enviada para aprovação do Admin Chief!");
       return;
@@ -331,13 +332,13 @@ function AdminProvider({ children }) {
   const addModule = (subjectKey, moduleObj) => {
     const modItem = { slug: `modulo-${Date.now()}`, title: moduleObj.title || moduleObj.titulo, aulas: [], ...moduleObj };
 
-    if (isCollaborator) {
+    if (needsApproval) {
       if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-        window.BfaSupabase.submitPendingEdit('module', `${subjectKey}-${modItem.slug}`, modItem, currentUser.name);
+        window.BfaSupabase.submitPendingEdit('module', `${subjectKey}-${modItem.slug}`, modItem, currentUser.name || currentUser.email);
       }
       setCmsData(prev => comHorario({
         ...prev,
-        pendingEdits: [{ id: `edit_${Date.now()}`, authorName: currentUser.name, resourceType: 'module', resourceId: `${subjectKey}-${modItem.slug}`, changesJson: { subjectKey, module: modItem }, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
+        pendingEdits: [{ id: `edit_${Date.now()}`, authorName: currentUser.name || currentUser.email, resourceType: 'module', resourceId: `${subjectKey}-${modItem.slug}`, changesJson: { subjectKey, module: modItem }, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
       }));
       alert("ℹ️ Novo módulo enviado para aprovação do Admin Chief!");
       return;
@@ -352,13 +353,13 @@ function AdminProvider({ children }) {
   const addExercise = (exObj) => {
     const item = { id: `ex_${Date.now()}`, module: exObj.module || 'Geral', difficulty: exObj.difficulty || 'Médio', title: exObj.title, question: exObj.question, answer: exObj.answer, category: exObj.category || 'fixacao' };
 
-    if (isCollaborator) {
+    if (needsApproval) {
       if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-        window.BfaSupabase.submitPendingEdit('exercise', item.id, item, currentUser.name);
+        window.BfaSupabase.submitPendingEdit('exercise', item.id, item, currentUser.name || currentUser.email);
       }
       setCmsData(prev => comHorario({
         ...prev,
-        pendingEdits: [{ id: item.id, authorName: currentUser.name, resourceType: 'exercise', resourceId: item.id, changesJson: item, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
+        pendingEdits: [{ id: item.id, authorName: currentUser.name || currentUser.email, resourceType: 'exercise', resourceId: item.id, changesJson: item, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
       }));
       alert("ℹ️ Exercício enviado para aprovação do Admin Chief!");
       return;
@@ -371,7 +372,7 @@ function AdminProvider({ children }) {
   };
 
   const deleteExercise = (exId) => {
-    if (isCollaborator) {
+    if (needsApproval) {
       alert("ℹ️ Exclusões devem ser solicitadas diretamente ao Admin Chief.");
       return;
     }
@@ -382,7 +383,10 @@ function AdminProvider({ children }) {
   };
 
   const deleteNews = (newsId) => {
-    if (isCollaborator) {
+    if (needsApproval) {
+      alert("ℹ️ Exclusões devem ser solicitadas diretamente ao Admin Chief.");
+      return;
+    }
       alert("ℹ️ Exclusões devem ser solicitadas diretamente ao Admin Chief.");
       return;
     }
