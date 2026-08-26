@@ -1,43 +1,46 @@
 # Handoff Briefing
 
-## Goal
-Redesign and maintain the Brasil Finanças Atlas (BFA) educational platform frontend UI/UX, implement interactive features (Khan Academy-style quiz engine, video player, timestamped forum, admin CMS), integrate zero-cost secure backend architecture (Supabase Auth / Turso / Cloudflare Workers), and maintain automated local-to-GitHub auto-sync using PAT token in a public-safe repository setup.
+## Environment Metadata
+- **Timestamp:** 2026-08-26T12:25:00-03:00
+- **Git Branch:** `main`
+- **Last Commit:** `73b049a - chore(auto-sync): atualiza arquivos locais [2026-08-26 12:12:19]`
+- **Uncommitted Changes:** None
+
+## Goal & Objective
+Maintain and advance the Brasil Finanças Atlas (BFA) educational platform frontend UI/UX, verify secure Supabase-based authentication & CMS role hierarchies, ensure zero secret leakage via `.gitignore`, and maintain real-time automated GitHub synchronization with local PAT.
 
 ## Current Status
-- **Completed:** 
-  - Verified and updated local workspace to latest GitHub `origin/main` (`b50c0f4..0d5dbaf`), integrating Supabase RLS schema rewrite, math rendering KaTeX fixes, and security cleanups.
-  - Confirmed `.env` and `auto_sync.log` are strictly ignored in [.gitignore](file:///C:/codigos/bfa-main/.gitignore), guaranteeing secret tokens are never pushed to GitHub (safe for public repository).
-  - Created local [.env](file:///C:/codigos/bfa-main/.env) with user's GitHub Personal Access Token (`GITHUB_PAT`).
-  - Tested initial `GitAutoSync` sync with GitHub via `python auto_sync.py`, successfully authenticating and pushing commits.
-  - Started background auto-sync process [`auto_sync.py`](file:///C:/codigos/bfa-main/auto_sync.py) with real-time Watchdog monitoring active.
-  - Extended `AdminContext.jsx` with `addModule`, `addNews`, `deleteNews`, `addExercise`, `deleteExercise` and collaborator pending edits workflow.
-  - Added Quick Action Bar and modals in `AdminPages.jsx` for creating modules, news, and exercises.
-  - Transformed `QuizEngine.jsx` into a Khan Academy Fixation Quiz with progress pills, instant feedback, and normalized property mapping for `miniQuiz` arrays.
-  - Solved page title illegibility (dark blue on dark blue) by passing `style={style}` directly to `<Component>` in `EditableBlock.jsx` and enforcing `.hero-gradient * { color: #FFFFFF !important; }` in `globals.css`.
-  - Added step-by-step GitHub continuous deployment guide (Netlify, Vercel, Cloudflare Pages) to `README.md`.
-  - Conducted deep-dive research into zero-cost / free-tier backend infrastructure (Turso / Cloudflare D1 + Workers + Supabase Auth + Cloudflare R2 + YouTube Unlisted).
+- **Completed in this session:**
+  - Sincronização completa de todos os arquivos locais com o GitHub (`origin/main`).
+  - Atualização segura do arquivo `.env` com a nova chave `GITHUB_PAT` fornecida pelo usuário, garantindo que permaneça ignorada pelo Git (`.gitignore`).
+  - Inicialização e validação do serviço de sincronização em segundo plano ([`auto_sync.py`](file:///C:/codigos/bfa-main/auto_sync.py)) com Watchdog em tempo real e push autenticado no GitHub.
+  - Alinhamento da hierarquia de permissões no CMS: administradores comuns (`admin`), professores (`teacher`) e colaboradores (`collaborator`) enviam edições para a fila de moderação (`pendingEdits`), cabendo exclusivamente ao Administrador Chefe (`admin_chief`) aprovar (`approvePendingEdit`), rejeitar (`rejectPendingEdit`) e publicar alterações no banco ([`AdminContext.jsx`](file:///C:/codigos/bfa-main/plataforma/src/context/AdminContext.jsx), [`AdminPages.jsx`](file:///C:/codigos/bfa-main/plataforma/src/pages/AdminPages.jsx)).
+  - Elaboração de documentação e roteiro detalhado para teste do sistema de admins e promoção de contas via SQL no Supabase.
 - **In-Progress:**
-  - Zero-cost backend integration and Cloudflare / Supabase setup.
-- **Blockers:**
-  - None.
+  - Plataforma 100% operacional com auto-sync ativo e permissões de CMS ajustadas.
+- **Blockers / Known Issues:**
+  - Nenhum.
 
 ## Decisions Made (Locked)
-- **Public Repo Security via `.gitignore`:** [.env](file:///C:/codigos/bfa-main/.env) stores `GITHUB_PAT` locally for background `auto_sync.py` process, strictly ignored by `.gitignore` so the repository can be made public without leaking secrets.
-- **PAT Scopes:** Personal Access Tokens must include both `repo` and `workflow` scopes to allow updating GitHub Actions workflows in `.github/workflows/`.
-- **Deployment Stack:** Netlify / Vercel / Cloudflare Pages connected to GitHub `main` branch for automatic 30s builds.
-- **Khan Academy Quiz Engine:** Quizzes use a 5-question step-by-step layout with visual status pills (`.bfa-quiz__pills`), instant answer verification, explanation cards, and mastery badges.
-- **Dynamic Lesson Mini-Quiz Resolution:** `AulaPage.jsx` checks `window.financasData` and `window.matematicaData` for rich `miniQuiz` data per lesson before falling back to default questions.
-- **Title Color Enforcement:** `EditableBlock.jsx` applies `style={style}` directly onto the rendered `<Component>` element to ensure inline styles override `typography.css` global element rules.
+- **Hierarquia de Permissões CMS (Admin vs Admin Chief):** Qualquer usuário com papel `admin`, `teacher` ou `collaborator` tem acesso às ferramentas de edição in-context e criação de módulos/questões/notícias, mas suas alterações geram pendências (`pendingEdits`). Somente o usuário com papel `admin_chief` pode aprovar as alterações para publicação definitiva.
+- **Segurança de Segredos e `.gitignore`:** O arquivo `.env` contendo o `GITHUB_PAT` nunca deve ser versionado nem designorado, mantendo o repositório seguro para publicação pública.
+- **Background Auto-Sync com Watchdog:** O processo `python auto_sync.py` roda continuamente em segundo plano com debounce de 3 segundos, gravando commits atômicos do tipo `chore(auto-sync)` e sincronizando via rebase e push com o GitHub.
 
-## Failed Approaches / Dead Ends (Do Not Retry)
-- **Tool calls without `TargetFile`:** Calling `replace_file_content` without specifying `TargetFile` explicitly causes JSON validation failure. Always include `TargetFile`.
-- **PAT without `workflow` scope:** Pushing commits to a repository containing `.github/workflows/*.yml` with a PAT that lacks `workflow` scope causes GitHub API rejection.
-- **Tracking `auto_sync.log` or `.env` in Git:** Keeping `auto_sync.log` or `.env` in Git causes rebase conflicts or leaks private secrets. Keep both in `.gitignore`.
-- **Applying `color: #FFFFFF` only to parent containers of `EditableBlock`**: Failed because `h1, h2, h3` element selectors in `typography.css` have higher specificity than CSS inheritance.
+## Failed Approaches & Anti-Patterns (Do Not Retry)
+- **Publicação direta por administradores comuns:** Configurar `admin` para gravar diretamente no `site_content` sem aprovação do `admin_chief` violava a governança do projeto. Todas as edições não-chief devem passar por `pendingEdits`.
+- **Credenciais no código:** Nunca reintroduzir credenciais estáticas de admin no frontend (`AdminContext.jsx`); a autenticação deve ser estritamente delegada ao Supabase Auth com papéis lidos da tabela `public.profiles`.
 
-## Extracted Memories & Preferences
-- **Single-page Babel SPA Architecture:** Project uses React 18 + Babel Standalone loaded directly in `index.html`. All data scripts (`contentData.js`, `financasData.js`, `matematicaData.js`) must be included in `index.html`.
-- **Background Auto-Sync Protocol:** `AGENTS.md` mandates auto-syncing commits via `python auto_sync.py` running in background.
+## Extracted User Preferences & Project Learnings
+- **Regra de Admin Chief:** O administrador edita e submete para o Admin Chief permitir/aprovar.
+- **Auto-Sync Ativo:** O usuário espera que todas as mudanças locais sejam refletidas automaticamente no GitHub via `auto_sync.py`.
+
+## Attention Routing (Key Pointers)
+- **Active Plan File:** N/A
+- **Primary Code Files:**
+  - [`plataforma/src/context/AdminContext.jsx`](file:///C:/codigos/bfa-main/plataforma/src/context/AdminContext.jsx)
+  - [`plataforma/src/pages/AdminPages.jsx`](file:///C:/codigos/bfa-main/plataforma/src/pages/AdminPages.jsx)
+  - [`plataforma/src/components/EditableBlock.jsx`](file:///C:/codigos/bfa-main/plataforma/src/components/EditableBlock.jsx)
+  - [`auto_sync.py`](file:///C:/codigos/bfa-main/auto_sync.py)
 
 ## Immediate Next Step
-- Continue developing new lesson content, backend integration, or interactive features for the platform as requested by the user, with `auto_sync.py` running in the background.
+- Testar o fluxo de edição com conta `admin` e aprovação com conta `admin_chief` no ambiente local (`http://localhost:8080/#/admin`), ou prosseguir com a expansão de conteúdo pedagógico e módulos do Atlas.
