@@ -1,37 +1,46 @@
 # Handoff Briefing
 
-## Goal
-Overhaul the Brasil Finanças Atlas (BFA) web platform using the `/ai-unslop` skill and UI/UX Pro Max design standards, patch frontend security & LGPD privacy compliance, remove AI visual tropes/buzzwords/emojis, strip "Dragão do Mar" brand references, unify the Quiz Engine with step-by-step Gabarito Comentado, and ensure 100% mobile responsiveness.
+## Environment Metadata
+- **Timestamp:** 2026-08-26T12:25:00-03:00
+- **Git Branch:** `main`
+- **Last Commit:** `73b049a - chore(auto-sync): atualiza arquivos locais [2026-08-26 12:12:19]`
+- **Uncommitted Changes:** None
+
+## Goal & Objective
+Maintain and advance the Brasil Finanças Atlas (BFA) educational platform frontend UI/UX, verify secure Supabase-based authentication & CMS role hierarchies, ensure zero secret leakage via `.gitignore`, and maintain real-time automated GitHub synchronization with local PAT.
 
 ## Current Status
-- **Completed:**
-  - Resolved `SyntaxError` in `env.js` and `QuizEngine.jsx`; fixed Cloudflare Pages SPA `_redirects` (`/* /index.html 200!`).
-  - Completed Cybersecurity & LGPD Privacy audit: enforced DOMPurify hard-fail XSS protection in `LessonContent.jsx`, created floating `CookieConsent.jsx` toast, and generated `BACKEND_SECURITY_FIXES.md`.
-  - Applied UI/UX Pro Max overhaul: upgraded HSL color palette (`globals.css`), Bento Grid layouts, high-contrast solid typography, interactive SVG Yield Curve Chart in `CalculadoraJurosCompostos.jsx`, and Global Search with Autocomplete in `NavbarFooter.jsx`.
-  - Stripped all decorative emojis, flattering buzzwords ("de elite", "alta performance"), and "Dragão do Mar" brand credentials across 9+ files.
-  - Unified `miniQuiz` and `listaProblemas` into `QuizEngine.jsx`, with 4-option multiple choice conversion and step-by-step Gabarito Comentado displayed below correct options upon submission.
-  - Optimized mobile responsiveness (`globals.css`, `components.css`, `AulaPage.jsx`, `NavbarFooter.jsx`, `QuizEngine.jsx`) with `@media (max-width: 768px)` rules, touch-friendly padding, and responsive drawer sidebar.
-  - Approved and implemented all 10 UI/UX Pro Max proposals; removed temporary `GlassmorphismToggle` from `App.jsx`.
-- **In-Progress:** None. All core deliverables and user requests were completed.
-- **Blockers:** None.
+- **Completed in this session:**
+  - Sincronização completa de todos os arquivos locais com o GitHub (`origin/main`).
+  - Atualização segura do arquivo `.env` com a nova chave `GITHUB_PAT` fornecida pelo usuário, garantindo que permaneça ignorada pelo Git (`.gitignore`).
+  - Inicialização e validação do serviço de sincronização em segundo plano ([`auto_sync.py`](file:///C:/codigos/bfa-main/auto_sync.py)) com Watchdog em tempo real e push autenticado no GitHub.
+  - Alinhamento da hierarquia de permissões no CMS: administradores comuns (`admin`), professores (`teacher`) e colaboradores (`collaborator`) enviam edições para a fila de moderação (`pendingEdits`), cabendo exclusivamente ao Administrador Chefe (`admin_chief`) aprovar (`approvePendingEdit`), rejeitar (`rejectPendingEdit`) e publicar alterações no banco ([`AdminContext.jsx`](file:///C:/codigos/bfa-main/plataforma/src/context/AdminContext.jsx), [`AdminPages.jsx`](file:///C:/codigos/bfa-main/plataforma/src/pages/AdminPages.jsx)).
+  - Elaboração de documentação e roteiro detalhado para teste do sistema de admins e promoção de contas via SQL no Supabase.
+- **In-Progress:**
+  - Plataforma 100% operacional com auto-sync ativo e permissões de CMS ajustadas.
+- **Blockers / Known Issues:**
+  - Nenhum.
 
 ## Decisions Made (Locked)
-- **Single SPA CDN Architecture:** Vanilla JS + React 18 + Babel Standalone + KaTeX + DOMPurify + Supabase JS Client loaded via CDN script tags in `index.html`.
-- **Brand Identity:** Solely "Brasil Finanças Atlas (BFA)" / "NIF (Núcleo de Inteligência Financeira)". "Dragão do Mar" is a physical venue and must not appear in platform copy or certificates.
-- **Strict Anti-Slop Copy:** Zero decorative emojis, zero flattering buzzwords ("alta performance", "de elite"), zero CSS gradient keyword text fills. Use solid, high-contrast, objective, factual copy.
-- **Unified Quiz Engine:** `miniQuiz` and `listaProblemas` are combined in `QuizEngine.jsx` with automatic 4-option conversion and step-by-step Gabarito Comentado revealed below options upon submission.
-- **Security & LGPD Handshake:** Hard-fail XSS sanitization in `LessonContent.jsx`, floating `CookieConsent.jsx` toast for LGPD compliance, and backend/RLS fixes written to `BACKEND_SECURITY_FIXES.md`.
+- **Hierarquia de Permissões CMS (Admin vs Admin Chief):** Qualquer usuário com papel `admin`, `teacher` ou `collaborator` tem acesso às ferramentas de edição in-context e criação de módulos/questões/notícias, mas suas alterações geram pendências (`pendingEdits`). Somente o usuário com papel `admin_chief` pode aprovar as alterações para publicação definitiva.
+- **Segurança de Segredos e `.gitignore`:** O arquivo `.env` contendo o `GITHUB_PAT` nunca deve ser versionado nem designorado, mantendo o repositório seguro para publicação pública.
+- **Background Auto-Sync com Watchdog:** O processo `python auto_sync.py` roda continuamente em segundo plano com debounce de 3 segundos, gravando commits atômicos do tipo `chore(auto-sync)` e sincronizando via rebase e push com o GitHub.
 
-## Failed Approaches / Dead Ends (Do Not Retry)
-- **Unescaped newlines in Supabase anon key string:** Caused `SyntaxError: Invalid or unexpected token` breaking Babel compilation. String must remain strictly single-line and sanitized via `sanitizeSupabaseKey`.
-- **Cloudflare Pages SPA redirect rule `/* /index.html 200`:** Caused infinite loop warnings. Must use `/* /index.html 200!` with the trailing exclamation point.
-- **Rendering KaTeX via DOM scanning (`renderMathInElement` with `$`)**: Interfered with Brazilian real currency `R$`. All math must be pre-parsed into `@@BFAMATHn@@` tokens before Markdown parsing.
+## Failed Approaches & Anti-Patterns (Do Not Retry)
+- **Publicação direta por administradores comuns:** Configurar `admin` para gravar diretamente no `site_content` sem aprovação do `admin_chief` violava a governança do projeto. Todas as edições não-chief devem passar por `pendingEdits`.
+- **Credenciais no código:** Nunca reintroduzir credenciais estáticas de admin no frontend (`AdminContext.jsx`); a autenticação deve ser estritamente delegada ao Supabase Auth com papéis lidos da tabela `public.profiles`.
 
-## Extracted Memories & Preferences
-- The user prefers objective, factual descriptions over marketing fluff.
-- The user dislikes decorative emojis and gradient text fills on keywords.
-- The user approved glassmorphism, HSL high-contrast palettes, spring physics, spotlight bento grids, interactive SVG charts, global search, and responsive mobile drawers.
+## Extracted User Preferences & Project Learnings
+- **Regra de Admin Chief:** O administrador edita e submete para o Admin Chief permitir/aprovar.
+- **Auto-Sync Ativo:** O usuário espera que todas as mudanças locais sejam refletidas automaticamente no GitHub via `auto_sync.py`.
+
+## Attention Routing (Key Pointers)
+- **Active Plan File:** N/A
+- **Primary Code Files:**
+  - [`plataforma/src/context/AdminContext.jsx`](file:///C:/codigos/bfa-main/plataforma/src/context/AdminContext.jsx)
+  - [`plataforma/src/pages/AdminPages.jsx`](file:///C:/codigos/bfa-main/plataforma/src/pages/AdminPages.jsx)
+  - [`plataforma/src/components/EditableBlock.jsx`](file:///C:/codigos/bfa-main/plataforma/src/components/EditableBlock.jsx)
+  - [`auto_sync.py`](file:///C:/codigos/bfa-main/auto_sync.py)
 
 ## Immediate Next Step
-- Run `git status` to verify working tree cleanliness. The `auto_sync.py` background process will sync commits to `origin/main`.
-- Review `BACKEND_SECURITY_FIXES.md` on the Supabase SQL Editor to execute RLS database security policies.
+- Testar o fluxo de edição com conta `admin` e aprovação com conta `admin_chief` no ambiente local (`http://localhost:8080/#/admin`), ou prosseguir com a expansão de conteúdo pedagógico e módulos do Atlas.
