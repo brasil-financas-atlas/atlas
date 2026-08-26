@@ -454,6 +454,8 @@ function AdminProvider({ children }) {
     adminUser: currentUser,
     isAuthenticated: !!currentUser,
     isAdmin: PAPEIS_ADMIN.includes(currentUser && currentUser.role),
+    isChief: currentUser?.role === 'admin_chief',
+    isAdminChief: currentUser?.role === 'admin_chief',
     carregandoSessao,
     login,
     logout,
