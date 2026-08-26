@@ -387,9 +387,6 @@ function AdminProvider({ children }) {
       alert("ℹ️ Exclusões devem ser solicitadas diretamente ao Admin Chief.");
       return;
     }
-      alert("ℹ️ Exclusões devem ser solicitadas diretamente ao Admin Chief.");
-      return;
-    }
     setCmsData(prev => comHorario({
       ...prev,
       news: (prev.news || []).filter(n => n.id !== newsId)
