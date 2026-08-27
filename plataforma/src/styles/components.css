@@ -1214,3 +1214,91 @@
   display: block;
 }
 
+/* ==========================================================================
+   Bento Grid Micro-Widgets (Live Operable Tools in Cards)
+   ========================================================================== */
+
+.bfa-micro-widget {
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.15rem;
+  margin-top: 1.25rem;
+  transition: all 0.2s ease;
+}
+
+[data-theme="dark-obsidian"] .bfa-micro-widget,
+.dark .bfa-micro-widget {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.bfa-micro-widget__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.bfa-micro-widget__title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+}
+
+.bfa-micro-widget__badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.bfa-mini-slider {
+  width: 100%;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--border);
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+[data-theme="dark-obsidian"] .bfa-mini-slider,
+.dark .bfa-mini-slider {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.bfa-mini-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--track-finance);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(5, 150, 105, 0.5);
+}
+
+/* Card Glow Hover & Depth */
+.bfa-bento-card--interactive {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+  transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.bfa-bento-card--interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+
