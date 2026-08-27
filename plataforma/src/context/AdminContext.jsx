@@ -10,6 +10,16 @@ const LOCAL_STORAGE_CMS_KEY = 'bfa_cms_overrides';
 const LOCAL_STORAGE_INLINE_EDIT_KEY = 'bfa_inline_edit_mode';
 const LOCAL_STORAGE_THEME_KEY = 'bfa_theme_preference';
 
+function normalizarPapel(role) {
+  if (!role) return 'student';
+  const r = String(role).trim().toLowerCase().replace(/[\s-]+/g, '_');
+  if (r === 'adminchief' || r === 'admin_chief' || r === 'chief' || r === 'admin-chief') return 'admin_chief';
+  if (r === 'admin' || r === 'administrator' || r === 'administrador') return 'admin';
+  if (r === 'teacher' || r === 'professor') return 'teacher';
+  if (r === 'collaborator' || r === 'colaborador') return 'collaborator';
+  return r;
+}
+
 const CMS_PUBLICADO_URL = 'src/data/overrides.json';
 const CMS_VAZIO = { lastUpdated: null, modules: [], lessons: {}, news: [], quizzes: {}, overrides: {}, pendingEdits: [] };
 
@@ -109,6 +119,31 @@ function AdminProvider({ children }) {
         const doBanco = await sp.fetchSiteContent();
         if (doBanco) {
           adotarSeMaisNovo(doBanco);
+        }
+
+        // Carrega as edições pendentes do banco
+        try {
+          const pending = await sp.fetchPendingEdits();
+          if (!cancelado && pending && Array.isArray(pending) && pending.length > 0) {
+            const normalizedPending = pending.map(p => ({
+              id: p.id,
+              authorName: p.author_name || p.authorName || 'Colaborador',
+              resourceType: p.resource_type || p.resourceType,
+              resourceId: p.resource_id || p.resourceId,
+              changesJson: p.changes_json || p.changesJson,
+              createdAt: p.created_at || p.createdAt,
+              status: p.status || 'pending'
+            }));
+            setCmsData(prev => ({
+              ...prev,
+              pendingEdits: normalizedPending
+            }));
+          }
+        } catch (pErr) {
+          console.warn('[BFA] Não foi possível carregar pendências do Supabase:', pErr);
+        }
+
+        if (doBanco) {
           if (!cancelado) setCarregandoSessao(false);
           return;
         }
