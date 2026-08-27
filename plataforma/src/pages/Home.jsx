@@ -13,40 +13,40 @@ function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="hero-gradient" style={{ position: 'relative', overflow: 'hidden', padding: '5rem 0 4rem 0' }}>
-        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.4 }} />
+      <section className="hero-gradient" style={{ position: 'relative', overflow: 'hidden', padding: '5rem 0 4.5rem 0' }}>
+        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.35 }} />
         
         <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ maxWidth: '820px' }}>
+          <div style={{ maxWidth: '840px' }}>
             <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
-              <span className="mono-tag" style={{ color: '#FBBF24', background: 'rgba(251, 191, 36, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(251, 191, 36, 0.35)', fontWeight: 700 }}>
-                🏛️ Alinhado à BNCC & NIF Dragão do Mar
+              <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.95)', background: 'rgba(255, 255, 255, 0.12)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255, 255, 255, 0.25)', fontWeight: 700 }}>
+                Brasil Finanças Atlas
               </span>
-              <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', fontWeight: 700 }}>
-                100% Gratuito & Aberto
+              <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(52, 211, 153, 0.35)', fontWeight: 700 }}>
+                Acesso 100% Gratuito
               </span>
             </div>
 
-            <EditableBlock id="home-hero-title" as="h1" style={{ fontSize: '3.25rem', fontWeight: 800, lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.025em' }}>
+            <EditableBlock id="home-hero-title" as="h1" style={{ fontSize: '3.25rem', fontWeight: 800, lineHeight: 1.15, color: '#FFFFFF', letterSpacing: '-0.03em' }}>
               Matemática aplicada e finanças corporativas em um único ambiente de estudos.
             </EditableBlock>
 
-            <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.15rem', lineHeight: 1.6, color: 'rgba(241, 245, 249, 0.9)', marginTop: '1.25rem', maxWidth: '700px' }}>
+            <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.15rem', lineHeight: 1.65, color: 'rgba(241, 245, 249, 0.9)', marginTop: '1.25rem', maxWidth: '720px' }}>
               Aulas teóricas com rigor pedagógico, exercícios de fixação, simuladores de juros compostos e guia de preparação de alta performance.
             </EditableBlock>
 
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '2.25rem' }}>
-              <a href="#/matematica" className="bfa-btn bfa-btn--verde" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-                Começar Trilha de Matemática ➔
+              <a href="#/matematica" className="bfa-btn bfa-btn--verde" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
+                Começar Trilha de Matemática →
               </a>
-              <a href="#/financas" className="bfa-btn bfa-btn--ghost" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', border: '1px solid rgba(255, 255, 255, 0.35)', color: '#FFFFFF', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+              <a href="#/financas" className="bfa-btn bfa-btn--ghost" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', border: '1px solid rgba(255, 255, 255, 0.35)', color: '#FFFFFF', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600 }}>
                 Ver Trilha de Finanças
               </a>
             </div>
           </div>
 
           {/* Stats Bar */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginTop: '4rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginTop: '4rem' }}>
             {stats.map((s) => (
               <div key={s.label} className="bfa-stat-spotlight">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
@@ -66,7 +66,7 @@ function Home() {
       <section className="bfa-container" style={{ padding: '4.5rem 1.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '2.5rem' }}>
           <div>
-            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 700, display: 'block', marginBottom: '0.25rem' }}>
+            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 700, display: 'block', marginBottom: '0.25rem', letterSpacing: '0.06em' }}>
               GRADE CURRICULAR
             </span>
             <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em' }}>Trilhas de Aprendizagem</h2>
@@ -101,8 +101,8 @@ function Home() {
 
             <div style={{ marginTop: '2rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--muted-foreground)' }}>Aulas & Exercícios</span>
-              <a href="#/matematica" className="bfa-btn bfa-btn--azul" style={{ padding: '0.55rem 1rem', borderRadius: 'var(--radius-md)' }}>
-                Acessar Trilha ➔
+              <a href="#/matematica" className="bfa-btn bfa-btn--azul" style={{ padding: '0.55rem 1.15rem', borderRadius: 'var(--radius-md)', fontWeight: 600 }}>
+                Acessar Trilha →
               </a>
             </div>
           </article>
@@ -125,8 +125,8 @@ function Home() {
 
             <div style={{ marginTop: '2rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--muted-foreground)' }}>Valuation & Mercado</span>
-              <a href="#/financas" className="bfa-btn bfa-btn--verde" style={{ padding: '0.55rem 1rem', borderRadius: 'var(--radius-md)' }}>
-                Acessar Trilha ➔
+              <a href="#/financas" className="bfa-btn bfa-btn--verde" style={{ padding: '0.55rem 1.15rem', borderRadius: 'var(--radius-md)', fontWeight: 600 }}>
+                Acessar Trilha →
               </a>
             </div>
           </article>
@@ -149,8 +149,8 @@ function Home() {
 
             <div style={{ marginTop: '2rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--muted-foreground)' }}>Equity Research</span>
-              <a href="#/preparacao-brhsic" className="bfa-btn bfa-btn--ouro" style={{ padding: '0.55rem 1rem', borderRadius: 'var(--radius-md)' }}>
-                Ver Guia ➔
+              <a href="#/preparacao-brhsic" className="bfa-btn bfa-btn--ouro" style={{ padding: '0.55rem 1.15rem', borderRadius: 'var(--radius-md)', fontWeight: 600 }}>
+                Ver Guia →
               </a>
             </div>
           </article>
@@ -158,9 +158,9 @@ function Home() {
       </section>
 
       {/* Ferramentas do Laboratório */}
-      <section style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', background: 'var(--card)', padding: '4rem 0' }}>
+      <section style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', background: 'var(--card)', padding: '4.5rem 0' }}>
         <div className="bfa-container">
-          <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 700, display: 'block', marginBottom: '0.25rem' }}>
+          <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 700, display: 'block', marginBottom: '0.25rem', letterSpacing: '0.06em' }}>
             FERRAMENTAS PRÁTICAS
           </span>
           <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '2.5rem', letterSpacing: '-0.025em' }}>
@@ -169,42 +169,42 @@ function Home() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
             <div className="tool-card bfa-bento-card">
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Simulador de Juros</h4>
+              <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)' }}>Simulador de Juros</h4>
               <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', marginTop: '0.4rem', lineHeight: 1.55 }}>
                 Cálculo e comparação entre modelos de juros simples e compostos em diferentes prazos.
               </p>
-              <a href="#/cronograma" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', marginTop: '1.25rem', fontSize: '0.88rem', fontWeight: 700, color: 'var(--track-math)' }}>
-                Abrir Simulador ➔
+              <a href="#/cronograma" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.88rem', fontWeight: 700, color: 'var(--track-math)' }}>
+                Abrir Simulador →
               </a>
             </div>
 
             <div className="tool-card bfa-bento-card">
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Cronograma de Estudos</h4>
+              <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)' }}>Cronograma de Estudos</h4>
               <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', marginTop: '0.4rem', lineHeight: 1.55 }}>
                 Calculadora de metas e acompanhamento de ritmo de estudos.
               </p>
-              <a href="#/cronograma" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', marginTop: '1.25rem', fontSize: '0.88rem', fontWeight: 700, color: 'var(--track-math)' }}>
-                Gerar Meta ➔
+              <a href="#/cronograma" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.88rem', fontWeight: 700, color: 'var(--track-math)' }}>
+                Gerar Meta →
               </a>
             </div>
 
             <div className="tool-card bfa-bento-card">
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Certificado Digital</h4>
+              <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)' }}>Certificado Digital</h4>
               <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', marginTop: '0.4rem', lineHeight: 1.55 }}>
                 Emissão de certificado de conclusão com código único de validação.
               </p>
-              <a href="#/exercicios" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', marginTop: '1.25rem', fontSize: '0.88rem', fontWeight: 700, color: 'var(--track-finance)' }}>
-                Validar Emissão ➔
+              <a href="#/exercicios" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.88rem', fontWeight: 700, color: 'var(--track-finance)' }}>
+                Validar Emissão →
               </a>
             </div>
 
             <div className="tool-card bfa-bento-card">
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Gerenciamento de Conteúdo</h4>
+              <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)' }}>Gerenciamento de Conteúdo</h4>
               <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', marginTop: '0.4rem', lineHeight: 1.55 }}>
                 Painel administrativo para inclusão e edição de módulos e exercícios.
               </p>
-              <a href="#/admin/login" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', marginTop: '1.25rem', fontSize: '0.88rem', fontWeight: 700, color: 'var(--gold-deep)' }}>
-                Área do Professor ➔
+              <a href="#/admin/login" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.88rem', fontWeight: 700, color: 'var(--gold-deep)' }}>
+                Área do Professor →
               </a>
             </div>
           </div>
