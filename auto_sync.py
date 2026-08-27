@@ -22,7 +22,7 @@ except ImportError:
 
 # --- CONFIGURAÇÕES DO AUTO-SYNC ---
 REPO_DIR = os.path.abspath(os.path.dirname(__file__))
-BRANCH = "main"
+BRANCH = os.environ.get("SYNC_BRANCH", "auto")
 DEBOUNCE_INTERVAL = 3.0  # Segundos de inatividade antes de sincronizar
 
 # Carrega PAT de arquivo .env se existir
@@ -98,6 +98,14 @@ class GitAutoSync:
         success, out = self._run_git(["status", "--porcelain"])
         return success and len(out.strip()) > 0
 
+    def get_active_branch(self):
+        if self.branch and self.branch != "auto":
+            return self.branch
+        success, out = self._run_git(["branch", "--show-current"])
+        if success and out.strip():
+            return out.strip()
+        return "main"
+
     def sync(self):
         if self.is_syncing:
             return
@@ -106,6 +114,7 @@ class GitAutoSync:
         logging.info("[AUTO-SYNC] Alteracao detectada! Iniciando sincronizacao com GitHub...")
 
         remote_target = self._get_remote_url()
+        target_branch = self.get_active_branch()
 
         try:
             # 1. Se houver alterações locais, faz staging e commit primeiro
@@ -122,8 +131,8 @@ class GitAutoSync:
                     return
 
             # 2. Busca commits remotos (fetch) e aplica rebase limpo
-            logging.info("[AUTO-SYNC] Buscando atualizacoes do GitHub (git fetch)...")
-            success_fetch, out_fetch = self._run_git(["fetch", remote_target, self.branch])
+            logging.info(f"[AUTO-SYNC] Buscando atualizacoes do GitHub (git fetch branch {target_branch})...")
+            success_fetch, out_fetch = self._run_git(["fetch", remote_target, target_branch])
             if success_fetch:
                 logging.info("[AUTO-SYNC] Rebasando historico com FETCH_HEAD...")
                 success_rebase, out_rebase = self._run_git(["rebase", "FETCH_HEAD"])
@@ -133,8 +142,8 @@ class GitAutoSync:
                         self._run_git(["rebase", "--abort"])
 
             # 3. Envia os commits locais para o repositório remoto
-            logging.info("[AUTO-SYNC] Enviando commits para branch principal (git push)...")
-            success_push, out_push = self._run_git(["push", remote_target, self.branch])
+            logging.info(f"[AUTO-SYNC] Enviando commits para branch {target_branch} (git push)...")
+            success_push, out_push = self._run_git(["push", remote_target, target_branch])
             if success_push:
                 logging.info("[AUTO-SYNC] SUCESSO! Alteracoes sincronizadas no GitHub.")
             else:
