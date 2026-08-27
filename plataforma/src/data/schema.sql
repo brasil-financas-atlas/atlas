@@ -530,6 +530,9 @@ CREATE INDEX IF NOT EXISTS idx_comments_lesson        ON public.comments(lesson_
 CREATE INDEX IF NOT EXISTS idx_certificates_code      ON public.certificates(verification_code);
 CREATE INDEX IF NOT EXISTS idx_pending_edits_status   ON public.pending_edits(status);
 
+-- Notifica o PostgREST para recarregar o cache de schema imediatamente
+NOTIFY pgrst, 'reload schema';
+
 -- ==========================================================================
 -- 11. DEPOIS DE RODAR — CRIAR O PRIMEIRO ADMIN
 --
