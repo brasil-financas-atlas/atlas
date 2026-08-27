@@ -30,54 +30,89 @@ function DisciplinaOverview({ subjectKey }) {
 
   return (
     <div>
-      {/* Hero UI/UX Pro Max */}
-      <section className="hero-gradient" style={{ padding: '4.5rem 0 3.5rem 0', position: 'relative', overflow: 'hidden' }}>
-        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.5 }} />
+      {/* ── 1. Hero Split-Screen 50/50 ──────────────────────────────────── */}
+      <section className="hero-gradient" style={{ padding: '5rem 0 4rem 0', position: 'relative', overflow: 'hidden' }}>
+        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.35 }} />
         <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', background: 'rgba(255, 255, 255, 0.15)', border: '1px solid rgba(255, 255, 255, 0.25)', color: '#FFFFFF' }}>
-            <span className="mono-tag" style={{ fontWeight: 700, fontSize: '0.75rem' }}>
-              Trilha de Conhecimento
-            </span>
-          </div>
+          <div className="bfa-split-hero">
+            
+            {/* Coluna Esquerda: Ementa da Trilha */}
+            <div className="bfa-split-col--text">
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.95)', background: 'rgba(255, 255, 255, 0.12)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255, 255, 255, 0.25)', fontWeight: 700 }}>
+                  {isMatematica ? 'TRILHA 01 · MATEMÁTICA' : 'TRILHA 02 · FINANÇAS'}
+                </span>
+                <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(52, 211, 153, 0.35)', fontWeight: 700 }}>
+                  {subjectData.modulos.length} Módulos · {totalLessons} Aulas
+                </span>
+              </div>
 
-          <EditableBlock id={`overview-${subjectKey}-hero-title`} as="h1" className="headline-punch" style={{ fontSize: '3.2rem', fontWeight: 800, color: '#FFFFFF', marginTop: '1rem', letterSpacing: '-0.035em' }}>
-            {isMatematica ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}
-          </EditableBlock>
+              <EditableBlock id={`overview-${subjectKey}-hero-title`} as="h1" className="headline-punch" style={{ fontSize: '3.2rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.5rem', letterSpacing: '-0.035em' }}>
+                {isMatematica ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}
+              </EditableBlock>
 
-          <div className="mono-tag" style={{ color: 'rgba(241, 245, 249, 0.9)', marginTop: '0.5rem', fontWeight: 700, fontSize: '0.78rem' }}>
-            {subjectData.modulos.length} MÓDULOS ESTRUTURADOS · {totalLessons} AULAS COM FIXAÇÃO
-          </div>
-
-          <div style={{ marginTop: '2.25rem', maxWidth: '540px', background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(12px)', padding: '1.25rem 1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid rgba(255, 255, 255, 0.15)', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: '#FFFFFF', marginBottom: '0.6rem', fontWeight: 600 }}>
-              <span>SEU PROGRESSO: {doneCount} DE {totalLessons} AULAS CONCLUÍDAS</span>
-              <span className="mono-tag" style={{ color: '#10B981', fontWeight: 800 }}>{progressPct}%</span>
+              <p style={{ fontSize: '1.1rem', lineHeight: 1.65, color: 'rgba(241, 245, 249, 0.9)', marginTop: '0.5rem' }}>
+                {isMatematica
+                  ? 'Domine a álgebra de juros compostos contínuos, taxas equivalentes, amortização SAC/Price e modelagem quantitativa para o mercado financeiro.'
+                  : 'Compreenda a arquitetura do Sistema Financeiro Nacional, renda fixa soberana, fundos imobiliários, leitura contábil e valuation de empresas.'}
+              </p>
             </div>
-            <div style={{ height: '8px', width: '100%', background: 'rgba(255, 255, 255, 0.15)', borderRadius: '999px', overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: `${progressPct}%`, background: 'linear-gradient(90deg, #10B981 0%, #34D399 100%)', borderRadius: '999px', transition: 'width 0.4s ease' }} />
+
+            {/* Coluna Direita: Ilha de Telemetria de Progresso */}
+            <div className="bfa-split-col--visual">
+              <div className="bfa-tech-card" style={{ background: 'rgba(15, 23, 42, 0.88)', border: '1px solid rgba(255, 255, 255, 0.12)', boxShadow: '0 20px 40px -15px rgba(0,0,0,0.5)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                  <span className="mono-tag" style={{ color: '#94A3B8', fontWeight: 800, fontSize: '0.72rem' }}>
+                    TELEMETRIA DO ALUNO
+                  </span>
+                  <span className="tabular-numbers" style={{ color: '#10B981', fontWeight: 800, fontSize: '1.1rem' }}>
+                    {progressPct}% Concluído
+                  </span>
+                </div>
+
+                <div style={{ height: '8px', width: '100%', background: 'rgba(255, 255, 255, 0.12)', borderRadius: '999px', overflow: 'hidden', marginBottom: '1.5rem' }}>
+                  <div style={{ height: '100%', width: `${progressPct}%`, background: 'linear-gradient(90deg, #10B981 0%, #34D399 100%)', borderRadius: '999px', transition: 'width 0.4s ease' }} />
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                  <div>
+                    <span style={{ fontSize: '0.72rem', color: '#94A3B8', display: 'block', fontWeight: 600 }}>AULAS CONCLUÍDAS</span>
+                    <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: '#FFFFFF' }}>{doneCount} / {totalLessons}</div>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.72rem', color: '#94A3B8', display: 'block', fontWeight: 600 }}>CERTIFICADO</span>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: progressPct === 100 ? '#10B981' : '#FBBF24', marginTop: '4px' }}>
+                      {progressPct === 100 ? 'Disponível ✓' : 'Em Andamento'}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </section>
 
-      {/* Modules List Bento Grid */}
+      {/* ── 2. Grade de Módulos (Layout Técnico de 1px) ────────────────────── */}
       <section className="bfa-container" style={{ padding: '4.5rem 1.5rem' }}>
-        <div style={{ display: 'grid', gap: '2.25rem' }}>
+        <div style={{ display: 'grid', gap: '2.5rem' }}>
           {subjectData.modulos.map((mod, idx) => (
-            <article key={mod.slug} className="bfa-bento-card" style={{ borderTop: `4px solid ${trackColor}`, padding: '2rem' }}>
+            <article key={mod.slug} className="bfa-tech-card" style={{ borderTop: `4px solid ${trackColor}`, padding: '2rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
-                <span className="mono-tag" style={{ color: trackColor, background: 'rgba(15, 23, 42, 0.06)', padding: '0.3rem 0.65rem', borderRadius: '6px', fontWeight: 800 }}>
+                <span className="mono-tag" style={{ color: trackColor, background: 'rgba(15, 23, 42, 0.06)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800 }}>
                   MÓDULO {idx + 1}
                 </span>
-                <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>{mod.aulas.length} Aulas Didáticas</span>
+                <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>
+                  {mod.aulas.length} Aulas com Fixação
+                </span>
               </div>
 
               <EditableBlock id={`overview-${subjectKey}-mod-${mod.slug}-title`} as="h3" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em' }}>
                 {mod.titulo}
               </EditableBlock>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '0.85rem', marginTop: '1.5rem' }}>
-                {mod.aulas.map((aula) => {
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.85rem', marginTop: '1.5rem' }}>
+                {mod.aulas.map((aula, aIdx) => {
                   const lessonId = `${subjectKey}-${mod.slug}-${aula.slug}`;
                   const isDone = completedLessons && completedLessons.includes(lessonId);
 
@@ -89,22 +124,28 @@ function DisciplinaOverview({ subjectKey }) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        padding: '0.95rem 1.1rem',
-                        borderRadius: 'var(--radius-lg)',
+                        padding: '0.95rem 1.15rem',
+                        borderRadius: 'var(--radius-md)',
                         border: isDone ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border)',
-                        background: isDone ? 'rgba(16, 185, 129, 0.06)' : 'var(--card)',
+                        background: isDone ? 'rgba(16, 185, 129, 0.05)' : 'var(--surface-strong)',
                         transition: 'all 0.2s ease',
-                        boxShadow: '0 2px 8px rgba(15, 23, 42, 0.03)'
                       }}
                       className="card-lift"
                     >
-                      <span style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--foreground)' }}>
-                        {aula.titulo}
-                      </span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <span className="tabular-numbers" style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--muted-foreground)' }}>
+                          {String(aIdx + 1).padStart(2, '0')}
+                        </span>
+                        <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                          {aula.titulo}
+                        </span>
+                      </div>
                       {isDone ? (
-                        <span className="mono-tag" style={{ color: '#059669', background: '#ECFDF5', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 800 }}>Concluída ✓</span>
+                        <span className="mono-tag" style={{ color: '#059669', background: '#ECFDF5', padding: '0.2rem 0.45rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.72rem' }}>
+                          Concluída ✓
+                        </span>
                       ) : (
-                        <span style={{ color: 'var(--muted-foreground)', fontSize: '0.95rem' }}>→</span>
+                        <span style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem' }}>→</span>
                       )}
                     </a>
                   );
