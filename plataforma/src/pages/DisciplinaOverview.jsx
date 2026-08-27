@@ -40,7 +40,7 @@ function DisciplinaOverview({ subjectKey }) {
             </span>
           </div>
 
-          <EditableBlock id={`overview-${subjectKey}-hero-title`} as="h1" className="editorial-headline" style={{ fontSize: '3.4rem', fontWeight: 600, color: '#FFFFFF', marginTop: '1rem', letterSpacing: '-0.025em' }}>
+          <EditableBlock id={`overview-${subjectKey}-hero-title`} as="h1" className="headline-punch" style={{ fontSize: '3.2rem', fontWeight: 800, color: '#FFFFFF', marginTop: '1rem', letterSpacing: '-0.035em' }}>
             {isMatematica ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}
           </EditableBlock>
 
@@ -72,7 +72,7 @@ function DisciplinaOverview({ subjectKey }) {
                 <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>{mod.aulas.length} Aulas Didáticas</span>
               </div>
 
-              <EditableBlock id={`overview-${subjectKey}-mod-${mod.slug}-title`} as="h3" className="editorial-headline" style={{ fontSize: '1.6rem', fontWeight: 600, color: 'var(--foreground)', letterSpacing: '-0.02em' }}>
+              <EditableBlock id={`overview-${subjectKey}-mod-${mod.slug}-title`} as="h3" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em' }}>
                 {mod.titulo}
               </EditableBlock>
 
