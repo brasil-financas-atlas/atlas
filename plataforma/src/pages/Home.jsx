@@ -17,7 +17,7 @@ function Home() {
         <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.35 }} />
         
         <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ maxWidth: '840px' }}>
+          <div style={{ maxWidth: '860px' }}>
             <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
               <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.95)', background: 'rgba(255, 255, 255, 0.12)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255, 255, 255, 0.25)', fontWeight: 700 }}>
                 Brasil Finanças Atlas
@@ -27,26 +27,29 @@ function Home() {
               </span>
             </div>
 
-            <EditableBlock id="home-hero-title" as="h1" style={{ fontSize: '3.25rem', fontWeight: 800, lineHeight: 1.15, color: '#FFFFFF', letterSpacing: '-0.03em' }}>
+            <EditableBlock id="home-hero-title" as="h1" className="editorial-headline" style={{ fontSize: '3.6rem', fontWeight: 600, lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.025em' }}>
               Matemática aplicada e finanças corporativas em um único ambiente de estudos.
             </EditableBlock>
 
-            <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.15rem', lineHeight: 1.65, color: 'rgba(241, 245, 249, 0.9)', marginTop: '1.25rem', maxWidth: '720px' }}>
+            <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.2rem', lineHeight: 1.65, color: 'rgba(241, 245, 249, 0.9)', marginTop: '1.35rem', maxWidth: '740px' }}>
               Aulas teóricas com rigor pedagógico, exercícios de fixação, simuladores de juros compostos e guia de preparação de alta performance.
             </EditableBlock>
 
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '2.25rem' }}>
-              <a href="#/matematica" className="bfa-btn bfa-btn--verde" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
+              <a href="#/matematica" className="bfa-btn bfa-btn--verde" style={{ padding: '0.9rem 1.85rem', fontSize: '0.95rem', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, boxShadow: '0 10px 25px -5px rgba(5, 150, 105, 0.4)' }}>
                 Começar Trilha de Matemática →
               </a>
-              <a href="#/financas" className="bfa-btn bfa-btn--ghost" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', border: '1px solid rgba(255, 255, 255, 0.35)', color: '#FFFFFF', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600 }}>
+              <a href="#/financas" className="bfa-btn bfa-btn--ghost" style={{ padding: '0.9rem 1.85rem', fontSize: '0.95rem', border: '1px solid rgba(255, 255, 255, 0.35)', color: '#FFFFFF', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600 }}>
                 Ver Trilha de Finanças
               </a>
             </div>
           </div>
 
+          {/* Interactive Hero Showpiece */}
+          {window.HeroCompoundVisualizer && <window.HeroCompoundVisualizer />}
+
           {/* Stats Bar */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginTop: '4rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginTop: '3.5rem' }}>
             {stats.map((s) => (
               <div key={s.label} className="bfa-stat-spotlight">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
@@ -63,13 +66,13 @@ function Home() {
       </section>
 
       {/* Trilhas Principais */}
-      <section className="bfa-container" style={{ padding: '4.5rem 1.5rem' }}>
+      <section className="bfa-container" style={{ padding: '5rem 1.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '2.5rem' }}>
           <div>
             <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 700, display: 'block', marginBottom: '0.25rem', letterSpacing: '0.06em' }}>
               GRADE CURRICULAR
             </span>
-            <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em' }}>Trilhas de Aprendizagem</h2>
+            <h2 className="editorial-headline" style={{ fontSize: '2.4rem', fontWeight: 600, color: 'var(--foreground)', letterSpacing: '-0.025em' }}>Trilhas de Aprendizagem</h2>
           </div>
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             <span className="mono-tag" style={{ padding: '0.4rem 0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--card)', color: 'var(--track-math)', fontWeight: 700 }}>
@@ -158,12 +161,12 @@ function Home() {
       </section>
 
       {/* Ferramentas do Laboratório */}
-      <section style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', background: 'var(--card)', padding: '4.5rem 0' }}>
+      <section style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', background: 'var(--card)', padding: '5rem 0' }}>
         <div className="bfa-container">
           <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 700, display: 'block', marginBottom: '0.25rem', letterSpacing: '0.06em' }}>
             FERRAMENTAS PRÁTICAS
           </span>
-          <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '2.5rem', letterSpacing: '-0.025em' }}>
+          <h2 className="editorial-headline" style={{ fontSize: '2.4rem', fontWeight: 600, color: 'var(--foreground)', marginBottom: '2.5rem', letterSpacing: '-0.025em' }}>
             Laboratório Interativo
           </h2>
 
