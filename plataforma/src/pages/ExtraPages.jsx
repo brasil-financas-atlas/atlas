@@ -295,7 +295,7 @@ function Sobre() {
             Brasil Finanças Atlas (BFA)
           </EditableBlock>
           <EditableBlock id="sobre-hero-sub" as="p" style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.85)', marginTop: '0.5rem', maxWidth: '700px' }}>
-            Iniciativa educacional do Núcleo de Inteligência Financeira (NIF).
+            Plataforma aberta de excelência em educação financeira e matemática aplicada para estudantes do ensino médio.
           </EditableBlock>
         </div>
       </section>
