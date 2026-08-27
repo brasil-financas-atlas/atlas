@@ -328,13 +328,13 @@ function AdminDashboard() {
                     <div>
                       <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.35rem' }}>
                         <span className="mono-tag" style={{ color: 'var(--track-math)', background: 'var(--card)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
-                          {edit.resourceType}
+                          {edit.resourceType || edit.resource_type}
                         </span>
-                        <strong style={{ fontSize: '0.9rem', color: 'var(--foreground)' }}>Recurso: {edit.resourceId}</strong>
-                        <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>por {edit.authorName || 'Colaborador'}</span>
+                        <strong style={{ fontSize: '0.9rem', color: 'var(--foreground)' }}>Recurso: {edit.resourceId || edit.resource_id}</strong>
+                        <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>por {edit.authorName || edit.author_name || 'Colaborador'}</span>
                       </div>
                       <pre style={{ fontSize: '0.8rem', fontFamily: 'var(--font-mono)', background: 'var(--card)', padding: '0.5rem 0.75rem', borderRadius: '4px', border: '1px solid var(--border)', color: 'var(--foreground)', overflowX: 'auto', maxWidth: '600px' }}>
-                        {JSON.stringify(edit.changesJson, null, 2)}
+                        {JSON.stringify(edit.changesJson || edit.changes_json, null, 2)}
                       </pre>
                     </div>
 
