@@ -240,6 +240,29 @@ function AdminProvider({ children }) {
     if (res.success) {
       setCurrentUser(res.user);
       setInlineEditActive(true);
+
+      // Carrega pendências ao logar
+      try {
+        const pending = await sp.fetchPendingEdits();
+        if (pending && Array.isArray(pending) && pending.length > 0) {
+          const normalizedPending = pending.map(p => ({
+            id: p.id,
+            authorName: p.author_name || p.authorName || 'Colaborador',
+            resourceType: p.resource_type || p.resourceType,
+            resourceId: p.resource_id || p.resourceId,
+            changesJson: p.changes_json || p.changesJson,
+            createdAt: p.created_at || p.createdAt,
+            status: p.status || 'pending'
+          }));
+          setCmsData(prev => ({
+            ...prev,
+            pendingEdits: normalizedPending
+          }));
+        }
+      } catch (pErr) {
+        console.warn('[BFA] Não foi possível carregar pendências no login:', pErr);
+      }
+
       return res;
     }
     return { success: false, error: res.error || 'E-mail ou senha incorretos' };
@@ -282,7 +305,9 @@ function AdminProvider({ children }) {
   };
 
   // Se o usuário não for Admin Chief (ou seja, for admin, teacher ou colaborador), a edição vai para a fila de aprovação (Pending Edit)
-  const isChief = currentUser?.role === 'admin_chief';
+  const userRole = normalizarPapel(currentUser?.role);
+  const isChief = userRole === 'admin_chief';
+  const isAdmin = PAPEIS_ADMIN.includes(userRole);
   const needsApproval = !isChief;
 
   const updateLesson = (lessonId, updatedData) => {
