@@ -126,24 +126,34 @@ async function signInUser(email, password) {
     if (error) throw error;
 
     // Busca perfil com role
-    let userRole = 'student';
-    let fullName = data.user.email;
+    let userRole = data.user.user_metadata?.role || data.user.app_metadata?.role || 'student';
+    let fullName = data.user.user_metadata?.full_name || data.user.email;
 
     try {
-      const { data: profile } = await supabaseClient
+      let { data: profile } = await supabaseClient
         .from('profiles')
         .select('*')
         .eq('id', data.user.id)
         .maybeSingle();
 
+      if (!profile) {
+        const { data: profileByEmail } = await supabaseClient
+          .from('profiles')
+          .select('*')
+          .eq('email', cleanEmail)
+          .maybeSingle();
+        if (profileByEmail) profile = profileByEmail;
+      }
+
       if (profile && profile.role) {
         userRole = String(profile.role).trim().toLowerCase();
-        fullName = profile.full_name || data.user.email;
+        fullName = profile.full_name || fullName;
       }
     } catch (pErr) {
       console.warn('[BFA Supabase] Falha ao consultar tabela profiles:', pErr);
     }
 
+    userRole = String(userRole).trim().toLowerCase().replace(/[\s-]+/g, '_');
     console.log(`[BFA Supabase Auth] Login com sucesso: ${cleanEmail} | Papel: ${userRole}`);
 
     return {
@@ -191,24 +201,34 @@ async function restoreSession() {
     const user = data?.session?.user;
     if (!user) return null;
 
-    let userRole = 'student';
-    let fullName = user.email;
+    let userRole = user.user_metadata?.role || user.app_metadata?.role || 'student';
+    let fullName = user.user_metadata?.full_name || user.email;
 
     try {
-      const { data: profile } = await supabaseClient
+      let { data: profile } = await supabaseClient
         .from('profiles')
         .select('full_name, role')
         .eq('id', user.id)
         .maybeSingle();
 
+      if (!profile) {
+        const { data: profileByEmail } = await supabaseClient
+          .from('profiles')
+          .select('full_name, role')
+          .eq('email', user.email)
+          .maybeSingle();
+        if (profileByEmail) profile = profileByEmail;
+      }
+
       if (profile && profile.role) {
         userRole = String(profile.role).trim().toLowerCase();
-        fullName = profile.full_name || user.email;
+        fullName = profile.full_name || fullName;
       }
     } catch (pErr) {
       console.warn('[BFA Supabase] Falha ao ler perfil na restauração da sessão:', pErr);
     }
 
+    userRole = String(userRole).trim().toLowerCase().replace(/[\s-]+/g, '_');
     console.log(`[BFA Supabase Auth] Sessão ativa restaurada: ${user.email} | Papel: ${userRole}`);
 
     return {
