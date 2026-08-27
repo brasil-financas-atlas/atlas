@@ -175,7 +175,7 @@ function CertificadoGenerator() {
                   BRASIL FINANÇAS ATLAS
                 </span>
                 <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#1B6B3A', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                  Núcleo de Inteligência Financeira
+                  Programa de Formação em Finanças & Matemática
                 </span>
               </div>
             </div>
@@ -209,7 +209,7 @@ function CertificadoGenerator() {
 
           {/* Body Text */}
           <div style={{ textAlign: 'center', maxWidth: '750px', margin: '0 auto 3rem auto', fontSize: '1.05rem', lineHeight: 1.8, color: '#334155', position: 'relative', zIndex: 1 }}>
-            Concluiu com aproveitamento o <strong>{moduleObj?.titulo || 'Módulo de Estudos'}</strong> pertencente à trilha educacional de <strong>{selectedSubjectKey === 'matematica' ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}</strong>, cobrindo os conceitos teóricos e exercícios práticos em conformidade com as diretrizes do NIF.
+            Concluiu com aproveitamento o <strong>{moduleObj?.titulo || 'Módulo de Estudos'}</strong> pertencente à trilha educacional de <strong>{selectedSubjectKey === 'matematica' ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}</strong>, cobrindo os conceitos teóricos e exercícios práticos em conformidade com as diretrizes do programa Brasil Finanças Atlas.
           </div>
 
           {/* Signatures and QR Code Validation Footer */}
@@ -217,13 +217,13 @@ function CertificadoGenerator() {
             {/* Signature Left */}
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontFamily: 'monospace', fontSize: '1rem', color: '#1B3A5C', marginBottom: '0.25rem', fontWeight: 700, fontStyle: 'italic' }}>
-                Equipe NIF
+                Comitê Pedagógico BFA
               </div>
               <div style={{ height: '1px', background: '#94A3B8', width: '80%', margin: '0.4rem auto' }} />
               <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748B', display: 'block' }}>
-                Coordenação Pedagógica
+                Coordenação Acadêmica
               </span>
-              <span style={{ fontSize: '0.72rem', color: '#94A3B8' }}>NIF</span>
+              <span style={{ fontSize: '0.72rem', color: '#94A3B8' }}>Brasil Finanças Atlas</span>
             </div>
 
             {/* QR Code Verification Box */}
