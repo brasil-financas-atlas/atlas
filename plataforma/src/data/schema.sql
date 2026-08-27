@@ -325,6 +325,16 @@ ALTER TABLE public.certificates      ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.pending_edits     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.site_content     ENABLE ROW LEVEL SECURITY;
 
+-- Garante que anon e authenticated possam acessar as tabelas, delegando o controle para o RLS
+GRANT USAGE ON SCHEMA public TO anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated, service_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated, service_role;
+GRANT ALL ON ALL ROUTINES IN SCHEMA public TO anon, authenticated, service_role;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO anon, authenticated, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO anon, authenticated, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON ROUTINES TO anon, authenticated, service_role;
+
 -- ==========================================================================
 -- 8. TRAVA DE COLUNA — o que impede aluno virar admin
 --
