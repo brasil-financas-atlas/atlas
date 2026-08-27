@@ -99,8 +99,8 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         {/* Top Breadcrumb & Actions */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', paddingBottom: '1rem', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="nav-link" style={{ cursor: 'pointer', border: '1px solid var(--border)' }}>
-              {sidebarOpen ? '◀ Ocultar Trilha' : '▶ Ver Trilha'}
+            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="nav-link" style={{ cursor: 'pointer', border: '1px solid var(--border)', fontSize: '0.82rem', fontWeight: 600 }}>
+              {sidebarOpen ? 'Ocultar Trilha' : 'Ver Trilha'}
             </button>
             <span className="mono-tag" style={{ color: 'var(--muted-foreground)' }}>
               {isMatematica ? 'Matemática' : 'Finanças'} / {moduloObj.titulo} / <strong style={{ color: 'var(--foreground)' }}>{aulaObj.titulo}</strong>
@@ -112,7 +112,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
             className="btn-primary"
             style={{ backgroundColor: isDone ? 'var(--market)' : 'var(--secondary)', color: isDone ? '#FFFFFF' : 'var(--foreground)', border: '1px solid var(--border)' }}
           >
-            {isDone ? '✓ Concluída' : 'Marcar como Concluída'}
+            {isDone ? 'Concluída ✓' : 'Marcar como Concluída'}
           </button>
         </div>
 
@@ -134,10 +134,10 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <BfaIcon name="video" size={18} color="var(--color-azul)" />
                 <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--foreground)' }}>
-                  🎬 Gerenciador de Vídeo da Aula (Admin)
+                  Gerenciador de Vídeo da Aula (Admin)
                 </span>
                 <span className="mono-tag" style={{ color: videoUrl ? 'var(--market)' : 'var(--muted-foreground)', background: 'var(--card)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
-                  {videoUrl ? '✓ Vídeo Ativo' : 'Sem vídeo'}
+                  {videoUrl ? 'Vídeo Ativo' : 'Sem vídeo'}
                 </span>
               </div>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
