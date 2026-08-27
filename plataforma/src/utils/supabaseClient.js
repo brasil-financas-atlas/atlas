@@ -121,23 +121,38 @@ async function fetchUserProgress(userId) {
 async function signInUser(email, password) {
   if (!supabaseClient) return { success: false, error: 'Supabase não conectado' };
   try {
-    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    const cleanEmail = String(email || '').trim().toLowerCase();
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email: cleanEmail, password });
     if (error) throw error;
 
     // Busca perfil com role
-    const { data: profile } = await supabaseClient
-      .from('profiles')
-      .select('*')
-      .eq('id', data.user.id)
-      .single();
+    let userRole = 'student';
+    let fullName = data.user.email;
+
+    try {
+      const { data: profile } = await supabaseClient
+        .from('profiles')
+        .select('*')
+        .eq('id', data.user.id)
+        .maybeSingle();
+
+      if (profile && profile.role) {
+        userRole = String(profile.role).trim().toLowerCase();
+        fullName = profile.full_name || data.user.email;
+      }
+    } catch (pErr) {
+      console.warn('[BFA Supabase] Falha ao consultar tabela profiles:', pErr);
+    }
+
+    console.log(`[BFA Supabase Auth] Login com sucesso: ${cleanEmail} | Papel: ${userRole}`);
 
     return {
       success: true,
       user: {
         id: data.user.id,
         email: data.user.email,
-        name: profile?.full_name || data.user.email,
-        role: profile?.role || 'collaborator'
+        name: fullName,
+        role: userRole
       }
     };
   } catch (err) {
@@ -176,17 +191,31 @@ async function restoreSession() {
     const user = data?.session?.user;
     if (!user) return null;
 
-    const { data: profile } = await supabaseClient
-      .from('profiles')
-      .select('full_name, role')
-      .eq('id', user.id)
-      .single();
+    let userRole = 'student';
+    let fullName = user.email;
+
+    try {
+      const { data: profile } = await supabaseClient
+        .from('profiles')
+        .select('full_name, role')
+        .eq('id', user.id)
+        .maybeSingle();
+
+      if (profile && profile.role) {
+        userRole = String(profile.role).trim().toLowerCase();
+        fullName = profile.full_name || user.email;
+      }
+    } catch (pErr) {
+      console.warn('[BFA Supabase] Falha ao ler perfil na restauração da sessão:', pErr);
+    }
+
+    console.log(`[BFA Supabase Auth] Sessão ativa restaurada: ${user.email} | Papel: ${userRole}`);
 
     return {
       id: user.id,
       email: user.email,
-      name: profile?.full_name || user.email,
-      role: profile?.role || 'student'
+      name: fullName,
+      role: userRole
     };
   } catch (err) {
     console.warn('[BFA Supabase] Não foi possível recuperar a sessão:', err);
