@@ -71,7 +71,7 @@ function Navbar() {
             <span style={{ display: 'block', fontSize: '0.95rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.02em' }}>
               Brasil Finanças Atlas
             </span>
-            <span className="mono-tag" style={{ color: 'var(--track-finance)', fontWeight: 700, fontSize: '0.68rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <span className="mono-tag" style={{ color: 'var(--track-finance)', fontWeight: 700, fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
               <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10B981', display: 'inline-block' }} /> Plataforma Aberta NIF
             </span>
           </div>
@@ -91,13 +91,14 @@ function Navbar() {
             onBlur={() => setTimeout(() => setSearchOpen(false), 200)}
             style={{
               width: '100%',
-              padding: '0.4rem 0.75rem',
-              fontSize: '0.82rem',
+              padding: '0.5rem 0.95rem',
+              fontSize: '0.875rem',
               borderRadius: '9999px',
               border: '1px solid var(--border)',
               backgroundColor: 'var(--card)',
               color: 'var(--foreground)',
-              outline: 'none'
+              outline: 'none',
+              minHeight: '40px'
             }}
           />
           {searchOpen && searchResults.length > 0 && (
@@ -111,7 +112,8 @@ function Navbar() {
               borderRadius: 'var(--radius-lg)',
               boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
               zIndex: 9999,
-              overflow: 'hidden',
+              maxHeight: '65vh',
+              overflowY: 'auto',
               padding: '0.4rem 0'
             }}>
               {searchResults.map((item) => (
@@ -121,17 +123,18 @@ function Navbar() {
                   onClick={() => setSearchOpen(false)}
                   style={{
                     display: 'block',
-                    padding: '0.5rem 0.85rem',
+                    padding: '0.65rem 1rem',
                     textDecoration: 'none',
                     borderBottom: '1px solid var(--border)',
-                    fontSize: '0.82rem',
+                    fontSize: '0.875rem',
                     color: 'var(--foreground)',
-                    transition: 'background 0.15s ease'
+                    transition: 'background 0.15s ease',
+                    minHeight: '44px'
                   }}
                   className="search-item-link"
                 >
                   <span style={{ fontWeight: 700, display: 'block' }}>{item.aulaTitle}</span>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)' }}>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
                     {item.subjectTitle} · {item.moduloTitle}
                   </span>
                 </a>
@@ -149,11 +152,15 @@ function Navbar() {
                 href={`#${link.path}`}
                 className={`nav-link ${isActive ? 'active' : ''}`}
                 style={{
-                  fontWeight: isActive ? 700 : 500,
+                  fontWeight: isActive ? 700 : 600,
                   backgroundColor: isActive ? 'var(--track-finance)' : 'transparent',
                   color: isActive ? '#FFFFFF' : 'var(--muted-foreground)',
-                  padding: '0.45rem 0.85rem',
+                  padding: '0.5rem 0.95rem',
                   borderRadius: '9999px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  minHeight: '40px',
+                  fontSize: '0.85rem',
                   transition: 'all 0.15s ease'
                 }}
               >
