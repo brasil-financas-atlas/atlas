@@ -943,3 +943,274 @@
   }
 }
 
+/* ==========================================================================
+   Editorial Financial Craft: Ticker Ribbon & Hero Showpiece Visualizer
+   ========================================================================== */
+
+/* 1. Market Ticker Ribbon */
+.bfa-ticker-bar {
+  background: #090D16;
+  color: #F8FAFC;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  height: 38px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 40;
+}
+
+.bfa-ticker-header {
+  background: #0F172A;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0 1.25rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  z-index: 10;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
+}
+
+.bfa-ticker-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 10px #10B981;
+  animation: bfaPulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes bfaPulseGlow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+.bfa-ticker-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #F8FAFC;
+}
+
+.bfa-ticker-track-wrapper {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+}
+
+.bfa-ticker-track {
+  display: inline-flex;
+  gap: 2.5rem;
+  animation: bfaMarquee 40s linear infinite;
+}
+
+.bfa-ticker-track:hover {
+  animation-play-state: paused;
+}
+
+.bfa-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+}
+
+.bfa-ticker-item__label {
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.bfa-ticker-item__value {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.bfa-ticker-item__value small {
+  font-size: 0.68rem;
+  color: #94A3B8;
+  margin-left: 2px;
+}
+
+.bfa-ticker-item__change {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+}
+
+.bfa-ticker-item__change.up {
+  color: #34D399;
+  background: rgba(52, 211, 153, 0.15);
+}
+
+.bfa-ticker-item__change.down {
+  color: #F87171;
+  background: rgba(248, 113, 113, 0.15);
+}
+
+.bfa-ticker-item__change.neutral {
+  color: #CBD5E1;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@keyframes bfaMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* 2. Hero Showpiece Visualizer */
+.bfa-hero-showpiece {
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem 2rem;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  margin-top: 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.bfa-hero-showpiece::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.6), transparent);
+}
+
+.bfa-hero-showpiece__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.bfa-hero-showpiece__canvas-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  background: rgba(9, 13, 22, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem;
+  overflow: hidden;
+}
+
+.bfa-hero-showpiece__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.bfa-hero-tooltip {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.95rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+.bfa-hero-showpiece__controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bfa-hero-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bfa-hero-control__top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.bfa-hero-control__val {
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.bfa-range-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  accent-color: #10B981;
+}
+
+.bfa-hero-showpiece__kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.bfa-hero-kpi-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  transition: all 0.2s ease;
+}
+
+.bfa-hero-kpi-card.highlight {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 4px 20px -4px rgba(16, 185, 129, 0.2);
+}
+
+.bfa-hero-kpi-card__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #94A3B8;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.bfa-hero-kpi-card__num {
+  font-family: var(--font-mono);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #10B981;
+  letter-spacing: -0.02em;
+}
+
+.bfa-hero-kpi-card__sub {
+  font-size: 0.76rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+  display: block;
+}
+
