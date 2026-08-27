@@ -46,7 +46,10 @@ function Home() {
           </div>
 
           {/* Interactive Hero Showpiece */}
-          {window.HeroCompoundVisualizer && <window.HeroCompoundVisualizer />}
+          {(() => {
+            const HeroVisualizer = window.HeroCompoundVisualizer;
+            return HeroVisualizer ? <HeroVisualizer /> : null;
+          })()}
 
           {/* Stats Bar */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginTop: '3.5rem' }}>
