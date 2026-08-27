@@ -209,7 +209,7 @@ function Navbar() {
 
       </div>
     </header>
-    {window.MarketTickerRibbon && <window.MarketTickerRibbon />}
+    {MarketTicker && <MarketTicker />}
     </>
   );
 }
