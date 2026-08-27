@@ -49,8 +49,9 @@ function AdminLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [carregando, setCarregando] = useState(false);
 
-  if (isAuthenticated) {
+  if (isAuthenticated && adminUser) {
     return (
       <div className="bfa-container" style={{ padding: '4rem 1.5rem', maxWidth: '500px', margin: '0 auto' }}>
         <div className="tool-card" style={{ padding: '2.5rem', textAlign: 'center' }}>
@@ -58,9 +59,12 @@ function AdminLogin() {
             <span style={{ fontSize: '2rem' }}>✓</span>
           </div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--foreground)' }}>
-            Sessão Ativa: <strong>{adminUser.username}</strong>
+            Sessão Ativa: <strong>{adminUser.name || adminUser.email}</strong>
           </h2>
-          <p style={{ margin: '0.75rem 0 1.5rem 0', color: 'var(--muted-foreground)' }}>
+          <p style={{ margin: '0.75rem 0 0.5rem 0', color: 'var(--muted-foreground)' }}>
+            Papel no sistema: <strong>{adminUser.role}</strong>
+          </p>
+          <p style={{ margin: '0 0 1.5rem 0', color: 'var(--muted-foreground)', fontSize: '0.85rem' }}>
             Você está autenticado no Painel Admin do BFA.
           </p>
           <a href="#/admin" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
@@ -71,14 +75,21 @@ function AdminLogin() {
     );
   }
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg('');
-    const res = login(username, password);
-    if (res.success) {
-      navigate('/admin');
-    } else {
-      setErrorMsg(res.error || 'Credenciais inválidas.');
+    setCarregando(true);
+    try {
+      const res = await login(username, password);
+      if (res && res.success) {
+        navigate('/admin');
+      } else {
+        setErrorMsg((res && res.error) || 'Credenciais inválidas.');
+      }
+    } catch (err) {
+      setErrorMsg(err.message || 'Erro ao conectar ao servidor.');
+    } finally {
+      setCarregando(false);
     }
   };
 
@@ -87,7 +98,7 @@ function AdminLogin() {
       <div className="tool-card" style={{ padding: '2.5rem' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--foreground)' }}>Área do Professor</h2>
-          <p style={{ fontSize: '0.875rem', color: 'var(--muted-foreground)' }}>Acesso de edição para equipe docente do NIF</p>
+          <p style={{ fontSize: '0.875rem', color: 'var(--muted-foreground)' }}>Acesso de edição e moderação do Brasil Finanças Atlas</p>
         </div>
 
         {errorMsg && (
@@ -98,14 +109,15 @@ function AdminLogin() {
 
         <form onSubmit={handleLoginSubmit}>
           <div style={{ marginBottom: '1rem' }}>
-            <label style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>Usuário:</label>
+            <label style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>E-mail:</label>
             <input
-              type="text"
+              type="email"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="admin"
+              placeholder="seu-email@exemplo.com"
               style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.9rem' }}
               required
+              autoFocus
             />
           </div>
 
@@ -121,8 +133,8 @@ function AdminLogin() {
             />
           </div>
 
-          <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-            Entrar no Painel CMS ➔
+          <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={carregando}>
+            {carregando ? 'Autenticando...' : 'Entrar no Painel CMS ➔'}
           </button>
         </form>
       </div>
