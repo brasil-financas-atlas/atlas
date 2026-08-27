@@ -34,9 +34,9 @@ function DisciplinaOverview({ subjectKey }) {
       <section className="hero-gradient" style={{ padding: '4.5rem 0 3.5rem 0', position: 'relative', overflow: 'hidden' }}>
         <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.5 }} />
         <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.75rem', borderRadius: '9999px', background: 'rgba(255, 255, 255, 0.12)', border: '1px solid rgba(255, 255, 255, 0.2)', color: '#FFFFFF' }}>
-            <span className="mono-tag" style={{ fontWeight: 700, fontSize: '0.7rem' }}>
-              TRILHA DE CONHECIMENTO ABERTA
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', background: 'rgba(255, 255, 255, 0.15)', border: '1px solid rgba(255, 255, 255, 0.25)', color: '#FFFFFF' }}>
+            <span className="mono-tag" style={{ fontWeight: 700, fontSize: '0.75rem' }}>
+              Trilha de Conhecimento
             </span>
           </div>
 
@@ -44,7 +44,7 @@ function DisciplinaOverview({ subjectKey }) {
             {isMatematica ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}
           </EditableBlock>
 
-          <div className="mono-tag" style={{ color: 'rgba(241, 245, 249, 0.85)', marginTop: '0.5rem', fontWeight: 700 }}>
+          <div className="mono-tag" style={{ color: 'rgba(241, 245, 249, 0.9)', marginTop: '0.5rem', fontWeight: 700, fontSize: '0.78rem' }}>
             {subjectData.modulos.length} MÓDULOS ESTRUTURADOS · {totalLessons} AULAS COM FIXAÇÃO
           </div>
 
