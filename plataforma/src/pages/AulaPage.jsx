@@ -212,7 +212,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                     Cancelar
                   </button>
                   <button type="submit" className="bfa-btn bfa-btn--verde" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                    Salvar Vídeo 💾
+                    Salvar Vídeo
                   </button>
                 </div>
               </form>
