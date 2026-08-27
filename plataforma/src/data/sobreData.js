@@ -5,9 +5,9 @@ window.sobreData = {
   titulo: "Sobre o BFA — Brasil Finanças Atlas",
   subtitulo: "Plataforma aberta para o ensino de matemática aplicada e finanças corporativas.",
   origem: {
-    projeto: "NIF (Núcleo de Inteligência Financeira)",
-    localizacao: "Fortaleza - CE, Brasil",
-    historia: "O BFA nasceu no âmbito do NIF (Núcleo de Inteligência Financeira), em Fortaleza-CE, a partir da percepção de que a educação financeira nas escolas ainda se limitava a noções básicas de orçamento doméstico. Desenvolvemos um material prático e guiado por metodologias ativas para levar o estudante dos fundamentos até a análise de demonstrações financeiras e avaliação de empresas."
+    projeto: "Brasil Finanças Atlas (BFA)",
+    localizacao: "Brasil",
+    historia: "O Brasil Finanças Atlas nasceu a partir da percepção de que a educação financeira nas escolas ainda se limitava a noções básicas de orçamento doméstico. Desenvolvemos um material de excelência técnica e guiado por metodologias ativas para levar o estudante dos fundamentos da matemática até a análise de demonstrações financeiras, valuation e mercado de capitais."
   },
   missao: "Capacitar estudantes com conhecimento de matemática aplicada, finanças e análise fundamentalista.",
   visao: "Tornar-se uma plataforma educacional de referência no ensino de matemática aplicada e finanças.",
