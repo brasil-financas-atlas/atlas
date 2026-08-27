@@ -465,26 +465,29 @@ function AdminProvider({ children }) {
     setCmsData(prev => {
       const remainingPending = (prev.pendingEdits || []).filter(e => e.id !== editId && e._id !== editId);
 
-      // Aplica a alteração no CMS principal
+      const resType = targetEdit.resourceType || targetEdit.resource_type;
+      const resId = targetEdit.resourceId || targetEdit.resource_id;
+      const changes = targetEdit.changesJson || targetEdit.changes_json || {};
+
       let updatedLessons = { ...prev.lessons };
       let updatedOverrides = { ...(prev.overrides || {}) };
       let updatedNews = [...(prev.news || [])];
       let updatedExercises = [...(prev.exercises || [])];
       let updatedModules = [...(prev.modules || [])];
 
-      if (targetEdit.resourceType === 'lesson') {
-        updatedLessons[targetEdit.resourceId] = {
-          ...(updatedLessons[targetEdit.resourceId] || {}),
-          ...targetEdit.changesJson
+      if (resType === 'lesson') {
+        updatedLessons[resId] = {
+          ...(updatedLessons[resId] || {}),
+          ...changes
         };
-      } else if (targetEdit.resourceType === 'override') {
-        updatedOverrides[targetEdit.resourceId] = targetEdit.changesJson?.text;
-      } else if (targetEdit.resourceType === 'news') {
-        updatedNews = [targetEdit.changesJson, ...updatedNews];
-      } else if (targetEdit.resourceType === 'exercise') {
-        updatedExercises = [targetEdit.changesJson, ...updatedExercises];
-      } else if (targetEdit.resourceType === 'module') {
-        updatedModules = [...updatedModules, targetEdit.changesJson?.module];
+      } else if (resType === 'override') {
+        updatedOverrides[resId] = changes.text !== undefined ? changes.text : changes;
+      } else if (resType === 'news') {
+        updatedNews = [changes, ...updatedNews];
+      } else if (resType === 'exercise') {
+        updatedExercises = [changes, ...updatedExercises];
+      } else if (resType === 'module') {
+        updatedModules = [...updatedModules, changes.module || changes];
       }
 
       return comHorario({
@@ -513,9 +516,10 @@ function AdminProvider({ children }) {
   const value = {
     adminUser: currentUser,
     isAuthenticated: !!currentUser,
-    isAdmin: PAPEIS_ADMIN.includes(currentUser && currentUser.role),
-    isChief: currentUser?.role === 'admin_chief',
-    isAdminChief: currentUser?.role === 'admin_chief',
+    isAdmin,
+    isChief,
+    isAdminChief: isChief,
+    userRole,
     carregandoSessao,
     login,
     logout,
