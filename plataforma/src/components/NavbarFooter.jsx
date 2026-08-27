@@ -206,6 +206,8 @@ function Navbar() {
 
       </div>
     </header>
+    {window.MarketTickerRibbon && <window.MarketTickerRibbon />}
+    </>
   );
 }
 
