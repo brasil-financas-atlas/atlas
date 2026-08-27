@@ -62,8 +62,11 @@ function Navbar() {
     { label: "Sobre", path: "/sobre" },
   ];
 
+  const MarketTicker = window.MarketTickerRibbon;
+
   return (
-    <header className="site-header" style={{ boxShadow: '0 4px 20px -5px rgba(15, 23, 42, 0.05)' }}>
+    <>
+      <header className="site-header" style={{ boxShadow: '0 4px 20px -5px rgba(15, 23, 42, 0.05)' }}>
       <div className="site-header__container">
         <a href="#/" className="site-logo" style={{ textDecoration: 'none' }}>
           <div className="site-logo__badge" style={{ background: 'linear-gradient(135deg, #059669 0%, #0F172A 100%)', boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)', color: '#FFFFFF' }}>BFA</div>
