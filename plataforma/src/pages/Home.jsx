@@ -18,23 +18,28 @@ function Home() {
         
         <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ maxWidth: '820px' }}>
-            <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.8)', background: 'rgba(255, 255, 255, 0.1)', padding: '0.3rem 0.75rem', borderRadius: '4px', border: '1px solid rgba(255, 255, 255, 0.15)', display: 'inline-block', marginBottom: '1.25rem' }}>
-              Brasil Finanças Atlas — Plataforma de Ensino Aberto
-            </span>
+            <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
+              <span className="mono-tag" style={{ color: '#FBBF24', background: 'rgba(251, 191, 36, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(251, 191, 36, 0.35)', fontWeight: 700 }}>
+                🏛️ Alinhado à BNCC & NIF Dragão do Mar
+              </span>
+              <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', fontWeight: 700 }}>
+                100% Gratuito & Aberto
+              </span>
+            </div>
 
             <EditableBlock id="home-hero-title" as="h1" style={{ fontSize: '3.25rem', fontWeight: 800, lineHeight: 1.1, color: '#FFFFFF', letterSpacing: '-0.025em' }}>
               Matemática aplicada e finanças corporativas em um único ambiente de estudos.
             </EditableBlock>
 
-            <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.15rem', lineHeight: 1.6, color: 'rgba(241, 245, 249, 0.85)', marginTop: '1.25rem', maxWidth: '700px' }}>
-              Aulas teóricas, exercícios de fixação, simuladores de juros e guia de preparação para análise de empresas e investimentos.
+            <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.15rem', lineHeight: 1.6, color: 'rgba(241, 245, 249, 0.9)', marginTop: '1.25rem', maxWidth: '700px' }}>
+              Aulas teóricas com rigor pedagógico, exercícios de fixação, simuladores de juros compostos e guia de preparação de alta performance.
             </EditableBlock>
 
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '2rem' }}>
-              <a href="#/matematica" className="bfa-btn bfa-btn--verde" style={{ padding: '0.8rem 1.5rem', fontSize: '0.9rem' }}>
-                Ver Trilha de Matemática ➔
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '2.25rem' }}>
+              <a href="#/matematica" className="bfa-btn bfa-btn--verde" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                Começar Trilha de Matemática ➔
               </a>
-              <a href="#/financas" className="bfa-btn bfa-btn--ghost" style={{ padding: '0.8rem 1.5rem', fontSize: '0.9rem', border: '1px solid rgba(255, 255, 255, 0.3)', color: '#FFFFFF' }}>
+              <a href="#/financas" className="bfa-btn bfa-btn--ghost" style={{ padding: '0.85rem 1.75rem', fontSize: '0.95rem', border: '1px solid rgba(255, 255, 255, 0.35)', color: '#FFFFFF', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
                 Ver Trilha de Finanças
               </a>
             </div>
@@ -45,12 +50,12 @@ function Home() {
             {stats.map((s) => (
               <div key={s.label} className="bfa-stat-spotlight">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
-                  <span className="mono-tag" style={{ color: s.color, fontWeight: 700, fontSize: '0.7rem', background: 'rgba(255,255,255,0.08)', padding: '0.15rem 0.45rem', borderRadius: '4px' }}>
+                  <span className="mono-tag" style={{ color: s.color, fontWeight: 700, fontSize: '0.75rem', background: 'rgba(255,255,255,0.12)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
                     {s.note}
                   </span>
                 </div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '2rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>{s.value}</div>
-                <div style={{ fontSize: '0.88rem', fontWeight: 600, color: 'rgba(241, 245, 249, 0.85)', marginTop: '0.2rem' }}>{s.label}</div>
+                <div style={{ fontSize: '0.88rem', fontWeight: 600, color: 'rgba(241, 245, 249, 0.9)', marginTop: '0.2rem' }}>{s.label}</div>
               </div>
             ))}
           </div>
