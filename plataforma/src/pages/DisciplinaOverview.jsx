@@ -102,9 +102,9 @@ function DisciplinaOverview({ subjectKey }) {
                         {aula.titulo}
                       </span>
                       {isDone ? (
-                        <span className="mono-tag" style={{ color: '#059669', background: '#ECFDF5', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 800 }}>✓ Concluída</span>
+                        <span className="mono-tag" style={{ color: '#059669', background: '#ECFDF5', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 800 }}>Concluída ✓</span>
                       ) : (
-                        <span style={{ color: 'var(--muted-foreground)', fontSize: '0.85rem' }}>➔</span>
+                        <span style={{ color: 'var(--muted-foreground)', fontSize: '0.95rem' }}>→</span>
                       )}
                     </a>
                   );
