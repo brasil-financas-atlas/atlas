@@ -67,8 +67,53 @@ function BrhsicPage() {
         </div>
       </section>
 
+      {/* ── Laboratórios Interativos da Olimpíada ───────────────────────── */}
+      <section className="bfa-container" style={{ padding: '3.5rem 1.5rem 1rem 1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+          
+          {/* Card 1: Simulador de Carteira */}
+          <div className="bfa-tech-card card-lift" style={{ border: '1px solid rgba(251, 191, 36, 0.35)', background: 'linear-gradient(180deg, var(--card) 0%, rgba(251, 191, 36, 0.04) 100%)', padding: '2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+              <span className="mono-tag" style={{ color: '#FBBF24', background: 'rgba(251, 191, 36, 0.15)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800 }}>
+                LABORATÓRIO INTERATIVO
+              </span>
+              <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>6 Classes de Ativos</span>
+            </div>
+            <h3 style={{ fontSize: '1.45rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em', marginBottom: '0.65rem' }}>
+              Simulador de Alocação de Carteira
+            </h3>
+            <p style={{ color: 'var(--muted-foreground)', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '1.75rem' }}>
+              Monte e teste carteiras de investimento com Selic, IPCA+, Prefixados, FIIs, Ações e S&P 500. Projete patrimônio futuro, renda passiva mensal e analise o Índice de Sharpe.
+            </p>
+            <a href="#/simulador-carteira" className="bfa-btn bfa-btn--primary-solid" style={{ width: '100%', justifyContent: 'center', padding: '0.85rem 1.25rem', fontSize: '0.95rem', background: '#D97706', borderColor: '#D97706' }}>
+              Abrir Simulador de Carteira →
+            </a>
+          </div>
+
+          {/* Card 2: Simulados Oficiais */}
+          <div className="bfa-tech-card card-lift" style={{ border: '1px solid rgba(52, 211, 153, 0.35)', background: 'linear-gradient(180deg, var(--card) 0%, rgba(52, 211, 153, 0.04) 100%)', padding: '2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+              <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800 }}>
+                TREINAMENTO CRONOMETRADO
+              </span>
+              <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>3 Níveis de Prova</span>
+            </div>
+            <h3 style={{ fontSize: '1.45rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em', marginBottom: '0.65rem' }}>
+              Simulados Oficiais BRHSIC
+            </h3>
+            <p style={{ color: 'var(--muted-foreground)', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '1.75rem' }}>
+              Treine para a prova oficial com cronômetro regressivo, 4 opções por questão, cálculo instantâneo de pontuação e gabarito detalhado passo a passo.
+            </p>
+            <a href="#/simulados" className="bfa-btn bfa-btn--primary-solid" style={{ width: '100%', justifyContent: 'center', padding: '0.85rem 1.25rem', fontSize: '0.95rem', background: '#059669', borderColor: '#059669' }}>
+              Iniciar Simulado com Timer →
+            </a>
+          </div>
+
+        </div>
+      </section>
+
       {/* Pilares Técnicos */}
-      <section className="bfa-container" style={{ padding: '4.5rem 1.5rem' }}>
+      <section className="bfa-container" style={{ padding: '3rem 1.5rem 4.5rem 1.5rem' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.75rem' }}>
           
           <article className="bfa-tech-card" style={{ borderTop: '4px solid var(--gold-deep)' }}>
