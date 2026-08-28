@@ -12,14 +12,23 @@ Nos juros simples, você ganha juros só sobre o capital inicial. Nos juros comp
 
 ## Conceitos essenciais
 
-| Conceito | Significado simples |
-|----------|---------------------|
-| Capital inicial (VP) | O dinheiro que você coloca no início |
-| Taxa de juros (i) | O percentual que o dinheiro rende por período |
-| Prazo (n) | Número de períodos (meses, anos) |
-| Valor futuro (VF) | O total que você terá ao final |
-| Juros simples | Rendimento calculado só sobre o capital inicial |
-| Juros compostos | Rendimento calculado sobre capital + juros acumulados |
+| Conceito | Juros simples | Juros compostos |
+|----------|---------------|-----------------|
+| Fórmula do montante | $M = C(1 + it)$ | $M = C(1 + i)^t$ |
+| Base de cálculo | Sempre sobre o capital inicial | Sobre o saldo acumulado (capital + juros anteriores) |
+| Crescimento | Linear (soma o mesmo valor por período) | Exponencial (multiplica pelo mesmo fator por período) |
+| Curva no gráfico | Reta | Curva que acelera para cima |
+| Onde aparece | Atraso de conta, cheques especiais curtos | Tesouro Direto, CDBs, ações, financiamentos longos |
+
+??? math "🔬 Demonstração Algébrica: O que acontece na capitalização contínua?"
+    Quando a frequência de capitalização $n$ tende ao infinito (juros calculados a cada instante), o limite fundamental do cálculo exponencial gera a constante de Euler:
+    $$\lim_{n \to \infty} C \left(1 + \frac{r}{n}\right)^{nt} = C \cdot e^{rt}$$
+    Essa formulação contínua é amplamente utilizada em modelos quantitativos de precificação de opções e derivativos.
+
+??? tip "🏆 Dica Olímpica BRHSIC: Estimativa Mental pela Regra do 72"
+    Para calcular o tempo aproximado $t$ necessário para um capital dobrar a uma taxa de juros compostos $i\%$, divida $72$ pela taxa:
+    $$t \approx \frac{72}{i}$$
+    Exemplo: Com taxa de $12\%$ ao ano, o patrimônio dobra em aproximadamente $\frac{72}{12} = 6$ anos.
 
 ## Fórmulas
 
