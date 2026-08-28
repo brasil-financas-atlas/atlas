@@ -160,6 +160,41 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           </p>
         </div>
 
+        {/* Quick In-Lesson TOC Bar */}
+        <div className="bfa-quick-toc">
+          <span className="bfa-quick-toc__label">Roteiro da Aula:</span>
+          <button
+            type="button"
+            className="bfa-quick-toc__chip"
+            onClick={() => {
+              const el = document.querySelector('.bfa-lesson-article');
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
+            📖 Teoria & Fórmulas
+          </button>
+          <button
+            type="button"
+            className="bfa-quick-toc__chip"
+            onClick={() => {
+              const el = document.getElementById('quiz-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
+            🎯 Quiz Interativo (Khan)
+          </button>
+          <button
+            type="button"
+            className="bfa-quick-toc__chip"
+            onClick={() => {
+              const el = document.getElementById('forum-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
+            💬 Fórum de Dúvidas
+          </button>
+        </div>
+
         {/* Video Player & Admin Controls */}
         <div style={{ marginBottom: '2.5rem' }}>
           {isAuthenticated && inlineEditActive && (
@@ -178,22 +213,18 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                   type="button"
                   className="bfa-btn bfa-btn--sm bfa-btn--ouro"
                   onClick={() => {
-                    setInputVideoUrl(videoUrl || '');
+                    setInputVideoUrl(videoUrl);
                     setShowVideoModal(true);
                   }}
                   style={{ fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                 >
-                  <BfaIcon name="pencil" size={13} /> {videoUrl ? 'Alterar Vídeo' : '+ Adicionar Vídeo'}
+                  <BfaIcon name="pencil" size={13} /> {videoUrl ? 'Editar Vídeo' : 'Adicionar Vídeo'}
                 </button>
                 {videoUrl && (
                   <button
                     type="button"
                     className="bfa-btn bfa-btn--sm bfa-btn--ghost"
-                    onClick={() => {
-                      if (window.confirm("Remover o vídeo desta aula?")) {
-                        updateLesson(lessonId, { videoUrl: '' });
-                      }
-                    }}
+                    onClick={() => updateLesson(lessonId, { videoUrl: '' })}
                     style={{ fontSize: '0.8rem', color: '#EF4444', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                   >
                     <BfaIcon name="trash" size={13} /> Remover Vídeo
@@ -203,36 +234,49 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
             </div>
           )}
 
-          <VideoPlayer videoUrl={videoUrl} />
+          {videoUrl && (
+            <div className="bfa-video-responsive" style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', boxShadow: '0 10px 30px -10px rgba(0,0,0,0.3)', background: '#000' }}>
+              <iframe
+                src={videoUrl.replace('watch?v=', 'embed/')}
+                title={aulaObj.titulo}
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          )}
         </div>
 
-        {/* Modal Admin para Adicionar / Editar Vídeo */}
+        {/* Video Admin Modal */}
         {showVideoModal && (
-          <div className="bfa-inline-editor-modal" onClick={() => setShowVideoModal(false)}>
-            <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: 'var(--foreground)' }}>
-                  Configurar Vídeo da Aula
-                </h3>
-                <button type="button" onClick={() => setShowVideoModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.85rem', color: 'var(--muted-foreground)' }}>Fechar</button>
-              </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginBottom: '1rem' }}>
-                Cole o link de um vídeo do YouTube ou Vimeo para vincular a esta aula.
+          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '1.5rem' }}>
+            <div style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '2rem', maxWidth: '500px', width: '100%', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.5rem' }}>
+                Vincular Vídeo do YouTube
+              </h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginBottom: '1.25rem' }}>
+                Insira a URL completa do vídeo (ex: <code>https://www.youtube.com/watch?v=XXXXX</code>).
               </p>
               <input
                 type="text"
                 value={inputVideoUrl}
                 onChange={(e) => setInputVideoUrl(e.target.value)}
                 placeholder="https://www.youtube.com/watch?v=..."
-                style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)', fontSize: '0.9rem', marginBottom: '1.25rem', outline: 'none' }}
+                style={{ width: '100%', padding: '0.75rem 1rem', background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', color: 'var(--foreground)', fontSize: '0.9rem', marginBottom: '1.5rem', outline: 'none' }}
               />
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
-                <button type="button" className="bfa-btn bfa-btn--ghost bfa-btn--sm" onClick={() => setShowVideoModal(false)}>Cancelar</button>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                <button
+                  type="button"
+                  className="bfa-btn bfa-btn--ghost bfa-btn--sm"
+                  onClick={() => setShowVideoModal(false)}
+                >
+                  Cancelar
+                </button>
                 <button
                   type="button"
                   className="bfa-btn bfa-btn--verde bfa-btn--sm"
                   onClick={() => {
-                    updateLesson(lessonId, { videoUrl: inputVideoUrl.trim() });
+                    updateLesson(lessonId, { videoUrl: inputVideoUrl });
                     setShowVideoModal(false);
                   }}
                 >
@@ -249,7 +293,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         </article>
 
         {/* Quiz Engine */}
-        <div style={{ marginTop: '3.5rem', paddingTop: '2.5rem', borderTop: '1px solid var(--border)' }}>
+        <div id="quiz-section" style={{ marginTop: '3.5rem', paddingTop: '2.5rem', borderTop: '1px solid var(--border)' }}>
           {(() => {
             const richData = subjectKey === 'financas' ? window.financasData : (subjectKey === 'matematica' ? window.matematicaData : null);
             let richAula = null;
@@ -270,7 +314,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         </div>
 
         {/* Timestamps Forum */}
-        <div style={{ marginTop: '3.5rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
+        <div id="forum-section" style={{ marginTop: '3.5rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
           <ForumTimestamps lessonId={lessonId} />
         </div>
 
