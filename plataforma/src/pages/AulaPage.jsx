@@ -90,7 +90,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                         </span>
                         <span>{a.titulo}</span>
                       </div>
-                      {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.68rem', fontWeight: 800 }}>✓</span>}
+                      {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.68rem', fontWeight: 800 }}>Concluída</span>}
                     </a>
                   );
                 })}
@@ -138,7 +138,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               fontSize: '0.85rem'
             }}
           >
-            {isDone ? 'Concluída ✓' : 'Marcar como Concluída'}
+            {isDone ? 'Concluída' : 'Marcar como Concluída'}
           </button>
         </div>
 
@@ -214,7 +214,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 <h3 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: 'var(--foreground)' }}>
                   Configurar Vídeo da Aula
                 </h3>
-                <button type="button" onClick={() => setShowVideoModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', color: 'var(--muted-foreground)' }}>✕</button>
+                <button type="button" onClick={() => setShowVideoModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.85rem', color: 'var(--muted-foreground)' }}>Fechar</button>
               </div>
               <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginBottom: '1rem' }}>
                 Cole o link de um vídeo do YouTube ou Vimeo para vincular a esta aula.
