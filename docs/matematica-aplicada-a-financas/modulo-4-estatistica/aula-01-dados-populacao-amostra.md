@@ -45,23 +45,6 @@ Ana quer estimar o retorno típico mensal de um ETF do Ibovespa.
 
 Esse hábito — declarar variável, amostra e limitação **antes** de calcular qualquer média — é o que separa análise de achismo.
 
-## Lista de problemas
-
-1. Classifique as variáveis: (a) setor de uma empresa; (b) dividend yield; (c) número de funcionários; (d) rating "AAA/AA/A".
-2. Para estimar a inadimplência dos clientes de um banco gigante, analisou-se os clientes de **uma** agência de bairro nobre. Identifique população, amostra e o problema.
-3. Um site anuncia: "os fundos multimercado renderam em média 14% a.a. na última década". Que viés pode inflar esse número?
-4. Por que "a bolsa nunca caiu em ano de Copa" (baseado em 5 Copas) não é uma conclusão estatística confiável?
-5. Dê um exemplo de série temporal financeira e um de dado que **não** é série temporal.
-6. Desafio: você quer saber o gasto médio mensal dos alunos da sua escola. Desenhe uma amostra razoável (tamanho, como escolher, o que evitar).
-
-??? note "Gabarito"
-    1. (a) qualitativa; (b) quantitativa contínua; (c) quantitativa discreta; (d) qualitativa ordinal.
-    2. População: todos os clientes do banco; amostra: clientes de uma agência de perfil de renda alto; problema: amostra enviesada — inadimplência subestimada.
-    3. Viés de sobrevivência: fundos que quebraram ou fecharam saíram da média.
-    4. Amostra minúscula (n = 5): o acaso explica facilmente o padrão; não há relação causal plausível.
-    5. Série temporal: preços diários de uma ação. Não série: a lista dos P/L das empresas do índice **hoje** (corte transversal).
-    6. Exemplo: sortear ~50 alunos de todas as séries e turnos (não só a sua turma), coletar anonimamente, evitar voluntários apenas (quem se voluntaria pode gastar diferente).
-
 ## PBL
 
 Um canal de investimentos publicou: "Análise de 3 anos mostra que nossa carteira recomendada rende o dobro do CDI". Monte a lista de perguntas que você faria sobre a **amostra** dessa afirmação (mínimo 5), explicando o que cada resposta poderia revelar. Depois, descreva como você desenharia um teste honesto da mesma afirmação.

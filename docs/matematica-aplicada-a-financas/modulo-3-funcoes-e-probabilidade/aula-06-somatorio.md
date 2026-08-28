@@ -67,23 +67,6 @@ $$
 
 Usei as duas propriedades: a constante somada 6 vezes e a constante multiplicativa saindo do Σ. Conferindo pela fórmula da PA: $S_6 = (2000 + 4500) \cdot 6/2 = 19.500$. ✓
 
-## Lista de problemas
-
-1. Calcule: $\sum_{k=1}^{5} k$; $\sum_{k=1}^{4} (2k+1)$; $\sum_{k=3}^{6} k^2$.
-2. Escreva em notação Σ: $10 + 20 + 30 + \cdots + 100$.
-3. Escreva em notação Σ a soma dos montantes $50 \cdot 1{,}02^t$ para $t$ de 1 a 12.
-4. Use as propriedades para simplificar: $\sum_{k=1}^{10} (3a_k + 5)$, sabendo que $\sum_{k=1}^{10} a_k = 40$.
-5. Calcule o valor presente $\sum_{t=1}^{2} \dfrac{550}{(1{,}10)^t}$.
-6. Desafio: mostre que $\sum_{k=1}^{n} k = \dfrac{n(n+1)}{2}$ usando o truque de Gauss da aula de PA.
-
-??? note "Gabarito"
-    1. 15; 24; $9+16+25+36 = 86$.
-    2. $\sum_{k=1}^{10} 10k$.
-    3. $\sum_{t=1}^{12} 50 \cdot 1{,}02^t$.
-    4. $3 \cdot 40 + 10 \cdot 5 = 170$.
-    5. $500 + 454{,}55 = 954{,}55$ (ou seja: $550/1{,}1 = 500$; $550/1{,}21 \approx 454{,}55$).
-    6. Emparelhando $1+n$, $2+(n-1)$, ...: cada par soma $n+1$ e há $n/2$ pares → $n(n+1)/2$.
-
 ## PBL
 
 Sua escola quer arrecadar fundos vendendo doces por 10 semanas. O plano prevê vender 40 doces na semana 1 e crescer 15% por semana (lucro de R$ 2 por doce). Escreva o lucro total em notação de somatório, identifique que tipo de progressão está dentro do Σ, calcule o total com a fórmula apropriada da aula 5 e apresente o resultado num mini-relatório de 5 linhas para a coordenação — incluindo a fórmula, para impressionar.

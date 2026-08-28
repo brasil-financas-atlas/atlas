@@ -47,14 +47,6 @@ Ana (aula 2) vai investir R$ 500 por mês para o longo prazo, perfil moderado. C
 
 Aporte mensal: R$ 175 no Tesouro Selic, R$ 125 no IPCA+, R$ 50 no prefixado, R$ 75 num ETF Brasil, R$ 50 num ETF global, R$ 25 num FII diversificado. Seis ordens simples, repetidas todo mês. Quando ela dominar o Módulo 2 e quiser apostar numa empresa específica, essa posição entra como **satélite** dentro dos 15% de ações — sem quebrar o esqueleto.
 
-## Mini quiz
-
-1. O que pesa mais no resultado de longo prazo: a alocação entre classes ou a escolha dos ativos individuais?
-2. Qual a diferença entre alocação estratégica e tática?
-3. O que é a estrutura núcleo–satélites?
-4. Por que a reserva de emergência não entra na alocação?
-5. Para que serve escrever uma política de investimento?
-
 ## PBL
 
 Monte a carteira-alvo de João, 30 anos, professor concursado (renda estável), sem dependentes, tolerância média a quedas, objetivos: aposentadoria (30 anos) e entrada de apartamento (6 anos). Defina os percentuais por classe **para cada objetivo separadamente**, indique que veículos usaria como núcleo, e estabeleça dois limites de política de investimento que o protegeriam dele mesmo.

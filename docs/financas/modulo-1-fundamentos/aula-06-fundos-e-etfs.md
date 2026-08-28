@@ -52,14 +52,6 @@ Maria compara dois produtos para investir por 10 anos:
 
 Se o fundo ativo conseguir bater o Ibovespa em mais de 2,4% consistentemente, vale a pena. Se não conseguir — e a maioria dos fundos ativos não consegue no longo prazo — o ETF é superior.
 
-## Mini quiz
-
-1. O que é uma cota de fundo?
-2. Qual a principal vantagem de um ETF sobre um fundo ativo?
-3. O que é come-cotas e quando ocorre?
-4. Por que taxa de administração alta prejudica os juros compostos?
-5. O que é taxa de performance?
-
 ## PBL
 
 Maria compara um fundo ativo com taxa de 2% ao ano e histórico de 13% bruto ao ano com o BOVA11 (ETF Ibovespa) com taxa de 0,1% e rendimento histórico de 10% ao ano.

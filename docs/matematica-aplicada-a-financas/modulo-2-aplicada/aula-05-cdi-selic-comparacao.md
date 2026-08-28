@@ -62,14 +62,6 @@ Sempre faça as três perguntas antes de escolher:
 2. Qual o prazo e existe carência?
 3. Qual o risco de crédito do emissor?
 
-## Mini quiz
-
-1. O que é CDI e como ele se relaciona com a Selic?
-2. Se o CDI está em 12%, quanto rende um CDB a 108% do CDI?
-3. Por que comparar só pela taxa bruta pode enganar?
-4. O que é liquidez e por que ela importa na comparação?
-5. Quando uma LCA com 90% do CDI pode ser melhor que um CDB com 110% do CDI?
-
 ## PBL
 
 Você recebe três propostas com CDI em 10,5% ao ano:

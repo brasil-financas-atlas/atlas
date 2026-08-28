@@ -52,14 +52,6 @@ $$
 
 A carteira B atravessou a crise **no zero a zero** enquanto a A perdeu um quarto do valor — não porque acertou previsões, mas porque tinha jogadores que reagem diferente ao mesmo jogo.
 
-## Mini quiz
-
-1. O que é uma classe de ativos?
-2. O que significa correlação +1 entre dois ativos?
-3. Por que dez ações de bancos diferentes não é diversificação de verdade?
-4. Qual classe costuma proteger o investidor brasileiro numa crise local? Por quê?
-5. Em que cenário o Tesouro IPCA+ é o herói da carteira?
-
 ## PBL
 
 Um colega diz: "minha carteira é super diversificada: tenho ações da Vale, da Petrobras, da Gerdau e um fundo de ações de commodities". Usando correlação e o conceito de classes, explique o problema da carteira dele, descreva o cenário único que derrubaria tudo junto e proponha três adições de classes diferentes, justificando o papel de cada uma no time.

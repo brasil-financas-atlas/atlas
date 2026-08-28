@@ -41,14 +41,6 @@ Ana tem três objetivos:
 - **Viagem daqui a 2 anos**: **Tesouro Prefixado** com vencimento em 2 anos. Taxa travada, sem surpresa na data certa.
 - **Aposentadoria daqui a 30 anos**: **Tesouro IPCA+** com vencimento longo. Protege contra inflação e garante ganho real.
 
-## Mini quiz
-
-1. Por que o Tesouro Direto é considerado o investimento mais seguro do Brasil?
-2. Qual título é indicado para reserva de emergência? Por quê?
-3. O que é marcação a mercado?
-4. Quando você perde dinheiro no Tesouro Prefixado?
-5. Qual título protege o poder de compra no longo prazo?
-
 ## PBL
 
 Ana quer guardar dinheiro para três objetivos: reserva de emergência, viagem em 2 anos e aposentadoria em 30 anos.

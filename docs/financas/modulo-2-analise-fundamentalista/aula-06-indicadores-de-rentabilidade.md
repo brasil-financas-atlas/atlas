@@ -55,14 +55,6 @@ Com os números da Sorvetes Tropical (aulas 3 e 4): lucro líquido 23, receita 3
 
 Diagnóstico: ROE de 9,2% está **abaixo** do que pagava a renda fixa no período — a Tropical, hoje, não remunera bem o risco do acionista. A decomposição mostra o caminho: margem de 7,7% × giro de 0,75. Como as fábricas e a frota são pesadas (ativo grande), o giro é baixo; a alavanca mais realista é recuperar margem — lembra dos R$ 12 mi de juros da aula 4? Reduzir dívida elevaria lucro, ROE e margem ao mesmo tempo.
 
-## Mini quiz
-
-1. Por que comparar lucros absolutos entre empresas de tamanhos diferentes engana?
-2. O que significa um ROE de 15%?
-3. Por que dívida alta pode inflar o ROE?
-4. Explique a diferença entre o modelo "joalheria" e o modelo "supermercado".
-5. Com qual investimento você compara o ROE para saber se ele é bom?
-
 ## PBL
 
 Duas empresas do mesmo setor: a empresa A tem lucro de R$ 50 mi, PL de R$ 500 mi e dívida líquida próxima de zero. A empresa B tem lucro de R$ 45 mi, PL de R$ 150 mi e dívida líquida de R$ 400 mi. Calcule o ROE das duas, explique por que o ROE maior de B não significa necessariamente que ela é melhor, e decida: qual das duas você investigaria mais a fundo para investir, e o que verificaria antes?

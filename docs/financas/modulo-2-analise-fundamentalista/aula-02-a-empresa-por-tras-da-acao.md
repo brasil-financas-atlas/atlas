@@ -45,14 +45,6 @@ Voltemos à **Sorvetes Tropical S.A.** Como ela ganha dinheiro? Vende sorvete pa
 
 Riscos do negócio: verão fraco derruba vendas (sazonalidade), açúcar e leite são commodities (custo fora do controle) e grandes marcas nacionais podem atacar a região. Perceba: ainda não olhamos nenhum número, e já sabemos **o que verificar** nas demonstrações financeiras — margem (o custo das commodities aperta?) e endividamento (a frota foi financiada como?).
 
-## Mini quiz
-
-1. Quais são as três perguntas básicas para entender um negócio?
-2. O que é uma vantagem competitiva? Dê dois exemplos de tipos diferentes.
-3. Por que o setor em que a empresa atua importa tanto quanto a empresa em si?
-4. O que é poder de precificação e por que ele vale ouro em época de inflação?
-5. O que é governança corporativa e por que o acionista minoritário deve se importar?
-
 ## PBL
 
 Carlos quer investir em uma de duas empresas: uma fabricante de celulares genéricos que compete por preço, e uma empresa de software de gestão usada por 8 em cada 10 farmácias do país, cobrando mensalidade. Analise as duas pelo roteiro da aula (modelo de negócio, setor e vantagens competitivas) e explique qual tende a ter lucros mais protegidos no longo prazo — e o que poderia destruir essa proteção.

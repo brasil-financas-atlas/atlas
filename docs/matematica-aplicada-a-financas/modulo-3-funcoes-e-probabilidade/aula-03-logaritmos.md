@@ -60,23 +60,6 @@ $$
 
 Doze anos de dinheiro no colchão = metade do poder de compra. O logaritmo transforma um número abstrato ("6% a.a.") em uma consequência concreta que qualquer pessoa entende.
 
-## Lista de problemas
-
-1. Calcule sem calculadora: $\log_2 16$, $\log_3 81$, $\log_{10} 1000$, $\log_5 1$.
-2. Reescreva como logaritmo: $2^{10} = 1024$; $1{,}05^t = 3$.
-3. Use $\log 2 \approx 0{,}301$ e $\log 3 \approx 0{,}477$ para calcular $\log 6$ e $\log 8$ (só com as propriedades).
-4. A 12% ao ano, em quanto tempo um capital dobra? Resolva com logaritmo e confira com a regra do 72.
-5. Um investimento rende 0,9% ao mês. Em quantos meses R$ 5.000 chegam a R$ 8.000?
-6. Desafio: uma população de bactérias triplica a cada hora. Depois de quanto tempo ela é 100 vezes a inicial?
-
-??? note "Gabarito"
-    1. 4; 4; 3; 0.
-    2. $\log_2 1024 = 10$; $t = \log_{1{,}05} 3$.
-    3. $\log 6 = \log 2 + \log 3 = 0{,}778$; $\log 8 = 3\log 2 = 0{,}903$.
-    4. $t = \log 2 / \log 1{,}12 = 0{,}3010/0{,}0492 \approx 6{,}1$ anos; regra do 72: $72/12 = 6$ anos. ✓
-    5. $1{,}009^t = 1{,}6 \Rightarrow t = \log 1{,}6 / \log 1{,}009 \approx 0{,}2041/0{,}00389 \approx 52{,}4$ → ~53 meses.
-    6. $3^t = 100 \Rightarrow t = \log 100 / \log 3 = 2/0{,}477 \approx 4{,}2$ horas.
-
 ## PBL
 
 Ana viu um anúncio: "duplique seu dinheiro conosco!". Investigando, descobriu que o produto rende 0,7% ao mês líquido. Usando logaritmos, calcule quantos **anos** o produto leva para cumprir a promessa. Depois, compare com um cartão de crédito que cobra 12% **ao mês**: em quantos meses uma dívida dobra? Escreva duas frases de conclusão sobre o que a assimetria entre esses dois tempos revela sobre juros no Brasil.

@@ -50,14 +50,6 @@ $$
 
 A carteira moderada caiu ~8% enquanto a bolsa caiu 35%. Ana precisa responder: aguento ver −8%? Se sim, a alocação está calibrada. Se nem isso, a fatia de risco precisa encolher **antes** da próxima crise, não durante.
 
-## Mini quiz
-
-1. Por que o risco da carteira é menor que a média dos riscos dos ativos (quando a correlação é baixa)?
-2. O que é drawdown e por que ele "conversa" melhor com a psicologia do investidor?
-3. O que mostra a fronteira eficiente?
-4. Para que serve um teste de estresse?
-5. Correlação −1 entre dois ativos permitiria o quê?
-
 ## PBL
 
 Pegue a carteira que você montou para João no PBL da aula 4 e rode um teste de estresse com estas hipóteses: ações BR −40%, internacional −15% com dólar +30% (efeito líquido +10%), FIIs −30%, IPCA+ −8% na marcação, prefixado −10%, Selic +1% no período. Calcule o drawdown aproximado da carteira de longo prazo de João, avalie se um professor concursado de tolerância média seguraria essa queda e ajuste os percentuais se necessário — mostrando o novo teste.

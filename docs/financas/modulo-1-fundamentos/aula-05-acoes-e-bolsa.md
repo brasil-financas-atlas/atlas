@@ -51,14 +51,6 @@ Por quê? WEG é uma empresa industrial exportadora: receita em dólar, margens 
 
 Isso mostra que duas ações na mesma bolsa podem ter comportamentos completamente diferentes diante do mesmo cenário macro.
 
-## Mini quiz
-
-1. Qual a diferença entre ser credor (renda fixa) e ser sócio (ações)?
-2. O que é um IPO?
-3. Qual a diferença entre ação ON e PN?
-4. O que são dividendos?
-5. Por que a Selic alta tende a pressionar negativamente as ações de varejo?
-
 ## PBL
 
 MGLU3 caiu muito mais que WEGE3 em um período de alta da Selic e dólar forte. Pesquise o modelo de negócio das duas empresas e explique por que o mesmo cenário macroeconômico afeta uma de forma tão diferente da outra. Quais fatores você investigaria antes de comprar qualquer ação?

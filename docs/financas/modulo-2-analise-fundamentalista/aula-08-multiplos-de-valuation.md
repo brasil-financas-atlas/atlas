@@ -51,14 +51,6 @@ A Sorvetes Tropical tem 100 milhões de ações a R$ 2,30 cada (valor de mercado
 
 Os pares do setor de alimentos negociam a P/L ~14× e EV/EBITDA ~7×. A Tropical está mais barata que os pares — coerente com o ROE fraco que diagnosticamos na aula 6. A pergunta de um milhão: se a empresa reduzir a dívida e o ROE subir, o mercado reprecifica — e quem comprou a 10× de lucro ganha duas vezes (lucro maior **e** múltiplo maior). Se o ROE continuar fraco, o "desconto" era justo. Múltiplo não dá resposta; dá a pergunta certa.
 
-## Mini quiz
-
-1. O que significa um P/L de 20?
-2. Por que EV/EBITDA é melhor que P/L para comparar empresas com dívidas muito diferentes?
-3. O que pode explicar um P/VP abaixo de 1?
-4. O que é uma *value trap*?
-5. Quais são as três comparações que dão sentido a um múltiplo?
-
 ## PBL
 
 Ana comparou duas farmácias de rede: a Farma A negocia a P/L 25 e cresce lucros 20% ao ano; a Farma B negocia a P/L 9, mas o lucro está estagnado há 3 anos e ela perde lojas para a concorrente. Um colega disse "compra a B, está muito mais barata". Usando as três regras de ouro e o conceito de value trap, monte o contra-argumento (ou a concordância) e liste que informações adicionais você pediria antes de escolher.

@@ -55,14 +55,6 @@ Leitura rápida:
 3. O PL (250) é bem maior que a dívida líquida (60): estrutura de capital confortável.
 4. A maior parte do ativo está em fábricas e frota (250 de 400) — coerente com a vantagem competitiva de distribuição que vimos na aula 2.
 
-## Mini quiz
-
-1. Qual é a equação fundamental do balanço?
-2. Qual a diferença entre ativo circulante e não circulante?
-3. Como se calcula a dívida líquida e por que ela é mais informativa que a dívida bruta?
-4. O que pode indicar um estoque crescendo muito mais rápido que as vendas?
-5. O que significa um patrimônio líquido negativo?
-
 ## PBL
 
 Ana montou o "balanço pessoal" dela: R$ 2.000 na poupança, um notebook de R$ 3.000, uma dívida de R$ 4.500 no cartão (vence este mês) e R$ 6.000 de um financiamento de curso (vence em 3 anos). Monte o balanço de Ana no formato da aula (circulante × não circulante), calcule o patrimônio líquido dela e diagnostique: o problema de Ana é de **patrimônio** ou de **prazo**? O que ela poderia negociar para melhorar a situação sem ganhar um real a mais?

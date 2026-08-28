@@ -61,14 +61,6 @@ Leitura: a cada R$ 100 vendidos, R$ 40 sobram depois de fabricar o sorvete, R$ 1
 - **Lucro contábil não é dinheiro no caixa.** Vendas a prazo entram na receita antes de o dinheiro entrar — por isso existe a aula 5.
 - **Resultados "não recorrentes"** (venda de um prédio, acordo judicial) inflam ou derrubam o lucro de um período. Procure o lucro **recorrente**.
 
-## Mini quiz
-
-1. Qual a diferença entre custo (CPV) e despesa operacional?
-2. O que a margem bruta revela sobre a empresa?
-3. Uma empresa tem EBIT forte e lucro líquido fraco. Qual é o suspeito número 1?
-4. Por que comparar trimestres iguais de anos diferentes em empresas sazonais?
-5. O que é um resultado não recorrente e por que ele engana?
-
 ## PBL
 
 A lanchonete de João faturou R$ 20.000 no mês. Gastou R$ 9.000 com ingredientes e embalagens, R$ 5.000 com aluguel, salários e energia da loja, e paga R$ 1.200 de juros mensais de um empréstimo. Considere IR de 20% sobre o que sobrar. Monte a DRE da lanchonete no formato da escada, calcule as três margens e responda: se João quitasse o empréstimo, qual seria o novo lucro líquido? Vale mais a pena cortar custo de ingredientes em 10% ou quitar a dívida?

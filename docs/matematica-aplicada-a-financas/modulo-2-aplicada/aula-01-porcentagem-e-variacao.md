@@ -47,14 +47,6 @@ Exemplo:
 - Para voltar de R$ 50 para R$ 100, precisa ganhar R$ 50.
 - R$ 50 sobre R$ 50 = 100%.
 
-## Mini quiz
-
-1. Quanto é 15% de R$ 200?
-2. Um produto foi de R$ 80 para R$ 100. Qual foi a variação percentual?
-3. Uma ação caiu de R$ 40 para R$ 30. Qual foi a queda percentual?
-4. Qual a diferença entre porcentagem e ponto percentual?
-5. Por que cair 50% e subir 50% não volta ao ponto inicial?
-
 ## PBL
 
 Dois alunos analisam uma ação. Ela caiu de R$ 10 para R$ 5 e depois subiu de R$ 5 para R$ 8.

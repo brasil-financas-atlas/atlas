@@ -31,14 +31,6 @@ O sistema financeiro brasileiro tem três camadas: quem define a política monet
 
 Em 2019, uma empresa listada na B3 foi investigada pela CVM por suspeita de fraude contábil. A CVM pode suspender a negociação das ações, multar diretores e exigir reapresentação de balanços. O Banco Central não entra nesse caso — ele cuida de bancos, não de empresas abertas.
 
-## Mini quiz
-
-1. Qual instituição define a taxa Selic?
-2. O que é o COPOM?
-3. Qual a diferença entre B3 e corretora?
-4. Se uma empresa listada fraudar seus resultados, qual instituição investiga?
-5. O que o FGC garante ao investidor?
-
 ## PBL
 
 A CVM abriu investigação contra uma empresa listada na B3 por suspeita de manipulação de resultados. O preço da ação despencou.

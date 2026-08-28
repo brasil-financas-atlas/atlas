@@ -51,14 +51,6 @@ Como isso impacta cada ativo:
 - **FIIs:** pressão negativa. O dividend yield precisa competir com a renda fixa que está pagando mais.
 - **Câmbio:** Selic alta tende a atrair capital estrangeiro → dólar cai ou pressiona menos o real. Mas se a incerteza fiscal for grande, o efeito pode ser invertido.
 
-## Mini quiz
-
-1. O que o COPOM faz e com que frequência se reúne?
-2. Por que Selic alta prejudica ações de varejo?
-3. O que é juro real?
-4. Como a alta da Selic afeta o Tesouro Prefixado no curto prazo?
-5. Se a economia está em recessão (PIB caindo), o que o BC tende a fazer com a Selic?
-
 ## PBL
 
 O IPCA sobe acima da meta e o mercado espera alta da Selic. Analise o impacto esperado sobre:

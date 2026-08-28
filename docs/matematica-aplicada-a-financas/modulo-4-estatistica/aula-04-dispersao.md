@@ -50,23 +50,6 @@ $$
 
 Fundo A (retornos 8, 12, 9, 11): mesma média 10%, e $\sigma \approx 1{,}6\%$. **Mesmo retorno médio, vinte vezes mais risco.** Se você só olhar a média, os fundos são gêmeos; o desvio padrão revela que um é poupança e o outro é montanha-russa.
 
-## Lista de problemas
-
-1. Calcule amplitude, variância e desvio padrão de: 2, 4, 4, 4, 5, 5, 7, 9.
-2. Dois ativos têm média 12%: o ativo X com σ = 4% e o Y com σ = 25%. Qual é mais arriscado? O que isso significa na prática?
-3. Com média 10% e σ = 5% (regra empírica), em que faixa caem ~95% dos retornos anuais?
-4. Retornos de uma ação: +5%, −5%, +15%, −15%. Calcule média e desvio padrão.
-5. Por que elevamos os desvios ao quadrado em vez de simplesmente somá-los?
-6. Desafio: uma carteira 50/50 de dois ativos idênticos e **independentes** (cada um com σ = 20%) tem volatilidade menor que 20%. Usando a intuição de diversificação do Módulo 3 de Finanças, explique por quê (sem fórmula).
-
-??? note "Gabarito"
-    1. Amplitude = 7; média = 5; desvios: −3,−1,−1,−1,0,0,2,4 → quadrados: 9,1,1,1,0,0,4,16 → $\sigma^2 = 32/8 = 4$; $\sigma = 2$.
-    2. Y — seus retornos se afastam muito mais da média: anos muito bons e muito ruins.
-    3. Entre $10 - 2(5) = 0\%$ e $10 + 2(5) = 20\%$.
-    4. Média = 0; quadrados: 25, 25, 225, 225 → $\sigma^2 = 125$; $\sigma \approx 11{,}2\%$.
-    5. Sem o quadrado, desvios positivos e negativos se cancelam e a soma dá zero sempre; o quadrado também dá mais peso aos desvios grandes.
-    6. As oscilações independentes se cancelam parcialmente: quando um sobe, o outro nem sempre acompanha — o conjunto balança menos que as partes.
-
 ## PBL
 
 Monte (ou simule) duas "carteiras" com 8 retornos mensais cada: uma estável e uma volátil, ambas com a **mesma média** que você escolher. Calcule σ das duas, aplique a regra empírica para descrever a faixa esperada de cada uma e escreva um parágrafo de recomendação: para um estudante juntando dinheiro para um intercâmbio em 1 ano, qual carteira serve? E para uma aposentadoria em 30 anos? Justifique usando σ e horizonte.

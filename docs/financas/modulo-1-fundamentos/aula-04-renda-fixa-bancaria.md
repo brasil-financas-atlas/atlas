@@ -48,14 +48,6 @@ Muita gente acha que banco grande é sempre mais seguro para o investimento. Mas
 
 Bancos digitais menores frequentemente oferecem CDBs com 110–130% do CDI porque precisam captar dinheiro e não têm a marca dos grandes.
 
-## Mini quiz
-
-1. Qual a diferença entre CDB e LCI?
-2. O FGC cobre quanto por CPF por instituição?
-3. Por que LCI e LCA costumam ter rentabilidade nominal menor que CDB?
-4. O que é carência e por que produtos com carência costumam pagar mais?
-5. Um CDB de banco pequeno a 120% do CDI é mais arriscado que um CDB do Itaú a 100% do CDI?
-
 ## PBL
 
 Carlos tem R$ 50.000 e compara CDB, LCA e Tesouro Selic. Todos vencem em 2 anos. O CDI está em 10,5%. Considere IR de 15% para o CDB (prazo acima de 720 dias).

@@ -62,23 +62,6 @@ Calculando a potência: $(1{,}01)^{24} \approx 1{,}2697$. Logo $M \approx 5000 \
 
 Note o "bônus composto": 1% ao mês por 24 meses **não** é 24% — é 26,97%. Os quase 3 pontos extras são os juros sobre juros, o termo que a reta dos juros simples nunca captura.
 
-## Lista de problemas
-
-1. Identifique $a$ e $b$ e diga se cresce ou decai: (i) $f(x) = 200 \cdot 1{,}05^x$; (ii) $g(x) = 800 \cdot 0{,}9^x$.
-2. Uma cidade de 100.000 habitantes cresce 2% ao ano. Escreva a função e estime a população em 10 anos.
-3. R$ 3.000 a 0,8% ao mês por 18 meses: monte a expressão e calcule o montante.
-4. Um carro de R$ 60.000 desvaloriza 15% ao ano. Quanto vale após 4 anos?
-5. A inflação é de 5% ao ano. Qual o poder de compra de R$ 1.000 daqui a 10 anos, em reais de hoje?
-6. Desafio: qual rende mais em 3 anos — 12% ao ano compostos anualmente, ou 1% ao mês compostos mensalmente? Justifique com as duas expressões.
-
-??? note "Gabarito"
-    1. (i) $a=200$, $b=1{,}05$, cresce; (ii) $a=800$, $b=0{,}9$, decai.
-    2. $P(t) = 100000 \cdot 1{,}02^t$; $P(10) \approx 121.899$ habitantes.
-    3. $3000 \cdot 1{,}008^{18} \approx 3000 \cdot 1{,}1542 \approx R\$\,3.462{,}52$.
-    4. $60000 \cdot 0{,}85^4 \approx R\$\,31.320{,}38$.
-    5. $1000 / 1{,}05^{10} \approx R\$\,613{,}91$.
-    6. Mensal: $1{,}01^{36} \approx 1{,}4308$ (43,08%); anual: $1{,}12^3 \approx 1{,}4049$ (40,49%). O mensal vence — compor mais vezes acelera o crescimento.
-
 ## PBL
 
 Duas irmãs recebem R$ 10.000 cada aos 20 anos. Alice investe imediatamente a 10% ao ano e nunca mais aporta. Bruna deixa parado e só investe aos 35, também a 10% ao ano — mas para compensar, coloca R$ 30.000. Quem chega aos 60 com mais dinheiro? Calcule os dois montantes, explique o resultado usando a natureza da função exponencial e escreva a "moral matemática" da história em uma frase.

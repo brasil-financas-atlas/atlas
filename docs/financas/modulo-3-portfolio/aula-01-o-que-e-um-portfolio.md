@@ -37,14 +37,6 @@ Veio uma greve no setor aéreo e a ação caiu 30%:
 
 Mesma notícia, dez vezes menos estrago. E note: Ana **continua exposta** ao potencial da aérea — só não depende dela.
 
-## Mini quiz
-
-1. O que é um portfólio?
-2. Qual a diferença entre risco específico e risco de mercado?
-3. Qual dos dois riscos a diversificação elimina?
-4. Por que o exemplo do sorvete e da capa de chuva ilustra diversificação?
-5. Diversificar significa abrir mão de retorno? Explique.
-
 ## PBL
 
 Carlos trabalha num banco, tem todas as economias em ações **desse mesmo banco** e ainda mora de aluguel num imóvel financiado pelo banco vizinho. Liste todas as "cestas" em que os ovos de Carlos estão concentrados (dica: pense também no salário dele), descreva o cenário que quebraria Carlos de uma vez só e proponha uma primeira diversificação com o que ele já tem.

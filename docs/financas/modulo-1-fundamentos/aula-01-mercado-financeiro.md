@@ -44,14 +44,6 @@ $$
 
 O ponto importante não é decorar a fórmula agora. O ponto é entender a intuição: tempo transforma rendimento pequeno em resultado grande.
 
-## Mini quiz
-
-1. O que o mercado financeiro conecta?
-2. Qual é a diferença entre retorno e risco?
-3. O que significa liquidez?
-4. Por que tempo importa tanto em juros compostos?
-5. Investir é necessariamente coisa de rico? Explique.
-
 ## PBL
 
 João tem R$ 1.000 guardados na poupança. O Banco Central acabou de subir a taxa Selic.

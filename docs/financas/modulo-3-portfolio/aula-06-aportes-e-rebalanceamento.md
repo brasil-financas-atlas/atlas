@@ -45,14 +45,6 @@ Carteira-alvo de Ana: 15% ações BR. Depois de um rali, a carteira de R$ 20.000
 
 Mesma disciplina, e a versão com aportes é de graça. O rebalanceamento fez Ana **realizar parte do lucro do rali sem nenhuma previsão** sobre o futuro da bolsa.
 
-## Mini quiz
-
-1. Por que rebalancear força "vender caro e comprar barato"?
-2. O que é rebalanceamento por bandas?
-3. Por que usar aportes novos é a forma mais barata de rebalancear?
-4. Para o iniciante, o que importa mais: taxa de retorno ou valor do aporte? Por quê?
-5. Qual o problema de rebalancear com base em notícias?
-
 ## PBL
 
 A carteira de Carlos tinha alvo 40% renda fixa / 40% ações / 20% FIIs. Após uma forte queda da bolsa, está em R$ 44.000 de RF (55%), R$ 20.000 de ações (25%) e R$ 16.000 de FIIs (20%). Carlos está apavorado e quer vender as ações que restaram "antes que caia mais". Explique a Carlos o que a política de rebalanceamento manda fazer nesse momento, calcule as movimentações exatas para voltar ao alvo e argumente por que essa é psicologicamente a parte mais difícil — e mais valiosa — do método.

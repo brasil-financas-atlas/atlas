@@ -73,14 +73,6 @@ $$
 
 O investidor perdeu poder de compra mesmo vendo o saldo crescer em reais. Isso aconteceu no Brasil entre 2021 e 2022.
 
-## Mini quiz
-
-1. Qual a diferença entre rentabilidade nominal e real?
-2. O IPCA ficou em 5,5% e sua aplicação rendeu 9,5%. Qual foi a rentabilidade real aproximada?
-3. Por que comparar investimentos só pelo rendimento nominal pode enganar?
-4. O que é poder de compra?
-5. Se dois investimentos rendem 10% nominal mas a inflação em um período é 3% e no outro é 8%, qual situação é melhor para o investidor?
-
 ## PBL
 
 Um investimento rendeu 12% no ano, mas a inflação foi 7%. O investidor diz: "fiquei 12% mais rico". Ele está certo? Explique usando o conceito de poder de compra e calcule o rendimento real pela fórmula exata.

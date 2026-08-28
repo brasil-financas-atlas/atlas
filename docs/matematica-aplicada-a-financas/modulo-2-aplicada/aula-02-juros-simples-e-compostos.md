@@ -68,14 +68,6 @@ $$
 
 Uma dívida de R$ 1.000 vira R$ 3.138 em apenas 1 ano sem pagar nada.
 
-## Mini quiz
-
-1. Qual é a diferença entre juros simples e compostos?
-2. R$ 500 a 5% ao ano por 4 anos em juros simples: qual o valor futuro?
-3. R$ 500 a 5% ao ano por 4 anos em juros compostos: qual o valor futuro?
-4. Por que tempo importa muito mais nos juros compostos do que nos simples?
-5. Em qual regime se encaixam os investimentos brasileiros como CDB e Tesouro Direto?
-
 ## PBL
 
 Duas pessoas investem R$ 1.000 a 10% ao ano em juros compostos. Maria deixa por 10 anos. Pedro deixa por 30 anos.

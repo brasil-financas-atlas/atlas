@@ -50,14 +50,6 @@ Você compara dois FIIs:
 
 HGLG11 tem DY maior e vacância menor. Mas antes de decidir, você precisa entender: o DY alto é sustentável? A vacância vai subir? Os contratos de aluguel vencem quando?
 
-## Mini quiz
-
-1. Qual a principal vantagem dos FIIs sobre comprar um imóvel diretamente?
-2. Qual a diferença entre FII de tijolo e FII de papel?
-3. O que é dividend yield?
-4. P/VP de 0,90 significa o quê?
-5. Os rendimentos mensais dos FIIs pagam IR?
-
 ## PBL
 
 Compare dois FIIs usando dividend yield, preço da cota e P/VP. Um tem DY de 10% ao ano com P/VP de 0,85. O outro tem DY de 8% ao ano com P/VP de 1,05.
