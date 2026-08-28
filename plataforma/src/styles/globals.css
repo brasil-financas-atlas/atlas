@@ -248,10 +248,9 @@ a {
 .math-display {
   max-width: 100%;
   overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  padding: 0.5rem 0;
-  margin: 1rem 0;
+  padding: 1.25rem 1.75rem;
+  margin: 1.85rem 0 !important;
+  line-height: 1.95;
 }
 
 .card-lift {
