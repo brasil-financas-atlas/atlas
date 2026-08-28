@@ -13,7 +13,7 @@ function App() {
         });
       }, { threshold: 0.05 });
 
-      const targets = document.querySelectorAll('.module-card, .tool-card, .bfa-card, .bfa-quiz, .bfa-forum, .bfa-reveal');
+      const targets = document.querySelectorAll('.module-card, .tool-card, .bfa-card, .bfa-quiz, .bfa-forum, .bfa-reveal, .bfa-tech-card');
       targets.forEach(el => {
         el.classList.add('bfa-reveal');
         observer.observe(el);
@@ -29,6 +29,32 @@ function App() {
   const renderCurrentPage = () => {
     if (currentPath === '/' || currentPath === '') {
       return <Home />;
+    }
+
+    // Design Lab Variations
+    if (currentPath === '/galeria') {
+      const Gallery = window.VariationsGallery || Home;
+      return <Gallery />;
+    }
+
+    if (currentPath === '/v1') {
+      const V1 = window.HomeV1 || Home;
+      return <V1 />;
+    }
+
+    if (currentPath === '/v2') {
+      const V2 = window.HomeV2 || Home;
+      return <V2 />;
+    }
+
+    if (currentPath === '/v3') {
+      const V3 = window.HomeV3 || Home;
+      return <V3 />;
+    }
+
+    if (currentPath === '/v4') {
+      const V4 = window.HomeV4 || Home;
+      return <V4 />;
     }
 
     if (currentPath === '/matematica') {
@@ -93,6 +119,7 @@ function App() {
   };
 
   const isAulaRoute = currentPath.split('/').filter(Boolean).length === 3;
+  const Switcher = window.VariationSwitcher;
 
   return (
     <div className="bfa-app-root">
@@ -102,6 +129,9 @@ function App() {
       </div>
       {!isAulaRoute && <Footer />}
       <CookieConsent />
+      {Switcher && <Switcher />}
     </div>
   );
 }
+
+window.App = App;
