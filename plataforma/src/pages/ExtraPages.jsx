@@ -224,7 +224,7 @@ function Exercicios() {
                         onClick={() => deleteExercise && deleteExercise(ex.id)}
                         style={{ padding: '0.2rem 0.5rem', fontSize: '0.75rem', color: '#EF4444' }}
                       >
-                        ✕ Excluir
+                        Excluir
                       </button>
                     )}
                   </div>
