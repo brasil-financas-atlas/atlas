@@ -60,17 +60,17 @@ existe na branch do passo 5; até lá, o campo é o mesmo).
 Antes disso, as credenciais só existiam no navegador de quem as digitava — por
 isso o banco aparecia como desconectado em produção.
 
-### 4. Criar o primeiro administrador
+### 4. Criar o primeiro administrador (`admin_chief`)
 
 Ninguém nasce administrador e **não existe tela para virar administrador** — de
 propósito, senão isso seria um caminho para escalar privilégio. O primeiro é
-promovido à mão, uma única vez:
+promovido à mão, uma única vez como **`admin_chief`** (Administrador Chefe):
 
 1. Supabase → **Authentication → Users → Add user**, com "Auto Confirm User" marcado.
 2. No SQL Editor:
 
 ```sql
-UPDATE public.profiles SET role = 'admin' WHERE email = 'seu-email@exemplo.com';
+UPDATE public.profiles SET role = 'admin_chief' WHERE email = 'seu-email@exemplo.com';
 ```
 
 3. Confira:
@@ -78,6 +78,9 @@ UPDATE public.profiles SET role = 'admin' WHERE email = 'seu-email@exemplo.com';
 ```sql
 SELECT email, role FROM public.profiles ORDER BY created_at;
 ```
+
+> 📖 **Guia Completo de Permissões:** Para entender a diferença entre `admin_chief`, `admin`, `teacher` e `collaborator`, veja o **[MANUAL_ADMIN_CHIEF.md](MANUAL_ADMIN_CHIEF.md)**.
+
 
 ### 5. Mergear o PR `sem-token-e-rls`
 
