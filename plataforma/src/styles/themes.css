@@ -21,6 +21,9 @@
   --track-finance: #1B6B3A;
   --track-math: #1B3A5C;
   --track-brhsic: #C8963E;
+
+  --surface: #FFFFFF;
+  --surface-strong: #F1F5F9;
 }
 
 /* 2. Theme Executive B3 Corporate */
@@ -42,6 +45,9 @@
   --track-finance: #008F77;
   --track-math: #0A2540;
   --track-brhsic: #00D4B2;
+
+  --surface: #FFFFFF;
+  --surface-strong: #EBF1F8;
 }
 
 /* 3. Theme Khan Minimalist Academy */
@@ -63,53 +69,66 @@
   --track-math: #0056B3;
   --track-brhsic: #E0A800;
   --radius: 0.875rem;
+
+  --surface: #FFFFFF;
+  --surface-strong: #F1F3F5;
 }
 
-/* 4. Theme Dark Obsidian Pro (WCAG AAA High Contrast) */
+/* 4. Theme Dark Obsidian Pro (WCAG AAA High Contrast & Deep Luxury) */
 [data-theme="dark-obsidian"],
+[data-theme="dark"],
 .dark {
-  --background: #0D1117;
-  --foreground: #F0F6FC; /* 17.38:1 AAA vs #0D1117 */
-  --card: #161B22;       /* Surface */
-  --card-foreground: #F0F6FC;
-  --popover: #161B22;
-  --popover-foreground: #F0F6FC;
+  --background: #07090E;
+  --foreground: #F8FAFC;
+  --card: #0E131F;
+  --card-foreground: #F8FAFC;
+  --popover: #0E131F;
+  --popover-foreground: #F8FAFC;
 
-  --primary: #F0F6FC;
-  --primary-foreground: #0D1117;
-  --secondary: #21262D;
-  --secondary-foreground: #F0F6FC;
+  --primary: #F8FAFC;
+  --primary-foreground: #07090E;
+  --secondary: #141B2B;
+  --secondary-foreground: #F8FAFC;
 
-  --muted: #21262D;
-  --muted-foreground: #94A3B8; /* 6.75:1 AA/AAA vs #161B22 */
-  --accent: #30363D;
-  --accent-foreground: #F0F6FC;
+  --muted: #141B2B;
+  --muted-foreground: #94A3B8;
+  --accent: #1E293B;
+  --accent-foreground: #F8FAFC;
 
-  --border: #30363D;
-  --input: #30363D;
-  --ring: #60A5FA;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-color-hover: rgba(255, 255, 255, 0.18);
+  --input: #141B2B;
+  --ring: #38BDF8;
 
-  /* Domain Accent Colors - Luminance Adjusted for Dark Mode */
-  --market: #34D399;        /* Emerald 400 (9.0:1 AAA) */
-  --market-foreground: #0D1117;
-  --gold: #FBBF24;          /* Amber 400 (10.37:1 AAA) */
-  --gold-deep: #F59E0B;
-  --gold-foreground: #0D1117;
+  /* Domain Accent Colors */
+  --market: #10B981;
+  --market-foreground: #07090E;
+  --gold: #F59E0B;
+  --gold-deep: #D97706;
+  --gold-foreground: #07090E;
 
-  --track-finance: #34D399; /* Finance Track Accent */
-  --track-math: #60A5FA;    /* Math Track Accent (6.8:1 AA) */
-  --track-brhsic: #FBBF24;  /* BRHSIC Track Accent */
+  --track-finance: #10B981;
+  --track-math: #38BDF8;
+  --track-brhsic: #F59E0B;
 
-  --surface: #161B22;
-  --surface-strong: #21262D;
+  --surface: #0E131F;
+  --surface-strong: #141B2B;
 
-  --status-success: #34D399;
-  --status-success-bg: rgba(52, 211, 153, 0.15);
-  --status-warning: #FBBF24;
-  --status-warning-bg: rgba(251, 191, 36, 0.15);
-  --status-danger: #F87171;
-  --status-danger-bg: rgba(248, 113, 113, 0.15);
+  --status-success: #10B981;
+  --status-success-bg: rgba(16, 185, 129, 0.12);
+  --status-warning: #F59E0B;
+  --status-warning-bg: rgba(245, 158, 11, 0.12);
+  --status-danger: #EF4444;
+  --status-danger-bg: rgba(239, 68, 68, 0.12);
 
-  --color-azul-dark: #F0F6FC;
-  --color-azul: #60A5FA;
+  --color-azul-dark: #F8FAFC;
+  --color-azul: #38BDF8;
+  --color-verde: #10B981;
+  --color-ouro: #F59E0B;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6);
+  --shadow-elevated: 0 12px 32px -12px rgba(0, 0, 0, 0.8);
 }
