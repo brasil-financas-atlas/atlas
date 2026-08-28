@@ -1,56 +1,95 @@
 import subprocess
-import json
 import re
+import json
 
-def get_main_data():
-    res = subprocess.run(['git', 'show', 'main:plataforma/src/data/matematicaData.js'], capture_output=True, text=True, encoding='utf-8')
-    mat = {}
-    if res.returncode == 0:
-        c = res.stdout.strip()
-        if c.startswith('window.matematicaData = '):
-            c = c[len('window.matematicaData = '):]
-        if c.endswith(';'):
-            c = c[:-1]
-        mat = json.loads(c)
+def parse_js_data(code):
+    # Find start of object after window.xxx = 
+    match = re.search(r'window\.\w+\s*=\s*(\{[\s\S]*\});?\s*$', code)
+    if not match:
+        # Try match from { to last }
+        idx = code.find('{')
+        last_idx = code.rfind('}')
+        if idx != -1 and last_idx != -1:
+            json_str = code[idx:last_idx+1]
+        else:
+            return {}
+    else:
+        json_str = match.group(1)
+    
+    # Clean possible trailing commas or JS specifics if needed
+    try:
+        return json.loads(json_str)
+    except:
+        # Fallback to node
+        res = subprocess.run(['node', '-e', f'console.log(JSON.stringify({code}))'], capture_output=True, text=True, encoding='utf-8')
+        if res.returncode == 0:
+            return json.loads(res.stdout)
+        return {}
 
-    res_fin = subprocess.run(['git', 'show', 'main:plataforma/src/data/financasData.js'], capture_output=True, text=True, encoding='utf-8')
-    fin = {}
-    if res_fin.returncode == 0:
-        c = res_fin.stdout.strip()
-        if c.startswith('window.financasData = '):
-            c = c[len('window.financasData = '):]
-        if c.endswith(';'):
-            c = c[:-1]
-        fin = json.loads(c)
+res_mat = subprocess.run(['git', 'show', 'main:plataforma/src/data/matematicaData.js'], capture_output=True, text=True, encoding='utf-8')
+res_fin = subprocess.run(['git', 'show', 'main:plataforma/src/data/financasData.js'], capture_output=True, text=True, encoding='utf-8')
 
-    return mat, fin
+# Run with Node directly to parse window.xxx
+node_script = """
+const fs = require('fs');
+const vm = require('vm');
 
-mat, fin = get_main_data()
+function parseData(code, varName) {
+  const sandbox = { window: {} };
+  vm.runInContext(code, vm.createContext(sandbox));
+  return sandbox.window[varName];
+}
 
-print("=== MATEMÁTICA MAIN QUESTION AUDIT ===")
-total_all = 0
-for m in mat.get('modulos', []):
-    print(f"\nModulo {m['numero']}: {m['titulo']}")
-    for a in m['aulas']:
-        q = len(a.get('quiz', []))
-        mq = len(a.get('miniQuiz', []))
-        lp = len(a.get('listaProblemas', []))
-        total = q + mq + lp
-        total_all += total
-        print(f"  {a['slug']}: quiz={q}, miniQuiz={mq}, listaProblemas={lp} (TOTAL={total})")
+const matCode = process.argv[1];
+const finCode = process.argv[2];
 
-print(f"\nTotal Matemática in main: {total_all}")
+const mat = parseData(matCode, 'matematicaData');
+const fin = parseData(finCode, 'financasData');
 
-print("\n=== FINANÇAS MAIN QUESTION AUDIT ===")
-total_fin_all = 0
-for m in fin.get('modulos', []):
-    print(f"\nModulo {m['numero']}: {m['titulo']}")
-    for a in m['aulas']:
-        q = len(a.get('quiz', []))
-        mq = len(a.get('miniQuiz', []))
-        lp = len(a.get('listaProblemas', []))
-        total = q + mq + lp
-        total_fin_all += total
-        print(f"  {a['slug']}: quiz={q}, miniQuiz={mq}, listaProblemas={lp} (TOTAL={total})")
+console.log(JSON.stringify({ mat, fin }));
+"""
 
-print(f"\nTotal Finanças in main: {total_fin_all}")
+with open('scratch/mat_main.js', 'w', encoding='utf-8') as f:
+    f.write(res_mat.stdout)
+
+with open('scratch/fin_main.js', 'w', encoding='utf-8') as f:
+    f.write(res_fin.stdout)
+
+res_node = subprocess.run(['node', '-e', """
+const fs = require('fs');
+const vm = require('vm');
+const matCode = fs.readFileSync('scratch/mat_main.js', 'utf-8');
+const finCode = fs.readFileSync('scratch/fin_main.js', 'utf-8');
+
+const sMat = { window: {} };
+vm.runInContext(matCode, vm.createContext(sMat));
+const mat = sMat.window.matematicaData;
+
+const sFin = { window: {} };
+vm.runInContext(finCode, vm.createContext(sFin));
+const fin = sFin.window.financasData;
+
+console.log('=== MATEMATICA MAIN QUESTION COUNTS ===');
+mat.modulos.forEach(m => {
+  console.log('\\n' + m.titulo);
+  m.aulas.forEach(a => {
+    const q = (a.quiz || []).length;
+    const mq = (a.miniQuiz || []).length;
+    const lp = (a.listaProblemas || []).length;
+    console.log(`  ${a.slug}: quiz=${q}, miniQuiz=${mq}, listaProblemas=${lp} (TOTAL=${q+mq+lp})`);
+  });
+});
+
+console.log('\\n=== FINANCAS MAIN QUESTION COUNTS ===');
+fin.modulos.forEach(m => {
+  console.log('\\n' + m.titulo);
+  m.aulas.forEach(a => {
+    const q = (a.quiz || []).length;
+    const mq = (a.miniQuiz || []).length;
+    const lp = (a.listaProblemas || []).length;
+    console.log(`  ${a.slug}: quiz=${q}, miniQuiz=${mq}, listaProblemas=${lp} (TOTAL=${q+mq+lp})`);
+  });
+});
+"""], capture_output=True, text=True, encoding='utf-8')
+
+print(res_node.stdout)
