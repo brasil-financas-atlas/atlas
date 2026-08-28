@@ -255,7 +255,6 @@ function Navbar() {
 
       </div>
     </header>
-    {MarketTicker && <MarketTicker />}
     </>
   );
 }
