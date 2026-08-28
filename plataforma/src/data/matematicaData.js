@@ -45,7 +45,7 @@ window.matematicaData = {
             ],
             resultado: "Sobraram R$ 800 para poupança ou investimentos."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Qual a ordem correta de execução das operações na expressão 50 + 10 × 2?",
               opcoes: ["Soma 50 + 10 e depois multiplica por 2 (120)", "Primeiro multiplica 10 × 2 e depois soma 50 (70)", "Executa da esquerda para a direita de forma arbitrária", "Primeiro subtrai antes de multiplicar"],
@@ -120,7 +120,7 @@ window.matematicaData = {
             ],
             resultado: "A taxa é equivalente a 0,06 ou 6%."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "A fração 1/4 equivale a qual número decimal e a qual porcentagem?",
               opcoes: ["0,4 e 40%", "0,25 e 25%", "0,14 e 14%", "2,5 e 250%"],
@@ -192,7 +192,7 @@ window.matematicaData = {
             ],
             resultado: "A taxa subiu 2 pp, o que representa uma alta relativa de 20% sobre a taxa inicial."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Quanto é 15% de R$ 200?",
               opcoes: ["R$ 15", "R$ 20", "R$ 30", "R$ 45"],
@@ -266,7 +266,7 @@ window.matematicaData = {
             ],
             resultado: "Serão necessários R$ 1.820,00."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Se 1 dólar custa R$ 5,20, quanto custam US\\$ 350?",
               opcoes: ["R$ 1.500,00", "R$ 1.820,00", "R$ 1.750,00", "R$ 1.920,00"],
@@ -343,7 +343,7 @@ window.matematicaData = {
             ],
             resultado: "O montante final é R$ 2.420,00."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "O que representa o cálculo de 1,10³ em juros compostos?",
               opcoes: ["Multiplicar 1,10 por 3 (3,30)", "O fator de crescimento acumulado de 10% ao ano durante 3 anos (1,331)", "Somar 1,10 três vezes (3,30)", "Dividir 1,10 por 3"],
@@ -416,7 +416,7 @@ window.matematicaData = {
             ],
             resultado: "R$ 1,1 × 10¹³."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Como se escreve o valor R$ 2.300.000 em notação científica?",
               opcoes: ["23 × 10⁵", "2,3 × 10⁶", "0,23 × 10⁷", "2,3 × 10⁵"],
@@ -495,7 +495,7 @@ window.matematicaData = {
             ],
             resultado: "Você precisa aplicar R$ 1.000,00."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Se 300x = 2.400, qual é o valor de x (número de meses para poupar R$ 2.400 guardando R$ 300 por mês)?",
               opcoes: ["6 meses", "8 meses", "10 meses", "12 meses"],
@@ -577,7 +577,7 @@ window.matematicaData = {
             resultado: "A ação subiu 25%."
           },
           cuidadoComum: "Se uma ação cai 50%, ela precisa subir 100% para voltar ao preço original. Exemplo: R$ 100 cai 50% → R$ 50. De R$ 50 para R$ 100, precisa ganhar R$ 50, o que é 100% de R$ 50.",
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Quanto é 15% de R$ 200?",
               opcoes: ["R$ 20", "R$ 30", "R$ 40", "R$ 15"],
@@ -650,7 +650,7 @@ window.matematicaData = {
             resultado: "Compostos geram mais de 4 vezes o resultado simples em 30 anos."
           },
           cuidadoComum: "Empréstimos no Brasil usam juros compostos. Uma taxa de 10% ao mês em cartão de crédito transforma R$ 1.000 em R$ 3.138 em apenas 1 ano se não for paga.",
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Qual é a diferença entre juros simples e compostos?",
               opcoes: ["Juros simples rendem sobre o capital inicial; compostos rendem sobre o capital + juros acumulados", "Juros simples são cobrados por bancos; compostos pelo governo", "Juros simples usam potência; compostos usam multiplicação", "Não há diferença prática no longo prazo"],
@@ -724,7 +724,7 @@ window.matematicaData = {
             resultado: "A rentabilidade real exata foi de 4,67% (e não 5%)."
           },
           cuidadoComum: "Em anos de inflação alta, investimentos que parecem render bem podem estar destruindo poder de compra. Exemplo: Selic em 6% com IPCA em 8% → juro real aproximado de -2%.",
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Qual a diferença entre rentabilidade nominal e real?",
               opcoes: ["Nominal é a declarada no contrato; real é a que desconta a inflação e mede ganho no poder de compra", "Nominal é paga em dinheiro; real em moedas estrangeiras", "Nominal inclui impostos; real exclui impostos", "Não há diferença entre ambas"],
@@ -804,7 +804,7 @@ window.matematicaData = {
             resultado: "Se o prazo fosse menor (ex: IR de 22,5%), a LCA de 11% ganharia do CDB de 13%."
           },
           cuidadoComum: "Fundos de investimento cobram taxa de administração sobre todo o patrimônio e sofrem come-cotas (antecipação de IR a cada 6 meses), o que prejudica os juros compostos.",
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Qual a diferença entre rentabilidade bruta e líquida?",
               opcoes: ["Bruta é o ganho total antes de impostos/taxas; líquida é o que sobra após os custos", "Bruta inclui juros simples; líquida juros compostos", "Bruta é garantida pelo FGC; líquida não tem garantia", "São idênticas para investimentos bancários"],
@@ -880,7 +880,7 @@ window.matematicaData = {
             resultado: "O CDB 110% entrega o maior líquido (9,82%), mas LCI (9,66%) é próxima e pode oferecer prazos menores."
           },
           cuidadoComum: "Comparar investimentos apenas pela taxa bruta — sem ajustar IR, prazo, carência e risco de crédito — leva a decisões de investimento equivocadas.",
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "O que é o CDI e qual sua relação com a taxa Selic?",
               opcoes: ["CDI é uma ação da B3 que varia com a inflação", "CDI é a taxa negociada entre bancos e anda muito próxima da Selic (CDI ≈ Selic - 0,10%)", "CDI é o imposto sobre a renda fixa", "CDI é a taxa de juros do dólar nos EUA"],

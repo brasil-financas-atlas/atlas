@@ -38,7 +38,7 @@ window.financasData = {
             ],
             resultado: "Tempo transforma rendimento pequeno em resultado grande (R$ 17.449,40)."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "O que o mercado financeiro conecta?",
               opcoes: ["Bancos centrais e governos internacionais", "Investidores (poupadores) e tomadores de recursos", "Compradores e vendedores de imóveis físicos apenas", "Apenas empresas de tecnologia"],
@@ -101,7 +101,7 @@ window.financasData = {
             { instituicao: "CVM", papel: "Exige transparência de empresas abertas e fundos, punindo irregularidades no mercado de capitais." },
             { instituicao: "B3", papel: "Garante a liquidação e custódia segura das operações de compra e venda." }
           ],
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Qual instituição define a taxa básica de juros (Selic) no Brasil?",
               opcoes: ["CVM", "Banco Central (via COPOM)", "B3", "Ministério da Fazenda"],
@@ -173,7 +173,7 @@ window.financasData = {
             ],
             resultado: "Vender antes do prazo gera perda na marcação a mercado; segurar garante a taxa original."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Por que o Tesouro Direto é considerado o investimento mais seguro do Brasil?",
               opcoes: ["Garantido pelo FGC", "O emissor é o próprio Governo Federal (risco soberano)", "Não há incidência de Imposto de Renda", "Rende mais que ações"],
@@ -244,7 +244,7 @@ window.financasData = {
             ],
             resultado: "CDB 120% supera LCA 92% para prazo de 2 anos."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Qual a diferença tributária entre CDB e LCI/LCA para pessoa física?",
               opcoes: ["CDB é isento; LCI/LCA pagam 22,5%", "CDB segue a tabela regressiva de IR; LCI/LCA são isentas de IR", "Ambos são isentos", "Ambos pagam 15% fixo"],
@@ -318,7 +318,7 @@ window.financasData = {
             ],
             resultado: "Diferentes modelos de negócio reagem de formas opostas ao mesmo cenário macro."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Ao comprar uma ação na bolsa, você se torna:",
               opcoes: ["Credor da empresa", "Sócio (coproprietário) de uma fração da empresa", "Funcionário registrado", "Cliente prioritário"],
@@ -390,7 +390,7 @@ window.financasData = {
             ],
             resultado: "A taxa de 2% reduziu o resultado final acumulado em mais de 30%."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Qual a característica principal de um ETF?",
               opcoes: ["Construir galpões logísticos", "Replicar passivamente um índice de mercado com baixos custos", "Garantir 10% ao ano sem risco", "Emitir moedas físicas"],
@@ -456,7 +456,7 @@ window.financasData = {
             ],
             resultado: "Dividend Yield de 0,8% a.m. (9,6% a.a. isento de IR)."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Qual a vantagem de investir em FIIs em relação a imóveis físicos diretos?",
               opcoes: ["Sem risco", "Acessibilidade com baixo capital, alta liquidez em bolsa e isenção de IR nos proventos", "Garantia do governo", "Sem vacância"],
@@ -522,7 +522,7 @@ window.financasData = {
             ],
             resultado: "A Carteira B sofreu perda muito menor devido à descorrelação dos ativos."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "O que mede a volatilidade de um ativo?",
               opcoes: ["A taxa de imposto", "A intensidade das oscilações de preço ao longo do tempo", "O número de acionistas", "O valor mínimo inicial"],
@@ -593,7 +593,7 @@ window.financasData = {
             ],
             resultado: "Selic alta beneficia renda fixa pós-fixada e prejudica ações alavancadas."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Com que frequência o COPOM se reúne para definir a Selic?",
               opcoes: ["Todos os meses", "A cada 45 dias (8 vezes ao ano)", "Duas vezes por ano", "Quando a inflação passa de 10%"],
@@ -669,7 +669,7 @@ window.financasData = {
             ],
             resultado: "Tropical é mais barata em termos fundamentais."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Diferença entre preço e valor de uma ação:",
               opcoes: ["Preço é a cotação na tela; valor é o valor intrínseco baseado em lucros e geração de caixa", "Preço é do BC; valor da CVM", "São idênticos", "Preço só vale para renda fixa"],
@@ -741,7 +741,7 @@ window.financasData = {
             ],
             resultado: "A análise qualitativa indica o que acompanhar nas demonstrações (margem e dívida)."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Significado de 'moat' em empresas:",
               opcoes: ["Impostos atrasados", "Fosso de vantagem competitiva que protege os lucros contra concorrentes", "Contrato de aluguel", "Bônus da diretoria"],
@@ -806,7 +806,7 @@ window.financasData = {
             caixa: 50,
             dividaLiquida: 60
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Equação fundamental do Balanço:",
               opcoes: ["Ativo = Passivo + Patrimônio Líquido", "Ativo = Lucro - Dívida", "Passivo = Ativo + Caixa", "PL = Receita - Despesas"],
@@ -880,7 +880,7 @@ window.financasData = {
             ],
             resultado: "Margem líquida de 7,7% sobre a receita."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Lucro Bruto mede:",
               opcoes: ["Sobra após juros", "Receita Líquida − CPV (rentabilidade direta do produto)", "Impostos", "Caixa final"],
@@ -944,7 +944,7 @@ window.financasData = {
             ],
             resultado: "A operação gerou R$ 15 mi livres após os investimentos."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Por que 'lucro é opinião, caixa é fato'?",
               opcoes: ["Lucro usa competência/estimativas; caixa mede entradas/saídas reais de dinheiro", "DFC é secreta", "Caixa é só em papel", "Lucro é do governo"],
@@ -1009,7 +1009,7 @@ window.financasData = {
             ],
             resultado: "ROE de 9,2% fica abaixo do custo sem risco (Selic 10%)."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Cálculo do ROE:",
               opcoes: ["Receita ÷ Dívida", "Lucro Líquido ÷ Patrimônio Líquido", "EBITDA ÷ Ativo", "Ativo ÷ Passivo"],
@@ -1074,7 +1074,7 @@ window.financasData = {
             ],
             resultado: "Empresa sólida, sem risco imediato de insolvência."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Dívida Líquida / EBITDA indica:",
               opcoes: ["% de imposto", "Anos de EBITDA necessários para pagar a dívida líquida", "Ações B3", "Dividendos"],
@@ -1141,7 +1141,7 @@ window.financasData = {
             ],
             resultado: "Tropical negocia com desconto frente à média do setor de 14x P/L."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "P/L de 10× significa:",
               opcoes: ["Ação custa R$ 10", "Mercado paga 10 anos de lucro atual por cada ação", "Dividendos de 10%", "Dívida de 10 milhões"],
@@ -1208,7 +1208,7 @@ window.financasData = {
             ],
             resultado: "Valor intrínseco estimado de R$ 65,1 mi."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Conceito do FCD:",
               opcoes: ["Imóveis físicos", "Empresa vale a soma dos seus fluxos de caixa livres futuros trazidos a valor presente", "10x faturamento", "Dívida + Selic"],
@@ -1281,7 +1281,7 @@ window.financasData = {
             ],
             resultado: "Ana reduz o estrago em 10 vezes mantendo exposição."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "O que é um portfólio?",
               opcoes: ["Relatório CVM", "O conjunto total dos ativos e aplicações de um investidor", "Contrato bancário", "Conta sem juros"],
@@ -1346,7 +1346,7 @@ window.financasData = {
             ],
             resultado: "A mesma pessoa aloca com riscos diferentes conforme o objetivo."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Por que a carteira sustentável psicologicamente é melhor?",
               opcoes: ["Evita vendas em pânico no fundo do poço", "BC premia", "Paga mais imposto", "Sem diferença"],
@@ -1413,7 +1413,7 @@ window.financasData = {
             ],
             resultado: "A descorrelação do dólar e Selic protegeu o saldo da carteira B."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Função dos títulos IPCA+:",
               opcoes: ["Liquidez imediata", "Proteger o poder de compra acumulado contra a inflação", "Isentar de IR", "Substituir reserva"],
@@ -1472,7 +1472,7 @@ window.financasData = {
             ],
             resultado: "Execução automatizada que preserva a estrutura da carteira."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "O que é Alocação de Ativos?",
               opcoes: ["Day trade", "Definição dos percentuais do patrimônio em cada classe de ativo", "Pagamento de impostos", "Cadastro em corretora"],
@@ -1531,7 +1531,7 @@ window.financasData = {
             ],
             resultado: "Enquanto a bolsa caía 35%, a carteira caiu apenas 7,6%."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Nobel de Markowitz provou que:",
               opcoes: ["Prever ações é fácil", "O risco da carteira é menor que a média dos riscos individuais com descorrelação", "FIIs não têm taxas", "Dólar sempre sobe"],
@@ -1595,7 +1595,7 @@ window.financasData = {
             ],
             resultado: "Ajuste de carteira feito de forma gratuita e eficiente."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Por que o rebalanceamento força 'vender caro e comprar barato'?",
               opcoes: ["Obriga a vender fatias que subiram muito e comprar as que caíram/ficaram para trás", "B3 premia em dinheiro", "Zera IR", "Cancela juros"],
@@ -1662,7 +1662,7 @@ window.financasData = {
             ],
             resultado: "A taxa de 2,2% consumiu mais de 40% do patrimônio final."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Por que reduzir custos é 'retorno garantido'?",
               opcoes: ["O que economiza em taxas fica 100% no seu bolso sem adicionar risco", "CVM devolve dinheiro", "Corretoras zeram IR", "Falso"],
@@ -1732,7 +1732,7 @@ window.financasData = {
             ],
             resultado: "Plano estruturado de baixíssimo custo mantido sem sobressaltos."
           },
-          miniQuiz: [
+          quiz: [
             {
               pergunta: "Primeiro passo indispensável antes de montar qualquer carteira:",
               opcoes: ["Comprar small caps", "Constituir a Reserva de Emergência em liquidez diária e baixo risco", "Consultoria internacional", "Conta em dólares"],
