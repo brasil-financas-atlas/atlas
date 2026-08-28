@@ -173,45 +173,7 @@ function Navbar() {
           })}
         </nav>
 
-        <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          {/* Dark / Light Mode Toggle Button */}
-          <button
-            type="button"
-            onClick={() => {
-              const root = document.documentElement;
-              const isCurrentlyDark = root.classList.contains('dark') || root.classList.contains('dark-obsidian');
-              if (isCurrentlyDark) {
-                root.classList.remove('dark');
-                root.classList.remove('dark-obsidian');
-                setTheme('light');
-                localStorage.setItem('bfa-theme', 'light');
-              } else {
-                root.classList.add('dark');
-                root.classList.add('dark-obsidian');
-                setTheme('dark');
-                localStorage.setItem('bfa-theme', 'dark');
-              }
-            }}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '0.45rem 0.85rem',
-              borderRadius: '9999px',
-              border: '1px solid var(--border)',
-              backgroundColor: 'var(--card)',
-              color: 'var(--foreground)',
-              fontSize: '0.8rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              minHeight: '38px',
-              transition: 'all 0.15s ease'
-            }}
-            title="Alternar entre modo Claro e Escuro"
-          >
-            <span>{document.documentElement.classList.contains('dark') || document.documentElement.classList.contains('dark-obsidian') ? '🌙 Dark' : '☀️ Light'}</span>
-          </button>
-
+        <div className="navbar-actions">
           {adminUser ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               {/* Publicar não pede credencial nenhuma: quem autoriza é a

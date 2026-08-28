@@ -1,6 +1,194 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
 /* ==========================================================================
+   Hero Visual: Visualizador Gráfico de Convexidade & Curvas Exponenciais
+   ========================================================================== */
+function HeroInteractiveCurveCanvas() {
+  const [horizonYears, setHorizonYears] = useState(20);
+  const [hoverIndex, setHoverIndex] = useState(null);
+
+  const initialCapital = 10000;
+  const nominalRate = 0.105; // 10.5% Selic
+  const inflationRate = 0.042; // 4.2% IPCA
+
+  // Generate data points
+  const points = useMemo(() => {
+    const data = [];
+    const steps = 20;
+    for (let i = 0; i <= steps; i++) {
+      const t = (i / steps) * horizonYears;
+      const compound = initialCapital * Math.pow(1 + nominalRate, t);
+      const linear = initialCapital * (1 + nominalRate * t);
+      const real = initialCapital * Math.pow(1 + (nominalRate - inflationRate), t);
+      data.push({
+        year: t.toFixed(1),
+        compound: Math.round(compound),
+        linear: Math.round(linear),
+        real: Math.round(real),
+        gainPct: Math.round(((compound - initialCapital) / initialCapital) * 100)
+      });
+    }
+    return data;
+  }, [horizonYears]);
+
+  const maxVal = points[points.length - 1].compound;
+  const svgWidth = 440;
+  const svgHeight = 220;
+  const padding = { top: 20, right: 20, bottom: 30, left: 10 };
+
+  const getCoordinates = (val, idx) => {
+    const x = padding.left + (idx / (points.length - 1)) * (svgWidth - padding.left - padding.right);
+    const y = svgHeight - padding.bottom - (val / maxVal) * (svgHeight - padding.top - padding.bottom);
+    return { x, y };
+  };
+
+  const compoundPath = points.map((p, i) => {
+    const { x, y } = getCoordinates(p.compound, i);
+    return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
+  }).join(' ');
+
+  const compoundArea = `${compoundPath} L ${svgWidth - padding.right} ${svgHeight - padding.bottom} L ${padding.left} ${svgHeight - padding.bottom} Z`;
+
+  const linearPath = points.map((p, i) => {
+    const { x, y } = getCoordinates(p.linear, i);
+    return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
+  }).join(' ');
+
+  const activePoint = hoverIndex !== null ? points[hoverIndex] : points[points.length - 1];
+  const activeCoord = hoverIndex !== null 
+    ? getCoordinates(activePoint.compound, hoverIndex) 
+    : getCoordinates(activePoint.compound, points.length - 1);
+
+  return (
+    <div className="bfa-tech-card" style={{ background: 'rgba(9, 13, 22, 0.95)', border: '1px solid rgba(255, 255, 255, 0.12)', boxShadow: '0 30px 70px -15px rgba(0, 0, 0, 0.7)', padding: '1.5rem 1.75rem', position: 'relative' }}>
+      
+      {/* Top Header Controls */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10B981', display: 'inline-block', boxShadow: '0 0 10px #10B981' }} />
+            <span className="mono-tag" style={{ color: '#E2E8F0', fontWeight: 800, fontSize: '0.75rem' }}>
+              SIMULADOR DE CONVEXIDADE & JUROS
+            </span>
+          </div>
+          <span style={{ fontSize: '0.72rem', color: '#94A3B8' }}>Passe o mouse na curva para inspecionar</span>
+        </div>
+
+        {/* Horizon Selector */}
+        <div style={{ display: 'flex', background: 'rgba(255, 255, 255, 0.05)', padding: '3px', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+          {[10, 20, 30].map((yr) => (
+            <button
+              key={yr}
+              type="button"
+              onClick={() => setHorizonYears(yr)}
+              style={{
+                background: horizonYears === yr ? 'rgba(52, 211, 153, 0.2)' : 'transparent',
+                color: horizonYears === yr ? '#34D399' : '#94A3B8',
+                border: 'none',
+                padding: '0.25rem 0.6rem',
+                borderRadius: '4px',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              {yr} Anos
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Floating HUD Tag (Live Inspection) */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 'var(--radius-md)', padding: '0.85rem 1rem', marginBottom: '1rem' }}>
+        <div>
+          <span style={{ fontSize: '0.68rem', color: '#94A3B8', display: 'block', fontWeight: 600 }}>PONTO INSPECCIONADO ({activePoint.year} ANOS)</span>
+          <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: '#34D399' }}>
+            R$ {activePoint.compound.toLocaleString('pt-BR')}
+          </div>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+          <span style={{ fontSize: '0.68rem', color: '#94A3B8', display: 'block', fontWeight: 600 }}>GANHO ACUMULADO</span>
+          <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: '#FBBF24' }}>
+            +{activePoint.gainPct}%
+          </div>
+        </div>
+      </div>
+
+      {/* SVG Canvas Chart */}
+      <div style={{ position: 'relative', width: '100%', height: `${svgHeight}px`, overflow: 'hidden' }}>
+        <svg
+          viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+          style={{ width: '100%', height: '100%', overflow: 'visible' }}
+          onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const normalizedX = (mouseX / rect.width) * svgWidth;
+            const clampedX = Math.max(padding.left, Math.min(svgWidth - padding.right, normalizedX));
+            const ratio = (clampedX - padding.left) / (svgWidth - padding.left - padding.right);
+            const index = Math.round(ratio * (points.length - 1));
+            setHoverIndex(index);
+          }}
+          onMouseLeave={() => setHoverIndex(null)}
+        >
+          <defs>
+            <linearGradient id="heroCompoundGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#10B981" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#10B981" stopOpacity="0.0" />
+            </linearGradient>
+          </defs>
+
+          {/* Grid lines */}
+          <line x1={padding.left} y1={svgHeight - padding.bottom} x2={svgWidth - padding.right} y2={svgHeight - padding.bottom} stroke="rgba(255, 255, 255, 0.12)" strokeWidth="1" />
+          <line x1={padding.left} y1={padding.top} x2={svgWidth - padding.right} y2={padding.top} stroke="rgba(255, 255, 255, 0.05)" strokeDasharray="3 3" strokeWidth="1" />
+          <line x1={padding.left} y1={(padding.top + svgHeight - padding.bottom) / 2} x2={svgWidth - padding.right} y2={(padding.top + svgHeight - padding.bottom) / 2} stroke="rgba(255, 255, 255, 0.05)" strokeDasharray="3 3" strokeWidth="1" />
+
+          {/* Linear Growth Path (Dashed Amber) */}
+          <path d={linearPath} fill="none" stroke="#F59E0B" strokeWidth="1.75" strokeDasharray="4 4" opacity="0.6" />
+
+          {/* Compound Area */}
+          <path d={compoundArea} fill="url(#heroCompoundGrad)" />
+
+          {/* Compound Growth Path (Solid Glowing Emerald) */}
+          <path d={compoundPath} fill="none" stroke="#10B981" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" />
+
+          {/* Inspection Vertical Line */}
+          {hoverIndex !== null && (
+            <line
+              x1={activeCoord.x}
+              y1={padding.top}
+              x2={activeCoord.x}
+              y2={svgHeight - padding.bottom}
+              stroke="rgba(255, 255, 255, 0.3)"
+              strokeDasharray="2 2"
+              strokeWidth="1"
+            />
+          )}
+
+          {/* Active Glowing Point */}
+          <circle cx={activeCoord.x} cy={activeCoord.y} r="6" fill="#10B981" stroke="#FFFFFF" strokeWidth="2" />
+          <circle cx={activeCoord.x} cy={activeCoord.y} r="12" fill="none" stroke="#10B981" strokeWidth="1" opacity="0.5" />
+        </svg>
+      </div>
+
+      {/* Legend Footer */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)', fontSize: '0.72rem', color: '#94A3B8' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{ width: '8px', height: '2px', background: '#10B981', display: 'inline-block' }} /> Juros Compostos
+          </span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{ width: '8px', height: '2px', background: '#F59E0B', display: 'inline-block' }} /> Linear Simples
+          </span>
+        </div>
+        <span style={{ color: '#34D399', fontWeight: 700 }}>Convexidade Real</span>
+      </div>
+
+    </div>
+  );
+}
+
+/* ==========================================================================
    Pilar 1: Matriz de Capitalização e Prova Algébrica (Matemática)
    ========================================================================== */
 function MathProofLedgerCard() {
@@ -170,7 +358,7 @@ function EquityResearchExecutiveCard() {
 }
 
 /* ==========================================================================
-   Home Page Component (Centralized Hero + 50/50 Track Rows)
+   Home Page Component (High-End Cloudflare / Linear / Stripe Synthesis)
    ========================================================================== */
 function Home() {
   const { completedLessons } = useContext(ProgressContext || createContext({}));
@@ -184,53 +372,66 @@ function Home() {
 
   return (
     <div>
-      {/* ── 1. Hero Section Centralizado e Imponente ─────────────────────── */}
-      <section className="hero-gradient" style={{ position: 'relative', overflow: 'hidden', padding: '6rem 0 5rem 0' }}>
+      {/* ── 1. Hero Section Split-Screen 50/50 ────────────────────────────── */}
+      <section className="hero-gradient" style={{ position: 'relative', overflow: 'hidden', padding: '5.5rem 0 4.5rem 0' }}>
         <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.35 }} />
         
-        <div className="bfa-container" style={{ position: 'relative', zIndex: 1, maxWidth: '920px', margin: '0 auto', textAlign: 'center' }}>
-          
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
-            <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.95)', background: 'rgba(255, 255, 255, 0.12)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255, 255, 255, 0.25)', fontWeight: 700 }}>
-              v2.0 · Plataforma Aberta
-            </span>
-            <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(52, 211, 153, 0.35)', fontWeight: 700 }}>
-              100% Gratuito
-            </span>
-          </div>
-
-          <EditableBlock id="home-hero-title" as="h1" className="headline-punch" style={{ fontSize: '3.6rem', fontWeight: 800, lineHeight: 1.12, color: '#FFFFFF', letterSpacing: '-0.035em', margin: '0 auto' }}>
-            O rigor da matemática financeira. O poder do mercado de capitais.
-          </EditableBlock>
-
-          <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.2rem', lineHeight: 1.7, color: 'rgba(241, 245, 249, 0.9)', marginTop: '1.25rem', maxWidth: '780px', margin: '1.25rem auto 0 auto' }}>
-            Uma suíte pedagógica aberta de padrão profissional com 55 aulas estruturadas, simuladores de juros e guia prático de Equity Research para o ensino médio e olimpíadas.
-          </EditableBlock>
-
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '2rem' }}>
-            <a href="#/matematica" className="bfa-btn bfa-btn--verde" style={{ padding: '0.9rem 1.85rem', fontSize: '1rem', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, boxShadow: '0 10px 25px -5px rgba(5, 150, 105, 0.4)' }}>
-              Começar Trilha de Matemática →
-            </a>
-            <a href="#/preparacao-brhsic" className="bfa-btn bfa-btn--ghost" style={{ padding: '0.9rem 1.85rem', fontSize: '1rem', border: '1px solid rgba(255, 255, 255, 0.35)', color: '#FFFFFF', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600 }}>
-              Ver Guia BRHSIC
-            </a>
-          </div>
-
-          {/* Stats Bar Centered */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1.25rem', marginTop: '3.25rem', paddingTop: '2rem', borderTop: '1px solid rgba(255, 255, 255, 0.12)' }}>
-            {stats.map((s) => (
-              <div key={s.label}>
-                <div className="tabular-numbers" style={{ fontSize: '1.6rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>{s.value}</div>
-                <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'rgba(241, 245, 249, 0.8)', marginTop: '2px' }}>{s.label}</div>
+        <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
+          <div className="bfa-split-hero">
+            
+            {/* Coluna Esquerda: Proposição de Valor Educacional */}
+            <div className="bfa-split-col--text">
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.95)', background: 'rgba(255, 255, 255, 0.12)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255, 255, 255, 0.25)', fontWeight: 700 }}>
+                  v2.0 · Plataforma Aberta
+                </span>
+                <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(52, 211, 153, 0.35)', fontWeight: 700 }}>
+                  100% Gratuito
+                </span>
               </div>
-            ))}
-          </div>
 
+              <EditableBlock id="home-hero-title" as="h1" className="headline-punch" style={{ fontSize: '3.35rem', fontWeight: 800, lineHeight: 1.12, color: '#FFFFFF', letterSpacing: '-0.035em', marginTop: '0.5rem' }}>
+                O rigor da matemática financeira. O poder do mercado de capitais.
+              </EditableBlock>
+
+              <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.15rem', lineHeight: 1.65, color: 'rgba(241, 245, 249, 0.9)', marginTop: '0.5rem' }}>
+                Uma suíte pedagógica aberta de padrão profissional com 55 aulas estruturadas, visualizações interativas de curvas exponenciais e guia prático de Equity Research para o ensino médio e olimpíadas.
+              </EditableBlock>
+
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1.5rem' }}>
+                <a href="#/matematica" className="bfa-btn bfa-btn--verde" style={{ padding: '0.85rem 1.65rem', fontSize: '0.95rem', minHeight: '46px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, boxShadow: '0 10px 25px -5px rgba(5, 150, 105, 0.4)' }}>
+                  Começar Trilha de Matemática →
+                </a>
+                <a href="#/preparacao-brhsic" className="bfa-btn bfa-btn--ghost" style={{ padding: '0.85rem 1.65rem', fontSize: '0.95rem', border: '1px solid rgba(255, 255, 255, 0.35)', color: '#FFFFFF', minHeight: '46px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600 }}>
+                  Ver Guia BRHSIC
+                </a>
+              </div>
+
+              {/* Stats Bar Compact */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.85rem', marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.12)' }}>
+                {stats.map((s) => (
+                  <div key={s.label}>
+                    <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>{s.value}</div>
+                    <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'rgba(241, 245, 249, 0.8)' }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Coluna Direita: Topografia Matemática & Escultura Cinética de Ondas */}
+            <div className="bfa-split-col--visual">
+              {(() => {
+                const CanvasVisual = window.FinancialKineticCanvas || HeroInteractiveCurveCanvas;
+                return <CanvasVisual />;
+              })()}
+            </div>
+
+          </div>
         </div>
       </section>
 
       {/* ── 2. Pilares de Aprendizagem em Blocos 50/50 com Prova Visual ─────── */}
-      <section className="bfa-container" style={{ padding: '4.5rem 1.5rem' }}>
+      <section className="bfa-container" style={{ padding: '3.5rem 1.5rem' }}>
         
         {/* Bloco 1: Matemática Aplicada (Texto na Esquerda, Prova na Direita) */}
         <div className="bfa-split-row">
