@@ -418,12 +418,9 @@ function Home() {
               </div>
             </div>
 
-            {/* Coluna Direita: Topografia Matemática & Escultura Cinética de Ondas */}
+            {/* Coluna Direita: Visualizador de Curva Exponencial & Convexidade */}
             <div className="bfa-split-col--visual">
-              {(() => {
-                const CanvasVisual = window.FinancialKineticCanvas || HeroInteractiveCurveCanvas;
-                return <CanvasVisual />;
-              })()}
+              <HeroInteractiveCurveCanvas />
             </div>
 
           </div>
