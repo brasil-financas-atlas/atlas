@@ -1,280 +1,316 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
 /* ==========================================================================
-   Micro-Widget 1: Mini Calculadora de Taxas Equivalentes (Card Matemática)
+   Hero Visual: Terminal de Aprendizagem & Telemetria do Atlas (Stripe/Linear)
    ========================================================================== */
-function MiniMathWidget() {
-  const [monthlyRate, setMonthlyRate] = useState(1.0);
+function HeroPlatformMockup() {
+  const [activeTab, setActiveTab] = useState('aula');
 
-  const annualEquivalent = useMemo(() => {
-    const im = monthlyRate / 100;
-    const ia = Math.pow(1 + im, 12) - 1;
-    return (ia * 100).toFixed(2);
-  }, [monthlyRate]);
+  return (
+    <div className="bfa-tech-card" style={{ background: 'rgba(11, 15, 25, 0.95)', border: '1px solid rgba(255, 255, 255, 0.12)', boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.6)', padding: '1.5rem 1.75rem' }}>
+      
+      {/* Chrome Top Bar */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '1rem', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', marginBottom: '1.25rem' }}>
+        <div style={{ display: 'flex', gap: '0.4rem' }}>
+          <button
+            type="button"
+            onClick={() => setActiveTab('aula')}
+            style={{
+              padding: '0.35rem 0.75rem',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              borderRadius: 'var(--radius-sm)',
+              border: 'none',
+              background: activeTab === 'aula' ? 'rgba(52, 211, 153, 0.15)' : 'transparent',
+              color: activeTab === 'aula' ? '#34D399' : '#94A3B8',
+              cursor: 'pointer'
+            }}
+          >
+            📐 Caderno Teórico
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('telemetria')}
+            style={{
+              padding: '0.35rem 0.75rem',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              borderRadius: 'var(--radius-sm)',
+              border: 'none',
+              background: activeTab === 'telemetria' ? 'rgba(96, 165, 250, 0.15)' : 'transparent',
+              color: activeTab === 'telemetria' ? '#60A5FA' : '#94A3B8',
+              cursor: 'pointer'
+            }}
+          >
+            📊 Telemetria Macro
+          </button>
+        </div>
 
-  const simpleMultiplication = (monthlyRate * 12).toFixed(2);
-  const compoundGain = (Number(annualEquivalent) - Number(simpleMultiplication)).toFixed(2);
+        <span className="mono-tag" style={{ color: '#34D399', fontSize: '0.7rem', fontWeight: 800 }}>
+          SISTEMA ATIVO · BFA v2.0
+        </span>
+      </div>
+
+      {activeTab === 'aula' ? (
+        <div>
+          {/* Lecture Snippet */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+            <span className="mono-tag" style={{ color: '#94A3B8', fontSize: '0.72rem' }}>
+              MÓDULO 02 · AULA 04
+            </span>
+            <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.1)', padding: '0.15rem 0.45rem', borderRadius: '4px' }}>
+              Rigor Acadêmico
+            </span>
+          </div>
+
+          <h4 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em', margin: '0 0 0.75rem 0' }}>
+            Dinâmica Exponencial & Capitalização Contínua
+          </h4>
+
+          {/* Mathematical Proof Box */}
+          <div style={{ background: 'rgba(9, 13, 22, 0.8)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 'var(--radius-md)', padding: '1rem 1.25rem', marginBottom: '1.25rem' }}>
+            <div style={{ fontSize: '0.75rem', color: '#94A3B8', marginBottom: '0.4rem', fontFamily: 'var(--font-mono)' }}>
+              // Equação Fundamental de Capitalização Contínua:
+            </div>
+            <div style={{ fontSize: '1.25rem', color: '#34D399', fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.02em' }}>
+              M(t) = C · e^(r · t)
+            </div>
+            <div style={{ fontSize: '0.78rem', color: '#CBD5E1', marginTop: '0.5rem', lineHeight: 1.5 }}>
+              Onde o limite discreto de reinvestimento instantâneo converge para a constante de Euler (e ≈ 2,71828).
+            </div>
+          </div>
+
+          {/* Verification Footnote */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+            <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: 'var(--radius-sm)', padding: '0.65rem 0.85rem' }}>
+              <span style={{ fontSize: '0.68rem', color: '#94A3B8', display: 'block' }}>CERTIFICADO</span>
+              <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#FFFFFF' }}>Hash SHA-256</span>
+            </div>
+            <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: 'var(--radius-sm)', padding: '0.65rem 0.85rem' }}>
+              <span style={{ fontSize: '0.68rem', color: '#94A3B8', display: 'block' }}>ACESSO</span>
+              <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#34D399' }}>100% Gratuito</span>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div>
+          {/* Telemetry Tab */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
+            <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 'var(--radius-md)', padding: '0.85rem' }}>
+              <span className="mono-tag" style={{ fontSize: '0.68rem', color: '#94A3B8', display: 'block' }}>SELIC META (BACEN)</span>
+              <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: '#34D399' }}>10,50% a.a.</div>
+            </div>
+            <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 'var(--radius-md)', padding: '0.85rem' }}>
+              <span className="mono-tag" style={{ fontSize: '0.68rem', color: '#94A3B8', display: 'block' }}>IPCA INFLAÇÃO (12M)</span>
+              <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: '#FBBF24' }}>4,23% acum.</div>
+            </div>
+          </div>
+
+          <div style={{ background: 'rgba(9, 13, 22, 0.8)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 'var(--radius-md)', padding: '1rem', marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: '#CBD5E1', marginBottom: '0.25rem' }}>
+              <span>Juro Real Líquido (Equação de Fisher):</span>
+              <strong style={{ color: '#34D399' }}>+6,01% a.a. real</strong>
+            </div>
+            <div style={{ fontSize: '0.72rem', color: '#94A3B8' }}>
+              Rentabilidade soberana descontada a inflação com preservação do poder de compra.
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', color: '#94A3B8' }}>
+            <span>Fonte de Dados: <strong>B3 / Banco Central do Brasil</strong></span>
+            <span style={{ color: '#34D399' }}>● Sincronizado</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ==========================================================================
+   Pilar 1: Matriz de Capitalização e Prova Algébrica (Matemática)
+   ========================================================================== */
+function MathProofLedgerCard() {
+  const steps = [
+    { year: "Ano 01", nominal: "R$ 11.050", gain: "+10,5%", note: "Efeito inicial linear" },
+    { year: "Ano 05", nominal: "R$ 16.474", gain: "+64,7%", note: "Início da curvatura" },
+    { year: "Ano 10", nominal: "R$ 27.140", gain: "+171,4%", note: "Juros superam o capital" },
+    { year: "Ano 20", nominal: "R$ 73.662", gain: "+636,6%", note: "Domínio exponencial puro" },
+  ];
 
   return (
     <div className="bfa-tech-card">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
         <span className="mono-tag" style={{ color: 'var(--track-math)', fontWeight: 800, fontSize: '0.72rem' }}>
-          PROVA VISUAL · TAXAS EQUIVALENTES
+          PROVA MATEMÁTICA · CURVATURA TEMPORAL
         </span>
-        <span className="tabular-numbers" style={{ color: '#2563EB', background: 'rgba(37, 99, 235, 0.08)', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.75rem' }}>
-          {monthlyRate.toFixed(1)}% a.m.
+        <span className="mono-tag" style={{ color: 'var(--muted-foreground)' }}>
+          Base: R$ 10.000 a 10,5% a.a.
         </span>
       </div>
 
-      <div style={{ marginBottom: '1rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--muted-foreground)', marginBottom: '0.4rem', fontWeight: 600 }}>
-          <span>Ajustar Taxa Mensal:</span>
-          <span className="tabular-numbers" style={{ fontWeight: 700, color: 'var(--foreground)' }}>{monthlyRate.toFixed(1)}% ao mês</span>
-        </div>
-        <input
-          type="range"
-          min="0.5"
-          max="3.0"
-          step="0.1"
-          value={monthlyRate}
-          onChange={(e) => setMonthlyRate(Number(e.target.value))}
-          className="bfa-mini-slider"
-        />
+      <div style={{ display: 'grid', gap: '0.65rem' }}>
+        {steps.map((s, idx) => (
+          <div
+            key={s.year}
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '0.75rem 1rem',
+              borderRadius: 'var(--radius-md)',
+              background: idx === 3 ? 'rgba(37, 99, 235, 0.08)' : 'var(--surface-strong)',
+              border: idx === 3 ? '1px solid rgba(37, 99, 235, 0.25)' : '1px solid var(--border)'
+            }}
+          >
+            <div>
+              <span className="mono-tag" style={{ fontSize: '0.75rem', fontWeight: 800, color: idx === 3 ? 'var(--track-math)' : 'var(--foreground)' }}>
+                {s.year}
+              </span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)', marginLeft: '8px' }}>
+                {s.note}
+              </span>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <div className="tabular-numbers" style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--foreground)' }}>
+                {s.nominal}
+              </div>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: idx === 3 ? 'var(--track-math)' : '#059669' }}>
+                {s.gain}
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
 
-      <div style={{ background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '1rem', marginTop: '1rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-          <div>
-            <span style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)', display: 'block', fontWeight: 600 }}>Taxa Anual Efetiva (Composta):</span>
-            <div className="tabular-numbers" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--track-math)' }}>
-              {annualEquivalent}% <small style={{ fontSize: '0.8rem', fontWeight: 600 }}>a.a.</small>
-            </div>
-          </div>
-          <div style={{ textAlign: 'right' }}>
-            <span style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)', display: 'block' }}>Multiplicação Linear (Simples):</span>
-            <div className="tabular-numbers" style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--muted-foreground)' }}>
-              {simpleMultiplication}% a.a.
-            </div>
-          </div>
-        </div>
-        <div style={{ marginTop: '0.75rem', paddingTop: '0.65rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}>
-          <span style={{ color: 'var(--muted-foreground)' }}>Efeito dos Juros Compostos:</span>
-          <span style={{ color: '#059669', fontWeight: 800 }}>+{compoundGain}% de juro sobre juro</span>
-        </div>
+      <div style={{ marginTop: '1.25rem', paddingTop: '0.85rem', borderTop: '1px solid var(--border)', fontSize: '0.78rem', color: 'var(--muted-foreground)', display: 'flex', justifyContent: 'space-between' }}>
+        <span>Equação: <strong>M = C · (1 + i)^t</strong></span>
+        <span style={{ color: 'var(--track-math)', fontWeight: 700 }}>Convexidade Exponencial</span>
       </div>
     </div>
   );
 }
 
 /* ==========================================================================
-   Micro-Widget 2: Matriz Comparativa de Classes de Ativos (Card Finanças)
+   Pilar 2: Matriz Comparativa de Ativos do Brasil (Finanças)
    ========================================================================== */
-function MiniFinanceWidget() {
-  const [activeAsset, setActiveAsset] = useState('selic');
-
-  const assets = {
-    selic: {
-      name: "Tesouro Selic",
-      category: "Renda Fixa Soberana",
-      yield: "10,50% a.a.",
-      risk: "Risco Mínimo (Tesouro Nacional)",
-      tax: "Tabela Regressiva (22,5% a 15%)",
-      liquidity: "D+0 / D+1 (Imediata)",
-      points: [100, 100.8, 101.6, 102.5, 103.4, 104.3, 105.2, 106.1, 107.1, 108.2, 109.3, 110.5],
-      color: "#059669"
-    },
-    fiis: {
-      name: "Fundos Imobiliários (FIIs)",
-      category: "Renda Imobiliária",
-      yield: "9,80% dividend yield + ganho",
-      risk: "Risco Médio (Oscilação de Cotas)",
-      tax: "Rendimentos Mensais 100% Isentos",
-      liquidity: "D+2 em Bolsa (B3)",
-      points: [100, 101.2, 99.8, 102.4, 104.1, 103.5, 106.2, 105.8, 108.4, 111.2, 109.8, 113.5],
-      color: "#D97706"
-    },
-    ibov: {
-      name: "Ações / Ibovespa",
-      category: "Renda Variável & Equity",
-      yield: "13,20% a.a. média histórica",
-      risk: "Risco de Mercado (Volatilidade)",
-      tax: "15% sobre ganho de capital (isento até 20k)",
-      liquidity: "D+2 em Bolsa (B3)",
-      points: [100, 104.5, 98.2, 106.8, 103.4, 112.5, 108.9, 116.4, 114.2, 122.1, 119.5, 128.4],
-      color: "#2563EB"
-    }
-  };
-
-  const current = assets[activeAsset];
-  const minVal = Math.min(...current.points);
-  const maxVal = Math.max(...current.points);
-  const svgWidth = 260;
-  const svgHeight = 50;
-
-  const pointsSvg = current.points.map((val, i) => {
-    const x = (i / (current.points.length - 1)) * svgWidth;
-    const y = svgHeight - ((val - minVal) / (maxVal - minVal || 1)) * (svgHeight - 8) - 4;
-    return `${x},${y}`;
-  }).join(' ');
-
+function FinancialAssetsMatrixCard() {
   return (
     <div className="bfa-tech-card">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
         <span className="mono-tag" style={{ color: 'var(--track-finance)', fontWeight: 800, fontSize: '0.72rem' }}>
-          MATRIZ DE ATIVOS BRASILEIROS
+          MERCADO NACIONAL · MATRIZ DE ALOCAÇÃO
         </span>
-        <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>
-          {current.category}
+        <span className="mono-tag" style={{ color: '#059669', background: 'rgba(5, 150, 105, 0.08)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
+          Sistema B3 / BACEN
         </span>
       </div>
 
-      <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '1rem' }}>
-        <button
-          type="button"
-          onClick={() => setActiveAsset('selic')}
-          style={{
-            flex: 1,
-            padding: '0.35rem 0.5rem',
-            fontSize: '0.75rem',
-            fontWeight: activeAsset === 'selic' ? 700 : 500,
-            borderRadius: 'var(--radius-sm)',
-            border: '1px solid var(--border)',
-            background: activeAsset === 'selic' ? 'var(--track-finance)' : 'var(--surface-strong)',
-            color: activeAsset === 'selic' ? '#FFFFFF' : 'var(--foreground)',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease'
-          }}
-        >
-          Tesouro Selic
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveAsset('fiis')}
-          style={{
-            flex: 1,
-            padding: '0.35rem 0.5rem',
-            fontSize: '0.75rem',
-            fontWeight: activeAsset === 'fiis' ? 700 : 500,
-            borderRadius: 'var(--radius-sm)',
-            border: '1px solid var(--border)',
-            background: activeAsset === 'fiis' ? '#D97706' : 'var(--surface-strong)',
-            color: activeAsset === 'fiis' ? '#FFFFFF' : 'var(--foreground)',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease'
-          }}
-        >
-          FIIs (Imóveis)
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveAsset('ibov')}
-          style={{
-            flex: 1,
-            padding: '0.35rem 0.5rem',
-            fontSize: '0.75rem',
-            fontWeight: activeAsset === 'ibov' ? 700 : 500,
-            borderRadius: 'var(--radius-sm)',
-            border: '1px solid var(--border)',
-            background: activeAsset === 'ibov' ? '#2563EB' : 'var(--surface-strong)',
-            color: activeAsset === 'ibov' ? '#FFFFFF' : 'var(--foreground)',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease'
-          }}
-        >
-          Ações (Ibov)
-        </button>
+      <div style={{ display: 'grid', gap: '0.75rem' }}>
+        {/* Ativo 1 */}
+        <div style={{ padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', background: 'var(--surface-strong)', border: '1px solid var(--border)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+            <span style={{ fontWeight: 800, fontSize: '0.9rem', color: 'var(--foreground)' }}>1. Tesouro Selic & IPCA+</span>
+            <span className="tabular-numbers" style={{ fontWeight: 800, color: 'var(--track-finance)', fontSize: '0.88rem' }}>10,50% a.a. / IPCA + 6,2%</span>
+          </div>
+          <p style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', margin: 0 }}>
+            Risco soberano com proteção integral contra a inflação e liquidez diária garantida pelo Tesouro Nacional.
+          </p>
+        </div>
+
+        {/* Ativo 2 */}
+        <div style={{ padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', background: 'var(--surface-strong)', border: '1px solid var(--border)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+            <span style={{ fontWeight: 800, fontSize: '0.9rem', color: 'var(--foreground)' }}>2. Fundos Imobiliários (FIIs)</span>
+            <span className="tabular-numbers" style={{ fontWeight: 800, color: 'var(--gold-deep)', fontSize: '0.88rem' }}>9,80% dividend yield</span>
+          </div>
+          <p style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', margin: 0 }}>
+            Renda passiva mensal com isenção de Imposto de Renda para pessoa física e diversificação imobiliária.
+          </p>
+        </div>
+
+        {/* Ativo 3 */}
+        <div style={{ padding: '0.85rem 1rem', borderRadius: 'var(--radius-md)', background: 'var(--surface-strong)', border: '1px solid var(--border)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+            <span style={{ fontWeight: 800, fontSize: '0.9rem', color: 'var(--foreground)' }}>3. Ações & Equity (Bolsa B3)</span>
+            <span className="tabular-numbers" style={{ fontWeight: 800, color: 'var(--track-math)', fontSize: '0.88rem' }}>Ganho de Capital + JCP</span>
+          </div>
+          <p style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', margin: 0 }}>
+            Participação acionária no crescimento e nos lucros das maiores companhias do Brasil.
+          </p>
+        </div>
       </div>
 
-      <div style={{ height: '50px', width: '100%', marginBottom: '1rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-sm)', padding: '4px', overflow: 'hidden' }}>
-        <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} style={{ width: '100%', height: '100%', overflow: 'visible' }}>
-          <polyline fill="none" stroke={current.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" points={pointsSvg} />
-        </svg>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', fontSize: '0.78rem', background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '0.85rem' }}>
-        <div>
-          <span style={{ color: 'var(--muted-foreground)', display: 'block', fontSize: '0.7rem' }}>Rentabilidade Referência:</span>
-          <span className="tabular-numbers" style={{ fontWeight: 800, color: current.color, fontSize: '0.95rem' }}>{current.yield}</span>
-        </div>
-        <div>
-          <span style={{ color: 'var(--muted-foreground)', display: 'block', fontSize: '0.7rem' }}>Tributação:</span>
-          <span style={{ fontWeight: 600, color: 'var(--foreground)' }}>{current.tax}</span>
-        </div>
+      <div style={{ marginTop: '1.25rem', paddingTop: '0.85rem', borderTop: '1px solid var(--border)', fontSize: '0.78rem', color: 'var(--muted-foreground)', display: 'flex', justifyContent: 'space-between' }}>
+        <span>Transmissão: <strong>Selic ➔ CDI ➔ Crédito</strong></span>
+        <span style={{ color: 'var(--track-finance)', fontWeight: 700 }}>Estrutura Regulatória CVM</span>
       </div>
     </div>
   );
 }
 
 /* ==========================================================================
-   Micro-Widget 3: Painel de Tese de Valuation (Card BRHSIC)
+   Pilar 3: One-Page Memo de Equity Research (BRHSIC)
    ========================================================================== */
-function MiniValuationWidget() {
-  const currentPrice = 32.50;
-  const [targetPrice, setTargetPrice] = useState(44.00);
-
-  const upside = useMemo(() => {
-    return (((targetPrice - currentPrice) / currentPrice) * 100).toFixed(1);
-  }, [targetPrice]);
-
-  const recommendation = Number(upside) >= 15 ? { label: "COMPRA FORTE", color: "#059669", bg: "#ECFDF5" }
-    : Number(upside) >= 0 ? { label: "MANTER / NEUTRO", color: "#D97706", bg: "#FFFBEB" }
-    : { label: "VENDA / DESVALORIZAÇÃO", color: "#DC2626", bg: "#FEF2F2" };
-
+function EquityResearchExecutiveCard() {
   return (
     <div className="bfa-tech-card">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <span className="mono-tag" style={{ color: 'var(--track-brhsic)', fontWeight: 800, fontSize: '0.72rem' }}>
-          MODELAGEM DCF · VALUATION
+        <span className="mono-tag" style={{ color: 'var(--gold-deep)', fontWeight: 800, fontSize: '0.72rem' }}>
+          EQUITY RESEARCH · RELATÓRIO OFICIAL BRHSIC
         </span>
-        <span className="mono-tag" style={{ color: recommendation.color, background: recommendation.bg, fontWeight: 800, padding: '0.2rem 0.55rem', borderRadius: '4px' }}>
-          {recommendation.label}
+        <span className="mono-tag" style={{ color: '#059669', background: '#ECFDF5', fontWeight: 800, padding: '0.2rem 0.55rem', borderRadius: '4px' }}>
+          RECOMENDAÇÃO: COMPRA
         </span>
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginBottom: '0.5rem', fontWeight: 600 }}>
-        <span>Preço Atual de Mercado: <strong>R$ {currentPrice.toFixed(2)}</strong></span>
-        <span style={{ color: 'var(--track-brhsic)' }}>Preço-Alvo Justo: <strong>R$ {targetPrice.toFixed(2)}</strong></span>
-      </div>
-
-      <input
-        type="range"
-        min="20"
-        max="55"
-        step="0.5"
-        value={targetPrice}
-        onChange={(e) => setTargetPrice(Number(e.target.value))}
-        className="bfa-mini-slider"
-      />
-
-      <div style={{ background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '1rem', marginTop: '1.25rem' }}>
+      {/* Target Price Header */}
+      <div style={{ background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '1rem 1.25rem', marginBottom: '1rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <span style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)', display: 'block', fontWeight: 600 }}>Potencial de Valorização (Upside):</span>
-            <div className="tabular-numbers" style={{ fontSize: '1.5rem', fontWeight: 800, color: Number(upside) >= 0 ? '#059669' : '#DC2626' }}>
-              {Number(upside) >= 0 ? `+${upside}%` : `${upside}%`}
-            </div>
+            <span style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)', display: 'block', fontWeight: 700 }}>ATIVO: WEGE3 (WEG S.A.)</span>
+            <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--foreground)' }}>Preço Atual: R$ 41,20</div>
           </div>
-          <div style={{ textAlign: 'right', fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
-            <div>Múltiplo P/L Proj: <strong>11.4x</strong></div>
-            <div>EV/EBITDA: <strong>6.8x</strong></div>
+          <div style={{ textAlign: 'right' }}>
+            <span style={{ fontSize: '0.72rem', color: 'var(--gold-deep)', display: 'block', fontWeight: 800 }}>PREÇO-ALVO DCF</span>
+            <div className="tabular-numbers" style={{ fontSize: '1.4rem', fontWeight: 800, color: '#059669' }}>R$ 54,00 (+31,1%)</div>
           </div>
         </div>
+      </div>
+
+      {/* Valuation Financial Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.65rem', marginBottom: '1rem' }}>
+        <div style={{ background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '0.65rem', textAlign: 'center' }}>
+          <span style={{ fontSize: '0.68rem', color: 'var(--muted-foreground)', display: 'block' }}>WACC</span>
+          <span className="tabular-numbers" style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--foreground)' }}>11,2%</span>
+        </div>
+        <div style={{ background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '0.65rem', textAlign: 'center' }}>
+          <span style={{ fontSize: '0.68rem', color: 'var(--muted-foreground)', display: 'block' }}>ROIC</span>
+          <span className="tabular-numbers" style={{ fontSize: '0.95rem', fontWeight: 800, color: '#059669' }}>28,6%</span>
+        </div>
+        <div style={{ background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '0.65rem', textAlign: 'center' }}>
+          <span style={{ fontSize: '0.68rem', color: 'var(--muted-foreground)', display: 'block' }}>EV/EBITDA</span>
+          <span className="tabular-numbers" style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--foreground)' }}>14,2x</span>
+        </div>
+      </div>
+
+      <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', lineHeight: 1.5, background: 'var(--surface-strong)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', borderLeft: '3px solid var(--gold-deep)' }}>
+        <strong>Tese de Vantagem Competitiva (Moat):</strong> Domínio de motores de alta eficiência industrial, integração vertical e liderança em transição energética global.
       </div>
     </div>
   );
 }
 
 /* ==========================================================================
-   Home Page Component (Cloudflare Pages Architecture)
+   Home Page Component (High-End Cloudflare / Linear / Stripe Synthesis)
    ========================================================================== */
 function Home() {
   const { completedLessons } = useContext(ProgressContext || createContext({}));
 
   const stats = [
-    { value: "55", label: "Aulas publicadas", note: "Matemática & Finanças", color: "var(--track-finance)" },
-    { value: "7", label: "Módulos de estudo", note: "Conteúdo progressivo", color: "var(--gold)" },
-    { value: "100%", label: "Acesso gratuito", note: "Sem custo", color: "var(--track-math)" },
-    { value: "BRHSIC", label: "Equity Research", note: "Guia de preparação", color: "var(--gold-deep)" },
+    { value: "55", label: "Aulas publicadas", note: "Matemática & Finanças" },
+    { value: "7", label: "Módulos de estudo", note: "Conteúdo progressivo" },
+    { value: "100%", label: "Acesso gratuito", note: "Sem custo" },
+    { value: "BRHSIC", label: "Equity Research", note: "Guia de preparação" },
   ];
 
   return (
@@ -325,12 +361,9 @@ function Home() {
               </div>
             </div>
 
-            {/* Coluna Direita: Painel de Telemetria Macroeconômica */}
+            {/* Coluna Direita: Mockup da Plataforma (Linear / Stripe) */}
             <div className="bfa-split-col--visual">
-              {(() => {
-                const HeroVisualizer = window.HeroCompoundVisualizer;
-                return HeroVisualizer ? <HeroVisualizer /> : null;
-              })()}
+              <HeroPlatformMockup />
             </div>
 
           </div>
@@ -363,14 +396,14 @@ function Home() {
           </div>
 
           <div className="bfa-split-col--visual">
-            <MiniMathWidget />
+            <MathProofLedgerCard />
           </div>
         </div>
 
         {/* Bloco 2: Finanças Corporativas (Prova na Esquerda, Texto na Direita) */}
         <div className="bfa-split-row">
           <div className="bfa-split-col--visual">
-            <MiniFinanceWidget />
+            <FinancialAssetsMatrixCard />
           </div>
 
           <div className="bfa-split-col--text">
@@ -417,7 +450,7 @@ function Home() {
           </div>
 
           <div className="bfa-split-col--visual">
-            <MiniValuationWidget />
+            <EquityResearchExecutiveCard />
           </div>
         </div>
 
