@@ -1,0 +1,421 @@
+{
+  "total_pages_gh_pages": 70,
+  "lessons_comparison": [
+    {
+      "path": "exercicios/index.html",
+      "gh_pages_length": 504,
+      "local_length": 611,
+      "matched": true
+    },
+    {
+      "path": "financas/index.html",
+      "gh_pages_length": 874,
+      "local_length": 1018,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-1-fundamentos/aula-01-mercado-financeiro/index.html",
+      "gh_pages_length": 1902,
+      "local_length": 1822,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-1-fundamentos/aula-02-sistema-financeiro-brasileiro/index.html",
+      "gh_pages_length": 2660,
+      "local_length": 2577,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-1-fundamentos/aula-03-tesouro-direto/index.html",
+      "gh_pages_length": 2998,
+      "local_length": 2959,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-1-fundamentos/aula-04-renda-fixa-bancaria/index.html",
+      "gh_pages_length": 3293,
+      "local_length": 3281,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-1-fundamentos/aula-05-acoes-e-bolsa/index.html",
+      "gh_pages_length": 3178,
+      "local_length": 3137,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-1-fundamentos/aula-06-fundos-e-etfs/index.html",
+      "gh_pages_length": 3268,
+      "local_length": 3288,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-1-fundamentos/aula-07-fiis/index.html",
+      "gh_pages_length": 3007,
+      "local_length": 3006,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-1-fundamentos/aula-08-risco-e-diversificacao/index.html",
+      "gh_pages_length": 3358,
+      "local_length": 3342,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-1-fundamentos/aula-09-macro-para-investidores/index.html",
+      "gh_pages_length": 3494,
+      "local_length": 3509,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-1-fundamentos/index.html",
+      "gh_pages_length": 1120,
+      "local_length": 1539,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-2-analise-fundamentalista/aula-01-o-que-e-analise-fundamentalista/index.html",
+      "gh_pages_length": 4074,
+      "local_length": 3933,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-2-analise-fundamentalista/aula-02-a-empresa-por-tras-da-acao/index.html",
+      "gh_pages_length": 4126,
+      "local_length": 3944,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-2-analise-fundamentalista/aula-03-balanco-patrimonial/index.html",
+      "gh_pages_length": 3417,
+      "local_length": 3416,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-2-analise-fundamentalista/aula-04-dre/index.html",
+      "gh_pages_length": 3926,
+      "local_length": 3942,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-2-analise-fundamentalista/aula-05-fluxo-de-caixa/index.html",
+      "gh_pages_length": 3802,
+      "local_length": 3827,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-2-analise-fundamentalista/aula-06-indicadores-de-rentabilidade/index.html",
+      "gh_pages_length": 3768,
+      "local_length": 3703,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-2-analise-fundamentalista/aula-07-endividamento-e-liquidez/index.html",
+      "gh_pages_length": 3687,
+      "local_length": 3641,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-2-analise-fundamentalista/aula-08-multiplos-de-valuation/index.html",
+      "gh_pages_length": 4046,
+      "local_length": 4050,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-2-analise-fundamentalista/aula-09-valuation-fluxo-de-caixa-descontado/index.html",
+      "gh_pages_length": 4186,
+      "local_length": 4204,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-2-analise-fundamentalista/index.html",
+      "gh_pages_length": 1650,
+      "local_length": 2216,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-3-portfolio/aula-01-o-que-e-um-portfolio/index.html",
+      "gh_pages_length": 3282,
+      "local_length": 3185,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-3-portfolio/aula-02-perfil-de-investidor-e-objetivos/index.html",
+      "gh_pages_length": 3629,
+      "local_length": 3574,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-3-portfolio/aula-03-classes-de-ativos-e-correlacao/index.html",
+      "gh_pages_length": 3794,
+      "local_length": 3759,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-3-portfolio/aula-04-alocacao-de-ativos/index.html",
+      "gh_pages_length": 3591,
+      "local_length": 3545,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-3-portfolio/aula-05-risco-de-carteira/index.html",
+      "gh_pages_length": 3858,
+      "local_length": 3751,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-3-portfolio/aula-06-aportes-e-rebalanceamento/index.html",
+      "gh_pages_length": 3983,
+      "local_length": 3876,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-3-portfolio/aula-07-custos-e-impostos/index.html",
+      "gh_pages_length": 3938,
+      "local_length": 3868,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-3-portfolio/aula-08-montando-sua-carteira/index.html",
+      "gh_pages_length": 3890,
+      "local_length": 3804,
+      "matched": true
+    },
+    {
+      "path": "financas/modulo-3-portfolio/index.html",
+      "gh_pages_length": 1478,
+      "local_length": 1983,
+      "matched": true
+    },
+    {
+      "path": "index.html",
+      "gh_pages_length": 1361,
+      "local_length": 2407,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/index.html",
+      "gh_pages_length": 1082,
+      "local_length": 1269,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-1-algebra-do-zero/aula-01-numeros-e-operacoes/index.html",
+      "gh_pages_length": 1397,
+      "local_length": 1595,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-1-algebra-do-zero/aula-02-fracoes-e-decimais/index.html",
+      "gh_pages_length": 1659,
+      "local_length": 1884,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-1-algebra-do-zero/aula-03-porcentagem-na-vida-real/index.html",
+      "gh_pages_length": 1801,
+      "local_length": 1943,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-1-algebra-do-zero/aula-04-regra-de-tres/index.html",
+      "gh_pages_length": 1675,
+      "local_length": 1866,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-1-algebra-do-zero/aula-05-potencias-e-raizes/index.html",
+      "gh_pages_length": 1673,
+      "local_length": 1798,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-1-algebra-do-zero/aula-06-notacao-cientifica/index.html",
+      "gh_pages_length": 1593,
+      "local_length": 1783,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-1-algebra-do-zero/aula-07-equacoes-1-grau/index.html",
+      "gh_pages_length": 1867,
+      "local_length": 2093,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-1-algebra-do-zero/index.html",
+      "gh_pages_length": 1243,
+      "local_length": 1544,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-2-aplicada/aula-01-porcentagem-e-variacao/index.html",
+      "gh_pages_length": 1733,
+      "local_length": 1588,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-2-aplicada/aula-02-juros-simples-e-compostos/index.html",
+      "gh_pages_length": 2880,
+      "local_length": 2716,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-2-aplicada/aula-03-inflacao-e-juros-reais/index.html",
+      "gh_pages_length": 2671,
+      "local_length": 2449,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-2-aplicada/aula-04-rentabilidade-liquida/index.html",
+      "gh_pages_length": 3002,
+      "local_length": 2870,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-2-aplicada/aula-05-cdi-selic-comparacao/index.html",
+      "gh_pages_length": 3216,
+      "local_length": 3194,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-2-aplicada/index.html",
+      "gh_pages_length": 1086,
+      "local_length": 1405,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-3-funcoes-e-probabilidade/aula-01-o-que-e-uma-funcao/index.html",
+      "gh_pages_length": 4116,
+      "local_length": 3197,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-3-funcoes-e-probabilidade/aula-02-funcao-exponencial/index.html",
+      "gh_pages_length": 4423,
+      "local_length": 3435,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-3-funcoes-e-probabilidade/aula-03-logaritmos/index.html",
+      "gh_pages_length": 4061,
+      "local_length": 3164,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-3-funcoes-e-probabilidade/aula-04-progressao-aritmetica/index.html",
+      "gh_pages_length": 4158,
+      "local_length": 3084,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-3-funcoes-e-probabilidade/aula-05-progressao-geometrica/index.html",
+      "gh_pages_length": 4407,
+      "local_length": 3405,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-3-funcoes-e-probabilidade/aula-06-somatorio/index.html",
+      "gh_pages_length": 4020,
+      "local_length": 3293,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-3-funcoes-e-probabilidade/aula-07-produtorio/index.html",
+      "gh_pages_length": 3880,
+      "local_length": 2939,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-3-funcoes-e-probabilidade/aula-08-probabilidade-fundamentos/index.html",
+      "gh_pages_length": 4789,
+      "local_length": 3792,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-3-funcoes-e-probabilidade/aula-09-valor-esperado/index.html",
+      "gh_pages_length": 4814,
+      "local_length": 3562,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-3-funcoes-e-probabilidade/index.html",
+      "gh_pages_length": 1418,
+      "local_length": 1892,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-4-estatistica/aula-01-dados-populacao-amostra/index.html",
+      "gh_pages_length": 4581,
+      "local_length": 3323,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-4-estatistica/aula-02-medias/index.html",
+      "gh_pages_length": 4406,
+      "local_length": 3484,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-4-estatistica/aula-03-mediana-moda/index.html",
+      "gh_pages_length": 4291,
+      "local_length": 3238,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-4-estatistica/aula-04-dispersao/index.html",
+      "gh_pages_length": 4581,
+      "local_length": 3443,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-4-estatistica/aula-05-coeficiente-variacao-zscore/index.html",
+      "gh_pages_length": 4576,
+      "local_length": 3426,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-4-estatistica/aula-06-covariancia-correlacao/index.html",
+      "gh_pages_length": 4952,
+      "local_length": 3818,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-4-estatistica/aula-07-regressao-linear/index.html",
+      "gh_pages_length": 5566,
+      "local_length": 4256,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-4-estatistica/aula-08-estatistica-na-pratica/index.html",
+      "gh_pages_length": 5213,
+      "local_length": 3943,
+      "matched": true
+    },
+    {
+      "path": "matematica-aplicada-a-financas/modulo-4-estatistica/index.html",
+      "gh_pages_length": 1616,
+      "local_length": 2066,
+      "matched": true
+    },
+    {
+      "path": "noticias/index.html",
+      "gh_pages_length": 286,
+      "local_length": 311,
+      "matched": true
+    },
+    {
+      "path": "preparacao-brhsic/index.html",
+      "gh_pages_length": 817,
+      "local_length": 973,
+      "matched": true
+    },
+    {
+      "path": "sobre/index.html",
+      "gh_pages_length": 483,
+      "local_length": 493,
+      "matched": true
+    }
+  ],
+  "structural_differences": [],
+  "missing_sections_or_text": []
+}
