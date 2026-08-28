@@ -1,51 +1,50 @@
 # Handoff Briefing
 
 ## Environment Metadata
-- **Timestamp:** 2026-08-28T01:20:00-03:00
-- **Git Branch:** `main`
-- **Last Commit:** `176f8c1 - chore(auto-sync): atualiza arquivos locais [2026-08-28 01:18:31]`
+- **Timestamp:** 2026-08-28T11:28:30-03:00
+- **Git Branch:** `inovador` (sandbox de features inovadoras / Suíte BRHSIC)
+- **Last Commit:** `c5feb48 - chore(auto-sync): atualiza arquivos locais [2026-08-28 11:22:29]`
 - **Uncommitted Changes:** None (working tree clean, 100% in sync with GitHub origin)
 
 ## Goal & Objective
-Modernização do Brasil Finanças Atlas (BFA): Restauração completa de 100% dos exercícios originais (292 questões ativas), isolamento do Ticker de Índices na Home, implementação de caixinhas expansíveis interativas (`???`), sumários executivos de módulos com matriz de competências e barra de roteiro rápido de aulas.
+Consolidação do **Manual Oficial de Administração do Administrador Chefe (`admin_chief`)** e ativação da branch **`inovador`** como ambiente experimental de novos recursos, restaurando e rodando a **Suíte Olímpica BRHSIC** (Simulador de Alocação de Carteira de Investimentos, Simulados Oficiais com Timer, Ranking Leaderboard e Badges).
 
 ## Current Status
 - **Completed in this session:**
-  - Resolução definitiva do limite de 5 questões: todas as 17 6ªs questões dos Módulos 3 e 4 de Matemática foram resgatadas do histórico e convertidas no padrão Khan Academy (162 questões em Matemática e 130 em Finanças, totalizando 292 questões).
-  - Ticker de Índices Financeiros (`MarketTickerRibbon`) removido do layout global (`NavbarFooter.jsx`) e ancorado exclusivamente no Hero da Home (`Home.jsx`).
-  - Implementado suporte nativo a caixinhas colapsáveis interativas (`??? type "Título"`) em `LessonContent.jsx` com chevron animado, KaTeX interno e estilos em `components.css` (`math`, `tip`, `warning`, `solution`, `note`).
-  - Sumário Executivo do Módulo implementado em `DisciplinaOverview.jsx` com carga horária, progresso dinâmico e matriz de 3 competências práticas por módulo.
-  - Barra de Roteiro Rápido (*Quick TOC*) adicionada em `AulaPage.jsx` com rolagem suave entre Teoria, Quiz e Fórum.
-  - Auditoria comparativa e relatório forense gerado (`deep-report-original-vs-plataforma.md`) comprovando 100% de integridade com o site original do GitHub Pages.
-  - Código mesclado e enviado com sucesso ao branch `main` com 29 PASS na compilação do Babel.
+  - Criação do documento oficial [`MANUAL_ADMIN_CHIEF.md`](file:///C:/codigos/bfa-main/MANUAL_ADMIN_CHIEF.md) no repositório com o passo a passo completo de cadastro no Supabase Auth e promoção via SQL, além de vincular a documentação no `README.md`.
+  - Mapeamento e explicação de todas as branches locais e remotas para o usuário.
+  - Ativação e sincronização da branch `inovador` baseada no `main` mais recente.
+  - Resgate do histórico Git dos 5 arquivos da Suíte Olímpica BRHSIC:
+    - `plataforma/src/components/SimuladorCarteiraInvestimentos.jsx` (770 linhas, 6 classes de ativos, projeção patrimonial, renda passiva, volatilidade e Sharpe ratio)
+    - `plataforma/src/components/SimuladosEngine.jsx` (784 linhas, provas cronometradas Nível 1, 2 e Geral)
+    - `plataforma/src/components/RankingLeaderboard.jsx`
+    - `plataforma/src/components/BadgesConquistas.jsx`
+    - `plataforma/src/data/simuladosData.js`
+  - Registro de rotas e scripts em `index.html`, `App.jsx`, `NavbarFooter.jsx` e `ExtraPages.jsx` (`#/simulador-carteira`, `#/simulados`, `#/ranking`, `#/conquistas`).
+  - Validação de 100% dos scripts no Babel (zero erros) e servidor local ativo em `http://localhost:8080`.
 
 - **In-Progress:**
-  - Nenhum sub-task pendente; plataforma em estado de produção estável no branch `main`.
+  - Branch `inovador` ativa para testes de novos simuladores e recursos interativos.
+  - Branch `main` estável com a versão oficial de produção.
 
 - **Blockers / Known Issues:**
-  - Nenhum. Todos os 29 scripts JSX/JS compilam com 100% de sucesso e o servidor local roda na porta 8080.
+  - Nenhum. Todos os componentes compilam limpos e estão disponíveis para navegação.
 
 ## Decisions Made (Locked)
-- **Extinção de Textos Estáticos de MiniQuiz:** Todo exercício reside exclusivamente no motor interativo Khan Academy no rodapé da aula.
-- **Ticker de Cotações:** Exclusivo da Home Page (Hero); nunca em páginas internas.
-- **Caixinhas Expansíveis:** Suporte nativo a `???` em Markdown para notas, demonstrações matemáticas e dicas olímpicas.
+- **Separação de Papéis de Branch:** A branch `main` é a versão oficial de produção (sóbria, editorial e estável). A branch `inovador` é o laboratório de experimentação de features interativas e simuladores complexos (como o Simulador de Carteira BRHSIC).
+- **Manual do Admin:** Promoção a `admin_chief` é restrita exclusivamente ao SQL no Supabase para manter segurança máxima contra escalada de privilégios.
 
 ## Failed Approaches & Anti-Patterns (Do Not Retry)
-- **Teto Artificial de 5 Questões:** Nunca truncar listas de exercícios a 5 itens fixos; sempre respeitar a totalidade dos problemas de cada lição.
-- **Renderização Global de Widgets de Home:** Componentes visuais voltados ao Hero (como tickers e visualizadores) não devem ser colocados no layout global de `NavbarFooter.jsx`.
-
-## Extracted User Preferences & Project Learnings
-- **Zero Emojis e Zero AI Slop:** Proibição estrita de emojis decorativos aleatórios; manter tom sóbrio e técnico.
-- **Espaçamento Numérico:** Margens de respiro em KaTeX inline (`.bfa-math-inline`) e espaçamento obrigatório em `R$ 1.000`.
-- **Interatividade Focada:** Caixinhas expansíveis (`details`) e sumários de módulo agregam valor sem poluir visualmente a leitura.
+- Não sobrescrever `main` com recursos experimentais sem validação prévia na branch `inovador`.
+- Não criar botões na UI pública para promoção de privilégios administrativos.
 
 ## Attention Routing (Key Pointers)
-- **Active Plans:** [plan-recursos-interativos.md](file:///C:/Users/User/.gemini/antigravity-cli/brain/83a27f3b-0f11-40ba-ae31-d92bcf98c536/plan-recursos-interativos.md), [deep-report-original-vs-plataforma.md](file:///C:/Users/User/.gemini/antigravity-cli/brain/83a27f3b-0f11-40ba-ae31-d92bcf98c536/deep-report-original-vs-plataforma.md)
 - **Primary Code Files:**
-  - `plataforma/src/components/LessonContent.jsx` (renderizador de markdown, fórmulas e caixas expansíveis)
-  - `plataforma/src/pages/DisciplinaOverview.jsx` (visão geral dos módulos e matriz de competências)
-  - `plataforma/src/pages/AulaPage.jsx` (sala de aula, Quick TOC e navegação)
-  - `plataforma/src/data/matematicaData.js` e `financasData.js` (banco de 292 questões)
+  - `plataforma/src/components/SimuladorCarteiraInvestimentos.jsx` (Simulador de carteira de investimentos com 6 ativos e cálculo de Sharpe)
+  - `plataforma/src/components/SimuladosEngine.jsx` (Motor de simulados com cronômetro)
+  - `plataforma/src/data/simuladosData.js` (Banco de questões de simulados da olimpíada)
+  - `plataforma/src/pages/ExtraPages.jsx` (Hub de preparação BRHSIC com links dos simuladores)
+  - `MANUAL_ADMIN_CHIEF.md` (Manual oficial do administrador chefe)
 
 ## Immediate Next Step
-- Para próximas sessões: Continuar enriquecendo aulas com caixinhas interativas adicionais (`??? tip` e `??? math`) nos módulos de Finanças e Estatística ou expandir recursos do simulador conforme demanda do usuário.
+- Apresentar o Simulador de Carteira BRHSIC aos colegas via `http://localhost:8080/#/simulador-carteira` ou testar novas funcionalidades na branch `inovador`.
