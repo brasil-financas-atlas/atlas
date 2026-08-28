@@ -43,6 +43,58 @@ function App() {
       return <BrhsicPage />;
     }
 
+    if (currentPath === '/simulador-carteira' || currentPath === '/simulador') {
+      return (
+        <div>
+          <section className="hero-gradient" style={{ padding: '4rem 0 3rem 0', position: 'relative' }}>
+            <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.4 }} />
+            <div className="bfa-container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+              <span className="mono-tag" style={{ color: '#FBBF24', background: 'rgba(251, 191, 36, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(251, 191, 36, 0.35)', fontWeight: 800 }}>
+                OLIMPÍADA DE FINANÇAS · BRHSIC
+              </span>
+              <h1 className="headline-punch" style={{ fontSize: '2.75rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.75rem', letterSpacing: '-0.03em' }}>
+                Simulador de Alocação de Carteira
+              </h1>
+              <p style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.85)', marginTop: '0.5rem', maxWidth: '720px', margin: '0.5rem auto 0 auto' }}>
+                Modele aportes, balanceamento entre 6 classes de ativos do mercado brasileiro, projeção de renda passiva mensal e cálculo de Sharpe da carteira.
+              </p>
+            </div>
+          </section>
+          <SimuladorCarteiraInvestimentos />
+        </div>
+      );
+    }
+
+    if (currentPath === '/simulados') {
+      return (
+        <div>
+          <section className="hero-gradient" style={{ padding: '4rem 0 3rem 0', position: 'relative' }}>
+            <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.4 }} />
+            <div className="bfa-container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+              <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(52, 211, 153, 0.35)', fontWeight: 800 }}>
+                TREINAMENTO OFICIAL DE PROVAS
+              </span>
+              <h1 className="headline-punch" style={{ fontSize: '2.75rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.75rem', letterSpacing: '-0.03em' }}>
+                Simulados com Cronômetro BRHSIC
+              </h1>
+              <p style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.85)', marginTop: '0.5rem', maxWidth: '720px', margin: '0.5rem auto 0 auto' }}>
+                Resolva baterias de questões cronometradas por fase (Nível 1, Fase Final e Prova Geral) com pontuação instantânea e gabarito passo a passo.
+              </p>
+            </div>
+          </section>
+          <SimuladosEngine />
+        </div>
+      );
+    }
+
+    if (currentPath === '/ranking') {
+      return <RankingLeaderboard />;
+    }
+
+    if (currentPath === '/conquistas') {
+      return <BadgesConquistas />;
+    }
+
     if (currentPath === '/exercicios') {
       return <Exercicios />;
     }
