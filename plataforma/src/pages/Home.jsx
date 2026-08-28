@@ -185,49 +185,28 @@ function Home() {
   return (
     <div>
       {/* ── 1. Hero Section Centralizado e Imponente ─────────────────────── */}
-      <section className="hero-gradient" style={{ position: 'relative', overflow: 'hidden', padding: '6.5rem 0 5.5rem 0' }}>
+      <section className="hero-gradient" style={{ position: 'relative', overflow: 'hidden', padding: '6rem 0 5rem 0' }}>
         <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.35 }} />
         
-        <div className="bfa-container" style={{ position: 'relative', zIndex: 1, maxWidth: '940px', margin: '0 auto', textAlign: 'center' }}>
+        <div className="bfa-container" style={{ position: 'relative', zIndex: 1, maxWidth: '920px', margin: '0 auto', textAlign: 'center' }}>
           
-          {/* Shimmer Announcement Pill */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
-            <a
-              href="#/preparacao-brhsic"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                textDecoration: 'none',
-                color: 'rgba(255, 255, 255, 0.95)',
-                background: 'rgba(255, 255, 255, 0.08)',
-                padding: '0.45rem 1.15rem',
-                borderRadius: 'var(--radius-full)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                fontWeight: 700,
-                fontSize: '0.82rem',
-                backdropFilter: 'blur(8px)',
-                transition: 'all 0.2s ease'
-              }}
-              className="card-lift"
-            >
-              <span style={{ color: '#34D399', fontWeight: 800 }}>✨ Grade 2026</span>
-              <span style={{ color: 'rgba(255, 255, 255, 0.35)' }}>·</span>
-              <span>55 Aulas Estruturadas + Guia Oficial BRHSIC →</span>
-            </a>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
+            <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.95)', background: 'rgba(255, 255, 255, 0.12)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255, 255, 255, 0.25)', fontWeight: 700 }}>
+              v2.0 · Plataforma Aberta
+            </span>
+            <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(52, 211, 153, 0.35)', fontWeight: 700 }}>
+              100% Gratuito
+            </span>
           </div>
 
-          {/* Headline Contrast Stacking */}
-          <EditableBlock id="home-hero-title" as="h1" className="headline-punch" style={{ fontSize: '3.6rem', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.035em', margin: '0 auto' }}>
-            <span style={{ color: '#FFFFFF', display: 'block' }}>O rigor da matemática financeira.</span>
-            <span style={{ color: '#34D399', display: 'block', marginTop: '0.25rem' }}>O poder do mercado de capitais.</span>
+          <EditableBlock id="home-hero-title" as="h1" className="headline-punch" style={{ fontSize: '3.6rem', fontWeight: 800, lineHeight: 1.12, color: '#FFFFFF', letterSpacing: '-0.035em', margin: '0 auto' }}>
+            O rigor da matemática financeira. O poder do mercado de capitais.
           </EditableBlock>
 
           <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.2rem', lineHeight: 1.7, color: 'rgba(241, 245, 249, 0.9)', marginTop: '1.25rem', maxWidth: '780px', margin: '1.25rem auto 0 auto' }}>
             Uma suíte pedagógica aberta de padrão profissional com 55 aulas estruturadas, simuladores de juros e guia prático de Equity Research para o ensino médio e olimpíadas.
           </EditableBlock>
 
-          {/* Primary Action Buttons */}
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '2rem' }}>
             <a href="#/matematica" className="bfa-btn bfa-btn--verde" style={{ padding: '0.9rem 1.85rem', fontSize: '1rem', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, boxShadow: '0 10px 25px -5px rgba(5, 150, 105, 0.4)' }}>
               Começar Trilha de Matemática →
@@ -237,45 +216,14 @@ function Home() {
             </a>
           </div>
 
-          {/* Quick Concept Shortcuts Bar */}
-          <div style={{ marginTop: '2.5rem', maxWidth: '720px', margin: '2.5rem auto 0 auto', background: 'rgba(15, 23, 42, 0.65)', backdropFilter: 'blur(12px)', padding: '1rem 1.25rem', borderRadius: 'var(--radius-lg)', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.72rem', color: '#94A3B8', fontWeight: 800, marginBottom: '0.65rem', letterSpacing: '0.05em', justifyContent: 'center' }}>
-              <span>🔍 ATALHOS RÁPIDOS DE CONCEITOS & FÓRMULAS</span>
-            </div>
-            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <a href="#/matematica/juros-compostos/juros-compostos-fundamentos" style={{ padding: '0.35rem 0.75rem', fontSize: '0.75rem', fontWeight: 700, borderRadius: 'var(--radius-full)', background: 'rgba(37, 99, 235, 0.15)', color: '#60A5FA', border: '1px solid rgba(37, 99, 235, 0.3)', textDecoration: 'none' }}>
-                📐 Juros Compostos
-              </a>
-              <a href="#/matematica/sistemas-amortizacao/tabela-sac-price" style={{ padding: '0.35rem 0.75rem', fontSize: '0.75rem', fontWeight: 700, borderRadius: 'var(--radius-full)', background: 'rgba(37, 99, 235, 0.15)', color: '#60A5FA', border: '1px solid rgba(37, 99, 235, 0.3)', textDecoration: 'none' }}>
-                🏦 SAC vs Price
-              </a>
-              <a href="#/financas/renda-fixa/tesouro-direto-titulos" style={{ padding: '0.35rem 0.75rem', fontSize: '0.75rem', fontWeight: 700, borderRadius: 'var(--radius-full)', background: 'rgba(5, 150, 105, 0.15)', color: '#34D399', border: '1px solid rgba(5, 150, 105, 0.3)', textDecoration: 'none' }}>
-                📈 Tesouro Selic & IPCA+
-              </a>
-              <a href="#/preparacao-brhsic" style={{ padding: '0.35rem 0.75rem', fontSize: '0.75rem', fontWeight: 700, borderRadius: 'var(--radius-full)', background: 'rgba(217, 119, 6, 0.15)', color: '#FBBF24', border: '1px solid rgba(217, 119, 6, 0.3)', textDecoration: 'none' }}>
-                🏆 Valuation DCF & WACC
-              </a>
-            </div>
-          </div>
-
-          {/* Live Telemetry Bar Centered */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1.25rem', marginTop: '2.5rem', paddingTop: '1.75rem', borderTop: '1px solid rgba(255, 255, 255, 0.12)' }}>
-            <div>
-              <div className="tabular-numbers" style={{ fontSize: '1.5rem', fontWeight: 800, color: '#FFFFFF' }}>55 Aulas</div>
-              <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'rgba(241, 245, 249, 0.8)' }}>Matemática & Finanças</div>
-            </div>
-            <div>
-              <div className="tabular-numbers" style={{ fontSize: '1.5rem', fontWeight: 800, color: '#34D399' }}>10,50% a.a.</div>
-              <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'rgba(241, 245, 249, 0.8)' }}>Taxa Selic Oficial</div>
-            </div>
-            <div>
-              <div className="tabular-numbers" style={{ fontSize: '1.5rem', fontWeight: 800, color: '#FBBF24' }}>+6,01% a.a.</div>
-              <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'rgba(241, 245, 249, 0.8)' }}>Juro Real Líquido</div>
-            </div>
-            <div>
-              <div className="tabular-numbers" style={{ fontSize: '1.5rem', fontWeight: 800, color: '#38BDF8' }}>SHA-256</div>
-              <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'rgba(241, 245, 249, 0.8)' }}>Certificado Verificável</div>
-            </div>
+          {/* Stats Bar Centered */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1.25rem', marginTop: '3.25rem', paddingTop: '2rem', borderTop: '1px solid rgba(255, 255, 255, 0.12)' }}>
+            {stats.map((s) => (
+              <div key={s.label}>
+                <div className="tabular-numbers" style={{ fontSize: '1.6rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>{s.value}</div>
+                <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'rgba(241, 245, 249, 0.8)', marginTop: '2px' }}>{s.label}</div>
+              </div>
+            ))}
           </div>
 
         </div>
