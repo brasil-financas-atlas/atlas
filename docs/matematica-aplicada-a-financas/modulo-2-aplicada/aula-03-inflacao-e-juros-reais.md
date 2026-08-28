@@ -10,11 +10,18 @@ Se seu investimento rendeu 12% e a inflação foi 7%, você não ficou 12% mais 
 
 ## Conceitos essenciais
 
-| Conceito | Significado simples |
-|----------|---------------------|
-| Inflação | Alta geral dos preços ao longo do tempo |
-| IPCA | Índice oficial de inflação do Brasil (medido pelo IBGE) |
-| Rentabilidade nominal | Rendimento em reais, antes de descontar inflação |
+| Conceito | Significado## Fórmulas
+ 
+ | Para calcular | Use |
+ |---------------|-----|
+ | Juro real (exato — Fisher) | $(1 + i_{real}) = \dfrac{1 + i_{nominal}}{1 + IPCA}$ |
+ | Juro real (aproximação rápida) | $i_{real} \approx i_{nominal} - IPCA$ |
+ | Poder de compra futuro | $VF_{real} = \dfrac{VF_{nominal}}{(1 + IPCA)^t}$ |
+ 
+??? warning "⚠️ Pegadinha Clássica de Mercado: Juros Reais não são a subtração simples!"
+    Muitos investidores calculam o juro real subtraindo a inflação ($i_{real} \approx i_{nominal} - IPCA$).
+    Essa aproximação gera distorções em cenários de juros ou inflação elevados. A **Equação de Fisher rigorosa** exige a divisão dos fatores: $(1 + i_{real}) = (1 + i_{nominal}) / (1 + IPCA)$.
+em reais, antes de descontar inflação |
 | Rentabilidade real | Rendimento depois de descontar a inflação |
 | Poder de compra | Quantidade de bens que seu dinheiro consegue comprar |
 | Juros reais | Taxa de juros que já considera a inflação |
