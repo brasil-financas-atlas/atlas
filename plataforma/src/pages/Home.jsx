@@ -1,189 +1,83 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
 /* ==========================================================================
-   Hero Visual: Visualizador Gráfico de Convexidade & Curvas Exponenciais
+   Hero Visual: Showcase em Camadas dos Recursos da Plataforma (Stripe / Linear)
+   Sem números ou fórmulas pesadas — Pura elegância visual e clareza didática
    ========================================================================== */
-function HeroInteractiveCurveCanvas() {
-  const [horizonYears, setHorizonYears] = useState(20);
-  const [hoverIndex, setHoverIndex] = useState(null);
-
-  const initialCapital = 10000;
-  const nominalRate = 0.105; // 10.5% Selic
-  const inflationRate = 0.042; // 4.2% IPCA
-
-  // Generate data points
-  const points = useMemo(() => {
-    const data = [];
-    const steps = 20;
-    for (let i = 0; i <= steps; i++) {
-      const t = (i / steps) * horizonYears;
-      const compound = initialCapital * Math.pow(1 + nominalRate, t);
-      const linear = initialCapital * (1 + nominalRate * t);
-      const real = initialCapital * Math.pow(1 + (nominalRate - inflationRate), t);
-      data.push({
-        year: t.toFixed(1),
-        compound: Math.round(compound),
-        linear: Math.round(linear),
-        real: Math.round(real),
-        gainPct: Math.round(((compound - initialCapital) / initialCapital) * 100)
-      });
-    }
-    return data;
-  }, [horizonYears]);
-
-  const maxVal = points[points.length - 1].compound;
-  const svgWidth = 440;
-  const svgHeight = 220;
-  const padding = { top: 20, right: 20, bottom: 30, left: 10 };
-
-  const getCoordinates = (val, idx) => {
-    const x = padding.left + (idx / (points.length - 1)) * (svgWidth - padding.left - padding.right);
-    const y = svgHeight - padding.bottom - (val / maxVal) * (svgHeight - padding.top - padding.bottom);
-    return { x, y };
-  };
-
-  const compoundPath = points.map((p, i) => {
-    const { x, y } = getCoordinates(p.compound, i);
-    return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
-  }).join(' ');
-
-  const compoundArea = `${compoundPath} L ${svgWidth - padding.right} ${svgHeight - padding.bottom} L ${padding.left} ${svgHeight - padding.bottom} Z`;
-
-  const linearPath = points.map((p, i) => {
-    const { x, y } = getCoordinates(p.linear, i);
-    return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
-  }).join(' ');
-
-  const activePoint = hoverIndex !== null ? points[hoverIndex] : points[points.length - 1];
-  const activeCoord = hoverIndex !== null 
-    ? getCoordinates(activePoint.compound, hoverIndex) 
-    : getCoordinates(activePoint.compound, points.length - 1);
-
+function HeroResourcesShowcase() {
   return (
-    <div className="bfa-tech-card" style={{ background: 'rgba(9, 13, 22, 0.95)', border: '1px solid rgba(255, 255, 255, 0.12)', boxShadow: '0 30px 70px -15px rgba(0, 0, 0, 0.7)', padding: '1.5rem 1.75rem', position: 'relative' }}>
-      
-      {/* Top Header Controls */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10B981', display: 'inline-block', boxShadow: '0 0 10px #10B981' }} />
-            <span className="mono-tag" style={{ color: '#E2E8F0', fontWeight: 800, fontSize: '0.75rem' }}>
-              SIMULADOR DE CONVEXIDADE & JUROS
+    <div className="bfa-hero-showcase">
+      {/* Luz ambiente difusa no fundo */}
+      <div className="bfa-hero-showcase-glow" />
+
+      {/* Recurso 1: Matemática Quantitativa */}
+      <div className="bfa-showcase-card bfa-float-1">
+        <div style={{ width: '48px', height: '48px', minWidth: '48px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(37, 99, 235, 0.05) 100%)', border: '1px solid rgba(59, 130, 246, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#60A5FA', fontSize: '1.4rem' }}>
+          📐
+        </div>
+        <div style={{ flex: 1 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#60A5FA', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
+              TRILHA 01 · MATEMÁTICA
+            </span>
+            <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.68rem', background: 'rgba(255, 255, 255, 0.08)', padding: '0.15rem 0.45rem', borderRadius: '4px' }}>
+              29 Aulas
             </span>
           </div>
-          <span style={{ fontSize: '0.72rem', color: '#94A3B8' }}>Passe o mouse na curva para inspecionar</span>
-        </div>
-
-        {/* Horizon Selector */}
-        <div style={{ display: 'flex', background: 'rgba(255, 255, 255, 0.05)', padding: '3px', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-          {[10, 20, 30].map((yr) => (
-            <button
-              key={yr}
-              type="button"
-              onClick={() => setHorizonYears(yr)}
-              style={{
-                background: horizonYears === yr ? 'rgba(52, 211, 153, 0.2)' : 'transparent',
-                color: horizonYears === yr ? '#34D399' : '#94A3B8',
-                border: 'none',
-                padding: '0.25rem 0.6rem',
-                borderRadius: '4px',
-                fontSize: '0.72rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                transition: 'all 0.15s ease'
-              }}
-            >
-              {yr} Anos
-            </button>
-          ))}
+          <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#FFFFFF', margin: '0 0 0.2rem 0', letterSpacing: '-0.02em' }}>
+            Modelagem Quantitativa
+          </h4>
+          <p style={{ fontSize: '0.8rem', color: 'rgba(241, 245, 249, 0.75)', margin: 0, lineHeight: 1.4 }}>
+            Geometria de juros contínuos, progressões e sistemas de amortização.
+          </p>
         </div>
       </div>
 
-      {/* Floating HUD Tag (Live Inspection) */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 'var(--radius-md)', padding: '0.85rem 1rem', marginBottom: '1rem' }}>
-        <div>
-          <span style={{ fontSize: '0.68rem', color: '#94A3B8', display: 'block', fontWeight: 600 }}>PONTO INSPECCIONADO ({activePoint.year} ANOS)</span>
-          <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: '#34D399' }}>
-            R$ {activePoint.compound.toLocaleString('pt-BR')}
+      {/* Recurso 2: Finanças & Mercado de Capitais */}
+      <div className="bfa-showcase-card bfa-float-2">
+        <div style={{ width: '48px', height: '48px', minWidth: '48px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.05) 100%)', border: '1px solid rgba(52, 211, 153, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#34D399', fontSize: '1.4rem' }}>
+          📈
+        </div>
+        <div style={{ flex: 1 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#34D399', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
+              TRILHA 02 · FINANÇAS
+            </span>
+            <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.68rem', background: 'rgba(255, 255, 255, 0.08)', padding: '0.15rem 0.45rem', borderRadius: '4px' }}>
+              26 Aulas
+            </span>
           </div>
+          <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#FFFFFF', margin: '0 0 0.2rem 0', letterSpacing: '-0.02em' }}>
+            Mercado de Capitais & Bolsa
+          </h4>
+          <p style={{ fontSize: '0.8rem', color: 'rgba(241, 245, 249, 0.75)', margin: 0, lineHeight: 1.4 }}>
+            Títulos soberanos, fundos imobiliários e análise contábil de empresas.
+          </p>
         </div>
-        <div style={{ textAlign: 'right' }}>
-          <span style={{ fontSize: '0.68rem', color: '#94A3B8', display: 'block', fontWeight: 600 }}>GANHO ACUMULADO</span>
-          <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: '#FBBF24' }}>
-            +{activePoint.gainPct}%
+      </div>
+
+      {/* Recurso 3: Preparação BRHSIC & Equity Research */}
+      <div className="bfa-showcase-card bfa-float-3">
+        <div style={{ width: '48px', height: '48px', minWidth: '48px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%)', border: '1px solid rgba(251, 191, 36, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FBBF24', fontSize: '1.4rem' }}>
+          🏆
+        </div>
+        <div style={{ flex: 1 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#FBBF24', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
+              COMPETIÇÃO NACIONAL
+            </span>
+            <span className="mono-tag" style={{ color: '#FBBF24', fontSize: '0.68rem', background: 'rgba(245, 158, 11, 0.15)', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>
+              BRHSIC 2026
+            </span>
           </div>
+          <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#FFFFFF', margin: '0 0 0.2rem 0', letterSpacing: '-0.02em' }}>
+            Guia de Equity Research
+          </h4>
+          <p style={{ fontSize: '0.8rem', color: 'rgba(241, 245, 249, 0.75)', margin: 0, lineHeight: 1.4 }}>
+            Teses de investimento profissional, valuation DCF e defesa em banca.
+          </p>
         </div>
       </div>
-
-      {/* SVG Canvas Chart */}
-      <div style={{ position: 'relative', width: '100%', height: `${svgHeight}px`, overflow: 'hidden' }}>
-        <svg
-          viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-          style={{ width: '100%', height: '100%', overflow: 'visible' }}
-          onMouseMove={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const normalizedX = (mouseX / rect.width) * svgWidth;
-            const clampedX = Math.max(padding.left, Math.min(svgWidth - padding.right, normalizedX));
-            const ratio = (clampedX - padding.left) / (svgWidth - padding.left - padding.right);
-            const index = Math.round(ratio * (points.length - 1));
-            setHoverIndex(index);
-          }}
-          onMouseLeave={() => setHoverIndex(null)}
-        >
-          <defs>
-            <linearGradient id="heroCompoundGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#10B981" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#10B981" stopOpacity="0.0" />
-            </linearGradient>
-          </defs>
-
-          {/* Grid lines */}
-          <line x1={padding.left} y1={svgHeight - padding.bottom} x2={svgWidth - padding.right} y2={svgHeight - padding.bottom} stroke="rgba(255, 255, 255, 0.12)" strokeWidth="1" />
-          <line x1={padding.left} y1={padding.top} x2={svgWidth - padding.right} y2={padding.top} stroke="rgba(255, 255, 255, 0.05)" strokeDasharray="3 3" strokeWidth="1" />
-          <line x1={padding.left} y1={(padding.top + svgHeight - padding.bottom) / 2} x2={svgWidth - padding.right} y2={(padding.top + svgHeight - padding.bottom) / 2} stroke="rgba(255, 255, 255, 0.05)" strokeDasharray="3 3" strokeWidth="1" />
-
-          {/* Linear Growth Path (Dashed Amber) */}
-          <path d={linearPath} fill="none" stroke="#F59E0B" strokeWidth="1.75" strokeDasharray="4 4" opacity="0.6" />
-
-          {/* Compound Area */}
-          <path d={compoundArea} fill="url(#heroCompoundGrad)" />
-
-          {/* Compound Growth Path (Solid Glowing Emerald) */}
-          <path d={compoundPath} fill="none" stroke="#10B981" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" />
-
-          {/* Inspection Vertical Line */}
-          {hoverIndex !== null && (
-            <line
-              x1={activeCoord.x}
-              y1={padding.top}
-              x2={activeCoord.x}
-              y2={svgHeight - padding.bottom}
-              stroke="rgba(255, 255, 255, 0.3)"
-              strokeDasharray="2 2"
-              strokeWidth="1"
-            />
-          )}
-
-          {/* Active Glowing Point */}
-          <circle cx={activeCoord.x} cy={activeCoord.y} r="6" fill="#10B981" stroke="#FFFFFF" strokeWidth="2" />
-          <circle cx={activeCoord.x} cy={activeCoord.y} r="12" fill="none" stroke="#10B981" strokeWidth="1" opacity="0.5" />
-        </svg>
-      </div>
-
-      {/* Legend Footer */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)', fontSize: '0.72rem', color: '#94A3B8' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-            <span style={{ width: '8px', height: '2px', background: '#10B981', display: 'inline-block' }} /> Juros Compostos
-          </span>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-            <span style={{ width: '8px', height: '2px', background: '#F59E0B', display: 'inline-block' }} /> Linear Simples
-          </span>
-        </div>
-        <span style={{ color: '#34D399', fontWeight: 700 }}>Convexidade Real</span>
-      </div>
-
     </div>
   );
 }
@@ -395,7 +289,7 @@ function Home() {
               </EditableBlock>
 
               <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.15rem', lineHeight: 1.65, color: 'rgba(241, 245, 249, 0.9)', marginTop: '0.5rem' }}>
-                Uma suíte pedagógica aberta de padrão profissional com 55 aulas estruturadas, visualizações interativas de curvas exponenciais e guia prático de Equity Research para o ensino médio e olimpíadas.
+                Uma suíte pedagógica aberta de padrão profissional com 55 aulas estruturadas, visualizações conceituais e guia prático de Equity Research para o ensino médio e olimpíadas.
               </EditableBlock>
 
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1.5rem' }}>
@@ -418,9 +312,9 @@ function Home() {
               </div>
             </div>
 
-            {/* Coluna Direita: Visualizador de Curva Exponencial & Convexidade */}
+            {/* Coluna Direita: Showcase em Camadas dos Recursos da Plataforma */}
             <div className="bfa-split-col--visual">
-              <HeroInteractiveCurveCanvas />
+              <HeroResourcesShowcase />
             </div>
 
           </div>
