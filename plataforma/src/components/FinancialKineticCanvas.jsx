@@ -1,379 +1,555 @@
-const { useState } = React;
+const { useState, useEffect, useRef } = React;
 
 /* ==========================================================================
-   STATIC ARTWORK 1: Infográfico Arquitetônico de Convexidade (Stripe Press)
+   VISUAL ENGINE 1: Topografia de Ondas Exponenciais (Kinetic Waves)
    ========================================================================== */
-function StaticArtworkConvexity() {
-  return (
-    <svg viewBox="0 0 500 380" style={{ width: '100%', height: '100%', display: 'block' }}>
-      <defs>
-        <linearGradient id="curveGlow1" x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0%" stopColor="#10B981" stopOpacity="0.8" />
-          <stop offset="60%" stopColor="#06B6D4" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#F59E0B" stopOpacity="1" />
-        </linearGradient>
-        <linearGradient id="areaFill1" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#10B981" stopOpacity="0.25" />
-          <stop offset="100%" stopColor="#10B981" stopOpacity="0.0" />
-        </linearGradient>
-        <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#34D399" stopOpacity="0.8" />
-          <stop offset="100%" stopColor="#34D399" stopOpacity="0.0" />
-        </radialGradient>
-      </defs>
+function renderWavesEngine(ctx, width, height, time, mouse) {
+  ctx.globalCompositeOperation = 'screen';
+  const numLines = 26;
+  const stepX = width / 34;
+  const mouseInfluenceX = (mouse.x / width - 0.5) * 50;
+  const mouseInfluenceY = (mouse.y / height - 0.5) * 40;
 
-      {/* Dark Isometric Grid Background */}
-      <g opacity="0.15" stroke="#94A3B8" strokeWidth="0.75">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <line key={`h-${i}`} x1="40" y1={40 + i * 26} x2="460" y2={40 + i * 26} strokeDasharray="3 3" />
-        ))}
-        {Array.from({ length: 14 }).map((_, i) => (
-          <line key={`v-${i}`} x1={40 + i * 32} y1="40" x2={40 + i * 32} y2="330" strokeDasharray="3 3" />
-        ))}
-      </g>
+  for (let i = 0; i < numLines; i++) {
+    const lineProgress = i / numLines;
+    const baseY = height * 0.22 + lineProgress * (height * 0.68) + mouseInfluenceY * (1 - lineProgress);
 
-      {/* Coordinate Axes */}
-      <line x1="40" y1="330" x2="470" y2="330" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-      <line x1="40" y1="30" x2="40" y2="330" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
+    ctx.beginPath();
+    const lineGrad = ctx.createLinearGradient(0, 0, width, 0);
+    if (i % 3 === 0) {
+      lineGrad.addColorStop(0, 'rgba(16, 185, 129, 0.0)');
+      lineGrad.addColorStop(0.35, 'rgba(16, 185, 129, 0.65)');
+      lineGrad.addColorStop(0.7, 'rgba(6, 182, 212, 0.8)');
+      lineGrad.addColorStop(1, 'rgba(245, 158, 11, 0.2)');
+    } else if (i % 3 === 1) {
+      lineGrad.addColorStop(0, 'rgba(6, 182, 212, 0.0)');
+      lineGrad.addColorStop(0.4, 'rgba(6, 182, 212, 0.7)');
+      lineGrad.addColorStop(0.8, 'rgba(16, 185, 129, 0.5)');
+      lineGrad.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+    } else {
+      lineGrad.addColorStop(0, 'rgba(245, 158, 11, 0.0)');
+      lineGrad.addColorStop(0.5, 'rgba(52, 211, 153, 0.45)');
+      lineGrad.addColorStop(0.9, 'rgba(6, 182, 212, 0.35)');
+      lineGrad.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
+    }
 
-      {/* Linear Baseline (Dashed Amber) */}
-      <line x1="40" y1="330" x2="460" y2="170" stroke="#F59E0B" strokeWidth="1.75" strokeDasharray="6 6" opacity="0.6" />
-      <text x="360" y="160" fill="#F59E0B" fontSize="10" fontFamily="var(--font-mono)" opacity="0.8">
-        f(t) = C · (1 + i·t) [Linear]
-      </text>
+    ctx.strokeStyle = lineGrad;
+    ctx.lineWidth = 1.3 + (1 - lineProgress) * 1.5;
 
-      {/* Compounding Exponential Area */}
-      <path
-        d="M 40 330 Q 180 325, 290 220 T 460 50 L 460 330 Z"
-        fill="url(#areaFill1)"
-      />
+    for (let x = -20; x <= width + 20; x += stepX) {
+      const normX = x / width;
+      const expFactor = Math.pow(normX, 2.2) * 55;
+      const wave1 = Math.sin(normX * 5.2 + time * 1.2 + i * 0.18) * (22 + i * 1.1);
+      const wave2 = Math.cos(normX * 8.0 - time * 0.8 + i * 0.12) * (12 + i * 0.8);
+      const distToMouse = Math.hypot(x - mouse.x, baseY - mouse.y);
+      const mouseDisplacement = Math.exp(-distToMouse / 110) * 32;
 
-      {/* Main Exponential Curve */}
-      <path
-        d="M 40 330 Q 180 325, 290 220 T 460 50"
-        fill="none"
-        stroke="url(#curveGlow1)"
-        strokeWidth="3.5"
-        strokeLinecap="round"
-      />
-
-      {/* Secondary Harmonic Wave */}
-      <path
-        d="M 40 310 C 120 280, 200 320, 280 250 S 400 130, 460 90"
-        fill="none"
-        stroke="#06B6D4"
-        strokeWidth="1.5"
-        strokeDasharray="4 2"
-        opacity="0.5"
-      />
-
-      {/* Mathematical Key Points */}
-      <circle cx="290" cy="220" r="14" fill="url(#nodeGlow)" />
-      <circle cx="290" cy="220" r="4.5" fill="#10B981" stroke="#FFFFFF" strokeWidth="1.5" />
-      <text x="305" y="224" fill="#E2E8F0" fontSize="11" fontWeight="700" fontFamily="var(--font-mono)">
-        t* = Inflection Point
-      </text>
-
-      <circle cx="460" cy="50" r="18" fill="url(#nodeGlow)" />
-      <circle cx="460" cy="50" r="5" fill="#F59E0B" stroke="#FFFFFF" strokeWidth="2" />
-      <text x="340" y="45" fill="#34D399" fontSize="12" fontWeight="800" fontFamily="var(--font-mono)">
-        M(t) = C · e^(r·t)
-      </text>
-
-      {/* Tangent Slope Vector */}
-      <line x1="230" y1="260" x2="350" y2="180" stroke="#38BDF8" strokeWidth="1" strokeDasharray="2 2" />
-      <text x="210" y="275" fill="#94A3B8" fontSize="9" fontFamily="var(--font-mono)">
-        dM/dt = r · M(t)
-      </text>
-
-      {/* Bottom Axis Labels */}
-      <text x="40" y="350" fill="#94A3B8" fontSize="10" fontFamily="var(--font-mono)">t = 0</text>
-      <text x="280" y="350" fill="#94A3B8" fontSize="10" fontFamily="var(--font-mono)">t = n/2</text>
-      <text x="445" y="350" fill="#94A3B8" fontSize="10" fontFamily="var(--font-mono)">t = N (Perpetuidade)</text>
-    </svg>
-  );
+      const y = baseY - expFactor + wave1 + wave2 - mouseDisplacement;
+      if (x === -20) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
 }
 
 /* ==========================================================================
-   STATIC ARTWORK 2: Espiral de Fibonacci & Proporção Áurea dos Mercados
+   VISUAL ENGINE 2: Vórtice Gravitacional de Partículas (Fibonacci Vortex)
    ========================================================================== */
-function StaticArtworkFibonacci() {
-  return (
-    <svg viewBox="0 0 500 380" style={{ width: '100%', height: '100%', display: 'block' }}>
-      <defs>
-        <linearGradient id="goldSpiralGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.4" />
-          <stop offset="50%" stopColor="#10B981" stopOpacity="0.8" />
-          <stop offset="100%" stopColor="#06B6D4" stopOpacity="1" />
-        </linearGradient>
-      </defs>
+function renderVortexEngine(ctx, width, height, time, mouse, stateRef) {
+  if (!stateRef.current.vortexParticles || stateRef.current.vortexParticles.length === 0) {
+    stateRef.current.vortexParticles = Array.from({ length: 420 }, () => ({
+      angle: Math.random() * Math.PI * 2,
+      radius: Math.random() * (Math.min(width, height) * 0.55) + 15,
+      speed: Math.random() * 0.015 + 0.008,
+      size: Math.random() * 2.2 + 0.8,
+      z: Math.random() * 2 - 1,
+      color: Math.random() > 0.4 ? '#10B981' : (Math.random() > 0.5 ? '#06B6D4' : '#F59E0B')
+    }));
+  }
 
-      {/* Grid Pattern */}
-      <g opacity="0.1" stroke="#FFFFFF" strokeWidth="0.5">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <circle key={i} cx="260" cy="190" r={20 + i * 22} fill="none" />
-        ))}
-        <line x1="40" y1="190" x2="480" y2="190" />
-        <line x1="260" y1="20" x2="260" y2="360" />
-      </g>
+  ctx.globalCompositeOperation = 'screen';
+  const cx = width * 0.5 + (mouse.x - width * 0.5) * 0.15;
+  const cy = height * 0.5 + (mouse.y - height * 0.5) * 0.15;
 
-      {/* Golden Rectangles Hierarchy */}
-      <rect x="70" y="50" width="360" height="222" fill="none" stroke="rgba(245, 158, 11, 0.4)" strokeWidth="1.5" />
-      <rect x="292" y="50" width="138" height="222" fill="none" stroke="rgba(16, 185, 129, 0.4)" strokeWidth="1.5" />
-      <rect x="292" y="188" width="138" height="84" fill="none" stroke="rgba(6, 182, 212, 0.4)" strokeWidth="1.5" />
-      <rect x="292" y="188" width="54" height="84" fill="none" stroke="rgba(245, 158, 11, 0.3)" strokeWidth="1.2" />
+  stateRef.current.vortexParticles.forEach((p) => {
+    p.angle += p.speed;
+    p.radius += Math.sin(time * 2 + p.angle * 3) * 0.35;
+    if (p.radius < 10) p.radius = Math.min(width, height) * 0.55;
 
-      {/* Golden Spiral Logarithmic Curve */}
-      <path
-        d="M 70 272 A 222 222 0 0 1 292 50 A 138 138 0 0 1 430 188 A 84 84 0 0 1 346 272 A 54 54 0 0 1 292 218 A 32 32 0 0 1 324 186"
-        fill="none"
-        stroke="url(#goldSpiralGrad)"
-        strokeWidth="3.5"
-        strokeLinecap="round"
-      />
+    // Golden spiral exponential distribution
+    const spiralRadius = p.radius * Math.exp(0.04 * Math.sin(p.angle * 2));
+    const x = cx + Math.cos(p.angle) * spiralRadius;
+    const y = cy + Math.sin(p.angle) * spiralRadius * 0.65; // Perspective flattening
 
-      {/* Geometric Fibonacci Annotations */}
-      <text x="85" y="80" fill="#F59E0B" fontSize="16" fontWeight="800" fontFamily="var(--font-mono)">
-        φ = 1,618033...
-      </text>
-      <text x="85" y="100" fill="#94A3B8" fontSize="10" fontFamily="var(--font-mono)">
-        Proporção Áurea & Sequência de Fibonacci
-      </text>
+    const distToMouse = Math.hypot(x - mouse.x, y - mouse.y);
+    const glow = Math.max(0.2, 1 - distToMouse / 220);
 
-      <text x="305" y="175" fill="#34D399" fontSize="12" fontWeight="700" fontFamily="var(--font-mono)">
-        r = a · e^(b·θ)
-      </text>
+    ctx.beginPath();
+    ctx.arc(x, y, p.size * (1 + glow * 0.8), 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = Math.min(1.0, 0.4 + glow * 0.6);
+    ctx.fill();
 
-      <g transform="translate(85, 310)">
-        <text x="0" y="0" fill="#E2E8F0" fontSize="11" fontWeight="700">Sequência Construtiva:</text>
-        <text x="0" y="18" fill="#38BDF8" fontSize="10" fontFamily="var(--font-mono)">
-          1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377...
-        </text>
-      </g>
-    </svg>
-  );
+    // Particle streak trail
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - Math.sin(p.angle) * 8, y + Math.cos(p.angle) * 5);
+    ctx.strokeStyle = p.color;
+    ctx.lineWidth = 0.8;
+    ctx.globalAlpha = 0.25;
+    ctx.stroke();
+  });
 }
 
 /* ==========================================================================
-   STATIC ARTWORK 3: Topografia Isométrica da Estrutura a Termo (Yield Curve)
+   VISUAL ENGINE 3: Rede Geodésica de Mercados 3D (Global Capital Mesh)
    ========================================================================== */
-function StaticArtworkTopography() {
-  return (
-    <svg viewBox="0 0 500 380" style={{ width: '100%', height: '100%', display: 'block' }}>
-      <defs>
-        <linearGradient id="topoGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#06B6D4" stopOpacity="0.4" />
-          <stop offset="50%" stopColor="#10B981" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#F59E0B" stopOpacity="0.6" />
-        </linearGradient>
-      </defs>
+function renderMeshEngine(ctx, width, height, time, mouse, stateRef) {
+  if (!stateRef.current.meshNodes || stateRef.current.meshNodes.length === 0) {
+    const nodes = [];
+    const numNodes = 48;
+    for (let i = 0; i < numNodes; i++) {
+      const phi = Math.acos(-1 + (2 * i) / numNodes);
+      const theta = Math.sqrt(numNodes * Math.PI) * phi;
+      nodes.push({
+        x: Math.cos(theta) * Math.sin(phi),
+        y: Math.sin(theta) * Math.sin(phi),
+        z: Math.cos(phi),
+        origZ: Math.cos(phi)
+      });
+    }
+    stateRef.current.meshNodes = nodes;
+  }
 
-      {/* Isometric Grid Floor */}
-      <g opacity="0.15" stroke="#FFFFFF" strokeWidth="0.75">
-        {Array.from({ length: 9 }).map((_, i) => {
-          const y = 200 + i * 16;
-          return <line key={i} x1="50" y1={y} x2="450" y2={y} />;
-        })}
-      </g>
+  ctx.globalCompositeOperation = 'screen';
+  const cx = width * 0.5;
+  const cy = height * 0.5;
+  const radius = Math.min(width, height) * 0.38;
 
-      {/* Topographic Contour Elevation Ribbons */}
-      {Array.from({ length: 7 }).map((_, i) => {
-        const offsetY = 60 + i * 36;
-        const alpha = 0.3 + (i / 7) * 0.7;
-        return (
-          <g key={i} opacity={alpha}>
-            <path
-              d={`M 50 ${offsetY + 90} Q 150 ${offsetY - 20}, 260 ${offsetY + 40} T 450 ${offsetY - 10}`}
-              fill="none"
-              stroke="url(#topoGrad)"
-              strokeWidth={i === 6 ? '3.5' : '1.5'}
-            />
-            {i === 6 && (
-              <path
-                d={`M 50 ${offsetY + 90} Q 150 ${offsetY - 20}, 260 ${offsetY + 40} T 450 ${offsetY - 10} L 450 330 L 50 330 Z`}
-                fill="rgba(16, 185, 129, 0.08)"
-              />
-            )}
-          </g>
-        );
-      })}
+  // 3D rotation angles with mouse tilt
+  const rotY = time * 0.6 + (mouse.x / width - 0.5) * 1.5;
+  const rotX = Math.sin(time * 0.4) * 0.3 + (mouse.y / height - 0.5) * 1.2;
 
-      {/* Labels */}
-      <text x="60" y="45" fill="#34D399" fontSize="13" fontWeight="800" fontFamily="var(--font-mono)">
-        ESTRUTURA A TERMO DAS TAXAS DE JUROS (ETTF)
-      </text>
-      <text x="60" y="65" fill="#94A3B8" fontSize="10" fontFamily="var(--font-mono)">
-        Curva Zero-Cupom & Superfície de Volatilidade de Nelson-Siegel
-      </text>
+  const projectedNodes = stateRef.current.meshNodes.map((n) => {
+    // Y-axis rotation
+    const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+    let x1 = n.x * cosY + n.z * sinY;
+    let z1 = -n.x * sinY + n.z * cosY;
 
-      <g transform="translate(60, 345)">
-        <text x="0" y="0" fill="#E2E8F0" fontSize="10" fontFamily="var(--font-mono)">Vértice 1M (Over-Selic)</text>
-        <text x="170" y="0" fill="#E2E8F0" fontSize="10" fontFamily="var(--font-mono)">Vértice 5Y (DI1 / NTN-F)</text>
-        <text x="320" y="0" fill="#E2E8F0" fontSize="10" fontFamily="var(--font-mono)">Vértice 30Y (NTN-B)</text>
-      </g>
-    </svg>
-  );
+    // X-axis rotation
+    const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+    let y1 = n.y * cosX - z1 * sinX;
+    let z2 = n.y * sinX + z1 * cosX;
+
+    const scale = 300 / (300 + z2 * radius);
+    return {
+      x: cx + x1 * radius * scale,
+      y: cy + y1 * radius * scale,
+      z: z2
+    };
+  });
+
+  // Connect close nodes with glowing laser lines
+  for (let i = 0; i < projectedNodes.length; i++) {
+    for (let j = i + 1; j < projectedNodes.length; j++) {
+      const p1 = projectedNodes[i];
+      const p2 = projectedNodes[j];
+      const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+
+      if (dist < radius * 0.72) {
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        const alpha = (1 - dist / (radius * 0.72)) * 0.45 * ((p1.z + p2.z) * 0.5 + 1.2);
+        ctx.strokeStyle = `rgba(16, 185, 129, ${Math.max(0, Math.min(0.8, alpha))})`;
+        ctx.lineWidth = 1.0;
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Draw node points
+  projectedNodes.forEach((p, idx) => {
+    const size = Math.max(1.5, (p.z + 1.2) * 2.5);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+    ctx.fillStyle = idx % 4 === 0 ? '#F59E0B' : (idx % 2 === 0 ? '#06B6D4' : '#10B981');
+    ctx.globalAlpha = Math.max(0.3, Math.min(1.0, (p.z + 1.2) * 0.6));
+    ctx.fill();
+  });
 }
 
 /* ==========================================================================
-   STATIC ARTWORK 4: Diagrama de Arquitetura do Sistema Financeiro (SFN)
+   VISUAL ENGINE 4: Matriz Cyber-Trading 3D (Neon Candlesticks & Depth)
    ========================================================================== */
-function StaticArtworkSFN() {
-  return (
-    <svg viewBox="0 0 500 380" style={{ width: '100%', height: '100%', display: 'block' }}>
-      {/* Node 1: CMN / BACEN */}
-      <g transform="translate(60, 60)">
-        <rect width="160" height="60" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="#10B981" strokeWidth="1.5" />
-        <text x="14" y="24" fill="#34D399" fontSize="11" fontWeight="800" fontFamily="var(--font-mono)">
-          BACEN · BANCO CENTRAL
-        </text>
-        <text x="14" y="42" fill="#E2E8F0" fontSize="9">
-          Copom / Taxa Selic 10,50%
-        </text>
-      </g>
+function renderTradingEngine(ctx, width, height, time, mouse) {
+  ctx.globalCompositeOperation = 'screen';
+  const numBars = 22;
+  const barWidth = width / (numBars * 1.5);
+  const startX = (width - numBars * barWidth * 1.4) * 0.5;
+  const mouseInfluence = (mouse.y / height - 0.5) * 35;
 
-      {/* Node 2: CVM & B3 */}
-      <g transform="translate(280, 60)">
-        <rect width="160" height="60" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="#06B6D4" strokeWidth="1.5" />
-        <text x="14" y="24" fill="#38BDF8" fontSize="11" fontWeight="800" fontFamily="var(--font-mono)">
-          CVM & BOLSA B3
-        </text>
-        <text x="14" y="42" fill="#E2E8F0" fontSize="9">
-          Ações, FIIs e Derivativos
-        </text>
-      </g>
+  for (let i = 0; i < numBars; i++) {
+    const progress = i / numBars;
+    const x = startX + i * barWidth * 1.4;
+    
+    // Wave of price oscillation
+    const heightMod = Math.sin(progress * 7.0 + time * 2.0 + i * 0.2) * 55 + Math.cos(progress * 4.0 - time) * 35;
+    const barHeight = Math.max(30, 90 + heightMod + Math.pow(progress, 1.8) * 80);
+    const y = height * 0.72 - barHeight + mouseInfluence * (progress - 0.5);
 
-      {/* Connector lines with pulses */}
-      <line x1="140" y1="120" x2="140" y2="180" stroke="#10B981" strokeWidth="1.5" strokeDasharray="4 4" />
-      <line x1="360" y1="120" x2="360" y2="180" stroke="#06B6D4" strokeWidth="1.5" strokeDasharray="4 4" />
-      <line x1="140" y1="180" x2="360" y2="180" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+    const isBull = Math.sin(time + i * 0.5) > -0.2;
+    const color = isBull ? '#10B981' : '#F59E0B';
 
-      {/* Node 3: Transmissão / Renda Fixa */}
-      <g transform="translate(60, 180)">
-        <rect width="160" height="60" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="#F59E0B" strokeWidth="1.5" />
-        <text x="14" y="24" fill="#FBBF24" fontSize="11" fontWeight="800" fontFamily="var(--font-mono)">
-          TESOURO NACIONAL
-        </text>
-        <text x="14" y="42" fill="#E2E8F0" fontSize="9">
-          Selic, Prefixado, IPCA+
-        </text>
-      </g>
+    // Wick
+    ctx.beginPath();
+    ctx.moveTo(x + barWidth * 0.5, y - 18);
+    ctx.lineTo(x + barWidth * 0.5, y + barHeight + 18);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.2;
+    ctx.globalAlpha = 0.5;
+    ctx.stroke();
 
-      {/* Node 4: Mercado Corporativo */}
-      <g transform="translate(280, 180)">
-        <rect width="160" height="60" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="#A855F7" strokeWidth="1.5" />
-        <text x="14" y="24" fill="#C084FC" fontSize="11" fontWeight="800" fontFamily="var(--font-mono)">
-          EQUITY RESEARCH
-        </text>
-        <text x="14" y="42" fill="#E2E8F0" fontSize="9">
-          Valuation DCF & Múltiplos
-        </text>
-      </g>
+    // Body
+    ctx.beginPath();
+    ctx.rect(x, y, barWidth, barHeight);
+    const grad = ctx.createLinearGradient(0, y, 0, y + barHeight);
+    grad.addColorStop(0, isBull ? 'rgba(16, 185, 129, 0.85)' : 'rgba(245, 158, 11, 0.85)');
+    grad.addColorStop(1, isBull ? 'rgba(6, 182, 212, 0.2)' : 'rgba(239, 68, 68, 0.2)');
+    ctx.fillStyle = grad;
+    ctx.globalAlpha = 0.85;
+    ctx.fill();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+  }
 
-      {/* Final Destination: O Aluno do Atlas */}
-      <g transform="translate(130, 280)">
-        <rect width="240" height="65" rx="10" fill="rgba(5, 150, 105, 0.15)" stroke="#10B981" strokeWidth="2" />
-        <text x="16" y="26" fill="#FFFFFF" fontSize="12" fontWeight="800">
-          🎓 BRASIL FINANÇAS ATLAS
-        </text>
-        <text x="16" y="46" fill="#34D399" fontSize="10" fontFamily="var(--font-mono)">
-          55 Aulas · Simulações · BRHSIC
-        </text>
-      </g>
-    </svg>
-  );
+  // Neon Exponential Moving Average (EMA Ribbon)
+  ctx.beginPath();
+  for (let i = 0; i < numBars; i++) {
+    const progress = i / numBars;
+    const x = startX + i * barWidth * 1.4 + barWidth * 0.5;
+    const heightMod = Math.sin(progress * 7.0 + time * 2.0 + i * 0.2) * 55 + Math.cos(progress * 4.0 - time) * 35;
+    const barHeight = Math.max(30, 90 + heightMod + Math.pow(progress, 1.8) * 80);
+    const y = height * 0.72 - barHeight - 12 + mouseInfluence * (progress - 0.5);
+
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.strokeStyle = '#38BDF8';
+  ctx.lineWidth = 2.5;
+  ctx.globalAlpha = 0.9;
+  ctx.stroke();
 }
 
 /* ==========================================================================
-   Master Component: FinancialKineticCanvas (Galeria de Obras Estáticas)
+   VISUAL ENGINE 5: Superfície 3D de Volatilidade Black-Scholes (Manifold)
+   ========================================================================== */
+function renderManifoldEngine(ctx, width, height, time, mouse) {
+  ctx.globalCompositeOperation = 'screen';
+  const gridX = 22;
+  const gridY = 16;
+  const cx = width * 0.5;
+  const cy = height * 0.52;
+
+  const tiltX = (mouse.y / height - 0.5) * 0.8 + 0.55;
+  const tiltY = (mouse.x / width - 0.5) * 0.8;
+
+  const get3DPoint = (gx, gy) => {
+    const normX = (gx / gridX - 0.5) * 2;
+    const normY = (gy / gridY - 0.5) * 2;
+
+    // Volatility Smile & Compounding Crest Surface Formula
+    const strike = normX * 1.6;
+    const maturity = (normY + 1) * 1.2;
+    const volSmile = Math.pow(strike, 2) * 0.35 + Math.sin(maturity * 2.5 + time * 1.5) * 0.25;
+    const expSlope = Math.exp(strike * 0.4) * 0.4;
+    const z = (volSmile + expSlope) * 70;
+
+    // Isometric projection with mouse rotation
+    const isoX = (normX * Math.cos(tiltY) - normY * Math.sin(tiltY)) * (width * 0.38);
+    const isoY = (normX * Math.sin(tiltY) + normY * Math.cos(tiltY)) * (height * 0.22) * Math.sin(tiltX) - z;
+
+    return { x: cx + isoX, y: cy + isoY, z };
+  };
+
+  // Render Grid Lines (X-direction)
+  for (let gy = 0; gy <= gridY; gy++) {
+    ctx.beginPath();
+    for (let gx = 0; gx <= gridX; gx++) {
+      const pt = get3DPoint(gx, gy);
+      if (gx === 0) ctx.moveTo(pt.x, pt.y);
+      else ctx.lineTo(pt.x, pt.y);
+    }
+    const alpha = (gy / gridY) * 0.65 + 0.15;
+    ctx.strokeStyle = `rgba(16, 185, 129, ${alpha})`;
+    ctx.lineWidth = 1.1;
+    ctx.stroke();
+  }
+
+  // Render Grid Lines (Y-direction)
+  for (let gx = 0; gx <= gridX; gx++) {
+    ctx.beginPath();
+    for (let gy = 0; gy <= gridY; gy++) {
+      const pt = get3DPoint(gx, gy);
+      if (gy === 0) ctx.moveTo(pt.x, pt.y);
+      else ctx.lineTo(pt.x, pt.y);
+    }
+    const alpha = (gx / gridX) * 0.5 + 0.2;
+    ctx.strokeStyle = `rgba(6, 182, 212, ${alpha})`;
+    ctx.lineWidth = 1.1;
+    ctx.stroke();
+  }
+}
+
+/* ==========================================================================
+   VISUAL ENGINE 6: Caleidoscópio Geométrico Fractal (Golden Geometry)
+   ========================================================================== */
+function renderFractalEngine(ctx, width, height, time, mouse) {
+  ctx.globalCompositeOperation = 'screen';
+  const cx = width * 0.5 + (mouse.x - width * 0.5) * 0.12;
+  const cy = height * 0.5 + (mouse.y - height * 0.5) * 0.12;
+  const numRings = 14;
+
+  for (let i = 1; i <= numRings; i++) {
+    const ringRadius = Math.pow(i / numRings, 1.4) * (Math.min(width, height) * 0.48);
+    const rotation = time * (0.35 / i) * (i % 2 === 0 ? 1 : -1);
+    const sides = 6 + (i % 3) * 2; // Hexagons and octagons
+
+    ctx.beginPath();
+    for (let s = 0; s <= sides; s++) {
+      const angle = (s / sides) * Math.PI * 2 + rotation;
+      const x = cx + Math.cos(angle) * ringRadius;
+      const y = cy + Math.sin(angle) * ringRadius;
+
+      if (s === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+
+    const grad = ctx.createLinearGradient(cx - ringRadius, cy, cx + ringRadius, cy);
+    if (i % 3 === 0) {
+      grad.addColorStop(0, 'rgba(245, 158, 11, 0.7)');
+      grad.addColorStop(1, 'rgba(16, 185, 129, 0.4)');
+    } else if (i % 3 === 1) {
+      grad.addColorStop(0, 'rgba(16, 185, 129, 0.8)');
+      grad.addColorStop(1, 'rgba(6, 182, 212, 0.5)');
+    } else {
+      grad.addColorStop(0, 'rgba(6, 182, 212, 0.7)');
+      grad.addColorStop(1, 'rgba(245, 158, 11, 0.3)');
+    }
+
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 1.2 + (i / numRings) * 1.4;
+    ctx.stroke();
+  }
+}
+
+/* ==========================================================================
+   Master Component: FinancialKineticCanvas (com Seletor Interativo)
    ========================================================================== */
 function FinancialKineticCanvas() {
-  const [activeArtwork, setActiveArtwork] = useState('convexity');
+  const canvasRef = useRef(null);
+  const stateRef = useRef({});
+  const [activeEngine, setActiveEngine] = useState('waves');
 
-  const artworks = [
-    { id: 'convexity', label: '📐 Infográfico Convexidade', title: 'Curva Exponencial & Cálculo de Juros' },
-    { id: 'fibonacci', label: '🌀 Espiral de Fibonacci', title: 'Proporção Áurea & Geometria Financeira' },
-    { id: 'topography', label: '🏔️ Topografia de Taxas', title: 'Estrutura a Termo da Curva de Juros' },
-    { id: 'sfn', label: '🏛️ Arquitetura do Mercado', title: 'Mapeamento do Sistema Financeiro Nacional' }
+  const engines = [
+    { id: 'waves', label: '🌊 Ondas Exponenciais', desc: 'Fitas de juros contínuos e superfície de liquidez' },
+    { id: 'vortex', label: '🌀 Vórtice de Partículas', desc: 'Espiral logarítmica de Fibonacci e atrator' },
+    { id: 'mesh', label: '🌐 Rede Geodésica 3D', desc: 'Malha geométrica de interconexão global' },
+    { id: 'trading', label: '📊 Candlestick Neon', desc: 'Profundidade cibernética de mercado e fita EMA' },
+    { id: 'manifold', label: '🏔️ Superfície 3D', desc: 'Topografia de volatilidade Black-Scholes' },
+    { id: 'fractal', label: '❄️ Fractais Dourados', desc: 'Geometria sagrada e expansão proporcional' }
   ];
 
-  const currentMeta = artworks.find(a => a.id === activeArtwork) || artworks[0];
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+    let width = (canvas.width = canvas.parentElement.clientWidth);
+    let height = (canvas.height = canvas.parentElement.clientHeight || 440);
+
+    const handleResize = () => {
+      if (!canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.clientWidth;
+      height = canvas.height = canvas.parentElement.clientHeight || 440;
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    let mouse = { x: width * 0.5, y: height * 0.5, targetX: width * 0.5, targetY: height * 0.5 };
+
+    const handleMouseMove = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.targetX = e.clientX - rect.left;
+      mouse.targetY = e.clientY - rect.top;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.targetX = width * 0.5;
+      mouse.targetY = height * 0.5;
+    };
+
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseleave', handleMouseLeave);
+
+    let time = 0;
+
+    const render = () => {
+      time += 0.018;
+
+      mouse.x += (mouse.targetX - mouse.x) * 0.06;
+      mouse.y += (mouse.targetY - mouse.y) * 0.06;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Deep Obsidian background with subtle radial glow
+      const bgGrad = ctx.createRadialGradient(
+        mouse.x,
+        mouse.y,
+        20,
+        width * 0.5,
+        height * 0.5,
+        width * 0.8
+      );
+      bgGrad.addColorStop(0, 'rgba(16, 185, 129, 0.09)');
+      bgGrad.addColorStop(0.5, 'rgba(6, 182, 212, 0.04)');
+      bgGrad.addColorStop(1, 'rgba(3, 7, 18, 0.98)');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      // Render Active Engine
+      switch (activeEngine) {
+        case 'waves':
+          renderWavesEngine(ctx, width, height, time, mouse);
+          break;
+        case 'vortex':
+          renderVortexEngine(ctx, width, height, time, mouse, stateRef);
+          break;
+        case 'mesh':
+          renderMeshEngine(ctx, width, height, time, mouse, stateRef);
+          break;
+        case 'trading':
+          renderTradingEngine(ctx, width, height, time, mouse);
+          break;
+        case 'manifold':
+          renderManifoldEngine(ctx, width, height, time, mouse);
+          break;
+        case 'fractal':
+          renderFractalEngine(ctx, width, height, time, mouse);
+          break;
+        default:
+          renderWavesEngine(ctx, width, height, time, mouse);
+      }
+
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.globalAlpha = 1.0;
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [activeEngine]);
+
+  const currentMeta = engines.find(e => e.id === activeEngine) || engines[0];
 
   return (
     <div
       style={{
         position: 'relative',
         width: '100%',
-        height: '450px',
+        height: '460px',
         borderRadius: 'var(--radius-lg)',
         overflow: 'hidden',
         border: '1px solid rgba(255, 255, 255, 0.12)',
         boxShadow: '0 30px 80px -15px rgba(0, 0, 0, 0.8)',
-        background: '#040813',
-        display: 'flex',
-        flexDirection: 'column'
+        background: '#030712'
       }}
     >
-      {/* Top Static Switcher Pills */}
+      <canvas
+        ref={canvasRef}
+        style={{
+          display: 'block',
+          width: '100%',
+          height: '100%',
+          cursor: 'crosshair'
+        }}
+      />
+
+      {/* Top Floating Engine Switcher Pills */}
       <div
         style={{
+          position: 'absolute',
+          top: '12px',
+          left: '12px',
+          right: '12px',
           display: 'flex',
           gap: '6px',
-          padding: '10px 12px 6px 12px',
-          background: 'rgba(15, 23, 42, 0.95)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
           overflowX: 'auto',
-          scrollbarWidth: 'none',
-          zIndex: 10
+          paddingBottom: '4px',
+          zIndex: 10,
+          scrollbarWidth: 'none'
         }}
       >
-        {artworks.map((art) => (
+        {engines.map((eng) => (
           <button
-            key={art.id}
+            key={eng.id}
             type="button"
-            onClick={() => setActiveArtwork(art.id)}
+            onClick={() => setActiveEngine(eng.id)}
             style={{
-              background: activeArtwork === art.id ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.04)',
-              border: activeArtwork === art.id ? '1px solid #10B981' : '1px solid rgba(255, 255, 255, 0.1)',
-              color: activeArtwork === art.id ? '#FFFFFF' : '#94A3B8',
+              background: activeEngine === eng.id ? 'rgba(16, 185, 129, 0.25)' : 'rgba(15, 23, 42, 0.75)',
+              backdropFilter: 'blur(10px)',
+              border: activeEngine === eng.id ? '1px solid #10B981' : '1px solid rgba(255, 255, 255, 0.12)',
+              color: activeEngine === eng.id ? '#FFFFFF' : '#94A3B8',
               padding: '0.35rem 0.65rem',
               borderRadius: 'var(--radius-full)',
               fontSize: '0.72rem',
-              fontWeight: activeArtwork === art.id ? 800 : 600,
+              fontWeight: activeEngine === eng.id ? 800 : 600,
               whiteSpace: 'nowrap',
               cursor: 'pointer',
-              transition: 'all 0.15s ease'
+              transition: 'all 0.15s ease',
+              boxShadow: activeEngine === eng.id ? '0 0 12px rgba(16, 185, 129, 0.4)' : 'none'
             }}
           >
-            {art.label}
+            {eng.label}
           </button>
         ))}
       </div>
 
-      {/* SVG Canvas Content (100% Static & Print-Shop Quality) */}
-      <div style={{ flex: 1, padding: '1rem', position: 'relative' }}>
-        {activeArtwork === 'convexity' && <StaticArtworkConvexity />}
-        {activeArtwork === 'fibonacci' && <StaticArtworkFibonacci />}
-        {activeArtwork === 'topography' && <StaticArtworkTopography />}
-        {activeArtwork === 'sfn' && <StaticArtworkSFN />}
-      </div>
-
-      {/* Bottom Footer Info */}
+      {/* Bottom Floating Info Pill */}
       <div
         style={{
+          position: 'absolute',
+          bottom: '14px',
+          left: '14px',
+          right: '14px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          background: 'rgba(11, 15, 25, 0.9)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-          padding: '0.45rem 1rem'
+          background: 'rgba(15, 23, 42, 0.85)',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255, 255, 255, 0.15)',
+          borderRadius: 'var(--radius-md)',
+          padding: '0.5rem 0.95rem',
+          pointerEvents: 'none'
         }}
       >
-        <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#34D399' }}>
-          {currentMeta.title}
-        </span>
-        <span style={{ fontSize: '0.68rem', color: '#94A3B8', fontFamily: 'var(--font-mono)' }}>
-          Ilustração Editorial Estática
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10B981', display: 'inline-block', boxShadow: '0 0 8px #10B981' }} />
+          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#F1F5F9' }}>
+            {currentMeta.desc}
+          </span>
+        </div>
+        <span style={{ fontSize: '0.7rem', color: '#94A3B8', fontFamily: 'var(--font-mono)' }}>
+          60 FPS · Mova o mouse
         </span>
       </div>
     </div>
