@@ -82,7 +82,7 @@ function DisciplinaOverview({ subjectKey }) {
                   <div>
                     <span style={{ fontSize: '0.72rem', color: '#94A3B8', display: 'block', fontWeight: 600 }}>CERTIFICADO</span>
                     <div style={{ fontSize: '0.85rem', fontWeight: 700, color: progressPct === 100 ? '#10B981' : '#FBBF24', marginTop: '4px' }}>
-                      {progressPct === 100 ? 'Disponível ✓' : 'Em Andamento'}
+                      {progressPct === 100 ? 'Disponível' : 'Em Andamento'}
                     </div>
                   </div>
                 </div>
@@ -142,7 +142,7 @@ function DisciplinaOverview({ subjectKey }) {
                       </div>
                       {isDone ? (
                         <span className="mono-tag" style={{ color: '#059669', background: '#ECFDF5', padding: '0.2rem 0.45rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.72rem' }}>
-                          Concluída ✓
+                          Concluída
                         </span>
                       ) : (
                         <span style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem' }}>→</span>
