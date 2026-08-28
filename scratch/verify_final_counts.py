@@ -1,20 +1,14 @@
 import json
 
-with open('plataforma/src/data/matematicaData.js', 'r', encoding='utf-8') as f:
-    c = f.read().strip()
-    if c.startswith('window.matematicaData = '):
-        c = c[len('window.matematicaData = '):]
-    if c.endswith(';'):
-        c = c[:-1]
-    mat = json.loads(c)
+def load_data(filepath):
+    with open(filepath, 'r', encoding='utf-8') as f:
+        code = f.read()
+    idx = code.find('{')
+    last_idx = code.rfind('}')
+    return json.loads(code[idx:last_idx+1])
 
-with open('plataforma/src/data/financasData.js', 'r', encoding='utf-8') as f:
-    c = f.read().strip()
-    if c.startswith('window.financasData = '):
-        c = c[len('window.financasData = '):]
-    if c.endswith(';'):
-        c = c[:-1]
-    fin = json.loads(c)
+mat = load_data('plataforma/src/data/matematicaData.js')
+fin = load_data('plataforma/src/data/financasData.js')
 
 print("=== CONTAGEM FINAL DE QUESTÕES ===")
 total_mat = 0
