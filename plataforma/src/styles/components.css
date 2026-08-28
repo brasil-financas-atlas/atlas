@@ -1391,5 +1391,82 @@
   }
 }
 
+/* ==========================================================================
+   Hero Visual Showcase (Layered Floating Cards without rigid boxes)
+   ========================================================================== */
+.bfa-hero-showcase {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justifyContent: center;
+  gap: 1rem;
+}
 
+.bfa-hero-showcase-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(59, 130, 246, 0.12) 40%, transparent 70%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 0;
+}
 
+.bfa-showcase-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 1.15rem 1.4rem;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bfa-showcase-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes bfaFloatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes bfaFloatDelayed {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.bfa-float-1 {
+  animation: bfaFloatSlow 6s ease-in-out infinite;
+}
+
+.bfa-float-2 {
+  animation: bfaFloatDelayed 7s ease-in-out infinite 1s;
+}
+
+.bfa-float-3 {
+  animation: bfaFloatSlow 8s ease-in-out infinite 2s;
+}
