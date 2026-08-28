@@ -74,7 +74,7 @@ function QuizEngine({ questions, lessonId }) {
       rawList = DEFAULT_FIXATION_QUESTIONS;
     }
 
-    return rawList.map(q => {
+    const formatted = rawList.map(q => {
       if (q.questao && !q.alternativas && !q.opcoes && !q.options) {
         return {
           pergunta: q.questao,
@@ -85,7 +85,7 @@ function QuizEngine({ questions, lessonId }) {
             "O resultado depende de variação cambial não informada."
           ],
           correta: 0,
-          explicacao: q.resposta ? `Resolução oficial: ${q.resposta}` : 'Gabarito oficial de resolução.'
+          explicacao: q.resposta ? `Resolução analítica: ${q.resposta}` : 'Gabarito oficial de resolução.'
         };
       }
       return {
@@ -94,6 +94,15 @@ function QuizEngine({ questions, lessonId }) {
         correta: q.correta !== undefined ? q.correta : (q.respostaCorreta !== undefined ? q.respostaCorreta : 0),
         explicacao: q.explicacao || q.explanation || q.resposta || ''
       };
+    });
+
+    // Deduplicação estrita por texto da pergunta (evita duplicações entre miniQuiz e lista de problemas)
+    const seen = new Set();
+    return formatted.filter(q => {
+      const key = (q.pergunta || '').trim().toLowerCase();
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
     });
   }, [cmsData, lessonId, questions]);
 
@@ -104,9 +113,9 @@ function QuizEngine({ questions, lessonId }) {
   const [finished, setFinished] = useState(false);
   const [answers, setAnswers] = useState([]);
 
-  // Quiz Modal state
+  // Quiz Modal state (Admin)
   const [showModal, setShowModal] = useState(false);
-  const [editingQuestionIdx, setEditingQuestionIdx] = useState(null); // null = new, number = edit
+  const [editingQuestionIdx, setEditingQuestionIdx] = useState(null);
   const [qText, setQText] = useState('');
   const [optA, setOptA] = useState('');
   const [optB, setOptB] = useState('');
@@ -149,7 +158,7 @@ function QuizEngine({ questions, lessonId }) {
       pergunta: qText.trim(),
       alternativas: [optA.trim(), optB.trim(), optC.trim() || 'N.D.A.', optD.trim() || 'N.D.A.'],
       correta: parseInt(correctIdx, 10),
-      explicacao: qExpl.trim() || 'Explicação do professor.'
+      explicacao: qExpl.trim() || 'Explicação pedagógica.'
     };
 
     let updatedList;
@@ -181,19 +190,18 @@ function QuizEngine({ questions, lessonId }) {
 
   if (!quizQuestions || quizQuestions.length === 0) {
     return (
-      <div className="bfa-quiz bfa-quiz--empty" style={{ padding: '2rem', textAlign: 'center', background: 'var(--surface-strong)', borderRadius: '12px', border: '1px dashed var(--border)' }}>
-        <h4 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '0.5rem', color: 'var(--foreground)' }}>
-          <BfaIcon name="target" size={20} color="var(--color-azul)" /> Quiz de Fixação (Khan Academy Style)
+      <div className="bfa-tech-card" style={{ padding: '2rem', textAlign: 'center' }}>
+        <h4 style={{ marginBottom: '0.5rem', color: 'var(--foreground)' }}>
+          Quiz de Fixação
         </h4>
-        <p style={{ color: 'var(--muted-foreground)', marginBottom: '1rem' }}>Esta aula ainda não possui questões interativas cadastradas.</p>
+        <p style={{ color: 'var(--muted-foreground)', marginBottom: '1rem' }}>Esta aula ainda não possui questões cadastradas.</p>
         {isAuthenticated && inlineEditActive && (
           <button
             type="button"
             className="bfa-btn bfa-btn--ouro bfa-btn--sm"
             onClick={openAddModal}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
           >
-            <BfaIcon name="pencil" size={14} /> + Cadastrar Primeira Questão (Admin)
+            + Cadastrar Questão (Admin)
           </button>
         )}
       </div>
@@ -248,218 +256,287 @@ function QuizEngine({ questions, lessonId }) {
     const pct = Math.round((finalScore / quizQuestions.length) * 100);
 
     return (
-      <div className="bfa-quiz bfa-quiz--finished">
-        <div className="bfa-quiz__result-icon" style={{ display: 'inline-flex', padding: '1rem', borderRadius: '50%', background: 'var(--surface-strong)', margin: '0 auto 1rem auto' }}>
-          <BfaIcon name={pct >= 80 ? "trophy" : pct >= 50 ? "thumbsUp" : "book"} size={48} color="var(--gold-deep)" />
+      <div className="bfa-tech-card" style={{ padding: '2.5rem 2rem', textAlign: 'center', maxWidth: '640px', margin: '0 auto' }}>
+        <span className="mono-tag" style={{ color: pct >= 70 ? 'var(--track-finance)' : 'var(--track-brhsic)', fontWeight: 800 }}>
+          {pct >= 70 ? 'DESEMPENHO APROVADO' : 'REVISÃO RECOMENDADA'}
+        </span>
+        <h3 className="headline-punch" style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0.5rem 0', color: 'var(--foreground)' }}>
+          Resultado do Quiz de Fixação
+        </h3>
+        <p style={{ color: 'var(--muted-foreground)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
+          Você acertou <strong>{finalScore}</strong> de <strong>{quizQuestions.length}</strong> questões ({pct}% de aproveitamento).
+        </p>
+
+        <div style={{ height: '8px', width: '100%', background: 'var(--surface-strong)', borderRadius: '999px', overflow: 'hidden', marginBottom: '2rem' }}>
+          <div style={{ height: '100%', width: `${pct}%`, background: pct >= 70 ? 'var(--track-finance)' : 'var(--track-brhsic)', borderRadius: '999px' }} />
         </div>
-        <h3 style={{ color: 'var(--foreground)' }}>Resultado do Quiz de Fixação</h3>
-        <div className="bfa-quiz__score-display">
-          <span className="bfa-quiz__score-num">{finalScore} / {quizQuestions.length}</span>
-          <span className="bfa-quiz__score-pct">{pct}% de acertos</span>
+
+        <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+          <button
+            onClick={handleRestart}
+            className="bfa-btn bfa-btn--verde"
+            style={{ padding: '0.65rem 1.35rem', fontSize: '0.88rem' }}
+          >
+            Refazer Quiz
+          </button>
         </div>
-
-        {pct >= 80 && (
-          <div className="bfa-quiz__badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--gold-deep)', fontWeight: 700 }}>
-            <BfaIcon name="sparkles" size={16} color="var(--gold-deep)" /> Dominado! Você assimilou perfeitamente os conceitos.
-          </div>
-        )}
-
-        {previousHighScore !== null && (
-          <p className="bfa-quiz__prev-score" style={{ color: 'var(--muted-foreground)' }}>
-            Sua melhor pontuação anterior: {previousHighScore} acertos
-          </p>
-        )}
-
-        <button onClick={handleRestart} className="bfa-btn bfa-btn--ouro" style={{ marginTop: '1rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-          <BfaIcon name="refresh" size={16} /> Reiniciar Fixação
-        </button>
       </div>
     );
   }
 
   return (
-    <div className="bfa-quiz">
-      <div className="bfa-quiz__progress-bar-wrap" style={{ height: '6px', background: 'var(--surface-strong)', borderRadius: '999px', overflow: 'hidden', marginBottom: '1rem' }}>
-        <div
-          className="bfa-quiz__progress-bar-fill"
-          style={{
-            height: '100%',
-            width: `${Math.round(((currentIdx + (submitted ? 1 : 0)) / quizQuestions.length) * 100)}%`,
-            background: 'linear-gradient(90deg, var(--track-finance) 0%, var(--gold) 100%)',
-            borderRadius: '999px',
-            transition: 'width 350ms cubic-bezier(0.4, 0, 0.2, 1)'
-          }}
-        />
-      </div>
-
-      <div className="bfa-quiz__header">
-        <div className="bfa-quiz__title">
-          <span style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--foreground)', fontWeight: 700 }}>
-            <BfaIcon name="target" size={20} color="var(--track-math)" /> Quiz de Fixação (Khan Academy Style)
+    <div className="bfa-tech-card" style={{ padding: '2rem' }}>
+      {/* Header do Quiz */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.75rem', borderBottom: '1px solid var(--border)' }}>
+        <div>
+          <span className="mono-tag" style={{ color: 'var(--track-math)', fontWeight: 800, fontSize: '0.72rem' }}>
+            QUIZ DE FIXAÇÃO · KHAN STYLE
           </span>
-          <span className="bfa-quiz__progress-text" style={{ color: 'var(--muted-foreground)' }}>
-            Questão {currentIdx + 1} de {quizQuestions.length} ({Math.round(((currentIdx + 1) / quizQuestions.length) * 100)}%)
-          </span>
+          <div style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '2px' }}>
+            Questão {currentIdx + 1} de {quizQuestions.length}
+          </div>
         </div>
 
-        {/* Visual Progress Pills Khan Academy */}
-        <div className="bfa-quiz__pills">
-          {quizQuestions.map((_, i) => {
-            const ans = answers.find(a => a.question === i);
-            let pClass = '';
-            if (i === currentIdx) pClass = 'active';
-            else if (ans) pClass = ans.isCorrect ? 'correct' : 'wrong';
-            return <div key={i} className={`bfa-quiz__pill ${pClass}`} />;
-          })}
-        </div>
-      </div>
-
-      <div className="bfa-quiz__question">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem' }}>
-          <h4>{currentQ.pergunta}</h4>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           {isAuthenticated && inlineEditActive && (
-            <div style={{ display: 'flex', gap: '0.4rem', flexShrink: 0 }}>
+            <div style={{ display: 'flex', gap: '0.35rem' }}>
+              <button
+                type="button"
+                className="bfa-btn bfa-btn--ouro bfa-btn--sm"
+                onClick={() => openEditModal(currentIdx)}
+                style={{ padding: '0.25rem 0.55rem', fontSize: '0.72rem' }}
+              >
+                Editar Questão
+              </button>
               <button
                 type="button"
                 className="bfa-btn bfa-btn--ghost bfa-btn--sm"
-                onClick={() => openEditModal(currentIdx)}
-                title="Editar esta questão"
-                style={{ padding: '0.35rem 0.6rem', fontSize: '0.8rem' }}
+                onClick={openAddModal}
+                style={{ padding: '0.25rem 0.55rem', fontSize: '0.72rem' }}
               >
-                <BfaIcon name="pencil" size={13} /> Editar
+                + Nova
               </button>
               <button
                 type="button"
                 className="bfa-btn bfa-btn--ghost bfa-btn--sm"
                 onClick={() => handleDeleteQuestion(currentIdx)}
-                title="Excluir esta questão"
-                style={{ padding: '0.35rem 0.6rem', fontSize: '0.8rem', color: 'var(--status-danger)' }}
+                style={{ padding: '0.25rem 0.55rem', fontSize: '0.72rem', color: '#EF4444' }}
               >
-                <BfaIcon name="trash" size={13} /> Excluir
+                Excluir
               </button>
             </div>
           )}
         </div>
-
-        <div className="bfa-quiz__options">
-          {currentQ.alternativas && currentQ.alternativas.map((opt, i) => {
-            let stateClass = '';
-            if (submitted) {
-              if (i === currentQ.correta) stateClass = 'correct';
-              else if (i === selectedOption) stateClass = 'wrong';
-            } else if (selectedOption === i) {
-              stateClass = 'selected';
-            }
-
-            return (
-              <button
-                key={i}
-                onClick={() => handleSelectOption(i)}
-                className={`bfa-quiz__option ${stateClass}`}
-                disabled={submitted}
-              >
-                <span className="bfa-quiz__option-letter">
-                  {String.fromCharCode(65 + i)}
-                </span>
-                <span className="bfa-quiz__option-text">{opt}</span>
-              </button>
-            );
-          })}
-        </div>
       </div>
 
+      {/* Barra de Progresso */}
+      <div style={{ height: '4px', width: '100%', background: 'var(--surface-strong)', borderRadius: '999px', overflow: 'hidden', marginBottom: '1.75rem' }}>
+        <div style={{ height: '100%', width: `${((currentIdx + (submitted ? 1 : 0)) / quizQuestions.length) * 100}%`, background: 'var(--track-math)', transition: 'width 0.3s ease' }} />
+      </div>
+
+      {/* Pergunta */}
+      <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1.25rem', lineHeight: 1.5 }}>
+        {currentQ.pergunta}
+      </h3>
+
+      {/* Alternativas */}
+      <div style={{ display: 'grid', gap: '0.65rem', marginBottom: '1.5rem' }}>
+        {currentQ.alternativas.map((alt, idx) => {
+          const isSelected = selectedOption === idx;
+          const isCorrect = idx === currentQ.correta;
+
+          let bg = 'var(--surface-strong)';
+          let border = '1px solid var(--border)';
+          let color = 'var(--foreground)';
+
+          if (submitted) {
+            if (isCorrect) {
+              bg = 'rgba(16, 185, 129, 0.12)';
+              border = '1px solid #10B981';
+              color = 'var(--foreground)';
+            } else if (isSelected && !isCorrect) {
+              bg = 'rgba(239, 68, 68, 0.12)';
+              border = '1px solid #EF4444';
+              color = 'var(--foreground)';
+            }
+          } else if (isSelected) {
+            bg = 'rgba(37, 99, 235, 0.08)';
+            border = '1px solid var(--track-math)';
+          }
+
+          return (
+            <button
+              key={idx}
+              type="button"
+              disabled={submitted}
+              onClick={() => handleSelectOption(idx)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem',
+                padding: '0.85rem 1rem',
+                borderRadius: 'var(--radius-md)',
+                background: bg,
+                border: border,
+                color: color,
+                textAlign: 'left',
+                cursor: submitted ? 'default' : 'pointer',
+                fontSize: '0.9rem',
+                fontWeight: isSelected ? 700 : 500,
+                transition: 'all 0.15s ease'
+              }}
+            >
+              <span
+                style={{
+                  width: '24px',
+                  height: '24px',
+                  minWidth: '24px',
+                  borderRadius: '50%',
+                  background: isSelected ? 'var(--track-math)' : 'var(--card)',
+                  color: isSelected ? '#FFFFFF' : 'var(--muted-foreground)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.75rem',
+                  fontWeight: 800,
+                  border: '1px solid var(--border)'
+                }}
+              >
+                {String.fromCharCode(65 + idx)}
+              </span>
+              <span>{alt}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Explicação Pedagógica após envio */}
       {submitted && (
-        <div className={`bfa-quiz__feedback ${selectedOption === currentQ.correta ? 'success' : 'error'}`} style={{ marginTop: '1.25rem', padding: '1.25rem', borderRadius: 'var(--radius-lg)', background: selectedOption === currentQ.correta ? 'rgba(16, 185, 129, 0.08)' : 'rgba(239, 68, 68, 0.08)', border: selectedOption === currentQ.correta ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid rgba(239, 68, 68, 0.3)' }}>
-          <div className="bfa-quiz__feedback-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1rem', fontWeight: 800 }}>
-            {selectedOption === currentQ.correta ? (
-              <><BfaIcon name="checkCircle" size={20} color="#059669" /> Resposta Correta!</>
-            ) : (
-              <><BfaIcon name="close" size={20} color="#DC2626" /> Resposta Incorreta</>
-            )}
+        <div
+          style={{
+            padding: '1rem 1.25rem',
+            borderRadius: 'var(--radius-md)',
+            background: selectedOption === currentQ.correta ? 'rgba(16, 185, 129, 0.08)' : 'rgba(239, 68, 68, 0.08)',
+            borderLeft: `4px solid ${selectedOption === currentQ.correta ? '#10B981' : '#EF4444'}`,
+            marginBottom: '1.5rem',
+            fontSize: '0.88rem',
+            lineHeight: 1.6
+          }}
+        >
+          <div style={{ fontWeight: 800, color: selectedOption === currentQ.correta ? '#059669' : '#DC2626', marginBottom: '0.25rem' }}>
+            {selectedOption === currentQ.correta ? 'Correto!' : 'Incorreto.'}
           </div>
-          <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid rgba(15, 23, 42, 0.1)' }}>
-            <span style={{ fontWeight: 800, fontSize: '0.85rem', color: 'var(--foreground)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '0.35rem' }}>
-              <BfaIcon name="book" size={14} color="var(--track-math)" /> Gabarito Comentado (Alternativa {String.fromCharCode(65 + currentQ.correta)}):
-            </span>
-            <p className="bfa-quiz__explanation" style={{ margin: 0, fontSize: '0.92rem', lineHeight: 1.6, color: 'var(--foreground)' }}>
-              {currentQ.explicacao}
-            </p>
+          <div style={{ color: 'var(--foreground)' }}>
+            {currentQ.explicacao}
           </div>
         </div>
       )}
 
-      <div className="bfa-quiz__actions">
-        {isAuthenticated && inlineEditActive && (
-          <button
-            type="button"
-            className="bfa-btn bfa-btn--ouro bfa-btn--sm"
-            onClick={openAddModal}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginRight: 'auto' }}
-          >
-            <BfaIcon name="pencil" size={14} /> + Adicionar Questão (Admin)
-          </button>
-        )}
-
+      {/* Ações Inferiores */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
         {!submitted ? (
           <button
-            onClick={handleSubmitAnswer}
+            type="button"
             disabled={selectedOption === null}
-            className="bfa-btn bfa-btn--verde"
+            onClick={handleSubmitAnswer}
+            className="bfa-btn bfa-btn--azul"
+            style={{ padding: '0.65rem 1.4rem', opacity: selectedOption === null ? 0.5 : 1 }}
           >
-            Confirmar Resposta
+            Verificar Resposta
           </button>
         ) : (
-          <button onClick={handleNextQuestion} className="bfa-btn bfa-btn--ouro" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            {currentIdx + 1 < quizQuestions.length ? 'Próxima Questão ➔' : <><BfaIcon name="trophy" size={16} /> Ver Resultado Final</>}
+          <button
+            type="button"
+            onClick={handleNextQuestion}
+            className="bfa-btn bfa-btn--verde"
+            style={{ padding: '0.65rem 1.4rem' }}
+          >
+            {currentIdx + 1 < quizQuestions.length ? 'Próxima Questão →' : 'Ver Resultado Final'}
           </button>
         )}
       </div>
 
+      {/* Modal Admin */}
       {showModal && (
         <div className="bfa-inline-editor-modal" onClick={() => setShowModal(false)}>
-          <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-azul-dark)', marginBottom: '1rem' }}>
-              {editingQuestionIdx !== null ? `✏️ Editar Questão #${editingQuestionIdx + 1}` : '➕ Cadastrar Nova Questão no Quiz'}
+          <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '560px' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--foreground)' }}>
+              {editingQuestionIdx !== null ? 'Editar Questão do Quiz' : 'Nova Questão do Quiz'}
             </h3>
             <form onSubmit={handleSaveQuestion}>
-              <div className="bfa-form-group" style={{ marginBottom: '1rem' }}>
-                <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Pergunta:</label>
-                <input type="text" value={qText} onChange={e => setQText(e.target.value)} className="bfa-input" style={{ width: '100%', padding: '0.6rem' }} required />
+              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--foreground)' }}>
+                Enunciado da Pergunta:
+              </label>
+              <textarea
+                value={qText}
+                onChange={(e) => setQText(e.target.value)}
+                rows={3}
+                style={{ width: '100%', padding: '0.65rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)', marginBottom: '1rem', outline: 'none' }}
+                required
+              />
+
+              <div style={{ display: 'grid', gap: '0.5rem', marginBottom: '1rem' }}>
+                <input
+                  type="text"
+                  placeholder="Alternativa A"
+                  value={optA}
+                  onChange={(e) => setOptA(e.target.value)}
+                  style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)' }}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Alternativa B"
+                  value={optB}
+                  onChange={(e) => setOptB(e.target.value)}
+                  style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)' }}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Alternativa C"
+                  value={optC}
+                  onChange={(e) => setOptC(e.target.value)}
+                  style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)' }}
+                />
+                <input
+                  type="text"
+                  placeholder="Alternativa D"
+                  value={optD}
+                  onChange={(e) => setOptD(e.target.value)}
+                  style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)' }}
+                />
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
-                <div>
-                  <label style={{ fontWeight: 700, fontSize: '0.8rem' }}>Alternativa A:</label>
-                  <input type="text" value={optA} onChange={e => setOptA(e.target.value)} className="bfa-input" style={{ width: '100%', padding: '0.5rem' }} required />
-                </div>
-                <div>
-                  <label style={{ fontWeight: 700, fontSize: '0.8rem' }}>Alternativa B:</label>
-                  <input type="text" value={optB} onChange={e => setOptB(e.target.value)} className="bfa-input" style={{ width: '100%', padding: '0.5rem' }} required />
-                </div>
-                <div>
-                  <label style={{ fontWeight: 700, fontSize: '0.8rem' }}>Alternativa C:</label>
-                  <input type="text" value={optC} onChange={e => setOptC(e.target.value)} className="bfa-input" style={{ width: '100%', padding: '0.5rem' }} />
-                </div>
-                <div>
-                  <label style={{ fontWeight: 700, fontSize: '0.8rem' }}>Alternativa D:</label>
-                  <input type="text" value={optD} onChange={e => setOptD(e.target.value)} className="bfa-input" style={{ width: '100%', padding: '0.5rem' }} />
-                </div>
-              </div>
-              <div className="bfa-form-group" style={{ marginBottom: '1rem' }}>
-                <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Alternativa Correta:</label>
-                <select value={correctIdx} onChange={e => setCorrectIdx(e.target.value)} className="bfa-input" style={{ width: '100%', padding: '0.5rem' }}>
-                  <option value={0}>A</option>
-                  <option value={1}>B</option>
-                  <option value={2}>C</option>
-                  <option value={3}>D</option>
+
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--foreground)' }}>
+                  Alternativa Correta:
+                </label>
+                <select
+                  value={correctIdx}
+                  onChange={(e) => setCorrectIdx(e.target.value)}
+                  style={{ width: '100%', padding: '0.5rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)' }}
+                >
+                  <option value={0}>Alternativa A</option>
+                  <option value={1}>Alternativa B</option>
+                  <option value={2}>Alternativa C</option>
+                  <option value={3}>Alternativa D</option>
                 </select>
               </div>
-              <div className="bfa-form-group" style={{ marginBottom: '1.25rem' }}>
-                <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Explicação do Gabarito:</label>
-                <textarea value={qExpl} onChange={e => setQExpl(e.target.value)} className="bfa-textarea" rows="2" style={{ width: '100%', padding: '0.5rem' }}></textarea>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
-                <button type="button" className="bfa-btn bfa-btn--ghost" onClick={() => setShowModal(false)}>Cancelar</button>
-                <button type="submit" className="bfa-btn bfa-btn--verde">Salvar Questão 💾</button>
+
+              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--foreground)' }}>
+                Explicação / Gabarito Comentado:
+              </label>
+              <textarea
+                value={qExpl}
+                onChange={(e) => setQExpl(e.target.value)}
+                rows={2}
+                style={{ width: '100%', padding: '0.65rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)', marginBottom: '1.25rem', outline: 'none' }}
+              />
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
+                <button type="button" className="bfa-btn bfa-btn--ghost bfa-btn--sm" onClick={() => setShowModal(false)}>Cancelar</button>
+                <button type="submit" className="bfa-btn bfa-btn--verde bfa-btn--sm">Salvar Questão</button>
               </div>
             </form>
           </div>
@@ -468,3 +545,5 @@ function QuizEngine({ questions, lessonId }) {
     </div>
   );
 }
+
+window.QuizEngine = QuizEngine;
