@@ -33,14 +33,14 @@ function Home() {
             Aulas estruturadas do básico ao avançado, listas de exercícios com gabarito passo a passo e o guia oficial de preparação para a olimpíada nacional de investimentos (BRHSIC).
           </EditableBlock>
 
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3.5rem' }}>
-            <a href="#/matematica" className="bfa-btn bfa-btn--verde" style={{ padding: '0.9rem 1.85rem', fontSize: '0.95rem', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
+          <div style={{ display: 'flex', gap: '0.85rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3.5rem' }}>
+            <a href="#/matematica" className="bfa-btn bfa-btn--primary-solid" style={{ padding: '0.85rem 1.85rem', fontSize: '0.95rem', minHeight: '46px' }}>
               Trilha de Matemática →
             </a>
-            <a href="#/financas" className="bfa-btn bfa-btn--ghost" style={{ padding: '0.9rem 1.85rem', fontSize: '0.95rem', border: '1px solid rgba(255, 255, 255, 0.3)', color: '#FFFFFF', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600 }}>
+            <a href="#/financas" className="bfa-btn bfa-btn--secondary-glass" style={{ padding: '0.85rem 1.85rem', fontSize: '0.95rem', minHeight: '46px' }}>
               Trilha de Finanças →
             </a>
-            <a href="#/preparacao-brhsic" className="bfa-btn bfa-btn--ouro" style={{ padding: '0.9rem 1.85rem', fontSize: '0.95rem', minHeight: '48px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
+            <a href="#/preparacao-brhsic" className="bfa-btn bfa-btn--secondary-glass" style={{ padding: '0.85rem 1.85rem', fontSize: '0.95rem', minHeight: '46px' }}>
               Guia da Olimpíada BRHSIC →
             </a>
           </div>
