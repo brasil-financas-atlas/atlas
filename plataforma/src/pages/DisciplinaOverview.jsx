@@ -93,66 +93,133 @@ function DisciplinaOverview({ subjectKey }) {
         </div>
       </section>
 
-      {/* ── 2. Grade de Módulos (Layout Técnico de 1px) ────────────────────── */}
+      {/* ── 2. Grade de Módulos com Sumário Executivo e Matriz de Competências ─ */}
       <section className="bfa-container" style={{ padding: '4.5rem 1.5rem' }}>
-        <div style={{ display: 'grid', gap: '2.5rem' }}>
-          {subjectData.modulos.map((mod, idx) => (
-            <article key={mod.slug} className="bfa-tech-card" style={{ borderTop: `4px solid ${trackColor}`, padding: '2rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
-                <span className="mono-tag" style={{ color: trackColor, background: 'rgba(15, 23, 42, 0.06)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800 }}>
-                  MÓDULO {idx + 1}
-                </span>
-                <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>
-                  {mod.aulas.length} Aulas com Fixação
-                </span>
-              </div>
+        <div style={{ display: 'grid', gap: '3rem' }}>
+          {subjectData.modulos.map((mod, idx) => {
+            const moduleMeta = {
+              'modulo-1-algebra-do-zero': {
+                horas: '3h de estudo',
+                competencias: ['Operações com decimais e frações sem calculadora', 'Porcentagem, variação e regra de três em finanças', 'Equações lineares e notação científica']
+              },
+              'modulo-2-aplicada': {
+                horas: '4h de estudo',
+                competencias: ['Juros simples vs compostos e valor no tempo', 'Equação de Fisher: Inflação e Juros Reais', 'Rentabilidade líquida com IR e CDI vs. Selic']
+              },
+              'modulo-3-funcoes-e-probabilidade': {
+                horas: '5h de estudo',
+                competencias: ['Modelagem exponencial e logarítmica (Regra do 72)', 'Progressões PA/PG e modelo de perpetuidades', 'Probabilidade estatística e Valor Esperado E[X]']
+              },
+              'modulo-4-estatistica': {
+                horas: '5h de estudo',
+                competencias: ['Médias aritmética, geométrica e ponderada', 'Dispersão, desvio padrão e volatilidade de ativos', 'Correlação de Pearson e Regressão Linear com Beta']
+              },
+              'modulo-1-fundamentos': {
+                horas: '4h de estudo',
+                competencias: ['Arquitetura do Sistema Financeiro Nacional (BACEN/CVM)', 'Renda Fixa: Tesouro Direto, CDBs e títulos bancários', 'Mercado de Ações, FIIs, Fundos e Macroeconomia']
+              },
+              'modulo-2-analise-fundamentalista': {
+                horas: '6h de estudo',
+                competencias: ['Leitura técnica de Balanço Patrimonial e DRE', 'Demonstração de Fluxo de Caixa (DFC) e EBITDA', 'Múltiplos de Valuation e Fluxo de Caixa Descontado']
+              },
+              'modulo-3-portfolio': {
+                horas: '5h de estudo',
+                competencias: ['Perfil de investidor e matriz de correlação entre classes', 'Alocação de ativos e diversificação de Markowitz', 'Rebalanceamento periódico, eficiência tributária e custos']
+              }
+            }[mod.slug] || {
+              horas: '4h de estudo',
+              competencias: ['Fundamentos essenciais da disciplina', 'Exercícios práticos com gabarito passo a passo', 'Aplicações reais de tomada de decisão financeira']
+            };
 
-              <EditableBlock id={`overview-${subjectKey}-mod-${mod.slug}-title`} as="h3" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em' }}>
-                {mod.titulo}
-              </EditableBlock>
+            const modCompletedCount = mod.aulas.filter(a => completedLessons && completedLessons.includes(`${subjectKey}-${mod.slug}-${a.slug}`)).length;
+            const modTotalCount = mod.aulas.length;
+            const modProgress = Math.round((modCompletedCount / modTotalCount) * 100);
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.85rem', marginTop: '1.5rem' }}>
-                {mod.aulas.map((aula, aIdx) => {
-                  const lessonId = `${subjectKey}-${mod.slug}-${aula.slug}`;
-                  const isDone = completedLessons && completedLessons.includes(lessonId);
+            return (
+              <article key={mod.slug} className="bfa-tech-card" style={{ borderTop: `4px solid ${trackColor}`, padding: '2.25rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '0.85rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span className="mono-tag" style={{ color: trackColor, background: 'rgba(15, 23, 42, 0.06)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800 }}>
+                      MÓDULO {idx + 1}
+                    </span>
+                    <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>
+                      {moduleMeta.horas} · {mod.aulas.length} Aulas com Quiz
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span className="mono-tag" style={{ color: modProgress === 100 ? '#059669' : 'var(--muted-foreground)', fontWeight: 700 }}>
+                      {modCompletedCount}/{modTotalCount} Concluídas ({modProgress}%)
+                    </span>
+                  </div>
+                </div>
 
-                  return (
-                    <a
-                      key={aula.slug}
-                      href={`#/${subjectKey}/${mod.slug}/${aula.slug}`}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        padding: '0.95rem 1.15rem',
-                        borderRadius: 'var(--radius-md)',
-                        border: isDone ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border)',
-                        background: isDone ? 'rgba(16, 185, 129, 0.05)' : 'var(--surface-strong)',
-                        transition: 'all 0.2s ease',
-                      }}
-                      className="card-lift"
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <span className="tabular-numbers" style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--muted-foreground)' }}>
-                          {String(aIdx + 1).padStart(2, '0')}
-                        </span>
-                        <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--foreground)' }}>
-                          {aula.titulo}
-                        </span>
+                <EditableBlock id={`overview-${subjectKey}-mod-${mod.slug}-title`} as="h3" style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em', marginBottom: '0.5rem' }}>
+                  {mod.titulo}
+                </EditableBlock>
+
+                <p style={{ color: 'var(--muted-foreground)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '1.5rem', maxWidth: '850px' }}>
+                  {mod.descricao}
+                </p>
+
+                {/* Matriz de Competências */}
+                <div style={{ background: 'var(--surface-strong)', padding: '1.15rem 1.35rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', marginBottom: '1.75rem' }}>
+                  <span className="mono-tag" style={{ color: 'var(--foreground)', fontWeight: 800, fontSize: '0.72rem', display: 'block', marginBottom: '0.65rem' }}>
+                    COMPETÊNCIAS DESENVOLVIDAS NESTE MÓDULO:
+                  </span>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.65rem' }}>
+                    {moduleMeta.competencias.map((comp, cIdx) => (
+                      <div key={cIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.45rem', fontSize: '0.85rem', color: 'var(--foreground)' }}>
+                        <span style={{ color: trackColor, fontWeight: 800 }}>✓</span>
+                        <span>{comp}</span>
                       </div>
-                      {isDone ? (
-                        <span className="mono-tag" style={{ color: '#059669', background: '#ECFDF5', padding: '0.2rem 0.45rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.72rem' }}>
-                          Concluída
-                        </span>
-                      ) : (
-                        <span style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem' }}>→</span>
-                      )}
-                    </a>
-                  );
-                })}
-              </div>
-            </article>
-          ))}
+                    ))}
+                  </div>
+                </div>
+
+                {/* Grade de Aulas */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.85rem' }}>
+                  {mod.aulas.map((aula, aIdx) => {
+                    const lessonId = `${subjectKey}-${mod.slug}-${aula.slug}`;
+                    const isDone = completedLessons && completedLessons.includes(lessonId);
+
+                    return (
+                      <a
+                        key={aula.slug}
+                        href={`#/${subjectKey}/${mod.slug}/${aula.slug}`}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '0.95rem 1.15rem',
+                          borderRadius: 'var(--radius-md)',
+                          border: isDone ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border)',
+                          background: isDone ? 'rgba(16, 185, 129, 0.05)' : 'var(--surface-strong)',
+                          transition: 'all 0.2s ease',
+                        }}
+                        className="card-lift"
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                          <span className="tabular-numbers" style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--muted-foreground)' }}>
+                            {String(aIdx + 1).padStart(2, '0')}
+                          </span>
+                          <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                            {aula.titulo}
+                          </span>
+                        </div>
+                        {isDone ? (
+                          <span className="mono-tag" style={{ color: '#059669', background: '#ECFDF5', padding: '0.2rem 0.45rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.72rem' }}>
+                            Concluída
+                          </span>
+                        ) : (
+                          <span style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem' }}>→</span>
+                        )}
+                      </a>
+                    );
+                  })}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
     </div>
