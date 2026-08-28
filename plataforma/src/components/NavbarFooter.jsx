@@ -57,10 +57,11 @@ function Navbar() {
   }, [searchQuery, allLessonsIndex]);
 
   const navLinks = [
-    { label: "Matemática Aplicada", path: "/matematica" },
-    { label: "Finanças & Investimentos", path: "/financas" },
+    { label: "Matemática", path: "/matematica" },
+    { label: "Finanças", path: "/financas" },
     { label: "Preparação BRHSIC", path: "/preparacao-brhsic" },
-    { label: "Recursos & Cronograma", path: "/cronograma" },
+    { label: "Simulador de Carteira", path: "/simulador-carteira" },
+    { label: "Simulados", path: "/simulados" },
     { label: "Exercícios", path: "/exercicios" },
     { label: "Sobre", path: "/sobre" },
   ];
