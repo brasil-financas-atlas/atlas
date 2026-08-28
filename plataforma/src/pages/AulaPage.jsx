@@ -261,12 +261,12 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
             }
             let lessonQuestions = [];
             if (richAula) {
-              const mq = richAula.miniQuiz || richAula.quiz || [];
+              const qz = richAula.quiz || [];
               const lp = richAula.listaProblemas || [];
-              lessonQuestions = [...mq, ...lp];
+              lessonQuestions = [...qz, ...lp];
             }
             if (lessonQuestions.length === 0) {
-              lessonQuestions = aulaObj?.miniQuiz || aulaObj?.quiz || aulaObj?.listaProblemas || [];
+              lessonQuestions = aulaObj?.quiz || aulaObj?.listaProblemas || [];
             }
             return <QuizEngine questions={lessonQuestions} lessonId={lessonId} />;
           })()}
