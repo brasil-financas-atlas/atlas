@@ -1,51 +1,6 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
 /* ==========================================================================
-   Hero Visual: Terminal Técnico do Atlas (Estilo Cloudflare / Vercel)
-   Zero Emojis · Zero Slop · Tipografia Mono Pura e Dados Estruturados
-   ========================================================================== */
-function HeroCodeBlueprint() {
-  return (
-    <div className="bfa-tech-card" style={{ background: '#080C14', border: '1px solid rgba(255, 255, 255, 0.1)', padding: '0', overflow: 'hidden', boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.7)' }}>
-      
-      {/* Top Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem 1.25rem', background: 'rgba(255, 255, 255, 0.03)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10B981', display: 'inline-block' }} />
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#94A3B8', fontWeight: 600 }}>
-            atlas-core / curriculum-spec.json
-          </span>
-        </div>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: '#10B981', background: 'rgba(16, 185, 129, 0.1)', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 700 }}>
-          LIVE v2.0
-        </span>
-      </div>
-
-      {/* Code / Architecture Body */}
-      <div style={{ padding: '1.25rem 1.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.82rem', lineHeight: 1.7, color: '#CBD5E1', overflowX: 'auto' }}>
-        <div><span style={{ color: '#64748B' }}>1</span>  <span style={{ color: '#F43F5E' }}>&#123;</span></div>
-        <div><span style={{ color: '#64748B' }}>2</span>    <span style={{ color: '#38BDF8' }}>"platform"</span>: <span style={{ color: '#FCD34D' }}>"Brasil Finanças Atlas"</span>,</div>
-        <div><span style={{ color: '#64748B' }}>3</span>    <span style={{ color: '#38BDF8' }}>"status"</span>: <span style={{ color: '#FCD34D' }}>"Open Source & 100% Gratuito"</span>,</div>
-        <div><span style={{ color: '#64748B' }}>4</span>    <span style={{ color: '#38BDF8' }}>"tracks"</span>: <span style={{ color: '#F43F5E' }}>[</span></div>
-        <div><span style={{ color: '#64748B' }}>5</span>      <span style={{ color: '#F43F5E' }}>&#123;</span> <span style={{ color: '#38BDF8' }}>"track"</span>: <span style={{ color: '#FCD34D' }}>"Matemática Quantitativa"</span>, <span style={{ color: '#38BDF8' }}>"lessons"</span>: <span style={{ color: '#34D399' }}>29</span>, <span style={{ color: '#38BDF8' }}>"modules"</span>: <span style={{ color: '#34D399' }}>4</span> <span style={{ color: '#F43F5E' }}>&#125;</span>,</div>
-        <div><span style={{ color: '#64748B' }}>6</span>      <span style={{ color: '#F43F5E' }}>&#123;</span> <span style={{ color: '#38BDF8' }}>"track"</span>: <span style={{ color: '#FCD34D' }}>"Mercado de Capitais"</span>, <span style={{ color: '#38BDF8' }}>"lessons"</span>: <span style={{ color: '#34D399' }}>26</span>, <span style={{ color: '#38BDF8' }}>"modules"</span>: <span style={{ color: '#34D399' }}>3</span> <span style={{ color: '#F43F5E' }}>&#125;</span>,</div>
-        <div><span style={{ color: '#64748B' }}>7</span>      <span style={{ color: '#F43F5E' }}>&#123;</span> <span style={{ color: '#38BDF8' }}>"track"</span>: <span style={{ color: '#FCD34D' }}>"Equity Research BRHSIC"</span>, <span style={{ color: '#38BDF8' }}>"method"</span>: <span style={{ color: '#FCD34D' }}>"DCF / WACC"</span> <span style={{ color: '#F43F5E' }}>&#125;</span></div>
-        <div><span style={{ color: '#64748B' }}>8</span>    <span style={{ color: '#F43F5E' }}>]</span>,</div>
-        <div><span style={{ color: '#64748B' }}>9</span>    <span style={{ color: '#38BDF8' }}>"telemetry"</span>: <span style={{ color: '#F43F5E' }}>&#123;</span> <span style={{ color: '#38BDF8' }}>"selic"</span>: <span style={{ color: '#FCD34D' }}>"10.50%"</span>, <span style={{ color: '#38BDF8' }}>"ipca"</span>: <span style={{ color: '#FCD34D' }}>"4.23%"</span>, <span style={{ color: '#38BDF8' }}>"juroReal"</span>: <span style={{ color: '#34D399' }}>"+6.01%"</span> <span style={{ color: '#F43F5E' }}>&#125;</span></div>
-        <div><span style={{ color: '#64748B' }}>10</span> <span style={{ color: '#F43F5E' }}>&#125;</span></div>
-      </div>
-
-      {/* Bottom Telemetry Bar */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem 1.25rem', background: 'rgba(255, 255, 255, 0.02)', borderTop: '1px solid rgba(255, 255, 255, 0.06)', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: '#94A3B8' }}>
-        <span>55 Aulas Estruturadas</span>
-        <span style={{ color: '#34D399' }}>Compilação Zero Erros</span>
-      </div>
-
-    </div>
-  );
-}
-
-/* ==========================================================================
    Pilar 1: Matriz de Capitalização e Prova Algébrica (Matemática)
    ========================================================================== */
 function MathProofLedgerCard() {
@@ -215,77 +170,67 @@ function EquityResearchExecutiveCard() {
 }
 
 /* ==========================================================================
-   Home Page Component (High-End Cloudflare / Linear / Stripe Synthesis)
+   Home Page Component (Monumental Editorial Authority — Stripe Press / Atlas)
    ========================================================================== */
 function Home() {
-  const { completedLessons } = useContext(ProgressContext || createContext({}));
-
   const stats = [
-    { value: "55", label: "Aulas publicadas", note: "Matemática & Finanças" },
-    { value: "7", label: "Módulos de estudo", note: "Conteúdo progressivo" },
-    { value: "100%", label: "Acesso gratuito", note: "Sem custo" },
-    { value: "BRHSIC", label: "Equity Research", note: "Guia de preparação" },
+    { value: "55", label: "Aulas Publicadas", note: "Matemática & Finanças" },
+    { value: "7", label: "Módulos Didáticos", note: "Progressão Estruturada" },
+    { value: "100%", label: "Acesso Livre", note: "Sem custo ou mensalidade" },
+    { value: "BRHSIC", label: "Equity Research", note: "Guia Oficial de Preparação" },
   ];
 
   return (
     <div>
-      {/* ── 1. Hero Section Split-Screen 50/50 ────────────────────────────── */}
-      <section className="hero-gradient" style={{ position: 'relative', overflow: 'hidden', padding: '5.5rem 0 4.5rem 0' }}>
-        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.35 }} />
+      {/* ── 1. Hero Section Editorial Monumental (Stripe Press Standard) ── */}
+      <section className="hero-gradient" style={{ position: 'relative', overflow: 'hidden', padding: '6.5rem 0 5.5rem 0', textAlign: 'center' }}>
+        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.25 }} />
         
-        <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="bfa-split-hero">
-            
-            {/* Coluna Esquerda: Proposição de Valor Educacional */}
-            <div className="bfa-split-col--text">
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.95)', background: 'rgba(255, 255, 255, 0.12)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255, 255, 255, 0.25)', fontWeight: 700 }}>
-                  v2.0 · Plataforma Aberta
-                </span>
-                <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(52, 211, 153, 0.35)', fontWeight: 700 }}>
-                  100% Gratuito
-                </span>
-              </div>
-
-              <EditableBlock id="home-hero-title" as="h1" className="headline-punch" style={{ fontSize: '3.35rem', fontWeight: 800, lineHeight: 1.12, color: '#FFFFFF', letterSpacing: '-0.035em', marginTop: '0.5rem' }}>
-                O rigor da matemática financeira. O poder do mercado de capitais.
-              </EditableBlock>
-
-              <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.15rem', lineHeight: 1.65, color: 'rgba(241, 245, 249, 0.9)', marginTop: '0.5rem' }}>
-                Uma suíte pedagógica aberta de padrão profissional com 55 aulas estruturadas, visualizações conceituais e guia prático de Equity Research para o ensino médio e olimpíadas.
-              </EditableBlock>
-
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1.5rem' }}>
-                <a href="#/matematica" className="bfa-btn bfa-btn--verde" style={{ padding: '0.85rem 1.65rem', fontSize: '0.95rem', minHeight: '46px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, boxShadow: '0 10px 25px -5px rgba(5, 150, 105, 0.4)' }}>
-                  Começar Trilha de Matemática →
-                </a>
-                <a href="#/preparacao-brhsic" className="bfa-btn bfa-btn--ghost" style={{ padding: '0.85rem 1.65rem', fontSize: '0.95rem', border: '1px solid rgba(255, 255, 255, 0.35)', color: '#FFFFFF', minHeight: '46px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600 }}>
-                  Ver Guia BRHSIC
-                </a>
-              </div>
-
-              {/* Stats Bar Compact */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.85rem', marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.12)' }}>
-                {stats.map((s) => (
-                  <div key={s.label}>
-                    <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>{s.value}</div>
-                    <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'rgba(241, 245, 249, 0.8)' }}>{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Coluna Direita: Terminal Técnico Blueprint (Estilo Cloudflare) */}
-            <div className="bfa-split-col--visual">
-              <HeroCodeBlueprint />
-            </div>
-
+        <div className="bfa-container" style={{ position: 'relative', zIndex: 1, maxWidth: '960px', margin: '0 auto' }}>
+          
+          {/* Badge de Identidade Soberana */}
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
+            <span className="mono-tag" style={{ color: '#E2E8F0', background: 'rgba(255, 255, 255, 0.08)', padding: '0.4rem 1rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255, 255, 255, 0.2)', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '0.06em' }}>
+              PLATAFORMA ABERTA DE EDUCAÇÃO FINANCEIRA & QUANTITATIVA
+            </span>
           </div>
+
+          {/* Headline Monumental */}
+          <EditableBlock id="home-hero-title" as="h1" className="headline-punch" style={{ fontSize: '3.85rem', fontWeight: 800, lineHeight: 1.08, color: '#FFFFFF', letterSpacing: '-0.04em', margin: '0 auto 1.25rem auto' }}>
+            O rigor da matemática financeira. O poder do mercado de capitais.
+          </EditableBlock>
+
+          {/* Subheadline Ampla & Inspiradora */}
+          <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.25rem', lineHeight: 1.7, color: 'rgba(241, 245, 249, 0.85)', maxWidth: '780px', margin: '0 auto 2.25rem auto', fontWeight: 400 }}>
+            Uma suíte pedagógica de padrão internacional com 55 aulas estruturadas, modelos quantitativos rigorosos e guia prático de Equity Research para o ensino médio e competições nacionais.
+          </EditableBlock>
+
+          {/* Dual CTAs de Prestígio */}
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3.5rem' }}>
+            <a href="#/matematica" className="bfa-btn bfa-btn--verde" style={{ padding: '0.95rem 2rem', fontSize: '1rem', minHeight: '50px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, boxShadow: '0 12px 30px -5px rgba(5, 150, 105, 0.4)' }}>
+              Explorar Trilha de Matemática →
+            </a>
+            <a href="#/financas" className="bfa-btn bfa-btn--ghost" style={{ padding: '0.95rem 2rem', fontSize: '1rem', border: '1px solid rgba(255, 255, 255, 0.3)', color: '#FFFFFF', minHeight: '50px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600 }}>
+              Ver Trilha de Finanças →
+            </a>
+          </div>
+
+          {/* Barra de Telemetria de Impacto (Grid 1px Sub-pixel) */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1px', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', backdropFilter: 'blur(16px)' }}>
+            {stats.map((s) => (
+              <div key={s.label} style={{ background: 'rgba(9, 13, 22, 0.85)', padding: '1.25rem 1rem', textAlign: 'center' }}>
+                <div className="tabular-numbers" style={{ fontSize: '1.75rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.03em' }}>{s.value}</div>
+                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#E2E8F0', marginTop: '0.2rem' }}>{s.label}</div>
+                <div style={{ fontSize: '0.72rem', color: '#94A3B8', marginTop: '0.15rem' }}>{s.note}</div>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
 
       {/* ── 2. Pilares de Aprendizagem em Blocos 50/50 com Prova Visual ─────── */}
-      <section className="bfa-container" style={{ padding: '3.5rem 1.5rem' }}>
+      <section className="bfa-container" style={{ padding: '4.5rem 1.5rem' }}>
         
         {/* Bloco 1: Matemática Aplicada (Texto na Esquerda, Prova na Direita) */}
         <div className="bfa-split-row">
