@@ -2,17 +2,20 @@ const { useState, useEffect, useContext, createContext, useMemo, useRef } = Reac
 
 function Navbar() {
   const { currentPath } = useRouter();
-  const { adminUser, isAdmin, logout, publicarConteudo, statusPublicacao, erroPublicacao } =
+  const { adminUser, isAdmin, logout, publicarConteudo, statusPublicacao, erroPublicacao, currentTheme, setTheme: setContextTheme } =
     useContext(AdminContext || createContext({}));
-  const [theme, setTheme] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
 
-  useEffect(() => {
-    const root = document.documentElement;
-    ["theme-executive", "theme-minimal", "dark-obsidian", "dark"].forEach((t) => root.classList.remove(t));
-    if (theme) root.classList.add(theme);
-  }, [theme]);
+  const isDark = currentTheme === 'dark-obsidian' || currentTheme === 'dark';
+
+  const toggleDarkLight = () => {
+    if (isDark) {
+      if (setContextTheme) setContextTheme('brasil-atlas');
+    } else {
+      if (setContextTheme) setContextTheme('dark-obsidian');
+    }
+  };
 
   const allLessonsIndex = useMemo(() => {
     const index = [];
@@ -173,11 +176,54 @@ function Navbar() {
           })}
         </nav>
 
-        <div className="navbar-actions">
+        <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          {/* Botão de Alternância Dark/Light */}
+          <button
+            type="button"
+            onClick={toggleDarkLight}
+            title={isDark ? "Mudar para modo claro" : "Mudar para modo escuro"}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '0.45rem 0.85rem',
+              borderRadius: '9999px',
+              border: '1px solid var(--border)',
+              background: 'var(--surface-strong)',
+              color: 'var(--foreground)',
+              fontSize: '0.8rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            {isDark ? (
+              <>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                  <line x1="1" y1="12" x2="3" y2="12"></line>
+                  <line x1="21" y1="12" x2="23" y2="12"></line>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <span>Claro</span>
+              </>
+            ) : (
+              <>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <span>Escuro</span>
+              </>
+            )}
+          </button>
+
           {adminUser ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              {/* Publicar não pede credencial nenhuma: quem autoriza é a
-                  política do banco, com base no papel da conta logada. */}
               {isAdmin && (
                 <button
                   type="button"
@@ -188,8 +234,8 @@ function Navbar() {
                   style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem' }}
                 >
                   {statusPublicacao === 'publicando' && 'Publicando...'}
-                  {statusPublicacao === 'publicado' && '✓ Publicado'}
-                  {statusPublicacao === 'erro' && '⚠ Erro ao publicar'}
+                  {statusPublicacao === 'publicado' && 'Publicado'}
+                  {statusPublicacao === 'erro' && 'Erro ao publicar'}
                   {(statusPublicacao === 'idle' || !statusPublicacao) && 'Publicar'}
                 </button>
               )}
@@ -197,7 +243,7 @@ function Navbar() {
                 Admin ({adminUser.name || adminUser.email})
               </a>
               <button onClick={logout} className="nav-link" title="Sair">
-                ✕
+                Sair
               </button>
             </div>
           ) : (
@@ -230,28 +276,27 @@ function Footer() {
 
         <div style={{ display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
           <div>
-            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.75rem' }}>Trilhas</span>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem' }}>
-              <li><a href="#/matematica" className="nav-link" style={{ padding: 0 }}>Matemática Aplicada</a></li>
-              <li><a href="#/financas" className="nav-link" style={{ padding: 0 }}>Finanças & Investimentos</a></li>
-              <li><a href="#/preparacao-brhsic" className="nav-link" style={{ padding: 0 }}>Competição BRHSIC</a></li>
+            <h4 style={{ fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--foreground)' }}>Disciplinas</h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem' }}>
+              <li><a href="#/matematica" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Matemática Aplicada</a></li>
+              <li><a href="#/financas" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Finanças & Investimentos</a></li>
+              <li><a href="#/preparacao-brhsic" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Guia BRHSIC</a></li>
             </ul>
           </div>
 
           <div>
-            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.75rem' }}>Recursos</span>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem' }}>
-              <li><a href="#/exercicios" className="nav-link" style={{ padding: 0 }}>Hub de Exercícios</a></li>
-              <li><a href="#/noticias" className="nav-link" style={{ padding: 0 }}>Notícias Macro</a></li>
-              <li><a href="#/admin/login" className="nav-link" style={{ padding: 0 }}>Área do Professor</a></li>
+            <h4 style={{ fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--foreground)' }}>Ferramentas</h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem' }}>
+              <li><a href="#/cronograma" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Simulador & Cronograma</a></li>
+              <li><a href="#/exercicios" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Exercícios & Casos</a></li>
+              <li><a href="#/sobre" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Sobre o Projeto</a></li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div className="bfa-container" style={{ marginTop: '3rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-        <span className="mono-tag" style={{ color: 'var(--muted-foreground)' }}>© 2026 Brasil Finanças Atlas · 100% Gratuito</span>
-        <span className="mono-tag" style={{ color: 'var(--muted-foreground)' }}>BUILD ZERO-DEPENDENCY · GIT-AS-A-CMS</span>
+      <div className="bfa-container" style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border)', textAlign: 'center', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
+        Brasil Finanças Atlas (BFA) — Plataforma Pública de Educação Financeira. Conteúdo 100% gratuito.
       </div>
     </footer>
   );
