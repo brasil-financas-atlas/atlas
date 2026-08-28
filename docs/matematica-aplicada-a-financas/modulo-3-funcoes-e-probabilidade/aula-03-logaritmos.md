@@ -1,4 +1,4 @@
-# Aula 3: Logaritmos
+# Unidade 3: Logaritmos
 
 ## Comece aqui
 

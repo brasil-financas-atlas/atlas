@@ -1,4 +1,4 @@
-# Aula 8: Estatística na prática — lendo números sem se enganar
+# Unidade 8: Estatística na prática — lendo números sem se enganar
 
 ## Comece aqui
 

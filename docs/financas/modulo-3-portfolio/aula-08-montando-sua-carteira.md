@@ -1,4 +1,4 @@
-# Aula 8: Montando sua primeira carteira — estudo de caso completo
+# Unidade 8: Montando sua primeira carteira — estudo de caso completo
 
 ## Comece aqui
 

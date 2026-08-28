@@ -1,4 +1,4 @@
-# Aula 6: Notação científica
+# Unidade 6: Notação científica
 
 ## Comece aqui
 

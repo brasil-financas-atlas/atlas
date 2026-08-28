@@ -1,4 +1,4 @@
-# Aula 4: Medidas de dispersão — variância e desvio padrão
+# Unidade 4: Medidas de dispersão — variância e desvio padrão
 
 ## Comece aqui
 

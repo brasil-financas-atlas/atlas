@@ -1,4 +1,4 @@
-# Aula 2: Perfil de investidor e objetivos
+# Unidade 2: Perfil de investidor e objetivos
 
 ## Comece aqui
 

@@ -1,4 +1,4 @@
-# Aula 2: Juros simples e compostos
+# Unidade 2: Juros simples e compostos
 
 ## Comece aqui
 

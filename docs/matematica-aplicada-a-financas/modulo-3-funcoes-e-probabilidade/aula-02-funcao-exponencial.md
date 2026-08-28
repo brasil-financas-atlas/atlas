@@ -1,4 +1,4 @@
-# Aula 2: Função exponencial
+# Unidade 2: Função exponencial
 
 ## Comece aqui
 

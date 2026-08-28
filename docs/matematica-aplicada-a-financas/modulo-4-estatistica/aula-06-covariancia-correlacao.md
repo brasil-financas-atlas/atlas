@@ -1,4 +1,4 @@
-# Aula 6: Covariância e correlação
+# Unidade 6: Covariância e correlação
 
 ## Comece aqui
 

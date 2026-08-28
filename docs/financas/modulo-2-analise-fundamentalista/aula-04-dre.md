@@ -1,4 +1,4 @@
-# Aula 4: DRE — Demonstração do Resultado
+# Unidade 4: DRE — Demonstração do Resultado
 
 ## Comece aqui
 

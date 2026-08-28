@@ -1,4 +1,4 @@
-# Aula 6: Indicadores de rentabilidade
+# Unidade 6: Indicadores de rentabilidade
 
 ## Comece aqui
 

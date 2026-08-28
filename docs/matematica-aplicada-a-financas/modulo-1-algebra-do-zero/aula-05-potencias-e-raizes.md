@@ -1,4 +1,4 @@
-# Aula 5: Potências e raízes
+# Unidade 5: Potências e raízes
 
 ## Comece aqui
 

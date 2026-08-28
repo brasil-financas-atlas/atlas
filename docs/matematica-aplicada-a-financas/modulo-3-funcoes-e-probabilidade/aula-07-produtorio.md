@@ -1,4 +1,4 @@
-# Aula 7: Produtório (Π)
+# Unidade 7: Produtório (Π)
 
 ## Comece aqui
 

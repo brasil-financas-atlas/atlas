@@ -1,4 +1,4 @@
-# Aula 2: Médias — aritmética, ponderada e geométrica
+# Unidade 2: Médias — aritmética, ponderada e geométrica
 
 ## Comece aqui
 

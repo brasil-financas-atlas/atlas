@@ -1,4 +1,4 @@
-# Aula 5: Progressão geométrica (PG)
+# Unidade 5: Progressão geométrica (PG)
 
 ## Comece aqui
 

@@ -1,4 +1,4 @@
-# Aula 2: Sistema Financeiro Brasileiro
+# Unidade 2: Sistema Financeiro Brasileiro
 
 ## Comece aqui
 

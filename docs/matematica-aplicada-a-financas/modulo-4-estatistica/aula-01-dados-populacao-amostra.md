@@ -1,4 +1,4 @@
-# Aula 1: Dados, população e amostra
+# Unidade 1: Dados, população e amostra
 
 ## Comece aqui
 

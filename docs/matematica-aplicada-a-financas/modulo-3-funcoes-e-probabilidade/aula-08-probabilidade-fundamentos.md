@@ -1,4 +1,4 @@
-# Aula 8: Probabilidade — fundamentos
+# Unidade 8: Probabilidade — fundamentos
 
 ## Comece aqui
 

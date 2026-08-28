@@ -1,4 +1,4 @@
-# Aula 2: A empresa por trás da ação
+# Unidade 2: A empresa por trás da ação
 
 ## Comece aqui
 

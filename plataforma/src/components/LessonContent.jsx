@@ -60,6 +60,52 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     if (!rawText) return "";
     let formatted = rawText;
 
+    /* A EXTRACAO DA MATEMATICA VEM PRIMEIRO — a ordem aqui e correcao de bug.
+
+       Os blocos `!!!` e `???` abaixo chamam `marked.parse` no proprio corpo.
+       Se a matematica ainda estiver como `$...$` nesse momento, o marked come
+       as barras invertidas: `\%` vira `%`, e em LaTeX `%` inicia comentario,
+       engolindo a chave de fechamento. `\mathbf{6\%}` chegava ao KaTeX como
+       `\mathbf{6%}` e nao renderizava.
+
+       Protegendo antes, o que entra no marked e `@@BFAMATHn@@`, que ele ignora. */
+
+    /* ----------------------------------------------------------------------
+       Retira a matemática do caminho do Markdown, guarda cada fórmula, e só
+       recoloca já como HTML no fim. Três detalhes aqui não são estilo, são
+       correção de bug:
+
+       1. O marcador é `@@BFAMATHn@@`, não `___MATH_TOK_n___`. Em Markdown,
+          `___texto___` é negrito com itálico — o marcador antigo virava
+          `<em><strong>MATH_TOK_0</strong></em>`, a string original deixava de
+          existir, e o replace no fim falhava calado. Resultado: 511
+          "MATH_TOK_0" apareciam como texto cru nas unidades.
+
+       2. A recolocação usa FUNÇÃO como segundo argumento do replace. Com
+          string, `$$` significa "um $ literal" — então toda fórmula em
+          destaque era rebaixada para fórmula em linha. Havia 84 blocos `$$`
+          no conteúdo e zero renderizados em destaque no site.
+
+       3. O padrão inline recusa abrir depois de `R` e antes de espaço, senão
+          casa com o `R$` de dinheiro e transforma prosa em fórmula.
+       ---------------------------------------------------------------------- */
+
+    const formulas = [];
+    const guardar = (tex, emDestaque) => {
+      formulas.push({ tex, emDestaque });
+      return `@@BFAMATH${formulas.length - 1}@@`;
+    };
+
+    formatted = formatted
+      // Destaque primeiro: senão o padrão inline abriria dentro de um `$$`.
+      .replace(/\$\$([\s\S]*?)\$\$/g, (m, tex) => guardar(tex, true))
+      .replace(/\\\[([\s\S]*?)\\\]/g, (m, tex) => guardar(tex, true))
+      .replace(/\\\(([\s\S]*?)\\\)/g, (m, tex) => guardar(tex, false))
+      // Inline: `$` não precedido de `R` nem de `\`, e não seguido de espaço.
+      // O corpo aceita `\$` escapado, que o conteúdo usa para cifrão dentro
+      // de fórmula.
+      .replace(/(?<![\\R])\$(?!\s)((?:[^$\n\\]|\\[\s\S])+?)\$/g, (m, tex) => guardar(tex, false));
+
     formatted = formatted.replace(
       /!!!\s*(\w+)(?:\s*"([^"]+)")?\n([\s\S]*?)(?=\n!!!|\n#|\n\n\n|$)/g,
       (match, type, title, body) => {
@@ -114,41 +160,6 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       }
     );
 
-    /* ----------------------------------------------------------------------
-       Retira a matemática do caminho do Markdown, guarda cada fórmula, e só
-       recoloca já como HTML no fim. Três detalhes aqui não são estilo, são
-       correção de bug:
-
-       1. O marcador é `@@BFAMATHn@@`, não `___MATH_TOK_n___`. Em Markdown,
-          `___texto___` é negrito com itálico — o marcador antigo virava
-          `<em><strong>MATH_TOK_0</strong></em>`, a string original deixava de
-          existir, e o replace no fim falhava calado. Resultado: 511
-          "MATH_TOK_0" apareciam como texto cru nas unidades.
-
-       2. A recolocação usa FUNÇÃO como segundo argumento do replace. Com
-          string, `$$` significa "um $ literal" — então toda fórmula em
-          destaque era rebaixada para fórmula em linha. Havia 84 blocos `$$`
-          no conteúdo e zero renderizados em destaque no site.
-
-       3. O padrão inline recusa abrir depois de `R` e antes de espaço, senão
-          casa com o `R$` de dinheiro e transforma prosa em fórmula.
-       ---------------------------------------------------------------------- */
-
-    const formulas = [];
-    const guardar = (tex, emDestaque) => {
-      formulas.push({ tex, emDestaque });
-      return `@@BFAMATH${formulas.length - 1}@@`;
-    };
-
-    formatted = formatted
-      // Destaque primeiro: senão o padrão inline abriria dentro de um `$$`.
-      .replace(/\$\$([\s\S]*?)\$\$/g, (m, tex) => guardar(tex, true))
-      .replace(/\\\[([\s\S]*?)\\\]/g, (m, tex) => guardar(tex, true))
-      .replace(/\\\(([\s\S]*?)\\\)/g, (m, tex) => guardar(tex, false))
-      // Inline: `$` não precedido de `R` nem de `\`, e não seguido de espaço.
-      // O corpo aceita `\$` escapado, que o conteúdo usa para cifrão dentro
-      // de fórmula.
-      .replace(/(?<![\\R])\$(?!\s)((?:[^$\n\\]|\\[\s\S])+?)\$/g, (m, tex) => guardar(tex, false));
 
     let parsedHtml = (window.marked && window.marked.parse) ? window.marked.parse(formatted) : formatted;
 

@@ -1,4 +1,4 @@
-# Aula 3: Inflação e juros reais
+# Unidade 3: Inflação e juros reais
 
 ## Comece aqui
 

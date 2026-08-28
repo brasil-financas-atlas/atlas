@@ -1,4 +1,4 @@
-# Aula 6: Somatório (Σ)
+# Unidade 6: Somatório (Σ)
 
 ## Comece aqui
 

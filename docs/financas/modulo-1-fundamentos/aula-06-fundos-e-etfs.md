@@ -1,4 +1,4 @@
-# Aula 6: Fundos de investimento e ETFs
+# Unidade 6: Fundos de investimento e ETFs
 
 ## Comece aqui
 

@@ -1,4 +1,4 @@
-# Aula 2: Frações e decimais
+# Unidade 2: Frações e decimais
 
 ## Comece aqui
 

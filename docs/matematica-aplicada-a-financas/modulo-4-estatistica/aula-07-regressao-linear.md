@@ -1,4 +1,4 @@
-# Aula 7: Regressão linear
+# Unidade 7: Regressão linear
 
 ## Comece aqui
 

@@ -1,4 +1,4 @@
-# Aula 3: Mediana, moda e quando a média engana
+# Unidade 3: Mediana, moda e quando a média engana
 
 ## Comece aqui
 

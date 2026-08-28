@@ -1,4 +1,4 @@
-# Aula 3: Classes de ativos e correlação
+# Unidade 3: Classes de ativos e correlação
 
 ## Comece aqui
 

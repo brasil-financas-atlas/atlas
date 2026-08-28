@@ -1,4 +1,4 @@
-# Aula 6: Aportes e rebalanceamento
+# Unidade 6: Aportes e rebalanceamento
 
 ## Comece aqui
 

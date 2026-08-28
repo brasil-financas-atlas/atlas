@@ -1,4 +1,4 @@
-# Aula 4: Progressão aritmética (PA)
+# Unidade 4: Progressão aritmética (PA)
 
 ## Comece aqui
 
