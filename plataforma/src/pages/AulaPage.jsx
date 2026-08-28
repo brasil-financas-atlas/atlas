@@ -260,13 +260,10 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               }
             }
             let lessonQuestions = [];
-            if (richAula) {
-              const qz = richAula.quiz || [];
-              const lp = richAula.listaProblemas || [];
-              lessonQuestions = [...qz, ...lp];
-            }
-            if (lessonQuestions.length === 0) {
-              lessonQuestions = aulaObj?.quiz || aulaObj?.listaProblemas || [];
+            if (richAula && richAula.quiz) {
+              lessonQuestions = richAula.quiz;
+            } else if (aulaObj && aulaObj.quiz) {
+              lessonQuestions = aulaObj.quiz;
             }
             return <QuizEngine questions={lessonQuestions} lessonId={lessonId} />;
           })()}
