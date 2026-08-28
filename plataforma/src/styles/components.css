@@ -91,16 +91,97 @@
 }
 
 /* ── 3. Buttons ─────────────────────────────────────────────────────────── */
+/* ── 3. Buttons ─────────────────────────────────────────────────────────── */
+.bfa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
+  line-height: 1;
+}
+
+.bfa-btn--primary-solid {
+  background-color: #FFFFFF;
+  color: #090D16 !important;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+.bfa-btn--primary-solid:hover {
+  background-color: #F8FAFC;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+}
+
+.bfa-btn--secondary-glass {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(12px);
+}
+.bfa-btn--secondary-glass:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.38);
+  transform: translateY(-2px);
+}
+
+.bfa-btn--azul {
+  background-color: var(--track-math);
+  color: #FFFFFF !important;
+}
+.bfa-btn--azul:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}
+
+.bfa-btn--verde {
+  background-color: var(--track-finance);
+  color: #FFFFFF !important;
+}
+.bfa-btn--verde:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}
+
+.bfa-btn--ouro {
+  background-color: var(--track-brhsic);
+  color: #FFFFFF !important;
+}
+.bfa-btn--ouro:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}
+
+.bfa-btn--ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--foreground);
+}
+.bfa-btn--ghost:hover {
+  background: var(--surface-strong);
+}
+
+.bfa-btn--sm {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.78rem;
+}
+
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   border-radius: var(--radius-md);
-  background-color: var(--gold);
-  padding: 0.75rem 1.25rem;
+  background-color: var(--primary);
+  padding: 0.65rem 1.15rem;
   font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--gold-foreground);
+  font-weight: 700;
+  color: var(--primary-foreground);
   transition: transform 0.15s ease, opacity 0.15s ease;
   border: none;
   cursor: pointer;
@@ -117,7 +198,7 @@
   gap: 0.5rem;
   border-radius: var(--radius-md);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 0.75rem 1.25rem;
+  padding: 0.65rem 1.15rem;
   font-size: 0.875rem;
   font-weight: 600;
   color: #FFFFFF;
