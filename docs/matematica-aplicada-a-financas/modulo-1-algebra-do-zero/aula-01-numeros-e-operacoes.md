@@ -26,7 +26,7 @@ Toda conta financeira — rendimento, desconto, imposto, lucro — é uma combin
 |----------|--------------------|
 | Soma | Saldo + rendimento do mês |
 | Subtração | Salário − gastos = quanto sobrou |
-| Multiplicação | R$1.000 × 1,10 = valor com 10% de juros |
+| Multiplicação | R$ 1.000 × 1,10 = valor com 10% de juros |
 | Divisão | Lucro ÷ capital investido = taxa de retorno |
 
 !!! note "Em construção"

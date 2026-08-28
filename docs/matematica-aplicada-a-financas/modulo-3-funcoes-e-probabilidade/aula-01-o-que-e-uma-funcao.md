@@ -65,7 +65,7 @@ A pergunta 2 mostra o movimento mais comum em finanças: **inverter a função**
 6. Por que $M(t) = C(1+it)$ e $M(t) = C + Cit$ são a mesma função? Mostre algebricamente.
 
 ??? note "Gabarito"
-    1. $f(2)=2$; $f(0)=-4$; $f(10)=26$.
+    1. $f(2) = 2$; $f(0)=-4$; $f(10) = 26$.
     2. Capital: R$ 1.000; rendimento: R$ 15/mês; taxa: $15/1000 = 1{,}5\%$ a.m.
     3. $1000 + 15t = 1450 \Rightarrow t = 30$ meses.
     4. $5 + 1{,}80d = 23 \Rightarrow d = 10$ km.

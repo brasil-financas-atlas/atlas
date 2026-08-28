@@ -84,7 +84,7 @@ Correlação de 0,98: A e B são quase o mesmo ativo. Ter os dois na carteira **
 
 ## PBL
 
-Pegue (ou invente de forma realista) os retornos mensais de 6 meses de três ativos: um ETF de Ibovespa, um fundo cambial (dólar) e um FII. Calcule a correlação entre os três pares, monte uma tabela 3×3 e responda como um analista: que par oferece a melhor diversificação? Que par é "diversificação de mentira"? Se você tivesse que montar uma carteira com apenas dois deles para atravessar uma crise local, quais escolheria — e por quê o resultado bate com a aula 3 do Módulo 3 de Finanças?
+Pegue (ou invente de forma realista) os retornos mensais de 6 meses de três ativos: um ETF de Ibovespa, um fundo cambial (dólar) e um FII. Calcule a correlação entre os três pares, monte uma tabela 3 × 3 e responda como um analista: que par oferece a melhor diversificação? Que par é "diversificação de mentira"? Se você tivesse que montar uma carteira com apenas dois deles para atravessar uma crise local, quais escolheria — e por quê o resultado bate com a aula 3 do Módulo 3 de Finanças?
 
 ## Resumo
 

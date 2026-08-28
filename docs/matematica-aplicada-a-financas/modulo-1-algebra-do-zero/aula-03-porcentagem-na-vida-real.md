@@ -21,16 +21,16 @@ Porcentagem é a linguagem do dinheiro. Desconto na loja, juros do cartão, rend
 ## Três situações que aparecem em finanças
 
 **Situação 1 — Calcular X% de um valor:**
-Quanto é 15% de R$200?
-→ R$200 × 0,15 = R$30
+Quanto é 15% de R$ 200?
+→ R$ 200 × 0,15 = R$ 30
 
 **Situação 2 — Calcular quanto um valor representa:**
-R$30 é quanto por cento de R$200?
+R$ 30 é quanto por cento de R$ 200?
 → 30 ÷ 200 = 0,15 = 15%
 
 **Situação 3 — Calcular o valor original:**
-R$30 são 15% de qual valor?
-→ 30 ÷ 0,15 = R$200
+R$ 30 são 15% de qual valor?
+→ 30 ÷ 0,15 = R$ 200
 
 ## Por que "porcentagem" e "ponto percentual" são diferentes
 

@@ -19,20 +19,20 @@ CDB, LCI e LCA são os três produtos mais comuns de renda fixa bancária. A dif
 | Conceito | Significado simples |
 |----------|---------------------|
 | CDI | Taxa de referência; a maioria dos CDBs rende um percentual do CDI |
-| FGC | Fundo Garantidor de Créditos: garante até R$250.000 por CPF por instituição |
+| FGC | Fundo Garantidor de Créditos: garante até R$ 250.000 por CPF por instituição |
 | Risco de crédito | Risco de o banco não conseguir pagar o que deve |
 | Liquidez | CDBs podem ter liquidez diária; LCI/LCA geralmente têm carência mínima |
 | Carência | Prazo mínimo antes de poder resgatar o dinheiro |
 
 ## Como o FGC funciona
 
-O FGC é uma garantia real. Se o banco quebrar, o FGC reembolsa até R$250.000 por CPF em cada instituição. O limite total é R$1.000.000 por CPF renovável a cada 4 anos.
+O FGC é uma garantia real. Se o banco quebrar, o FGC reembolsa até R$ 250.000 por CPF em cada instituição. O limite total é R$ 1.000.000 por CPF renovável a cada 4 anos.
 
 Isso significa que uma LCA de banco pequeno com taxa de 100% do CDI pode ser tão segura quanto um CDB do Itaú — desde que o valor esteja dentro do limite do FGC.
 
 ## Exemplo resolvido
 
-Carlos tem R$50.000 e compara três produtos com CDI em 10,5%:
+Carlos tem R$ 50.000 e compara três produtos com CDI em 10,5%:
 
 | Produto | Taxa | Bruto | IR | Líquido |
 |---------|------|-------|-------|---------|
@@ -40,7 +40,7 @@ Carlos tem R$50.000 e compara três produtos com CDI em 10,5%:
 | CDB banco médio | 120% CDI = 12,6% | 12,6% | −1,89% (15%) | 10,71% |
 | LCA banco médio | 92% CDI = 9,66% | 9,66% | isenta | 9,66% |
 
-O CDB de banco médio a 120% do CDI rende mais, mas exige atenção: o banco médio tem mais risco de crédito. Com R$50.000 dentro do limite do FGC, o risco é protegido. Acima de R$250.000, o risco seria real.
+O CDB de banco médio a 120% do CDI rende mais, mas exige atenção: o banco médio tem mais risco de crédito. Com R$ 50.000 dentro do limite do FGC, o risco é protegido. Acima de R$ 250.000, o risco seria real.
 
 ## Cuidado comum
 
@@ -58,7 +58,7 @@ Bancos digitais menores frequentemente oferecem CDBs com 110–130% do CDI porqu
 
 ## PBL
 
-Carlos tem R$50.000 e compara CDB, LCA e Tesouro Selic. Todos vencem em 2 anos. O CDI está em 10,5%. Considere IR de 15% para o CDB (prazo acima de 720 dias).
+Carlos tem R$ 50.000 e compara CDB, LCA e Tesouro Selic. Todos vencem em 2 anos. O CDI está em 10,5%. Considere IR de 15% para o CDB (prazo acima de 720 dias).
 
 - CDB banco médio: 115% do CDI, liquidez no vencimento
 - LCA banco médio: 93% do CDI, carência de 90 dias
@@ -70,5 +70,5 @@ Calcule a rentabilidade líquida de cada um e indique qual escolheria. Que fator
 
 - CDB, LCI e LCA são empréstimos ao banco, não ao governo.
 - LCI e LCA são isentos de IR; CDB tem tabela regressiva.
-- O FGC garante até R$250.000 por CPF por banco.
+- O FGC garante até R$ 250.000 por CPF por banco.
 - A próxima aula sai da renda fixa e entra em renda variável: ações e a bolsa de valores.
