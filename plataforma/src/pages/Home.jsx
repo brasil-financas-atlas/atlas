@@ -59,6 +59,9 @@ function Home() {
         </div>
       </section>
 
+      {/* ── Ticker de Índices Financeiros no Hero ─────────────────────── */}
+      {window.MarketTickerRibbon && React.createElement(window.MarketTickerRibbon)}
+
       {/* ── 2. Trilhas de Estudo com Caixas Amplas e Detalhadas ─────────── */}
       <section className="bfa-container" style={{ padding: '4.5rem 1.5rem' }}>
         
