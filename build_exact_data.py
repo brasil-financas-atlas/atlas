@@ -134,7 +134,7 @@ content_data = {
 
 out_path = r"C:\codigos\bfa-main\plataforma\src\data\contentData.js"
 with open(out_path, 'w', encoding='utf-8') as f:
-    f.write("export const EXACT_CONTENT = ")
+    f.write("window.EXACT_CONTENT = ")
     json.dump(content_data, f, ensure_ascii=False, indent=2)
     f.write(";\n")
 
