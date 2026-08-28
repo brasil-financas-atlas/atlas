@@ -12,14 +12,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-sans);
   color: var(--text-primary);
   font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.035em;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.4rem; }
-h4 { font-size: 1.15rem; }
+h1 { font-size: 2.35rem; margin-bottom: 1.25rem; }
+h2 { font-size: 1.85rem; margin-top: 2.25rem; margin-bottom: 1rem; }
+h3 { font-size: 1.35rem; margin-top: 1.75rem; margin-bottom: 0.85rem; }
+h4 { font-size: 1.15rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
 
 .font-sans {
   font-family: var(--font-sans);
@@ -28,19 +28,20 @@ h4 { font-size: 1.15rem; }
 .headline-punch {
   font-family: var(--font-sans);
   font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
 }
 
 .tabular-numbers {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 p {
-  color: var(--text-secondary);
-  line-height: 1.7;
+  color: var(--foreground);
+  line-height: 1.85;
+  margin-bottom: 1.35rem;
 }
 
 code, pre, kbd, samp {
@@ -52,27 +53,116 @@ code, pre, kbd, samp {
   background-color: var(--surface-strong);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  padding: 1rem 1.25rem;
-  font-size: 0.875rem;
+  padding: 1.15rem 1.35rem;
+  font-size: 0.88rem;
+  line-height: 1.7;
   overflow-x: auto;
 }
 
-/* KaTeX & MathJax Formatting */
-.katex-display {
-  background-color: var(--color-azul-light);
-  border-left: 4px solid var(--track-math);
-  padding: 1.15rem 1.5rem;
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  margin: 1.5rem 0 !important;
+/* ── Math & Calculation Spacing System ─────────────────────────────────── */
+.bfa-math-inline {
+  display: inline-block;
+  margin: 0 0.32em;
+  padding: 0 0.08em;
+  vertical-align: baseline;
+}
+
+.bfa-math-block {
+  margin: 1.75rem 0;
   overflow-x: auto;
+}
+
+.katex {
+  font-size: 1.06em;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.katex-display {
+  background-color: var(--surface-strong);
+  border-left: 4px solid var(--track-math);
+  padding: 1.35rem 1.75rem;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin: 1.85rem 0 !important;
+  overflow-x: auto;
+  line-height: 1.95;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="dark-obsidian"] .katex-display,
 .dark .katex-display {
-  background-color: rgba(59, 130, 246, 0.15);
-  border-left-color: #60A5FA;
+  background-color: rgba(56, 189, 248, 0.08);
+  border-left-color: #38BDF8;
 }
 
-.katex {
-  font-size: 1.05em;
+/* ── Lesson Article Typography & Spacing ──────────────────────────────── */
+.bfa-lesson-article,
+.bfa-markdown-body {
+  font-size: 1.035rem;
+  line-height: 1.85;
+  color: var(--foreground);
+}
+
+.bfa-markdown-body p {
+  margin-bottom: 1.35rem;
+  line-height: 1.85;
+}
+
+.bfa-markdown-body ul,
+.bfa-markdown-body ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.35rem;
+}
+
+.bfa-markdown-body li {
+  margin-bottom: 0.75rem;
+  line-height: 1.8;
+}
+
+.bfa-markdown-body strong {
+  font-weight: 800;
+  color: var(--foreground);
+}
+
+.bfa-markdown-body table {
+  width: 100%;
+  margin: 2rem 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.bfa-markdown-body table th {
+  background-color: var(--surface-strong);
+  padding: 0.85rem 1.25rem;
+  font-weight: 800;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+}
+
+.bfa-markdown-body table td {
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.bfa-markdown-body table tr:last-child td {
+  border-bottom: none;
+}
+
+.bfa-markdown-body code:not(.katex code) {
+  padding: 0.2rem 0.45rem;
+  margin: 0 0.25rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--surface-strong);
+  border: 1px solid var(--border);
+  font-size: 0.88em;
+  font-family: var(--font-mono);
 }
