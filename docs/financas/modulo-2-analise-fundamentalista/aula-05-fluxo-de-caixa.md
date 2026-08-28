@@ -51,14 +51,6 @@ Leitura:
 - FCO positivo só por atrasar pagamento de fornecedores: fôlego emprestado, não geração real.
 - Capex sempre maior que o FCO: dependência eterna de banco ou de novos sócios.
 
-## Mini quiz
-
-1. Por que "lucro é opinião, caixa é fato"?
-2. O que compõe o fluxo de caixa operacional?
-3. FCI negativo é ruim? Explique.
-4. Como se calcula o fluxo de caixa livre e o que ele representa?
-5. Uma empresa tem lucro alto e FCO negativo há 4 trimestres. Qual a suspeita?
-
 ## PBL
 
 A loja virtual de Ana lucrou R$ 8.000 no papel neste trimestre. Mas: R$ 12.000 das vendas foram parceladas e ainda não caíram na conta, ela gastou R$ 6.000 comprando estoque para a Black Friday e pegou R$ 5.000 emprestados para fechar as contas do mês. Monte os três fluxos de caixa de Ana (operacional, investimento em estoque como aproximação, financiamento), estime a variação real do caixa e explique por que ela está sem dinheiro apesar do lucro. O negócio dela é inviável ou é um problema de prazo?

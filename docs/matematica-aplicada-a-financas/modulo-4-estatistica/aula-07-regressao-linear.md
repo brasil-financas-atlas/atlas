@@ -70,23 +70,6 @@ Reta: $\hat{y} = 0{,}26 + 0{,}62x$. **Leitura financeira**: β ≈ 0,62 — a a�
 - **Relação ≠ lei**: betas mudam com o tempo; recalcule com dados recentes.
 - **Outliers puxam a reta**: um mês maluco distorce $a$ e $b$ — sempre olhe o gráfico.
 
-## Lista de problemas
-
-1. Na reta $\hat{y} = 2 + 0{,}8x$, o que significam o 2 e o 0,8? Estime $y$ para $x = 10$.
-2. Com Cov(X,Y) = 12 e $\sigma_X^2 = 4$: calcule $b$. Com $\bar{x} = 5$, $\bar{y} = 20$: calcule $a$ e escreva a reta.
-3. Uma ação tem β = 1,8. O Ibovespa cai 5% num mês. Qual a variação esperada da ação? Por que "esperada" e não "garantida"?
-4. Ajuste mentalmente: os pontos (1, 3), (2, 5), (3, 7) estão numa reta perfeita. Quais são $a$ e $b$? Qual o $R^2$?
-5. Um analista ajustou vendas de sorvete × temperatura com dados de 20 °C a 35 °C e quer prever vendas a 5 °C. Qual o problema?
-6. Desafio: se a correlação entre a ação e o índice é 0,6, qual o $R^2$ da regressão? Interprete: quanto do movimento da ação **não** é explicado pelo mercado (esse resto tem nome: risco específico — Módulo 3 de Finanças, aula 1).
-
-??? note "Gabarito"
-    1. $a = 2$: valor de $y$ com $x = 0$; $b = 0{,}8$: cada +1 em $x$ soma 0,8 a $y$; $\hat{y}(10) = 10$.
-    2. $b = 3$; $a = 20 - 15 = 5$; $\hat{y} = 5 + 3x$.
-    3. $-5\% \times 1{,}8 = -9\%$ esperados; "esperada" porque a reta descreve a média da relação — cada mês tem resíduo (risco específico da empresa).
-    4. $b = 2$, $a = 1$, $R^2 = 1$ (ajuste perfeito).
-    5. Extrapolação: 5 °C está fora do intervalo dos dados; a relação pode não ser linear no frio (ninguém compra sorvete, vendas ~0).
-    6. $R^2 = 0{,}6^2 = 0{,}36$: o mercado explica 36% da variação; os 64% restantes são risco específico — exatamente o que a diversificação elimina.
-
 ## PBL
 
 Colete (ou simule com bom senso) 8 pares de dados: retorno mensal do Ibovespa ($x$) e de uma ação que você acompanha ($y$). Calcule β e $a$ pela receita da aula, classifique a ação (amplificadora, neutra ou defensiva), calcule o $R^2$ a partir da correlação e escreva um mini-parecer de analista (5 linhas): o que o β diz sobre o papel dessa ação numa carteira conservadora? E numa arrojada? Este tipo de análise quantitativa diferencia um pitch na BRHSIC.

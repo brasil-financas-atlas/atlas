@@ -51,14 +51,6 @@ FCD simplificado da Sorvetes Tropical. Fluxo de caixa livre atual: R$ 15 mi (aul
 
 Do valor da operação, subtraímos a dívida líquida (60): valor para o acionista ≈ **R$ 65 mi**... bem abaixo dos R$ 230 mi de valor de mercado da aula 8! O que isso significa? Com **essas** premissas conservadoras, o preço atual só se justifica se a empresa crescer bem mais ou recuperar margem. O FCD revelou o que o mercado está apostando — agora o analista julga se a aposta é razoável. É este confronto entre premissas e preço que a BRHSIC espera ver num bom relatório.
 
-## Mini quiz
-
-1. Por que R$ 100 futuros valem menos que R$ 100 hoje?
-2. O que compõe uma taxa de desconto razoável?
-3. O que é a perpetuidade num FCD?
-4. Por que o FCD é sensível demais às premissas — e como se proteger disso?
-5. Para que serve o FCD, se ele não crava um preço exato?
-
 ## PBL — estudo de caso final do módulo
 
 Escolha uma empresa listada na B3 que você conheça do dia a dia (varejo, alimentos, banco). Monte um mini-relatório de uma página com: (1) o negócio e suas vantagens competitivas (aula 2); (2) três números-chave do balanço, DRE e caixa (aulas 3–5); (3) ROE e endividamento comparados a um concorrente (aulas 6–7); (4) P/L e EV/EBITDA contra o par (aula 8); e (5) sua conclusão: o que o preço atual está assumindo, e você compraria com margem de segurança? Este é o formato de pitch que competições como a BRHSIC avaliam.

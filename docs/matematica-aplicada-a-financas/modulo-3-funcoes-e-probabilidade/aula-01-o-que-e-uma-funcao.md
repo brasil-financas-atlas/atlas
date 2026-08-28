@@ -55,23 +55,6 @@ Um plano de celular cobra R$ 30 fixos + R$ 2 por GB usado. O custo é a função
 
 A pergunta 2 mostra o movimento mais comum em finanças: **inverter a função** — sair da saída desejada e descobrir a entrada necessária. É o que você faz ao perguntar "quanto preciso aportar para chegar a R$ 10.000?".
 
-## Lista de problemas
-
-1. Se $f(x) = 3x - 4$, calcule $f(2)$, $f(0)$ e $f(10)$.
-2. Um investimento em juros simples segue $M(t) = 1000 + 15t$ (em reais, $t$ em meses). Qual o capital inicial? Qual o rendimento mensal? Qual a taxa mensal?
-3. No problema 2, em quantos meses o montante chega a R$ 1.450?
-4. Uma corrida de aplicativo custa $f(d) = 5 + 1{,}80d$ ($d$ em km). Com R$ 23, qual a distância máxima?
-5. Escreva a função do montante em juros simples para C = R$ 2.000 e taxa de 1,5% ao mês, e calcule o montante após 2 anos.
-6. Por que $M(t) = C(1+it)$ e $M(t) = C + Cit$ são a mesma função? Mostre algebricamente.
-
-??? note "Gabarito"
-    1. $f(2) = 2$; $f(0)=-4$; $f(10) = 26$.
-    2. Capital: R$ 1.000; rendimento: R$ 15/mês; taxa: $15/1000 = 1{,}5\%$ a.m.
-    3. $1000 + 15t = 1450 \Rightarrow t = 30$ meses.
-    4. $5 + 1{,}80d = 23 \Rightarrow d = 10$ km.
-    5. $M(t) = 2000 + 30t$; após 24 meses: $M(24) = 2000 + 720 = R\$\,2.720$.
-    6. Fatorando $C$ em evidência: $C + Cit = C(1 + it)$ — propriedade distributiva.
-
 ## PBL
 
 João compara duas propostas de mesada por ajudar na loja da família: (a) R$ 80 fixos por mês; (b) R$ 20 fixos + R$ 6 por dia trabalhado. Modele as duas como funções do número de dias $d$, descubra a partir de quantos dias a proposta (b) vence a (a), desenhe (ou descreva) as duas retas e explique o que o "ponto de encontro" delas significa. Depois responda: qual proposta tem mais **risco**, e por quê?

@@ -52,23 +52,6 @@ $$
 
 A aritmética simples dos preços ($\frac{20+25+30}{3} = 25$) coincidiu por sorte aqui — se as quantidades fossem diferentes, divergiria. O custo médio da sua corretora é uma média ponderada.
 
-## Lista de problemas
-
-1. Calcule a média aritmética de: 4, 7, 9, 12, 18.
-2. Notas 6,0 (peso 2), 8,0 (peso 3) e 9,0 (peso 5): qual a média ponderada?
-3. Retornos anuais de +20%, +10% e −8%: calcule o retorno médio **geométrico** (dica: use os fatores 1,20; 1,10; 0,92).
-4. No problema 3, calcule também a média aritmética e explique por que ela é maior.
-5. Uma carteira tem 50% em Selic (+11%), 30% em IPCA+ (+7%) e 20% em ações (−12%). Qual o retorno da carteira?
-6. Desafio: um investimento dobrou em 5 anos. Qual a taxa média geométrica anual? (Resolva com raiz quinta e confira com a regra do 72 da aula de logaritmos.)
-
-??? note "Gabarito"
-    1. $50/5 = 10$.
-    2. $(12 + 24 + 45)/10 = 8{,}1$.
-    3. $\sqrt[3]{1{,}20 \times 1{,}10 \times 0{,}92} = \sqrt[3]{1{,}2144} \approx 1{,}0669$ → **+6,69% a.a.**
-    4. Aritmética: $(20+10-8)/3 = 7{,}33\%$. Maior porque ignora o efeito da composição sobre bases diferentes; com volatilidade, aritmética > geométrica sempre.
-    5. $0{,}5(11) + 0{,}3(7) + 0{,}2(-12) = 5{,}5 + 2{,}1 - 2{,}4 = +5{,}2\%$.
-    6. $\sqrt[5]{2} \approx 1{,}1487$ → ~14,9% a.a. Regra do 72: $72/14{,}4 \approx 5$ anos. ✓
-
 ## PBL
 
 Um fundo anuncia: "retorno médio de 12% ao ano nos últimos 4 anos!" Os retornos foram: +60%, −25%, +40%, −27%. Verifique se o "12%" é a média aritmética, calcule a média geométrica e o resultado acumulado de R$ 10.000 investidos, e escreva um parágrafo de "propaganda honesta" para o mesmo fundo — com o número que de fato representa a experiência do investidor.

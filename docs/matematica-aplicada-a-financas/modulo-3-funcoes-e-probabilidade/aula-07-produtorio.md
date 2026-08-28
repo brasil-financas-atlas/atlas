@@ -54,23 +54,6 @@ $$
 
 A soma ingênua daria 7% — a diferença parece pequena em 3 meses, mas em anos de composição o erro da soma vira abismo. É exatamente assim que o site do seu banco calcula o "retorno acumulado em 12 meses": um produtório de 12 fatores.
 
-## Lista de problemas
-
-1. Calcule: $\prod_{k=1}^{4} k$ (isto é, $4!$) e $\prod_{k=1}^{3} 2k$.
-2. Retornos de +2%, +3% e −1% em três meses: monte o produtório e calcule o acumulado.
-3. Uma ação caiu 30% num ano e subiu 30% no seguinte. Qual o resultado acumulado? Por que não é zero?
-4. Que alta é necessária para recuperar uma queda de 20%? E de 60%?
-5. A inflação foi 0,5% ao mês por 12 meses. Escreva o produtório e calcule a inflação anual (dica: $1{,}005^{12} \approx 1{,}0617$).
-6. Desafio: usando logaritmos, transforme $\prod_{t=1}^{n}(1+r_t)$ numa soma. Por que isso é útil para quem trabalha com muitos períodos?
-
-??? note "Gabarito"
-    1. $4! = 24$; $2 \cdot 4 \cdot 6 = 48$.
-    2. $1{,}02 \times 1{,}03 \times 0{,}99 = 1{,}04009$ → +4,009%.
-    3. $0{,}70 \times 1{,}30 = 0{,}91$ → −9%. A alta incide sobre base menor.
-    4. Queda de 20%: $1/0{,}80 = 1{,}25$ → +25%. Queda de 60%: $1/0{,}40 = 2{,}5$ → +150%.
-    5. $\prod_{t=1}^{12} 1{,}005 = 1{,}005^{12} \approx 1{,}0617$ → ~6,17% ao ano.
-    6. $\log\prod(1+r_t) = \sum \log(1+r_t)$: somas são mais fáceis de manipular, calcular médias e programar em planilhas.
-
 ## PBL
 
 Um influenciador postou: "Meu método rendeu 10% ao mês durante 6 meses. Total: 60%!". Verifique a afirmação com o produtório, calcule o valor correto e escreva um comentário educado (3–4 frases) corrigindo o erro e explicando por que a diferença entre somar e multiplicar retornos **aumenta** com o tempo. Bônus: mostre o que aconteceria com R$ 1.000 nos dois cálculos.

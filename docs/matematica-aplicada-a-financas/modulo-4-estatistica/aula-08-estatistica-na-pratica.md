@@ -43,23 +43,6 @@ Aplicando o checklist:
 
 Conclusão do analista: o anúncio pode ser 100% verdadeiro e ainda assim ser péssima evidência. O ônus da prova é de quem promete.
 
-## Lista de problemas
-
-1. "O preço médio dos apartamentos do bairro subiu 40% após o lançamento de um prédio de luxo." Que medida confirmaria se o bairro todo valorizou? Por quê?
-2. Um gestor anualiza o retorno de janeiro (+4%) para "60% ao ano". Refaça a conta dele (produtório!) e explique o erro conceitual.
-3. Um backtest de 500 estratégias achou uma com 95% de acerto. Por que isso pode ser esperado por puro acaso?
-4. Duas manchetes sobre o mesmo dado: "Bolsa dispara 3%!" e "Bolsa ainda acumula queda de 12% no ano". Alguma mente? O que cada recorte esconde?
-5. "Quem toma café da manhã tira notas melhores." Proponha duas variáveis escondidas plausíveis.
-6. Desafio: monte você mesmo um exemplo de estatística **verdadeira e enganosa** sobre mesada/dinheiro, e desmonte-o com o checklist.
-
-??? note "Gabarito (direções de resposta)"
-    1. A **mediana**: imune ao outlier de luxo; se só a média subiu, o bairro típico não valorizou.
-    2. $1{,}04^{12} \approx 1{,}601$ → 60% só se **todos** os meses repetirem janeiro; um mês não é amostra de um ano.
-    3. Com 500 tentativas, o acaso produz algumas vencedoras aparentes (pense em 500 pessoas jogando 10 moedas: ~0,5 delas tira 9+ caras). Validação exige dados fora do teste.
-    4. Nenhuma mente; a primeira esconde o acumulado, a segunda esconde a recuperação recente. Recorte é escolha editorial.
-    5. Renda familiar e rotina/organização da casa — ambas causam café da manhã **e** notas.
-    6. Resposta pessoal — o objetivo é aplicar o checklist ao próprio exemplo.
-
 ## PBL — projeto final do módulo
 
 Encontre uma peça real de comunicação financeira (anúncio de corretora, post de influenciador, manchete de economia) que use estatística. Aplique o checklist completo da aula por escrito: identifique amostra, tipo de média, risco omitido, benchmark, possíveis vieses e truques de recorte. Vereditos possíveis: "sólida", "verdadeira mas enganosa" ou "indefensável". Feche com a versão honesta da mesma mensagem, reescrita por você. Uma página.

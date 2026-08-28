@@ -45,14 +45,6 @@ Ana, 17 anos, tem três objetivos com R$ 6.000 guardados:
 
 Perceba: a mesma pessoa tem **três perfis ao mesmo tempo**, um por objetivo. Perfil não é rótulo fixo na testa; é função do objetivo e do prazo.
 
-## Mini quiz
-
-1. Quais são as três perguntas que definem uma carteira?
-2. Por que "a carteira que você consegue manter" vence a "carteira perfeita"?
-3. Qual a diferença entre tolerância e capacidade de risco?
-4. Por que dinheiro de curto prazo não deve ir para a bolsa?
-5. Uma mesma pessoa pode ter mais de um perfil? Explique.
-
 ## PBL
 
 Monte o "mapa de investidor" de duas pessoas: (a) Carlos, 45 anos, autônomo com renda instável, dois filhos, quer trocar de carro em 1 ano e se aposentar aos 65; (b) Júlia, 19 anos, estagiária morando com os pais, sem planos de curto prazo. Para cada um: defina objetivos, horizontes, avalie capacidade × tolerância (invente hipóteses razoáveis e declare-as) e diga que fatia de renda variável faria sentido em cada caso — justificando com os conceitos da aula.

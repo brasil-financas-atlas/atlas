@@ -65,23 +65,6 @@ $$
 
 B tem valor esperado maior — mas 70% de chance de perder. E agora? O valor esperado **não é o único critério**: se João só tem esses R$ 1.000 e não pode perder, A é a escolha racional; se é uma aposta pequena e repetível dentro de uma carteira, B compensa mais no longo prazo. $E[X]$ informa; o **perfil e o tamanho da aposta** (Módulo 3 de Finanças) decidem. Matemática e gestão de risco andam juntas.
 
-## Lista de problemas
-
-1. Um dado paga R$ 60 se sair 6 e nada nos demais. Qual o valor esperado do jogo? Quanto seria justo pagar para jogar?
-2. Calcule $E[X]$: 40% de chance de +10%; 60% de chance de −5%.
-3. Um seguro de celular custa R$ 150/ano. A chance de sinistro é 8%, com prejuízo médio de R$ 1.400. Qual o $E[X]$ de **não** fazer o seguro? E o de fazer? O que a diferença representa para a seguradora?
-4. Monte o retorno esperado: cenário bom (30%, +25%), neutro (50%, +8%), ruim (20%, −20%).
-5. Uma aposta tem $E[X] = +R\$\,50$, mas 95% de chance de perder R$ 100. Descreva o payoff do cenário de ganho e explique por que alguém racional poderia recusá-la mesmo com $E[X] > 0$.
-6. Desafio: um bilhete de loteria custa R$ 5 e o $E[X]$ é −R$ 3,50. Se 10 milhões de bilhetes são vendidos, quanto a loteria arrecada líquido, em média?
-
-??? note "Gabarito"
-    1. $E = \frac{1}{6}(60) = R\$\,10$; jogar custando até R$ 10 é justo (abaixo, vantajoso).
-    2. $0{,}4(10) + 0{,}6(-5) = 4 - 3 = +1\%$.
-    3. Sem seguro: $0{,}08(-1400) = -R\$\,112$/ano. Com seguro: −R$ 150 fixos. A diferença (R$ 38) é o lucro esperado + custos da seguradora — e o preço da sua tranquilidade.
-    4. $7{,}5 + 4 - 4 = +7{,}5\%$.
-    5. Para $E = 50$: $0{,}05 \cdot G + 0{,}95(-100) = 50 \Rightarrow G = R\$\,2.900$. Recusável porque quase sempre se perde — sem capital para repetir a aposta muitas vezes, a "média" nunca chega.
-    6. Perda média por bilhete = R$ 3,50 → arrecadação líquida ≈ R$ 35 milhões.
-
 ## PBL — projeto final do módulo
 
 Monte a análise de cenários de uma decisão real da sua vida (ex.: fazer um curso pago, comprar um equipamento para renda extra, trocar de escola). Defina 3 cenários com probabilidades que somem 100%, estime o resultado financeiro de cada um, calcule o valor esperado com a notação Σ, e escreva a recomendação final considerando também o pior caso ("eu sobrevivo ao cenário pessimista?"). Formato: meia página, com a tabela de cenários.

@@ -45,14 +45,6 @@ Sorvetes Tropical, juntando as aulas anteriores: dívida líquida 60, PL 250, EB
 
 Diagnóstico: a dívida da Tropical **não** é um risco de sobrevivência (1× EBITDA, liquidez folgada). O problema, como vimos na aula 6, é de **custo**: os juros comem um terço do lucro operacional que sobraria para o acionista. Empresa segura, mas menos rentável do que poderia ser — perfil de quem deveria amortizar dívida antes de pensar em grandes expansões.
 
-## Mini quiz
-
-1. Qual a diferença entre o risco medido pelo endividamento e o medido pela liquidez?
-2. O que significa uma dívida líquida/EBITDA de 4×?
-3. Por que a cobertura de juros é um indicador de "sobrevivência"?
-4. Liquidez corrente de 0,8 significa o quê, na prática?
-5. Por que os limites de endividamento variam por setor?
-
 ## PBL
 
 Carlos analisa uma construtora com liquidez corrente de 2,5 (parece ótima), mas 80% do ativo circulante são apartamentos em estoque num momento de mercado imobiliário parado, e a dívida vence em 8 meses. Calcule mentalmente o que acontece com a liquidez **seca** dela, explique por que a liquidez corrente sozinha enganou, e proponha duas saídas que a empresa poderia negociar antes de a dívida vencer.

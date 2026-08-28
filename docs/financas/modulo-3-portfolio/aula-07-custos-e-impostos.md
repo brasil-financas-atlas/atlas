@@ -50,14 +50,6 @@ João quer deixar R$ 5.000 por 3 anos e compara:
 
 A LCI "de taxa menor" vence o CDB "de taxa maior", e o fundo — que parecia inofensivo com 1% de taxa — fica quase 2 pontos atrás. Etiqueta bruta engana; a conta líquida decide.
 
-## Mini quiz
-
-1. Por que reduzir custo é "retorno garantido"?
-2. O que é o come-cotas e por que ele atrapalha os juros compostos?
-3. Como funciona a tabela regressiva de IR na renda fixa?
-4. Qual a isenção mais relevante para pessoa física em ações? E em FIIs?
-5. Por que girar muito a carteira destrói retorno mesmo quando as trocas "dão certo"?
-
 ## PBL
 
 Ana (17 anos) vai guardar R$ 200/mês por 10 anos e está em dúvida entre: (a) um fundo do banco com taxa de 2,5% a.a.; (b) montar ela mesma uma carteira com Tesouro e um ETF de taxa 0,2%; (c) uma LCI que rende "menos" que o fundo no papel. Estime qualitativamente (ou com contas aproximadas de juros compostos) a diferença de resultado em 10 anos entre (a) e (b), explique em que situação (c) pode vencer os dois, e escreva o argumento que Ana usaria para convencer o gerente — educadamente — de que não quer o fundo de 2,5%.

@@ -46,14 +46,6 @@ Quando as ações caem, os títulos do Tesouro tendem a ser mais estáveis. Os F
 | Risco de liquidez | Não consegue vender quando precisa | Manter reserva em ativos líquidos |
 | Risco de concentração | Tudo no mesmo ativo/setor | Diversificar setores e ativos |
 
-## Mini quiz
-
-1. O que é volatilidade?
-2. Qual a diferença entre risco e retorno?
-3. O que é correlação e por que ela importa na diversificação?
-4. Por que ter 10 ações do mesmo setor não é diversificação real?
-5. Qual a diferença entre perfil conservador e arrojado?
-
 ## PBL
 
 Ana tem carteira 100% em ações de tecnologia e perdeu muito mais que um colega que estava diversificado. Como a correlação explica essa diferença?

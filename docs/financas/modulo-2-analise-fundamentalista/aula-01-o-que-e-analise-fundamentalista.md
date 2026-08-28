@@ -43,14 +43,6 @@ Duas empresas de sorvete têm ações custando R$ 10 cada.
 
 O preço é o mesmo, mas o valor é claramente diferente: a Tropical devolve o preço da ação em lucro em 5 anos (10 ÷ 2); a Genéricos levaria 50 anos (10 ÷ 0,20). Só de olhar o lucro por ação, você já percebe que "ação barata" não é a de menor preço — é a que custa pouco **em relação ao que entrega**. É exatamente isso que os múltiplos da aula 8 vão medir.
 
-## Mini quiz
-
-1. Qual a diferença entre preço e valor de uma ação?
-2. O que significa a frase de Graham sobre a máquina de votar e a balança?
-3. O que é margem de segurança e por que ela protege o investidor?
-4. Por que uma ação de R$ 5 pode ser mais "cara" que uma de R$ 100?
-5. Cite duas coisas que a análise fundamentalista estuda além do preço da ação.
-
 ## PBL
 
 João viu um influenciador dizendo que uma ação "está barata porque caiu 40% no ano". Ana respondeu que "cair não é sinônimo de ficar barata". Usando os conceitos de preço × valor, explique quem tem razão e o que João precisaria descobrir sobre a empresa antes de decidir se ela está barata de verdade.

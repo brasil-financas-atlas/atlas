@@ -67,14 +67,6 @@ Fundos têm taxa de administração que incide sobre o patrimônio total, não s
 
 Além disso, fundos com prazo inferior a 1 ano sofrem **come-cotas**: cobrança antecipada de IR a cada seis meses, que reduz as cotas e prejudica os juros compostos.
 
-## Mini quiz
-
-1. Qual a diferença entre rentabilidade bruta e líquida?
-2. Um CDB rende 14% ao ano. O prazo é 1,5 anos (alíquota 17,5%). Qual a rentabilidade líquida?
-3. Por que a LCA pode ser mais vantajosa mesmo com taxa nominal menor?
-4. O que é a tabela regressiva de IR?
-5. Um fundo cobra 2% de taxa de administração e rendeu 12% bruto. Qual a rentabilidade antes do IR?
-
 ## PBL
 
 Carlos compara um CDB a 105% do CDI com uma LCA a 91% do CDI. O CDI está em 10,5% ao ano. O prazo é 2 anos (IR de 15%).

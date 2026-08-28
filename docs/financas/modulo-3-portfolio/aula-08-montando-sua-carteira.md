@@ -45,14 +45,6 @@ Marina, 22 anos, primeiro emprego (CLT, R$ 3.500/mês), guarda R$ 700/mês. Cust
 - Parar de aportar na queda — exatamente quando o aporte compra mais barato.
 - Trocar o plano por causa de manchete, influencer ou "dica quente".
 
-## Mini quiz
-
-1. Por que a reserva de emergência vem antes da carteira?
-2. Por que Marina montou duas carteiras separadas?
-3. O que o teste de estresse validou no plano dela?
-4. Quando o plano deve mudar — e quando não deve?
-5. Cite três erros clássicos do primeiro portfólio.
-
 ## PBL — projeto final do módulo
 
 Monte **a sua** carteira (ou a de um personagem realista da sua idade) seguindo os 7 passos: reserva, perfil e objetivos declarados, alocação-alvo com justificativa por classe, teste de estresse com números, escolha de veículos com atenção a custos, rotina de aportes e rebalanceamento, e a política de investimento escrita em meia página. Apresente como se estivesse defendendo o plano para uma banca — este é o formato de "portfolio construction" que competições como a BRHSIC valorizam.
