@@ -133,7 +133,12 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
 
     return parsedHtml.replace(/@@BFAMATH(\d+)@@/g, (marcador, i) => {
       const f = formulas[Number(i)];
-      return f ? renderizarTex(f.tex, f.emDestaque) : marcador;
+      if (!f) return marcador;
+      const html = renderizarTex(f.tex, f.emDestaque);
+      if (f.emDestaque) {
+        return `<div class="bfa-math-block">${html}</div>`;
+      }
+      return `<span class="bfa-math-inline">${html}</span>`;
     });
   };
 
