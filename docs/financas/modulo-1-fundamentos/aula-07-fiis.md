@@ -22,7 +22,7 @@ FIIs são fundos que investem em imóveis ou em títulos ligados ao mercado imob
 
 ## Dividend yield na prática
 
-Se um FII custa R$100 por cota e distribui R$0,80 por mês:
+Se um FII custa R$ 100 por cota e distribui R$ 0,80 por mês:
 
 $$
 DY\ mensal = \frac{0{,}80}{100} = 0{,}8\%\ ao\ mês
@@ -45,8 +45,8 @@ Você compara dois FIIs:
 
 | Fundo | Preço | DY mensal | P/VP | Vacância |
 |-------|-------|-----------|------|----------|
-| HGLG11 (galpões) | R$165 | R$1,25 (0,76%/mês) | 0,97 | 3% |
-| XPML11 (shoppings) | R$112 | R$0,72 (0,64%/mês) | 0,95 | 8% |
+| HGLG11 (galpões) | R$ 165 | R$ 1,25 (0,76%/mês) | 0,97 | 3% |
+| XPML11 (shoppings) | R$ 112 | R$ 0,72 (0,64%/mês) | 0,95 | 8% |
 
 HGLG11 tem DY maior e vacância menor. Mas antes de decidir, você precisa entender: o DY alto é sustentável? A vacância vai subir? Os contratos de aluguel vencem quando?
 

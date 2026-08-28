@@ -2,7 +2,7 @@
 
 ## Comece aqui
 
-Juros compostos funcionam com potências. Sem entender o que é 1,10³ você não consegue calcular quanto R$1.000 vira em 3 anos a 10% ao ano. Esta aula destrava isso.
+Juros compostos funcionam com potências. Sem entender o que é 1,10³ você não consegue calcular quanto R$ 1.000 vira em 3 anos a 10% ao ano. Esta aula destrava isso.
 
 ## Ideia central
 
@@ -29,7 +29,7 @@ Esta é a fórmula dos juros compostos. O $(1+i)$ é a base — o fator de cresc
 
 ## Raízes em finanças
 
-Se você sabe que R$1.000 virou R$1.331 em 3 anos, qual foi a taxa anual?
+Se você sabe que R$ 1.000 virou R$ 1.331 em 3 anos, qual foi a taxa anual?
 
 $$
 taxa = \sqrt[3]{1{,}331} - 1 = 1{,}10 - 1 = 10\%\ ao\ ano

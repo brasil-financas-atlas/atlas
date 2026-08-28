@@ -2,7 +2,7 @@
 
 ## Comece aqui
 
-Equação de 1º grau é qualquer problema do tipo "qual é o valor desconhecido?". Em finanças: quanto preciso investir pra ter R$10.000 em um ano? Qual taxa preciso conseguir pra dobrar meu dinheiro em 5 anos? Essas perguntas são equações de 1º grau disfarçadas.
+Equação de 1º grau é qualquer problema do tipo "qual é o valor desconhecido?". Em finanças: quanto preciso investir pra ter R$ 10.000 em um ano? Qual taxa preciso conseguir pra dobrar meu dinheiro em 5 anos? Essas perguntas são equações de 1º grau disfarçadas.
 
 ## Ideia central
 
@@ -44,9 +44,9 @@ $$
 
 | Pergunta financeira | Equação |
 |--------------------|---------|
-| Quanto investir pra ter R$1.100 com 10% de juros? | x × 1,10 = 1.100 |
-| Qual o gasto máximo com salário de R$3.000 e economia de R$500? | x + 500 = 3.000 |
-| Em quantos meses junto R$2.400 poupando R$300/mês? | 300x = 2.400 |
+| Quanto investir pra ter R$ 1.100 com 10% de juros? | x × 1,10 = 1.100 |
+| Qual o gasto máximo com salário de R$ 3.000 e economia de R$ 500? | x + 500 = 3.000 |
+| Em quantos meses junto R$ 2.400 poupando R$ 300/mês? | 300x = 2.400 |
 
 !!! note "Em construção"
     Exemplo resolvido, mini quiz e PBL serão adicionados em breve.

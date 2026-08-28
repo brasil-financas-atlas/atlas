@@ -32,9 +32,9 @@ Você conhece três valores e quer descobrir o quarto.
 
 | Situação | Exemplo |
 |----------|---------|
-| Conversão de moeda | Se 1 dólar = R$5,20, quanto são 350 dólares? |
+| Conversão de moeda | Se 1 dólar = R$ 5,20, quanto são 350 dólares? |
 | Proporção de rendimento | Se 100 rende 8, quanto rende 450? |
-| Desconto proporcional | Se 200g custa R$4, quanto custa 350g? |
+| Desconto proporcional | Se 200g custa R$ 4, quanto custa 350g? |
 | Taxa mensal vs anual | Se a taxa anual é 12%, qual é a proporcional mensal? |
 
 !!! note "Em construção"

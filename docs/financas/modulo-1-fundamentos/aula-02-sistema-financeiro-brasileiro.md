@@ -21,7 +21,7 @@ O sistema financeiro brasileiro tem três camadas: quem define a política monet
 
 ## Como cada um protege o investidor
 
-**Banco Central:** garante que os bancos têm capital suficiente para honrar depósitos. Também regula o FGC (Fundo Garantidor de Créditos), que protege até R$250.000 por CPF por instituição.
+**Banco Central:** garante que os bancos têm capital suficiente para honrar depósitos. Também regula o FGC (Fundo Garantidor de Créditos), que protege até R$ 250.000 por CPF por instituição.
 
 **CVM:** exige que empresas listadas divulguem resultados trimestrais, que fundos publiquem regulamentos e que gestores sejam certificados. Se uma empresa manipula resultados, é a CVM que investiga e pune.
 

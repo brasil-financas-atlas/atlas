@@ -38,10 +38,10 @@ Uma taxa de 2% ao ano parece pequena. Mas incide sobre o patrimônio total, não
 
 Compare em 20 anos:
 
-- R$10.000 a 10% sem taxa: **R$67.275**
-- R$10.000 a 8% (após 2% de taxa): **R$46.610**
+- R$ 10.000 a 10% sem taxa: **R$ 67.275**
+- R$ 10.000 a 8% (após 2% de taxa): **R$ 46.610**
 
-A diferença de R$20.665 foi para o gestor.
+A diferença de R$ 20.665 foi para o gestor.
 
 ## Exemplo resolvido
 
