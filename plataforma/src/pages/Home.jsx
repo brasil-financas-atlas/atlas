@@ -1,83 +1,46 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
 /* ==========================================================================
-   Hero Visual: Showcase em Camadas dos Recursos da Plataforma (Stripe / Linear)
-   Sem números ou fórmulas pesadas — Pura elegância visual e clareza didática
+   Hero Visual: Terminal Técnico do Atlas (Estilo Cloudflare / Vercel)
+   Zero Emojis · Zero Slop · Tipografia Mono Pura e Dados Estruturados
    ========================================================================== */
-function HeroResourcesShowcase() {
+function HeroCodeBlueprint() {
   return (
-    <div className="bfa-hero-showcase">
-      {/* Luz ambiente difusa no fundo */}
-      <div className="bfa-hero-showcase-glow" />
-
-      {/* Recurso 1: Matemática Quantitativa */}
-      <div className="bfa-showcase-card bfa-float-1">
-        <div style={{ width: '48px', height: '48px', minWidth: '48px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(37, 99, 235, 0.05) 100%)', border: '1px solid rgba(59, 130, 246, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#60A5FA', fontSize: '1.4rem' }}>
-          📐
+    <div className="bfa-tech-card" style={{ background: '#080C14', border: '1px solid rgba(255, 255, 255, 0.1)', padding: '0', overflow: 'hidden', boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.7)' }}>
+      
+      {/* Top Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem 1.25rem', background: 'rgba(255, 255, 255, 0.03)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10B981', display: 'inline-block' }} />
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#94A3B8', fontWeight: 600 }}>
+            atlas-core / curriculum-spec.json
+          </span>
         </div>
-        <div style={{ flex: 1 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#60A5FA', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
-              TRILHA 01 · MATEMÁTICA
-            </span>
-            <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.68rem', background: 'rgba(255, 255, 255, 0.08)', padding: '0.15rem 0.45rem', borderRadius: '4px' }}>
-              29 Aulas
-            </span>
-          </div>
-          <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#FFFFFF', margin: '0 0 0.2rem 0', letterSpacing: '-0.02em' }}>
-            Modelagem Quantitativa
-          </h4>
-          <p style={{ fontSize: '0.8rem', color: 'rgba(241, 245, 249, 0.75)', margin: 0, lineHeight: 1.4 }}>
-            Geometria de juros contínuos, progressões e sistemas de amortização.
-          </p>
-        </div>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: '#10B981', background: 'rgba(16, 185, 129, 0.1)', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: 700 }}>
+          LIVE v2.0
+        </span>
       </div>
 
-      {/* Recurso 2: Finanças & Mercado de Capitais */}
-      <div className="bfa-showcase-card bfa-float-2">
-        <div style={{ width: '48px', height: '48px', minWidth: '48px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.05) 100%)', border: '1px solid rgba(52, 211, 153, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#34D399', fontSize: '1.4rem' }}>
-          📈
-        </div>
-        <div style={{ flex: 1 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#34D399', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
-              TRILHA 02 · FINANÇAS
-            </span>
-            <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.68rem', background: 'rgba(255, 255, 255, 0.08)', padding: '0.15rem 0.45rem', borderRadius: '4px' }}>
-              26 Aulas
-            </span>
-          </div>
-          <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#FFFFFF', margin: '0 0 0.2rem 0', letterSpacing: '-0.02em' }}>
-            Mercado de Capitais & Bolsa
-          </h4>
-          <p style={{ fontSize: '0.8rem', color: 'rgba(241, 245, 249, 0.75)', margin: 0, lineHeight: 1.4 }}>
-            Títulos soberanos, fundos imobiliários e análise contábil de empresas.
-          </p>
-        </div>
+      {/* Code / Architecture Body */}
+      <div style={{ padding: '1.25rem 1.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.82rem', lineHeight: 1.7, color: '#CBD5E1', overflowX: 'auto' }}>
+        <div><span style={{ color: '#64748B' }}>1</span>  <span style={{ color: '#F43F5E' }}>&#123;</span></div>
+        <div><span style={{ color: '#64748B' }}>2</span>    <span style={{ color: '#38BDF8' }}>"platform"</span>: <span style={{ color: '#FCD34D' }}>"Brasil Finanças Atlas"</span>,</div>
+        <div><span style={{ color: '#64748B' }}>3</span>    <span style={{ color: '#38BDF8' }}>"status"</span>: <span style={{ color: '#FCD34D' }}>"Open Source & 100% Gratuito"</span>,</div>
+        <div><span style={{ color: '#64748B' }}>4</span>    <span style={{ color: '#38BDF8' }}>"tracks"</span>: <span style={{ color: '#F43F5E' }}>[</span></div>
+        <div><span style={{ color: '#64748B' }}>5</span>      <span style={{ color: '#F43F5E' }}>&#123;</span> <span style={{ color: '#38BDF8' }}>"track"</span>: <span style={{ color: '#FCD34D' }}>"Matemática Quantitativa"</span>, <span style={{ color: '#38BDF8' }}>"lessons"</span>: <span style={{ color: '#34D399' }}>29</span>, <span style={{ color: '#38BDF8' }}>"modules"</span>: <span style={{ color: '#34D399' }}>4</span> <span style={{ color: '#F43F5E' }}>&#125;</span>,</div>
+        <div><span style={{ color: '#64748B' }}>6</span>      <span style={{ color: '#F43F5E' }}>&#123;</span> <span style={{ color: '#38BDF8' }}>"track"</span>: <span style={{ color: '#FCD34D' }}>"Mercado de Capitais"</span>, <span style={{ color: '#38BDF8' }}>"lessons"</span>: <span style={{ color: '#34D399' }}>26</span>, <span style={{ color: '#38BDF8' }}>"modules"</span>: <span style={{ color: '#34D399' }}>3</span> <span style={{ color: '#F43F5E' }}>&#125;</span>,</div>
+        <div><span style={{ color: '#64748B' }}>7</span>      <span style={{ color: '#F43F5E' }}>&#123;</span> <span style={{ color: '#38BDF8' }}>"track"</span>: <span style={{ color: '#FCD34D' }}>"Equity Research BRHSIC"</span>, <span style={{ color: '#38BDF8' }}>"method"</span>: <span style={{ color: '#FCD34D' }}>"DCF / WACC"</span> <span style={{ color: '#F43F5E' }}>&#125;</span></div>
+        <div><span style={{ color: '#64748B' }}>8</span>    <span style={{ color: '#F43F5E' }}>]</span>,</div>
+        <div><span style={{ color: '#64748B' }}>9</span>    <span style={{ color: '#38BDF8' }}>"telemetry"</span>: <span style={{ color: '#F43F5E' }}>&#123;</span> <span style={{ color: '#38BDF8' }}>"selic"</span>: <span style={{ color: '#FCD34D' }}>"10.50%"</span>, <span style={{ color: '#38BDF8' }}>"ipca"</span>: <span style={{ color: '#FCD34D' }}>"4.23%"</span>, <span style={{ color: '#38BDF8' }}>"juroReal"</span>: <span style={{ color: '#34D399' }}>"+6.01%"</span> <span style={{ color: '#F43F5E' }}>&#125;</span></div>
+        <div><span style={{ color: '#64748B' }}>10</span> <span style={{ color: '#F43F5E' }}>&#125;</span></div>
       </div>
 
-      {/* Recurso 3: Preparação BRHSIC & Equity Research */}
-      <div className="bfa-showcase-card bfa-float-3">
-        <div style={{ width: '48px', height: '48px', minWidth: '48px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%)', border: '1px solid rgba(251, 191, 36, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FBBF24', fontSize: '1.4rem' }}>
-          🏆
-        </div>
-        <div style={{ flex: 1 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#FBBF24', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
-              COMPETIÇÃO NACIONAL
-            </span>
-            <span className="mono-tag" style={{ color: '#FBBF24', fontSize: '0.68rem', background: 'rgba(245, 158, 11, 0.15)', padding: '0.15rem 0.45rem', borderRadius: '4px', fontWeight: 700 }}>
-              BRHSIC 2026
-            </span>
-          </div>
-          <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#FFFFFF', margin: '0 0 0.2rem 0', letterSpacing: '-0.02em' }}>
-            Guia de Equity Research
-          </h4>
-          <p style={{ fontSize: '0.8rem', color: 'rgba(241, 245, 249, 0.75)', margin: 0, lineHeight: 1.4 }}>
-            Teses de investimento profissional, valuation DCF e defesa em banca.
-          </p>
-        </div>
+      {/* Bottom Telemetry Bar */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem 1.25rem', background: 'rgba(255, 255, 255, 0.02)', borderTop: '1px solid rgba(255, 255, 255, 0.06)', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: '#94A3B8' }}>
+        <span>55 Aulas Estruturadas</span>
+        <span style={{ color: '#34D399' }}>Compilação Zero Erros</span>
       </div>
+
     </div>
   );
 }
@@ -312,9 +275,9 @@ function Home() {
               </div>
             </div>
 
-            {/* Coluna Direita: Showcase em Camadas dos Recursos da Plataforma */}
+            {/* Coluna Direita: Terminal Técnico Blueprint (Estilo Cloudflare) */}
             <div className="bfa-split-col--visual">
-              <HeroResourcesShowcase />
+              <HeroCodeBlueprint />
             </div>
 
           </div>
@@ -337,9 +300,9 @@ function Home() {
               Não decore fórmulas sem sentido. Compreenda a geometria do crescimento exponencial, a lógica das progressões aritméticas e geométricas, a equivalência temporal de capitais e os sistemas de amortização que regem o crédito na economia real.
             </p>
             <ul style={{ listStyle: 'none', padding: 0, margin: '0.5rem 0 1rem 0', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--foreground)' }}>
-              <li><strong>✦ 29 Aulas Estruturadas</strong> com demonstrações algébricas completas do zero.</li>
-              <li><strong>✦ Provas Visuais</strong> da constante de Euler (e) e capitalização contínua.</li>
-              <li><strong>✦ Listas de Fixação Analíticas</strong> com gabaritos detalhados passo a passo.</li>
+              <li><strong>— 29 Aulas Estruturadas</strong> com demonstrações algébricas completas do zero.</li>
+              <li><strong>— Provas Visuais</strong> da constante de Euler (e) e capitalização contínua.</li>
+              <li><strong>— Listas de Fixação Analíticas</strong> com gabaritos detalhados passo a passo.</li>
             </ul>
             <a href="#/matematica" className="bfa-btn bfa-btn--azul" style={{ padding: '0.75rem 1.4rem', borderRadius: 'var(--radius-md)', fontWeight: 700, width: 'fit-content' }}>
               Explorar Trilha de Matemática →
@@ -368,9 +331,9 @@ function Home() {
               Mergulhe no funcionamento prático do Sistema Financeiro Nacional. Do Banco Central à B3, aprenda a avaliar títulos públicos, fundos imobiliários com isenção fiscal e a dissecar demonstrativos contábeis (DRE, Balanço e DFC) como um analista de investimentos.
             </p>
             <ul style={{ listStyle: 'none', padding: 0, margin: '0.5rem 0 1rem 0', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--foreground)' }}>
-              <li><strong>✦ 26 Aulas Didáticas</strong> focadas na anatomia real dos ativos brasileiros.</li>
-              <li><strong>✦ Matriz Comparativa</strong> de liquidez, volatilidade e tributação regressiva.</li>
-              <li><strong>✦ Análise de Múltiplos</strong> de mercado: P/L, EV/EBITDA, ROIC e Dividend Yield.</li>
+              <li><strong>— 26 Aulas Didáticas</strong> focadas na anatomia real dos ativos brasileiros.</li>
+              <li><strong>— Matriz Comparativa</strong> de liquidez, volatilidade e tributação regressiva.</li>
+              <li><strong>— Análise de Múltiplos</strong> de mercado: P/L, EV/EBITDA, ROIC e Dividend Yield.</li>
             </ul>
             <a href="#/financas" className="bfa-btn bfa-btn--verde" style={{ padding: '0.75rem 1.4rem', borderRadius: 'var(--radius-md)', fontWeight: 700, width: 'fit-content' }}>
               Explorar Trilha de Finanças →
@@ -391,9 +354,9 @@ function Home() {
               Prepare-se para a Brazil High School Investment Competition com o mesmo rigor de um banco de investimentos. Domine a modelagem por Fluxo de Caixa Descontado (DCF), mapeie vantagens competitivas sustentáveis (Moat) e estruture um pitch verbal de alto impacto.
             </p>
             <ul style={{ listStyle: 'none', padding: 0, margin: '0.5rem 0 1rem 0', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--foreground)' }}>
-              <li><strong>✦ Modelagem Financeira Completa</strong> com projeção de WACC e perpetuidade.</li>
-              <li><strong>✦ Análise Setorial e Moat</strong> para identificação de barreiras de entrada.</li>
-              <li><strong>✦ Estrutura de Pitch Executivo</strong> para apresentações sob pressão de bancas.</li>
+              <li><strong>— Modelagem Financeira Completa</strong> com projeção de WACC e perpetuidade.</li>
+              <li><strong>— Análise Setorial e Moat</strong> para identificação de barreiras de entrada.</li>
+              <li><strong>— Estrutura de Pitch Executivo</strong> para apresentações sob pressão de bancas.</li>
             </ul>
             <a href="#/preparacao-brhsic" className="bfa-btn bfa-btn--ouro" style={{ padding: '0.75rem 1.4rem', borderRadius: 'var(--radius-md)', fontWeight: 700, width: 'fit-content' }}>
               Ver Guia de Preparação BRHSIC →
@@ -421,8 +384,8 @@ function Home() {
 
           <div className="bfa-grid-tools-4">
             <div className="tool-card bfa-bento-card" style={{ padding: '1.5rem' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: 'var(--radius-md)', background: 'rgba(37, 99, 235, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--track-math)', fontWeight: 800, marginBottom: '1rem' }}>
-                ∑
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', fontWeight: 800, color: 'var(--track-math)', marginBottom: '0.75rem' }}>
+                01 // SIMULADOR
               </div>
               <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Simulador de Juros</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
@@ -434,8 +397,8 @@ function Home() {
             </div>
 
             <div className="tool-card bfa-bento-card" style={{ padding: '1.5rem' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: 'var(--radius-md)', background: 'rgba(5, 150, 105, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--track-finance)', fontWeight: 800, marginBottom: '1rem' }}>
-                ⏱
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', fontWeight: 800, color: 'var(--track-finance)', marginBottom: '0.75rem' }}>
+                02 // METAS
               </div>
               <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Cronograma de Estudos</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
@@ -447,8 +410,8 @@ function Home() {
             </div>
 
             <div className="tool-card bfa-bento-card" style={{ padding: '1.5rem' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: 'var(--radius-md)', background: 'rgba(217, 119, 6, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold-deep)', fontWeight: 800, marginBottom: '1rem' }}>
-                ★
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', fontWeight: 800, color: 'var(--gold-deep)', marginBottom: '0.75rem' }}>
+                03 // VERIFICAÇÃO
               </div>
               <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Certificado Digital</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
@@ -460,8 +423,8 @@ function Home() {
             </div>
 
             <div className="tool-card bfa-bento-card" style={{ padding: '1.5rem' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: 'var(--radius-md)', background: 'rgba(15, 23, 42, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--foreground)', fontWeight: 800, marginBottom: '1rem' }}>
-                ⚙
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.75rem' }}>
+                04 // GESTÃO
               </div>
               <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Área do Professor</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
