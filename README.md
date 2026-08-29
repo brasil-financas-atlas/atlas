@@ -9,7 +9,7 @@
 
 | Ambiente | Provedor / Tecnologia | URL Pública de Acesso | Finalidade |
 | :--- | :--- | :--- | :--- |
-| **⚡ Plataforma Principal** | **Cloudflare Pages** | 🔗 **[https://atlas-c2i.pages.dev/]** | Aplicação interativa em React com Quizzes, Simuladores, Gráficos e KaTeX |
+| **⚡ Plataforma Principal** | **Cloudflare Pages** | 🔗 **[https://atlas-c2i.pages.dev/](https://atlas-c2i.pages.dev/)** | Aplicação interativa em React com Quizzes, Simuladores, Gráficos e KaTeX |
 | **📖 Documentação MkDocs** | **GitHub Pages** | 🔗 **[https://brasil-financas-atlas.github.io/bfa/](https://brasil-financas-atlas.github.io/bfa/)** | Ementa editorial, material de apoio estático e notas de estudo |
 | **💻 Ambiente Local** | **Python HTTP Server** | 🔗 **[http://localhost:8080/](http://localhost:8080/)** | Pré-visualização local instantânea de desenvolvimento |
 
