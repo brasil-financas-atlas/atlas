@@ -14,7 +14,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
   useEffect(() => {
     setActiveTab('teoria');
-    setExpandedMods(prev => ({ ...prev, [moduloSlug]: true }));
+    setExpandedMods({ [moduloSlug]: true });
     if (activeLessonRef.current) {
       activeLessonRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
@@ -69,7 +69,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         <div className="aula-sidebar-content" style={{ padding: '1rem 0.85rem' }}>
           {subjectData.modulos.map((m, idx) => {
             const isCurrentMod = m.slug === moduloSlug;
-            const isExpanded = expandedMods[m.slug] !== false;
+            const isExpanded = !!expandedMods[m.slug];
             const modCompletedCount = m.aulas.filter(a => completedLessons && completedLessons.includes(`${subjectKey}-${m.slug}-${a.slug}`)).length;
             const modTotalCount = m.aulas.length;
             const isAllDone = modCompletedCount === modTotalCount;
@@ -88,7 +88,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               >
                 {/* Module Header Bar Accordion */}
                 <div
-                  onClick={() => setExpandedMods(prev => ({ ...prev, [m.slug]: !isExpanded }))}
+                  onClick={() => setExpandedMods(prev => ({ ...prev, [m.slug]: !prev[m.slug] }))}
                   style={{
                     padding: '0.75rem 0.85rem',
                     display: 'flex',
