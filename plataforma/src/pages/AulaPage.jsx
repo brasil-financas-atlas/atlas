@@ -55,48 +55,82 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         </div>
 
         <div style={{ flex: 1, overflowY: 'auto', padding: '1.25rem 1rem' }}>
-          {subjectData.modulos.map((m, idx) => (
-            <div key={m.slug} style={{ marginBottom: '1.5rem' }}>
-              <div className="mono-tag" style={{ color: 'var(--muted-foreground)', marginBottom: '0.5rem', fontSize: '0.68rem', fontWeight: 800 }}>
-                MÓDULO {idx + 1} · {m.titulo}
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                {m.aulas.map((a, aIdx) => {
-                  const itemLessonId = `${subjectKey}-${m.slug}-${a.slug}`;
-                  const itemDone = completedLessons && completedLessons.includes(itemLessonId);
-                  const isCurrent = a.slug === aulaSlug && m.slug === moduloSlug;
+          {subjectData.modulos.map((m, idx) => {
+            const isCurrentMod = m.slug === moduloSlug;
+            return (
+              <div key={m.slug} style={{ marginBottom: '1.5rem' }}>
+                <div style={{ marginBottom: '0.5rem' }}>
+                  <a
+                    href={`#/${subjectKey}/${m.slug}`}
+                    className="mono-tag"
+                    style={{
+                      color: isCurrentMod ? trackColor : 'var(--muted-foreground)',
+                      fontSize: '0.72rem',
+                      fontWeight: 800,
+                      textDecoration: 'none'
+                    }}
+                  >
+                    MÓDULO {idx + 1} · {m.titulo}
+                  </a>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                  {/* Link da Introdução do Módulo */}
+                  <a
+                    href={`#/${subjectKey}/${m.slug}`}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      fontSize: '0.82rem',
+                      fontWeight: 600,
+                      backgroundColor: 'transparent',
+                      color: 'var(--muted-foreground)',
+                      padding: '0.45rem 0.65rem',
+                      borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+                      textDecoration: 'none',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    <span>📖</span>
+                    <span>Introdução do Módulo</span>
+                  </a>
+                  {m.aulas.map((a, aIdx) => {
+                    const itemLessonId = `${subjectKey}-${m.slug}-${a.slug}`;
+                    const itemDone = completedLessons && completedLessons.includes(itemLessonId);
+                    const isCurrent = a.slug === aulaSlug && m.slug === moduloSlug;
 
-                  return (
-                    <a
-                      key={a.slug}
-                      href={`#/${subjectKey}/${m.slug}/${a.slug}`}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        fontSize: '0.85rem',
-                        fontWeight: isCurrent ? 800 : 500,
-                        backgroundColor: isCurrent ? 'var(--surface-strong)' : 'transparent',
-                        borderLeft: isCurrent ? `3px solid ${trackColor}` : '3px solid transparent',
-                        color: isCurrent ? 'var(--foreground)' : 'var(--muted-foreground)',
-                        padding: '0.5rem 0.65rem',
-                        borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
-                        transition: 'all 0.15s ease'
-                      }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <span className="tabular-numbers" style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
-                          {String(aIdx + 1).padStart(2, '0')}
-                        </span>
-                        <span>{a.titulo}</span>
-                      </div>
-                      {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.68rem', fontWeight: 800 }}>Concluída</span>}
-                    </a>
-                  );
-                })}
+                    return (
+                      <a
+                        key={a.slug}
+                        href={`#/${subjectKey}/${m.slug}/${a.slug}`}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          fontSize: '0.85rem',
+                          fontWeight: isCurrent ? 800 : 500,
+                          backgroundColor: isCurrent ? 'var(--surface-strong)' : 'transparent',
+                          borderLeft: isCurrent ? `3px solid ${trackColor}` : '3px solid transparent',
+                          color: isCurrent ? 'var(--foreground)' : 'var(--muted-foreground)',
+                          padding: '0.5rem 0.65rem',
+                          borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+                          transition: 'all 0.15s ease'
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <span className="tabular-numbers" style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
+                            {String(aIdx + 1).padStart(2, '0')}
+                          </span>
+                          <span>{a.titulo}</span>
+                        </div>
+                        {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.68rem', fontWeight: 800 }}>Concluída</span>}
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </aside>
 
