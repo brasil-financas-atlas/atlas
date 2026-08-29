@@ -403,7 +403,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                 className="bfa-btn bfa-btn--verde"
                 style={{ padding: '0.75rem 1.5rem', fontSize: '0.95rem', fontWeight: 800, borderRadius: 'var(--radius-md)', textDecoration: 'none' }}
               >
-                Começar Módulo: Aula 1 ➔
+                Começar Módulo: Aula 1 →
               </a>
             )}
           </div>
@@ -467,7 +467,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
               className="bfa-btn bfa-btn--verde"
               style={{ textDecoration: 'none', padding: '0.65rem 1.35rem', fontSize: '0.88rem', fontWeight: 700 }}
             >
-              Ir para Aula 1: {firstAula.titulo} ➔
+              Ir para Aula 1: {firstAula.titulo} →
             </a>
           )}
         </div>
