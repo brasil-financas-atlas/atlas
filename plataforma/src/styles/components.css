@@ -1778,3 +1778,58 @@
   font-size: 0.85rem;
   line-height: 1.5;
 }
+
+/* ==========================================================================
+   Mermaid Diagrams & Responsive Ledger Tables
+   ========================================================================== */
+.mermaid-wrapper {
+  margin: 2rem 0;
+  overflow-x: auto;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.mermaid svg {
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 0 auto;
+}
+
+/* Markdown Ledger Tables */
+.bfa-markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+.bfa-markdown-body th {
+  background: var(--surface-strong);
+  color: var(--foreground);
+  font-weight: 700;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--border);
+  letter-spacing: -0.01em;
+}
+
+.bfa-markdown-body td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+}
+
+.bfa-markdown-body tr:last-child td {
+  border-bottom: none;
+}
+
+.bfa-markdown-body tr:hover td {
+  background: rgba(150, 150, 150, 0.04);
+}
