@@ -420,7 +420,12 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                       {lessonQuestions.length} Questões Disponíveis
                     </span>
                   </div>
-                  <QuizEngine questions={lessonQuestions} lessonId={lessonId} />
+                  <QuizEngine
+                    questions={lessonQuestions}
+                    lessonId={lessonId}
+                    onBackToTheory={() => setActiveTab('teoria')}
+                    nextLessonUrl={nextAula ? `#/${subjectKey}/${nextAula.moduloSlug}/${nextAula.slug}` : null}
+                  />
                 </div>
               )}
 
