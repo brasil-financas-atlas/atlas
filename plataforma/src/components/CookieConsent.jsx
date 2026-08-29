@@ -42,7 +42,7 @@ function CookieConsent() {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-        <span style={{ fontSize: '1.25rem' }}>🛡️</span>
+        <BfaIcon name="shield" size={18} color="var(--track-finance)" />
         <h4 style={{ fontSize: '1rem', fontWeight: 800, margin: 0, color: 'var(--foreground)' }}>
           Privacidade & LGPD
         </h4>
