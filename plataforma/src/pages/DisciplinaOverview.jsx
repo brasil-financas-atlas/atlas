@@ -136,7 +136,7 @@ function DisciplinaOverview({ subjectKey }) {
                         }}
                       >
                         <span>{mod.titulo}</span>
-                        <span style={{ color: trackColor, fontSize: '1.1rem', transition: 'transform 0.2s ease' }}>➔</span>
+                        <span style={{ color: trackColor, fontSize: '1.1rem', transition: 'transform 0.2s ease' }}>→</span>
                       </h3>
                     </a>
                   </div>
@@ -148,9 +148,9 @@ function DisciplinaOverview({ subjectKey }) {
                     <a
                       href={`#/${subjectKey}/${mod.slug}`}
                       className="bfa-btn bfa-btn--sm bfa-btn--secondary-glass"
-                      style={{ padding: '0.45rem 0.95rem', fontSize: '0.82rem', fontWeight: 700, borderRadius: 'var(--radius-sm)' }}
+                      style={{ padding: '0.45rem 0.95rem', fontSize: '0.82rem', fontWeight: 700, borderRadius: 'var(--radius-sm)', textDecoration: 'none' }}
                     >
-                      📖 Introdução ao Módulo ➔
+                      Introdução do Módulo →
                     </a>
                   </div>
                 </div>
