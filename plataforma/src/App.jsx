@@ -119,8 +119,18 @@ function App() {
       return <AdminDashboard />;
     }
 
-    // Check dynamic routes /:subjectKey/:moduloSlug/:aulaSlug
+    // Dynamic Route: Introdução ao Módulo (/:subjectKey/:moduloSlug)
     const parts = currentPath.split('/').filter(Boolean);
+    if (parts.length === 2 && (parts[0] === 'matematica' || parts[0] === 'financas')) {
+      return (
+        <ModuloIntroPage
+          subjectKey={parts[0]}
+          moduloSlug={parts[1]}
+        />
+      );
+    }
+
+    // Dynamic Route: Aula (/:subjectKey/:moduloSlug/:aulaSlug)
     if (parts.length === 3 && (parts[0] === 'matematica' || parts[0] === 'financas')) {
       return (
         <AulaPage
