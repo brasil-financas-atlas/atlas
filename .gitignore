@@ -1,0 +1,5 @@
+*.log
+auto_sync.log
+__pycache__/
+.env
+scratch/
