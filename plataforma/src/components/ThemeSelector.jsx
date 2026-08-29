@@ -12,7 +12,7 @@ function ThemeSelector() {
       <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--color-azul-dark)', margin: 0 }}>
-            🎨 Personalização & Temas Visuais
+            Configuração de Temas Visuais
           </h3>
           <p className="bfa-text-muted" style={{ fontSize: '0.9rem', marginTop: '0.25rem' }}>
             Alterne o tema de design da plataforma em tempo real. A preferência é salva automaticamente no LocalStorage (<code>bfa_theme_preference</code>).
@@ -48,8 +48,8 @@ function ThemeSelector() {
                   {theme.name}
                 </h4>
                 {isActive && (
-                  <span style={{ fontSize: '1.1rem', color: 'var(--color-verde)' }} title="Tema Selecionado">
-                    ✅
+                  <span style={{ display: 'inline-flex', alignItems: 'center', color: 'var(--color-verde)' }} title="Tema Selecionado">
+                    <BfaIcon name="check" size={16} color="var(--color-verde)" />
                   </span>
                 )}
               </div>
