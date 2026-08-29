@@ -1,17 +1,5 @@
-# Site gerado pelo `mkdocs build` — nao versionar, e recriado sempre
-site/
-
-# Python
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-
-# Sistema
-.DS_Store
-Thumbs.db
-
-# Configurações locais e logs de auto-sync
-.env
+*.log
 auto_sync.log
-
+__pycache__/
+.env
+scratch/
