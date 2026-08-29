@@ -118,6 +118,27 @@ function Home() {
 
         {/* Trilha 2: Finanças */}
         <div className="bfa-split-row" style={{ alignItems: 'flex-start' }}>
+          <div className="bfa-split-col--text">
+            <span className="mono-tag" style={{ color: 'var(--track-finance)', background: 'rgba(5, 150, 105, 0.08)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800, width: 'fit-content' }}>
+              TRILHA 02 · FINANÇAS & MERCADO DE CAPITAIS
+            </span>
+            <h2 className="headline-punch" style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.03em' }}>
+              Mercado de Capitais e Análise de Empresas
+            </h2>
+            <p style={{ fontSize: '1.05rem', color: 'var(--muted-foreground)', lineHeight: 1.7 }}>
+              Um curso prático sobre como funciona o dinheiro e as empresas no Brasil. Aborda desde a estrutura regulatória do Sistema Financeiro Nacional até os critérios para analisar ações, fundos imobiliários e títulos de renda fixa.
+            </p>
+            <ul style={{ listStyle: 'none', padding: 0, margin: '1rem 0 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.92rem', color: 'var(--foreground)' }}>
+              <li><strong>— 26 aulas práticas:</strong> focadas no mercado financeiro brasileiro real.</li>
+              <li><strong>— Renda Fixa e Títulos Públicos:</strong> Selic, IPCA+ e títulos bancários privados.</li>
+              <li><strong>— Renda Variável e Imobiliária:</strong> ações na B3 e fundos imobiliários isentos de I.R.</li>
+              <li><strong>— Leitura contábil:</strong> entenda DRE, Balanço e os principais indicadores financeiros.</li>
+            </ul>
+            <a href="#/financas" className="bfa-btn bfa-btn--verde" style={{ padding: '0.85rem 1.6rem', borderRadius: 'var(--radius-md)', fontWeight: 700, width: 'fit-content' }}>
+              Acessar Aulas de Finanças →
+            </a>
+          </div>
+
           <div className="bfa-split-col--visual">
             <div className="bfa-tech-card" style={{ padding: '2rem 2.25rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.85rem', borderBottom: '1px solid var(--border)' }}>
@@ -139,27 +160,6 @@ function Home() {
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="bfa-split-col--text">
-            <span className="mono-tag" style={{ color: 'var(--track-finance)', background: 'rgba(5, 150, 105, 0.08)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800, width: 'fit-content' }}>
-              TRILHA 02 · FINANÇAS & MERCADO DE CAPITAIS
-            </span>
-            <h2 className="headline-punch" style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.03em' }}>
-              Mercado de Capitais e Análise de Empresas
-            </h2>
-            <p style={{ fontSize: '1.05rem', color: 'var(--muted-foreground)', lineHeight: 1.7 }}>
-              Um curso prático sobre como funciona o dinheiro e as empresas no Brasil. Aborda desde a estrutura regulatória do Sistema Financeiro Nacional até os critérios para analisar ações, fundos imobiliários e títulos de renda fixa.
-            </p>
-            <ul style={{ listStyle: 'none', padding: 0, margin: '1rem 0 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.92rem', color: 'var(--foreground)' }}>
-              <li><strong>— 26 aulas práticas:</strong> focadas no mercado financeiro brasileiro real.</li>
-              <li><strong>— Renda Fixa e Títulos Públicos:</strong> Selic, IPCA+ e títulos bancários privados.</li>
-              <li><strong>— Renda Variável e Imobiliária:</strong> ações na B3 e fundos imobiliários isentos de I.R.</li>
-              <li><strong>— Leitura contábil:</strong> entenda DRE, Balanço e os principais indicadores financeiros.</li>
-            </ul>
-            <a href="#/financas" className="bfa-btn bfa-btn--verde" style={{ padding: '0.85rem 1.6rem', borderRadius: 'var(--radius-md)', fontWeight: 700, width: 'fit-content' }}>
-              Acessar Aulas de Finanças →
-            </a>
           </div>
         </div>
 
