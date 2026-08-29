@@ -331,6 +331,13 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           <LessonContent markdownContent={markdownContent} lessonId={lessonId} />
         </article>
 
+        {/* Dynamic Interactive Lesson Visualizer (Chart.js / Simulation) */}
+        {window.LessonVisualizerRouter && (
+          <div style={{ marginTop: '2rem' }}>
+            <LessonVisualizerRouter lessonSlug={aulaSlug} />
+          </div>
+        )}
+
         {/* Quiz Engine */}
         <div id="quiz-section" style={{ marginTop: '3.5rem', paddingTop: '2.5rem', borderTop: '1px solid var(--border)' }}>
           {(() => {
