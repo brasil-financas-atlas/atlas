@@ -6,14 +6,14 @@ function ThemeSelector() {
   const themes = [
     { id: 'brasil-atlas', name: 'Brasil Atlas Classic', desc: 'Verde Floresta & Azul Marinho' },
     { id: 'b3-corporate', name: 'B3 Corporate Executive', desc: 'Grafite & Azul B3' },
-    { id: 'khan-minimalist', name: 'Minimalist Academy', desc: 'Azul Acadêmico & Branco' },
+    { id: 'khan-minimalist', name: 'Academic Minimalist', desc: 'Azul Acadêmico & Branco' },
     { id: 'dark-obsidian', name: 'Dark Obsidian Pro', desc: 'Modo Escuro com Emerald' }
   ];
 
   return (
     <div className="tool-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
       <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        ⚡ Seleção de Tema Visual da Plataforma
+        Configuração Visual da Plataforma
       </h3>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
         {themes.map((t) => (
