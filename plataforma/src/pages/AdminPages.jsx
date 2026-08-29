@@ -68,7 +68,7 @@ function AdminLogin() {
             Você está autenticado no Painel Admin do BFA.
           </p>
           <a href="#/admin" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-            Acessar Painel de Controle CMS ➔
+            Acessar Painel de Controle CMS →
           </a>
         </div>
       </div>
@@ -134,7 +134,7 @@ function AdminLogin() {
           </div>
 
           <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={carregando}>
-            {carregando ? 'Autenticando...' : 'Entrar no Painel CMS ➔'}
+            {carregando ? 'Autenticando...' : 'Entrar no Painel CMS →'}
           </button>
         </form>
       </div>
