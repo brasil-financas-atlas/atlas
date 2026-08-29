@@ -34,8 +34,7 @@ Fração é uma forma de representar partes de um todo. Decimal é a mesma ideia
 
 Taxas de juros são sempre frações do capital. Quando um investimento rende 8% ao ano, isso significa que ele rende 8/100 — ou 0,08 — por cada real investido. Saber operar com frações e decimais é o que permite transformar "8% ao ano" num número que você consegue calcular.
 
-!!! note "Em construção"
-    Exemplo resolvido, mini quiz e PBL serão adicionados em breve.
+
 
 ## Resumo
 

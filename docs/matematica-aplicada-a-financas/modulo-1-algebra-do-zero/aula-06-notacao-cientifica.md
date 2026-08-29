@@ -34,8 +34,7 @@ R$ 2,3 × 10⁶ = R$ 2.300.000
 | Bilhão | 10⁹ | R$ 1,4 bi = R$ 1.400.000.000 |
 | Trilhão | 10¹² | PIB ≈ R$ 11 trilhões |
 
-!!! note "Em construção"
-    Exemplo resolvido, mini quiz e PBL serão adicionados em breve.
+
 
 ## Resumo
 
