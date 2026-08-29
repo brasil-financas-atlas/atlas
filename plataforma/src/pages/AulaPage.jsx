@@ -1,0 +1,486 @@
+const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+
+function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
+  const { EXACT_CONTENT } = window;
+  const { completedLessons, toggleLessonComplete } = useContext(ProgressContext || createContext({}));
+  const { isAuthenticated, inlineEditActive, cmsData, updateLesson } = useContext(AdminContext || createContext({}));
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [inputVideoUrl, setInputVideoUrl] = useState('');
+  const [activeTab, setActiveTab] = useState('teoria'); // 'teoria' | 'quiz' | 'forum'
+  const activeLessonRef = useRef(null);
+
+  const [expandedMods, setExpandedMods] = useState({ [moduloSlug]: true });
+
+  useEffect(() => {
+    setActiveTab('teoria');
+    setExpandedMods({ [moduloSlug]: true });
+    if (activeLessonRef.current) {
+      activeLessonRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [aulaSlug, moduloSlug]);
+
+  const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
+  if (!subjectData) {
+    return <div className="bfa-container" style={{ padding: '4rem 1.5rem' }}>Disciplina não encontrada.</div>;
+  }
+
+  const moduloObj = subjectData.modulos.find(m => m.slug === moduloSlug);
+  if (!moduloObj) {
+    return <div className="bfa-container" style={{ padding: '4rem 1.5rem' }}>Módulo não encontrado.</div>;
+  }
+
+  const aulaObj = moduloObj.aulas.find(a => a.slug === aulaSlug);
+  if (!aulaObj) {
+    return <div className="bfa-container" style={{ padding: '4rem 1.5rem' }}>Aula não encontrada.</div>;
+  }
+
+  const lessonId = `${subjectKey}-${moduloSlug}-${aulaSlug}`;
+  const isDone = completedLessons && completedLessons.includes(lessonId);
+
+  const cmsOverride = cmsData && cmsData.lessons && cmsData.lessons[lessonId];
+  const videoUrl = cmsOverride && cmsOverride.videoUrl ? cmsOverride.videoUrl : (aulaObj.videoUrl || "");
+  const markdownContent = cmsOverride && cmsOverride.content ? cmsOverride.content : aulaObj.content;
+
+  const allAulas = [];
+  subjectData.modulos.forEach(m => {
+    m.aulas.forEach(a => {
+      allAulas.push({ ...a, moduloSlug: m.slug });
+    });
+  });
+
+  const currentIdx = allAulas.findIndex(a => a.slug === aulaSlug && a.moduloSlug === moduloSlug);
+  const prevAula = currentIdx > 0 ? allAulas[currentIdx - 1] : null;
+  const nextAula = currentIdx < allAulas.length - 1 ? allAulas[currentIdx + 1] : null;
+
+  const isMatematica = subjectKey === 'matematica';
+  const trackColor = isMatematica ? 'var(--track-math)' : 'var(--track-finance)';
+
+  return (
+    <div className="aula-layout">
+      {/* Sidebar - Curriculum Tree */}
+      <aside className={`aula-sidebar ${!sidebarOpen ? 'closed' : ''}`} style={{ borderRight: '1px solid var(--border)', background: 'var(--card)' }}>
+        <div style={{ padding: '1.15rem 1.25rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <a href={`#/${subjectKey}`} className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.78rem', textDecoration: 'none' }}>
+            ← Voltar para {isMatematica ? 'Matemática' : 'Finanças'}
+          </a>
+        </div>
+
+        <div className="aula-sidebar-content" style={{ padding: '1rem 0.85rem' }}>
+          {subjectData.modulos.map((m, idx) => {
+            const isCurrentMod = m.slug === moduloSlug;
+            const isExpanded = !!expandedMods[m.slug];
+            const modCompletedCount = m.aulas.filter(a => completedLessons && completedLessons.includes(`${subjectKey}-${m.slug}-${a.slug}`)).length;
+            const modTotalCount = m.aulas.length;
+            const isAllDone = modCompletedCount === modTotalCount;
+
+            return (
+              <div
+                key={m.slug}
+                style={{
+                  marginBottom: '0.85rem',
+                  border: isCurrentMod ? `1px solid ${trackColor}40` : '1px solid var(--border)',
+                  borderRadius: 'var(--radius-md)',
+                  background: isCurrentMod ? 'var(--surface-strong)' : 'var(--card)',
+                  overflow: 'hidden',
+                  transition: 'border-color 0.2s ease'
+                }}
+              >
+                {/* Module Header Bar Accordion */}
+                <div
+                  onClick={() => setExpandedMods(prev => ({ ...prev, [m.slug]: !prev[m.slug] }))}
+                  style={{
+                    padding: '0.75rem 0.85rem',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    userSelect: 'none',
+                    borderBottom: isExpanded ? '1px solid var(--border)' : 'none',
+                    background: isCurrentMod ? 'rgba(255, 255, 255, 0.03)' : 'transparent'
+                  }}
+                >
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <span className="mono-tag" style={{ color: isCurrentMod ? trackColor : 'var(--muted-foreground)', fontSize: '0.65rem', fontWeight: 800 }}>
+                        MÓDULO {idx + 1}
+                      </span>
+                      {isCurrentMod && (
+                        <span className="mono-tag" style={{ color: trackColor, background: 'rgba(56, 189, 248, 0.1)', fontSize: '0.62rem', fontWeight: 700, padding: '0.1rem 0.35rem' }}>
+                          Ativo
+                        </span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--foreground)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {m.titulo}
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0, marginLeft: '0.5rem' }}>
+                    <span className="mono-tag" style={{ color: isAllDone ? '#059669' : 'var(--muted-foreground)', fontSize: '0.68rem', fontWeight: 700 }}>
+                      {modCompletedCount}/{modTotalCount}
+                    </span>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--muted-foreground)', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease', display: 'inline-block' }}>
+                      ▶
+                    </span>
+                  </div>
+                </div>
+
+                {/* Expanded Module Content */}
+                {isExpanded && (
+                  <div style={{ padding: '0.35rem 0.4rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                    {/* Link da Introdução do Módulo */}
+                    <a
+                      href={`#/${subjectKey}/${m.slug}`}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        fontSize: '0.78rem',
+                        fontWeight: 600,
+                        color: 'var(--muted-foreground)',
+                        padding: '0.4rem 0.6rem',
+                        borderRadius: 'var(--radius-sm)',
+                        textDecoration: 'none'
+                      }}
+                    >
+                      <BfaIcon name="book" size={12} color="var(--muted-foreground)" />
+                      <span>Introdução & Ementa</span>
+                    </a>
+
+                    {/* Aulas do Módulo */}
+                    {m.aulas.map((a, aIdx) => {
+                      const itemLessonId = `${subjectKey}-${m.slug}-${a.slug}`;
+                      const itemDone = completedLessons && completedLessons.includes(itemLessonId);
+                      const isCurrent = a.slug === aulaSlug && m.slug === moduloSlug;
+
+                      return (
+                        <a
+                          key={a.slug}
+                          ref={isCurrent ? activeLessonRef : null}
+                          href={`#/${subjectKey}/${m.slug}/${a.slug}`}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            fontSize: '0.82rem',
+                            fontWeight: isCurrent ? 800 : 500,
+                            backgroundColor: isCurrent ? 'var(--card)' : 'transparent',
+                            borderLeft: isCurrent ? `3px solid ${trackColor}` : '3px solid transparent',
+                            boxShadow: isCurrent ? '0 1px 4px rgba(0, 0, 0, 0.08)' : 'none',
+                            color: isCurrent ? 'var(--foreground)' : 'var(--muted-foreground)',
+                            padding: '0.5rem 0.65rem',
+                            borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+                            textDecoration: 'none',
+                            transition: 'all 0.15s ease'
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
+                            <span className="tabular-numbers" style={{ fontSize: '0.72rem', color: isCurrent ? trackColor : 'var(--muted-foreground)', fontWeight: 800 }}>
+                              {String(aIdx + 1).padStart(2, '0')}
+                            </span>
+                            <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.titulo}</span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0, marginLeft: '0.4rem' }}>
+                            {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.65rem', fontWeight: 800 }}>✓</span>}
+                            {isCurrent && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: trackColor }} />}
+                          </div>
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </aside>
+
+      {/* Main Classroom Canvas */}
+      <main className="aula-main">
+        {/* Top Breadcrumb & Actions */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', paddingBottom: '1.25rem', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="bfa-btn"
+              style={{
+                cursor: 'pointer',
+                border: '1px solid var(--border)',
+                background: 'var(--surface-strong)',
+                color: 'var(--foreground)',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                padding: '0.45rem 0.85rem',
+                borderRadius: 'var(--radius-sm)'
+              }}
+            >
+              {sidebarOpen ? 'Ocultar Trilha' : 'Ver Trilha'}
+            </button>
+            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.78rem' }}>
+              {isMatematica ? 'Matemática' : 'Finanças'} / {moduloObj.titulo} / <strong style={{ color: 'var(--foreground)' }}>{aulaObj.titulo}</strong>
+            </span>
+          </div>
+
+          <button
+            onClick={() => toggleLessonComplete(lessonId)}
+            className="bfa-btn"
+            style={{
+              backgroundColor: isDone ? '#059669' : 'var(--surface-strong)',
+              color: isDone ? '#FFFFFF' : 'var(--foreground)',
+              border: isDone ? '1px solid #059669' : '1px solid var(--border)',
+              padding: '0.55rem 1.15rem',
+              borderRadius: 'var(--radius-md)',
+              fontWeight: 700,
+              fontSize: '0.85rem'
+            }}
+          >
+            {isDone ? 'Concluída' : 'Marcar como Concluída'}
+          </button>
+        </div>
+
+        {/* Audio Reader Accessibility */}
+        <AudioReader markdownContent={markdownContent} lessonTitle={aulaObj.titulo} />
+
+        {/* Briefing Technical Card */}
+        <div className="bfa-tech-card" style={{ marginBottom: '2rem', padding: '1.5rem 1.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.35rem' }}>
+            <span className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.72rem' }}>
+              OBJETIVO DA AULA
+            </span>
+          </div>
+          <h2 className="headline-punch" style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em', margin: '0.25rem 0 0.5rem 0' }}>
+            {aulaObj.titulo}
+          </h2>
+          <p style={{ fontSize: '0.95rem', color: 'var(--muted-foreground)', margin: 0, lineHeight: 1.6 }}>
+            Estudo analítico com fundamentação teórica, resolução de casos práticos e modelagem aplicada para tomada de decisão financeira.
+          </p>
+        </div>
+
+        {/* Quick In-Lesson Segmented Mode Navigation Bar */}
+        {(() => {
+          const richData = subjectKey === 'financas' ? window.financasData : (subjectKey === 'matematica' ? window.matematicaData : null);
+          let richAula = null;
+          if (richData && richData.modulos) {
+            const rMod = richData.modulos.find(m => m.slug === moduloSlug);
+            if (rMod && rMod.aulas) {
+              richAula = rMod.aulas.find(a => a.slug === aulaSlug);
+            }
+          }
+          let lessonQuestions = [];
+          if (richAula && richAula.quiz && richAula.quiz.length > 0) {
+            lessonQuestions = richAula.quiz;
+          } else if (aulaObj && aulaObj.quiz) {
+            lessonQuestions = aulaObj.quiz;
+          }
+
+          return (
+            <div>
+              {/* Top Segmented Tabs for Instant Access */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem', marginBottom: '2rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.85rem' }}>
+                <button
+                  type="button"
+                  className={`bfa-btn bfa-btn--sm ${activeTab === 'teoria' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+                  onClick={() => setActiveTab('teoria')}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
+                >
+                  <BfaIcon name="book" size={14} />
+                  <span>Teoria & Estudo</span>
+                </button>
+                <button
+                  type="button"
+                  className={`bfa-btn bfa-btn--sm ${activeTab === 'quiz' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+                  onClick={() => {
+                    setActiveTab('quiz');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
+                >
+                  <BfaIcon name="target" size={14} />
+                  <span>Exercícios de Fixação ({lessonQuestions.length})</span>
+                </button>
+                <button
+                  type="button"
+                  className={`bfa-btn bfa-btn--sm ${activeTab === 'forum' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+                  onClick={() => setActiveTab('forum')}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
+                >
+                  <BfaIcon name="chat" size={14} />
+                  <span>Fórum da Aula</span>
+                </button>
+              </div>
+
+              {/* TAB 1: TEORIA */}
+              {activeTab === 'teoria' && (
+                <div>
+                  {/* Video Player & Admin Controls */}
+                  <div style={{ marginBottom: '2.5rem' }}>
+                    {isAuthenticated && inlineEditActive && (
+                      <div className="bfa-admin-video-box" style={{ marginBottom: '1rem', padding: '0.85rem 1.25rem', background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <BfaIcon name="video" size={18} color="var(--color-azul)" />
+                          <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                            Gerenciador de Vídeo da Aula (Admin)
+                          </span>
+                          <span className="mono-tag" style={{ color: videoUrl ? 'var(--market)' : 'var(--muted-foreground)', background: 'var(--card)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
+                            {videoUrl ? 'Vídeo Ativo' : 'Sem vídeo'}
+                          </span>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button
+                            type="button"
+                            className="bfa-btn bfa-btn--sm bfa-btn--ouro"
+                            onClick={() => {
+                              setInputVideoUrl(videoUrl);
+                              setShowVideoModal(true);
+                            }}
+                            style={{ fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                          >
+                            <BfaIcon name="pencil" size={13} /> {videoUrl ? 'Editar Vídeo' : 'Adicionar Vídeo'}
+                          </button>
+                          {videoUrl && (
+                            <button
+                              type="button"
+                              className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+                              onClick={() => updateLesson(lessonId, { videoUrl: '' })}
+                              style={{ fontSize: '0.8rem', color: '#EF4444', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                            >
+                              <BfaIcon name="trash" size={13} /> Remover Vídeo
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {videoUrl && (
+                      <div className="bfa-video-responsive" style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', boxShadow: '0 10px 30px -10px rgba(0,0,0,0.3)', background: '#000' }}>
+                        <iframe
+                          src={videoUrl.replace('watch?v=', 'embed/')}
+                          title={aulaObj.titulo}
+                          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Markdown Theory Article */}
+                  <article className="bfa-lesson-article" style={{ fontSize: '1rem', lineHeight: 1.75 }}>
+                    <LessonContent markdownContent={markdownContent} lessonId={lessonId} />
+                  </article>
+
+                  {/* Dynamic Interactive Lesson Visualizer (Chart.js / Simulation) */}
+                  {window.LessonVisualizerRouter && (
+                    <div style={{ marginTop: '2rem' }}>
+                      <LessonVisualizerRouter lessonSlug={aulaSlug} />
+                    </div>
+                  )}
+
+                  {/* Practice CTA Card leading to Quiz */}
+                  {lessonQuestions.length > 0 && (
+                    <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', textAlign: 'center', boxShadow: '0 4px 20px -5px rgba(0,0,0,0.1)' }}>
+                      <h3 style={{ margin: '0 0 0.5rem 0', fontWeight: 800, color: 'var(--foreground)', fontSize: '1.2rem' }}>
+                        Pronto para testar sua retenção?
+                      </h3>
+                      <p style={{ margin: '0 0 1.5rem 0', color: 'var(--muted-foreground)', fontSize: '0.9rem', maxWidth: '500px', marginLeft: 'auto', marginRight: 'auto' }}>
+                        Resolva os {lessonQuestions.length} exercícios práticos de fixação com cálculo passo a passo para consolidar o aprendizado.
+                      </p>
+                      <button
+                        type="button"
+                        className="bfa-btn bfa-btn--verde"
+                        onClick={() => {
+                          setActiveTab('quiz');
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '0.75rem 1.5rem', fontWeight: 700 }}
+                      >
+                        <BfaIcon name="target" size={16} />
+                        <span>Praticar Exercícios de Fixação ({lessonQuestions.length} Questões)</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* TAB 2: QUIZ (Positioned right at the top for instant practice) */}
+              {activeTab === 'quiz' && (
+                <div id="quiz-section" style={{ marginTop: '1rem' }}>
+                  <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <button
+                      type="button"
+                      className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+                      onClick={() => setActiveTab('teoria')}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                    >
+                      <span>← Voltar para a Teoria</span>
+                    </button>
+                    <span className="mono-tag" style={{ color: 'var(--market)', fontSize: '0.75rem' }}>
+                      {lessonQuestions.length} Questões Disponíveis
+                    </span>
+                  </div>
+                  <QuizEngine
+                    questions={lessonQuestions}
+                    lessonId={lessonId}
+                    onBackToTheory={() => setActiveTab('teoria')}
+                    nextLessonUrl={nextAula ? `#/${subjectKey}/${nextAula.moduloSlug}/${nextAula.slug}` : null}
+                  />
+                </div>
+              )}
+
+              {/* TAB 3: FORUM */}
+              {activeTab === 'forum' && (
+                <div id="forum-section" style={{ marginTop: '1rem' }}>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <button
+                      type="button"
+                      className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+                      onClick={() => setActiveTab('teoria')}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                    >
+                      <span>← Voltar para a Teoria</span>
+                    </button>
+                  </div>
+                  <ForumTimestamps lessonId={lessonId} />
+                </div>
+              )}
+            </div>
+          );
+        })()}
+
+        {/* Bottom Lesson Navigation */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4rem', paddingTop: '1.75rem', borderTop: '1px solid var(--border)' }}>
+          {prevAula ? (
+            <a
+              href={`#/${subjectKey}/${prevAula.moduloSlug}/${prevAula.slug}`}
+              style={{
+                border: '1px solid var(--border)',
+                background: 'var(--surface-strong)',
+                color: 'var(--foreground)',
+                padding: '0.65rem 1.25rem',
+                borderRadius: 'var(--radius-md)',
+                fontWeight: 700,
+                fontSize: '0.85rem'
+              }}
+            >
+              ← Aula Anterior
+            </a>
+          ) : <div />}
+
+          {nextAula ? (
+            <a
+              href={`#/${subjectKey}/${nextAula.moduloSlug}/${nextAula.slug}`}
+              className="bfa-btn bfa-btn--verde"
+              style={{ padding: '0.65rem 1.35rem', borderRadius: 'var(--radius-md)', fontWeight: 700, fontSize: '0.85rem' }}
+            >
+              Próxima Aula →
+            </a>
+          ) : <div />}
+        </div>
+      </main>
+    </div>
+  );
+}
+
+window.AulaPage = AulaPage;

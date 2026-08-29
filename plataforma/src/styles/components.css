@@ -1,0 +1,1874 @@
+/* ==========================================================================
+   Brasil Finanças Atlas (BFA) — Component Design System (From Scratch)
+   Inspirado 100% em lovable-project-2bcdc0ac
+   ========================================================================== */
+
+/* ── 1. Header & Navigation ──────────────────────────────────────────────── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+  background-color: rgba(248, 250, 252, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+[data-theme="dark-obsidian"] .site-header,
+.dark .site-header {
+  background-color: rgba(13, 17, 23, 0.85);
+}
+
+.site-header__container {
+  margin: 0 auto;
+  display: flex;
+  height: 4rem;
+  max-width: 1400px;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 1.5rem;
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.site-logo__badge {
+  display: flex;
+  height: 2.25rem;
+  width: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background-color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: var(--primary-foreground);
+}
+
+.nav-link {
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background-color: var(--secondary);
+  color: var(--foreground);
+}
+
+/* ── 2. Cards & Modules ──────────────────────────────────────────────────── */
+.module-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  padding: 1.25rem;
+}
+
+.tool-card {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  padding: 1.25rem;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-elevated);
+}
+
+/* ── 3. Buttons ─────────────────────────────────────────────────────────── */
+/* ── 3. Buttons ─────────────────────────────────────────────────────────── */
+.bfa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
+  line-height: 1;
+}
+
+.bfa-btn--primary-solid {
+  background-color: #FFFFFF;
+  color: #090D16 !important;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+.bfa-btn--primary-solid:hover {
+  background-color: #F8FAFC;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+}
+
+.bfa-btn--secondary-glass {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(12px);
+}
+.bfa-btn--secondary-glass:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.38);
+  transform: translateY(-2px);
+}
+
+.bfa-btn--azul {
+  background-color: var(--track-math);
+  color: #FFFFFF !important;
+}
+.bfa-btn--azul:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}
+
+.bfa-btn--verde {
+  background-color: var(--track-finance);
+  color: #FFFFFF !important;
+}
+.bfa-btn--verde:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}
+
+.bfa-btn--ouro {
+  background-color: var(--track-brhsic);
+  color: #FFFFFF !important;
+}
+.bfa-btn--ouro:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}
+
+.bfa-btn--ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--foreground);
+}
+.bfa-btn--ghost:hover {
+  background: var(--surface-strong);
+}
+
+.bfa-btn--sm {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.78rem;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-md);
+  background-color: var(--primary);
+  padding: 0.65rem 1.15rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--primary-foreground);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.65rem 1.15rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  transition: background-color 0.15s ease;
+  background: transparent;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ── 4. Badges ──────────────────────────────────────────────────────────── */
+.badge-market {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+}
+
+.dot-market {
+  height: 0.375rem;
+  width: 0.375rem;
+  border-radius: 50%;
+  background-color: var(--market);
+}
+
+/* ── 5. Napkin Briefing Card ────────────────────────────────────────────── */
+.napkin-card {
+  border: 1px dashed var(--gold);
+  background-color: rgba(217, 119, 6, 0.05);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── 6. Footer ──────────────────────────────────────────────────────────── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background-color: var(--card);
+  padding: 4rem 0 2rem 0;
+  margin-top: 4rem;
+}
+
+/* ── 7. Forum & Comments Section ────────────────────────────────────────── */
+.bfa-forum {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.bfa-forum__header {
+  margin-bottom: 1.5rem;
+}
+
+.bfa-forum__header h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 0.25rem;
+}
+
+.bfa-forum__header p {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.bfa-forum__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  background-color: var(--surface-strong);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.bfa-forum__form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.bfa-input {
+  background-color: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.85rem;
+  font-size: 0.875rem;
+  font-family: var(--font-sans);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.bfa-input:focus,
+.bfa-textarea:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.bfa-input--num {
+  width: 60px;
+  text-align: center;
+  font-family: var(--font-mono);
+}
+
+.bfa-timestamp-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+}
+
+.bfa-textarea {
+  background-color: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  resize: vertical;
+  min-height: 80px;
+}
+
+.bfa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 140ms cubic-bezier(0.2, 0, 0, 1), box-shadow 140ms ease, background-color 140ms ease, opacity 140ms ease;
+  user-select: none;
+}
+
+.bfa-btn:hover, .btn-primary:hover, .btn-secondary:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+}
+
+.bfa-btn:active, .btn-primary:active, .btn-secondary:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+  opacity: 0.95;
+}
+
+.bfa-btn--verde {
+  background-color: var(--track-finance);
+  color: #FFFFFF;
+}
+
+.bfa-btn--verde:hover {
+  background-color: #12572e;
+}
+
+.bfa-btn--ouro {
+  background-color: var(--gold);
+  color: #FFFFFF;
+}
+
+.bfa-btn--ouro:hover {
+  background-color: var(--gold-deep);
+}
+
+.bfa-btn--azul {
+  background-color: var(--track-math);
+  color: #FFFFFF;
+}
+
+.bfa-btn--ghost {
+  background-color: transparent;
+  color: var(--muted-foreground);
+}
+
+/* Glassmorphism Optional Preview Mode */
+.bfa-glassmorphism-active .site-header {
+  background-color: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .site-header,
+.dark.bfa-glassmorphism-active .site-header {
+  background-color: rgba(13, 17, 23, 0.72) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+}
+
+.bfa-glassmorphism-active .bfa-card,
+.bfa-glassmorphism-active .module-card,
+.bfa-glassmorphism-active .tool-card,
+.bfa-glassmorphism-active .bfa-quiz,
+.bfa-glassmorphism-active .bfa-forum,
+.bfa-glassmorphism-active .bfa-inline-editor-card {
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 10px 30px 0 rgba(31, 38, 135, 0.08) !important;
+}
+
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .bfa-card,
+.dark.bfa-glassmorphism-active .bfa-card,
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .module-card,
+.dark.bfa-glassmorphism-active .module-card,
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .tool-card,
+.dark.bfa-glassmorphism-active .tool-card,
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .bfa-quiz,
+.dark.bfa-glassmorphism-active .bfa-quiz,
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .bfa-forum,
+.dark.bfa-glassmorphism-active .bfa-forum {
+  background-color: rgba(22, 27, 34, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.bfa-btn--ghost:hover {
+  background-color: var(--secondary);
+  color: var(--foreground);
+}
+
+.bfa-btn-link {
+  background: none;
+  border: none;
+  color: var(--ring);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+.bfa-btn-link:hover {
+  text-decoration: underline;
+}
+
+.bfa-forum__threads {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.bfa-forum__empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+}
+
+.bfa-forum__card {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  transition: border-color 0.15s ease;
+}
+
+.bfa-forum__card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.8125rem;
+  margin-bottom: 0.65rem;
+}
+
+.bfa-forum__author {
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.bfa-forum__timestamp {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--gold-deep);
+  background-color: rgba(217, 119, 6, 0.12);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.bfa-forum__date {
+  color: var(--muted-foreground);
+  margin-left: auto;
+  font-size: 0.75rem;
+}
+
+.bfa-forum__card-text {
+  font-size: 0.925rem;
+  color: var(--foreground);
+  line-height: 1.55;
+}
+
+.bfa-forum__replies {
+  margin-top: 1rem;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.bfa-forum__reply {
+  background-color: var(--card);
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.bfa-forum__reply-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+  margin-bottom: 0.35rem;
+}
+
+.bfa-forum__reply-form {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: var(--surface-strong);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ── 8. Interactive Quiz Engine ─────────────────────────────────────────── */
+.bfa-quiz {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.bfa-quiz__header {
+  margin-bottom: 1.75rem;
+}
+
+.bfa-quiz__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--foreground);
+  margin-bottom: 0.75rem;
+}
+
+.bfa-quiz__progress-text {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+}
+
+.bfa-quiz__bar {
+  height: 8px;
+  background-color: var(--secondary);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.bfa-quiz__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--track-finance) 0%, var(--ring) 100%);
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bfa-quiz__question h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--foreground);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.bfa-quiz__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.75rem;
+}
+
+.bfa-quiz__option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background-color: var(--background);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  width: 100%;
+}
+
+.bfa-quiz__option:hover:not(:disabled) {
+  border-color: var(--ring);
+  background-color: var(--secondary);
+  transform: translateX(4px);
+}
+
+.bfa-quiz__option-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--surface-strong);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--foreground);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.bfa-quiz__option.selected {
+  border-color: var(--ring);
+  background-color: rgba(59, 130, 246, 0.08);
+  box-shadow: 0 0 0 1px var(--ring);
+}
+
+.bfa-quiz__option.selected .bfa-quiz__option-letter {
+  background-color: var(--ring);
+  color: #FFFFFF;
+}
+
+.bfa-quiz__option.correct {
+  border-color: #10B981;
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #10B981;
+}
+
+.bfa-quiz__option.correct .bfa-quiz__option-letter {
+  background-color: #10B981;
+  color: #FFFFFF;
+}
+
+.bfa-quiz__option.wrong {
+  border-color: #EF4444;
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #EF4444;
+}
+
+.bfa-quiz__option.wrong .bfa-quiz__option-letter {
+  background-color: #EF4444;
+  color: #FFFFFF;
+}
+
+.bfa-quiz__feedback {
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  font-size: 0.925rem;
+  line-height: 1.6;
+}
+
+.bfa-quiz__feedback.success {
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: var(--foreground);
+}
+
+.bfa-quiz__feedback.error {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--foreground);
+}
+
+.bfa-quiz__feedback-title {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.bfa-quiz__explanation {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.bfa-quiz__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bfa-quiz--finished {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.bfa-quiz__score-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 1.25rem 0;
+}
+
+.bfa-quiz__score-num {
+  font-family: var(--font-mono);
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: var(--foreground);
+}
+
+.bfa-quiz__score-pct {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold-deep);
+}
+
+/* ── 9. Video Player Placeholder ────────────────────────────────────────── */
+.bfa-video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background-color: #000000;
+}
+
+.bfa-video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.bfa-video-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 2rem;
+  background-color: var(--surface-strong);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.bfa-video-placeholder h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 0.35rem;
+}
+
+.bfa-video-placeholder p {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  margin-bottom: 1rem;
+}
+
+/* ── 10. Modals & Overlays (Admin & Interactive Editors) ─────────────────── */
+.bfa-inline-editor-modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.bfa-inline-editor-card {
+  background-color: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  width: 100%;
+  max-width: 640px;
+  box-shadow: var(--shadow-elevated);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.bfa-btn-icon {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--muted-foreground);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s ease;
+}
+
+.bfa-btn-icon:hover {
+  background-color: var(--secondary);
+  color: var(--foreground);
+}
+
+.bfa-btn-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+/* ── 11. Khan Academy Style Fixation Quiz Controls ───────────────────────── */
+.bfa-quiz__pills {
+  display: flex;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.bfa-quiz__pill {
+  width: 24px;
+  height: 6px;
+  border-radius: 999px;
+  background-color: var(--border);
+  transition: all 0.2s ease;
+}
+
+.bfa-quiz__pill.active {
+  background-color: var(--ring);
+  width: 36px;
+}
+
+.bfa-quiz__pill.correct {
+  background-color: var(--market);
+}
+
+.bfa-quiz__pill.wrong {
+  background-color: var(--status-danger);
+}
+
+/* ── 12. Tab Buttons ─────────────────────────────────────────────────────── */
+.bfa-tab-btn {
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.bfa-tab-btn:hover {
+  background-color: var(--secondary);
+}
+
+.bfa-tab-btn.active-fixacao {
+  background-color: var(--track-finance);
+  color: #FFFFFF !important;
+  border-color: var(--track-finance);
+}
+
+.bfa-tab-btn.active-calculo {
+  background-color: var(--track-math);
+  color: #FFFFFF !important;
+  border-color: var(--track-math);
+}
+
+.bfa-tab-btn.active-pbl {
+  background-color: var(--gold-deep);
+  color: #FFFFFF !important;
+  border-color: var(--gold-deep);
+}
+
+/* ── Responsive Mobile Rules ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .site-header__container {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 0.75rem 1rem;
+    gap: 0.75rem;
+  }
+  .site-header nav {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    justify-content: flex-start;
+  }
+  .bfa-quiz__title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .bfa-quiz__option {
+    padding: 0.75rem 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .bfa-quiz__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .bfa-quiz__actions button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  .bfa-forum__form-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header__container {
+    padding: 0.5rem;
+  }
+  .bfa-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── Specific Component Responsive Classes ────────────────────────────────────────────── */
+.navbar-search {
+  position: relative;
+  margin-left: 1rem;
+  flex: 0 1 240px;
+}
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: auto;
+}
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.aula-layout {
+  display: flex;
+  min-height: calc(100vh - 4rem);
+  position: relative;
+  align-items: flex-start;
+}
+
+.aula-sidebar {
+  position: sticky;
+  top: 4rem;
+  height: calc(100vh - 4rem);
+  max-height: calc(100vh - 4rem);
+  align-self: flex-start;
+  transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 320px;
+  z-index: 30;
+}
+
+.aula-sidebar.closed {
+  width: 0px;
+  border-right: none;
+}
+
+.aula-sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.aula-main {
+  flex: 1;
+  padding: 2rem 2.5rem;
+  max-width: 1050px;
+  margin: 0 auto;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .navbar-search {
+    margin-left: 0;
+    flex: 1 1 100%;
+    order: 3;
+  }
+  .navbar-nav {
+    margin-left: 0;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    order: 4;
+  }
+  .navbar-actions {
+    margin-left: auto;
+    order: 2;
+  }
+  
+  .aula-sidebar {
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    z-index: 100;
+    height: calc(100vh - 4rem);
+    width: 100%;
+    max-width: 320px;
+    box-shadow: var(--shadow-lg);
+  }
+  .aula-sidebar.closed {
+    width: 0px;
+    max-width: 0px;
+    transform: translateX(-100%);
+  }
+  .aula-main {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* ==========================================================================
+   Editorial Financial Craft: Ticker Ribbon & Hero Showpiece Visualizer
+   ========================================================================== */
+
+/* 1. Market Ticker Ribbon */
+.bfa-ticker-bar {
+  background: #090D16;
+  color: #F8FAFC;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  height: 38px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 40;
+}
+
+.bfa-ticker-header {
+  background: #0F172A;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0 1.25rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  z-index: 10;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
+}
+
+.bfa-ticker-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 10px #10B981;
+  animation: bfaPulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes bfaPulseGlow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+.bfa-ticker-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #F8FAFC;
+}
+
+.bfa-ticker-track-wrapper {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+}
+
+.bfa-ticker-track {
+  display: inline-flex;
+  gap: 2.5rem;
+  animation: bfaMarquee 40s linear infinite;
+}
+
+.bfa-ticker-track:hover {
+  animation-play-state: paused;
+}
+
+.bfa-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+}
+
+.bfa-ticker-item__label {
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.bfa-ticker-item__value {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.bfa-ticker-item__value small {
+  font-size: 0.68rem;
+  color: #94A3B8;
+  margin-left: 2px;
+}
+
+.bfa-ticker-item__change {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+}
+
+.bfa-ticker-item__change.up {
+  color: #34D399;
+  background: rgba(52, 211, 153, 0.15);
+}
+
+.bfa-ticker-item__change.down {
+  color: #F87171;
+  background: rgba(248, 113, 113, 0.15);
+}
+
+.bfa-ticker-item__change.neutral {
+  color: #CBD5E1;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@keyframes bfaMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* 2. Hero Showpiece Visualizer */
+.bfa-hero-showpiece {
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem 2rem;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  margin-top: 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.bfa-hero-showpiece::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.6), transparent);
+}
+
+.bfa-hero-showpiece__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.bfa-hero-showpiece__canvas-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  background: rgba(9, 13, 22, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem;
+  overflow: hidden;
+}
+
+.bfa-hero-showpiece__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.bfa-hero-tooltip {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.95rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+.bfa-hero-showpiece__controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bfa-hero-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bfa-hero-control__top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.bfa-hero-control__val {
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.bfa-range-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  accent-color: #10B981;
+}
+
+.bfa-hero-showpiece__kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.bfa-hero-kpi-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  transition: all 0.2s ease;
+}
+
+.bfa-hero-kpi-card.highlight {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 4px 20px -4px rgba(16, 185, 129, 0.2);
+}
+
+.bfa-hero-kpi-card__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #94A3B8;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.bfa-hero-kpi-card__num {
+  font-family: var(--font-mono);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #10B981;
+  letter-spacing: -0.02em;
+}
+
+.bfa-hero-kpi-card__sub {
+  font-size: 0.76rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* ==========================================================================
+   Bento Grid Micro-Widgets (Live Operable Tools in Cards)
+   ========================================================================== */
+
+.bfa-micro-widget {
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.15rem;
+  margin-top: 1.25rem;
+  transition: all 0.2s ease;
+}
+
+[data-theme="dark-obsidian"] .bfa-micro-widget,
+.dark .bfa-micro-widget {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.bfa-micro-widget__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.bfa-micro-widget__title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+}
+
+.bfa-micro-widget__badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.bfa-mini-slider {
+  width: 100%;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--border);
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+[data-theme="dark-obsidian"] .bfa-mini-slider,
+.dark .bfa-mini-slider {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.bfa-mini-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--track-finance);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(5, 150, 105, 0.5);
+}
+
+/* Card Glow Hover & Depth */
+.bfa-bento-card--interactive {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+  transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.bfa-bento-card--interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+/* ==========================================================================
+   Cloudflare & Linear Style 50/50 Split Section Architecture
+   ========================================================================== */
+
+.bfa-split-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.bfa-split-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  padding: 5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.bfa-split-row.reverse {
+  grid-template-columns: 1fr 1fr;
+}
+
+.bfa-split-col--text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bfa-split-col--visual {
+  position: relative;
+  width: 100%;
+}
+
+.bfa-tech-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem 2rem;
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
+  position: relative;
+}
+
+[data-theme="dark-obsidian"] .bfa-tech-card,
+.dark .bfa-tech-card {
+  background: #0B0F19;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+}
+
+.bfa-tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.bfa-grid-tools-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+  .bfa-split-hero {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .bfa-split-row {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem;
+    padding: 3.5rem 0;
+  }
+  .bfa-grid-tools-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .bfa-grid-tools-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Hero Visual Showcase (Layered Floating Cards without rigid boxes)
+   ========================================================================== */
+.bfa-hero-showcase {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justifyContent: center;
+  gap: 1rem;
+}
+
+.bfa-hero-showcase-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(59, 130, 246, 0.12) 40%, transparent 70%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bfa-showcase-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 1.15rem 1.4rem;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bfa-showcase-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes bfaFloatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes bfaFloatDelayed {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.bfa-float-1 {
+  animation: bfaFloatSlow 6s ease-in-out infinite;
+}
+
+.bfa-float-2 {
+  animation: bfaFloatDelayed 7s ease-in-out infinite 1s;
+}
+
+.bfa-float-3 {
+  animation: bfaFloatSlow 8s ease-in-out infinite 2s;
+}
+
+/* ==========================================================================
+   BFA Admonitions & Interactive Collapsible Callouts (??? / !!!)
+   ========================================================================== */
+.bfa-admonition,
+.bfa-collapsible {
+  margin: 1.75rem 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--card);
+  overflow: hidden;
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bfa-collapsible:hover {
+  border-color: var(--border-strong, rgba(255, 255, 255, 0.2));
+}
+
+.bfa-admonition__header,
+.bfa-collapsible__summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.15rem;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  user-select: none;
+  background: var(--surface-strong, rgba(255, 255, 255, 0.03));
+  border-bottom: 1px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.bfa-collapsible[open] > .bfa-collapsible__summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.bfa-collapsible__summary::-webkit-details-marker {
+  display: none;
+}
+
+.bfa-collapsible__summary {
+  list-style: none;
+}
+
+.bfa-admonition__icon,
+.bfa-collapsible__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bfa-admonition__title,
+.bfa-collapsible__title {
+  flex: 1;
+  letter-spacing: -0.01em;
+}
+
+.bfa-collapsible__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--muted-foreground);
+}
+
+.bfa-collapsible[open] .bfa-collapsible__chevron {
+  transform: rotate(90deg);
+  color: var(--foreground);
+}
+
+.bfa-admonition__content,
+.bfa-collapsible__content {
+  padding: 1.15rem 1.35rem;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--foreground);
+}
+
+.bfa-admonition__content p:last-child,
+.bfa-collapsible__content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Modificadores Temáticos de Callout */
+.bfa-collapsible--math,
+.bfa-admonition--math {
+  border-left: 4px solid #2563EB;
+}
+.bfa-collapsible--math .bfa-collapsible__icon {
+  color: #2563EB;
+}
+
+.bfa-collapsible--tip,
+.bfa-admonition--tip {
+  border-left: 4px solid #059669;
+}
+.bfa-collapsible--tip .bfa-collapsible__icon {
+  color: #059669;
+}
+
+.bfa-collapsible--warning,
+.bfa-admonition--warning {
+  border-left: 4px solid #D97706;
+}
+.bfa-collapsible--warning .bfa-collapsible__icon {
+  color: #D97706;
+}
+
+.bfa-collapsible--solution,
+.bfa-collapsible--pbl,
+.bfa-admonition--solution {
+  border-left: 4px solid #7C3AED;
+}
+.bfa-collapsible--solution .bfa-collapsible__icon,
+.bfa-collapsible--pbl .bfa-collapsible__icon {
+  color: #7C3AED;
+}
+
+.bfa-collapsible--note,
+.bfa-admonition--note {
+  border-left: 4px solid #0284C7;
+}
+.bfa-collapsible--note .bfa-collapsible__icon {
+  color: #0284C7;
+}
+
+/* ==========================================================================
+   Barra de Roteiro Rápido no Topo da Aula (Quick In-Lesson TOC)
+   ========================================================================== */
+.bfa-quick-toc {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  margin-bottom: 2rem;
+  background: var(--surface-strong, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+}
+
+.bfa-quick-toc__label {
+  font-weight: 700;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.72rem;
+  margin-right: 0.25rem;
+}
+
+.bfa-quick-toc__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--foreground);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.bfa-quick-toc__chip:hover {
+  background: var(--secondary);
+  border-color: var(--ring);
+  color: var(--foreground);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Sumário Executivo do Módulo (Module Syllabus Card)
+   ========================================================================== */
+.bfa-module-summary-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.08);
+}
+
+.bfa-module-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.bfa-competency-pill {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  background: var(--surface-strong, rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Mermaid Diagrams & Responsive Ledger Tables
+   ========================================================================== */
+.mermaid-wrapper {
+  margin: 2rem 0;
+  overflow-x: auto;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+/* ==========================================================================
+   Mermaid Diagrams & Responsive Ledger Tables
+   ========================================================================== */
+.mermaid-wrapper {
+  margin: 2rem 0;
+  overflow-x: auto;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.mermaid-target svg,
+.mermaid svg {
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 0 auto;
+}
+
+/* Markdown Ledger Tables & Responsive Wrapper */
+.bfa-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: 1.75rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.05);
+  scrollbar-width: thin;
+}
+
+.bfa-markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 0.9rem;
+  border: none;
+  background: transparent;
+}
+
+.bfa-markdown-body th {
+  background: var(--surface-strong);
+  color: var(--foreground);
+  font-weight: 700;
+  text-align: left;
+  padding: 0.85rem 1.15rem;
+  border-bottom: 2px solid var(--border);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.bfa-markdown-body td {
+  padding: 0.75rem 1.15rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+  line-height: 1.6;
+}
+
+.bfa-markdown-body tr:last-child td {
+  border-bottom: none;
+}
+
+.bfa-markdown-body tr:hover td {
+  background: rgba(150, 150, 150, 0.04);
+}
+
+/* ==========================================================================
+   Learning Pathway & Rich Lesson Cards
+   ========================================================================== */
+.bfa-lesson-card-rich:hover {
+  border-color: var(--ring) !important;
+  background: var(--card) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.08);
+}
+
+.bfa-module-milestone-card {
+  transition: all 0.2s ease;
+}
+
+.bfa-module-milestone-card:hover {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.12);
+}

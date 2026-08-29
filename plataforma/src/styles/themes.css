@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Brasil Finanças Atlas (BFA) — Theme Definitions & WCAG AAA Dark Contrast
+   ========================================================================== */
+
+/* 1. Theme Classic Institucional (Default Light) */
+:root,
+[data-theme="brasil-atlas"] {
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --card: #FFFFFF;
+  --primary: #0F172A;
+  --primary-foreground: #F8FAFC;
+  --secondary: #F1F5F9;
+  --muted-foreground: #64748B;
+  --border: #E2E8F0;
+
+  --market: #059669;
+  --gold: #D97706;
+  --gold-deep: #B45309;
+
+  --track-finance: #1B6B3A;
+  --track-math: #1B3A5C;
+  --track-brhsic: #C8963E;
+
+  --surface: #FFFFFF;
+  --surface-strong: #F1F5F9;
+}
+
+/* 2. Theme Executive B3 Corporate */
+[data-theme="b3-corporate"],
+.theme-executive {
+  --background: #F1F5F9;
+  --foreground: #0A2540;
+  --card: #FFFFFF;
+  --primary: #0A2540;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EBF1F8;
+  --muted-foreground: #4E5978;
+  --border: #D8E0E8;
+
+  --market: #00D4B2;
+  --gold: #00D4B2;
+  --gold-deep: #008F77;
+
+  --track-finance: #008F77;
+  --track-math: #0A2540;
+  --track-brhsic: #00D4B2;
+
+  --surface: #FFFFFF;
+  --surface-strong: #EBF1F8;
+}
+
+/* 3. Theme Khan Minimalist Academy */
+[data-theme="khan-minimalist"],
+.theme-minimal {
+  --background: #FFFFFF;
+  --foreground: #212529;
+  --card: #FFFFFF;
+  --primary: #0056B3;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F1F3F5;
+  --muted-foreground: #6C757D;
+  --border: #DEE2E6;
+
+  --market: #108548;
+  --gold: #E0A800;
+
+  --track-finance: #108548;
+  --track-math: #0056B3;
+  --track-brhsic: #E0A800;
+  --radius: 0.875rem;
+
+  --surface: #FFFFFF;
+  --surface-strong: #F1F3F5;
+}
+
+/* 4. Theme Dark Obsidian Pro (WCAG AAA High Contrast & Deep Luxury) */
+[data-theme="dark-obsidian"],
+[data-theme="dark"],
+.dark {
+  --background: #07090E;
+  --foreground: #F8FAFC;
+  --card: #0E131F;
+  --card-foreground: #F8FAFC;
+  --popover: #0E131F;
+  --popover-foreground: #F8FAFC;
+
+  --primary: #F8FAFC;
+  --primary-foreground: #07090E;
+  --secondary: #141B2B;
+  --secondary-foreground: #F8FAFC;
+
+  --muted: #141B2B;
+  --muted-foreground: #94A3B8;
+  --accent: #1E293B;
+  --accent-foreground: #F8FAFC;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-color-hover: rgba(255, 255, 255, 0.18);
+  --input: #141B2B;
+  --ring: #38BDF8;
+
+  /* Domain Accent Colors */
+  --market: #10B981;
+  --market-foreground: #07090E;
+  --gold: #F59E0B;
+  --gold-deep: #D97706;
+  --gold-foreground: #07090E;
+
+  --track-finance: #10B981;
+  --track-math: #38BDF8;
+  --track-brhsic: #F59E0B;
+
+  --surface: #0E131F;
+  --surface-strong: #141B2B;
+
+  --status-success: #10B981;
+  --status-success-bg: rgba(16, 185, 129, 0.12);
+  --status-warning: #F59E0B;
+  --status-warning-bg: rgba(245, 158, 11, 0.12);
+  --status-danger: #EF4444;
+  --status-danger-bg: rgba(239, 68, 68, 0.12);
+
+  --color-azul-dark: #F8FAFC;
+  --color-azul: #38BDF8;
+  --color-verde: #10B981;
+  --color-ouro: #F59E0B;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6);
+  --shadow-elevated: 0 12px 32px -12px rgba(0, 0, 0, 0.8);
+}
