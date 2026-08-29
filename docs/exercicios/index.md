@@ -1,20 +1,14 @@
-# Exercícios
+# Banco de Exercícios e Casos Práticos
 
-Esta área reunirá listas de fixação, cálculo e PBLs.
+O Brasil Finanças Atlas conta com um repositório abrangente de exercícios analíticos, cálculos financeiros aplicados e estudos de caso baseados em problemas reais (*Problem-Based Learning - PBL*).
 
-## Formato sugerido
+## Estrutura Pedagógica de Cada Aula
 
-Cada aula deve ter:
+1. **Questões de Fixação Conceitual:** Verificação imediata dos fundamentos teóricos com gabarito comentado passo a passo.
+2. **Cálculos e Modelagem Financeira:** Aplicações de juros, inflação, balanços, valuation e estatística.
+3. **Casos do Mundo Real (PBL):** Resolução de situações práticas enfrentadas por investidores, empresas e participantes de olimpíadas.
 
-1. 5 questões de fixação.
-2. 3 questões de cálculo ou aplicação.
-3. 1 PBL curto.
+## Como Praticar
 
-## Onde já existem exercícios
+Todas as aulas das trilhas de **Matemática Aplicada** e **Finanças** possuem baterias de exercícios interativos integradas ao final da página com feedback instantâneo.
 
-- As aulas dos Módulos 3 e 4 de [Matemática Aplicada a Finanças](../matematica-aplicada-a-financas/index.md) já trazem **lista de problemas com gabarito** e PBL ao final de cada aula.
-- Todas as aulas de [Finanças](../financas/index.md) terminam com mini quiz e PBL.
-
-## Em construção
-
-Listas complementares para os Módulos 1 e 2 de Matemática e para as aulas de Fundamentos em Finanças.
