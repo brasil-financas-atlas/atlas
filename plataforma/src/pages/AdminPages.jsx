@@ -442,7 +442,7 @@ function AdminDashboard() {
           <div className="bfa-inline-editor-modal" onClick={() => setShowAddModuleModal(false)}>
             <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '480px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1rem' }}>
-                📁 Criar Novo Módulo
+                Criar Novo Módulo
               </h3>
               <form onSubmit={handleCreateModule}>
                 <div style={{ marginBottom: '1rem' }}>
@@ -458,7 +458,7 @@ function AdminDashboard() {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
                   <button type="button" className="bfa-btn bfa-btn--ghost" onClick={() => setShowAddModuleModal(false)}>Cancelar</button>
-                  <button type="submit" className="bfa-btn bfa-btn--azul">Salvar Módulo 💾</button>
+                  <button type="submit" className="bfa-btn bfa-btn--azul">Salvar Módulo</button>
                 </div>
               </form>
             </div>
@@ -470,7 +470,7 @@ function AdminDashboard() {
           <div className="bfa-inline-editor-modal" onClick={() => setShowAddNewsModal(false)}>
             <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1rem' }}>
-                📰 Publicar Notícia Macro
+                Publicar Notícia Macro
               </h3>
               <form onSubmit={handleCreateNews}>
                 <div style={{ marginBottom: '1rem' }}>
@@ -492,7 +492,7 @@ function AdminDashboard() {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
                   <button type="button" className="bfa-btn bfa-btn--ghost" onClick={() => setShowAddNewsModal(false)}>Cancelar</button>
-                  <button type="submit" className="bfa-btn bfa-btn--ouro">Publicar Notícia 🚀</button>
+                  <button type="submit" className="bfa-btn bfa-btn--ouro">Publicar Notícia</button>
                 </div>
               </form>
             </div>
@@ -504,7 +504,7 @@ function AdminDashboard() {
           <div className="bfa-inline-editor-modal" onClick={() => setShowAddExModal(false)}>
             <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '580px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1rem' }}>
-                ✏️ Cadastrar Exercício (PBL)
+                Cadastrar Exercício (PBL)
               </h3>
               <form onSubmit={handleCreateExercise}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
@@ -548,7 +548,7 @@ function AdminDashboard() {
 
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
                   <button type="button" className="bfa-btn bfa-btn--ghost" onClick={() => setShowAddExModal(false)}>Cancelar</button>
-                  <button type="submit" className="bfa-btn bfa-btn--verde">Cadastrar Exercício 💾</button>
+                  <button type="submit" className="bfa-btn bfa-btn--verde">Salvar Exercício</button>
                 </div>
               </form>
             </div>
