@@ -968,9 +968,16 @@
   display: flex;
   min-height: calc(100vh - 4rem);
   position: relative;
+  align-items: flex-start;
 }
+
 .aula-sidebar {
-  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  position: sticky;
+  top: 4rem;
+  height: calc(100vh - 4rem);
+  max-height: calc(100vh - 4rem);
+  align-self: flex-start;
+  transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
   overflow: hidden;
   border-right: 1px solid var(--border);
   background: var(--card);
@@ -978,15 +985,26 @@
   flex-direction: column;
   flex-shrink: 0;
   width: 320px;
+  z-index: 30;
 }
+
 .aula-sidebar.closed {
   width: 0px;
+  border-right: none;
 }
+
+.aula-sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
 .aula-main {
   flex: 1;
   padding: 2rem 2.5rem;
   max-width: 1050px;
   margin: 0 auto;
+  min-width: 0;
 }
 
 @media (max-width: 768px) {
@@ -1008,9 +1026,11 @@
   }
   
   .aula-sidebar {
-    position: absolute;
+    position: fixed;
+    top: 4rem;
+    left: 0;
     z-index: 100;
-    height: 100%;
+    height: calc(100vh - 4rem);
     width: 100%;
     max-width: 320px;
     box-shadow: var(--shadow-lg);
@@ -1018,6 +1038,7 @@
   .aula-sidebar.closed {
     width: 0px;
     max-width: 0px;
+    transform: translateX(-100%);
   }
   .aula-main {
     padding: 1.5rem 1rem;
