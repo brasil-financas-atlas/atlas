@@ -1,12 +1,17 @@
-# Preparação BRHSIC
+# Guia Oficial de Preparação BRHSIC
 
-!!! note "Em construção"
-    Esta trilha está sendo planejada. Com as trilhas de [Finanças](../financas/index.md) e [Matemática Aplicada a Finanças](../matematica-aplicada-a-financas/index.md) completas, o próximo passo é transformá-las em preparação direta para a competição.
+Material voltado especificamente para a preparação e prática de alto desempenho na **BRHSIC (Brazilian High School Investment Competition)**: estrutura de relatório de análise (*Equity Research*), elaboração e defesa de *Pitch*, simulados cronometrados e domínio das ferramentas de *Valuation*, contabilidade societária e alocação de ativos.
 
-## O que vai cobrir
+## Estrutura de Treinamento
 
-Material voltado especificamente para a preparação e prática da BRHSIC (Brazilian High School Investment Competition): estrutura do relatório de análise (equity research), prática de pitch, simulados e revisão dirigida dos pontos das trilhas de Matemática e Finanças que a competição mais exige — valuation, interpretação de demonstrações financeiras e construção de portfólio.
+1. **Relatório de Equity Research:** Tese de investimento, análise setorial, vantagens competitivas sustentáveis (*Moat*), projeções financeiras (DRE, Balanço, DFC) e *Valuation* por Fluxo de Caixa Descontado e Múltiplos.
+2. **Apresentação e Defesa de Pitch:** Síntese executiva dos principais direcionadores de valor (*Value Drivers*), riscos e catalisadores de preço.
+3. **Simulados e Avaliações Práticas:** Treinamento quantitativo e conceitual com cronômetro e gabarito comentado.
 
-## Enquanto isso
+## Conexão com as Trilhas do Atlas
 
-O caminho de preparação já existe nas trilhas atuais: o [Módulo 2 de Finanças](../financas/modulo-2-analise-fundamentalista/index.md) ensina a análise fundamentalista que sustenta o relatório, e o PBL final dele já tem o formato de um pitch de competição.
+O conhecimento exigido na competição está coberto em profundidade nas trilhas da plataforma:
+- O **Módulo 2 de Finanças (Análise Fundamentalista)** ensina a dissecar demonstrações financeiras e calcular modelos de *Valuation*.
+- O **Módulo 3 de Finanças (Portfólio & Gestão de Risco)** estrutura a teoria de diversificação e alocação de capital.
+- Os **Módulos 3 e 4 de Matemática** fornecem a base quantitativa de estatística, volatilidade, correlação e regressão linear.
+
