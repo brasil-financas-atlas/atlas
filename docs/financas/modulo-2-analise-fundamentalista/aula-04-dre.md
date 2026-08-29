@@ -23,16 +23,13 @@ A DRE é uma escada que desce: começa na **receita** (tudo que a empresa vendeu
 
 ## A escada da DRE
 
-```
-Receita líquida
-(−) Custo dos produtos vendidos
-(=) Lucro bruto                  → margem bruta
-(−) Despesas operacionais
-(=) EBIT (lucro operacional)     → margem operacional
-(−) Resultado financeiro (juros)
-(=) Lucro antes do IR
-(−) Imposto de renda e CSLL
-(=) Lucro líquido                → margem líquida
+```mermaid
+flowchart TD
+    REC["Receita Operacional Líquida (100%)"] -->|(-) Custo dos Produtos Vendidos - CPV| LB["(=) Lucro Bruto (Margem Bruta)"]
+    LB -->|(-) Despesas SG&A e Vendas| EBITDA["(=) EBITDA (Geração Operacional)"]
+    EBITDA -->|(-) Depreciação & Amortização| EBIT["(=) EBIT (Lucro Operacional)"]
+    EBIT -->|(-) Despesas Financeiras / Juros| LAIR["(=) Lucro Antes do IR (LAIR)"]
+    LAIR -->|(-) Imposto de Renda & CSLL| LL["(=) Lucro Líquido Final (Acionistas)"]
 ```
 
 O degrau onde a empresa "sangra" revela o problema: margem bruta baixa é problema de produto ou custo; EBIT baixo com margem bruta boa é problema de despesas; lucro líquido baixo com EBIT bom costuma ser problema de **dívida cara**.
