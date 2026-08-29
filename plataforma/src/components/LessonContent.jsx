@@ -1,5 +1,71 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
+function smartSplitMarkdown(text) {
+  if (!text) return [];
+  const lines = text.replace(/\r\n/g, '\n').split('\n');
+  const blocks = [];
+  let currentBlock = [];
+  
+  let inCodeFence = false;
+  let inMathFence = false;
+  let inAdmonition = false;
+  
+  for (const line of lines) {
+    const stripped = line.trim();
+    
+    if (stripped.startsWith('```')) {
+      inCodeFence = !inCodeFence;
+      currentBlock.push(line);
+      continue;
+    }
+    
+    if (stripped.startsWith('$$') || stripped === '\\]' || stripped === '\\[') {
+      if ((stripped.match(/\$\$/g) || []).length % 2 === 1) {
+        inMathFence = !inMathFence;
+      }
+      currentBlock.push(line);
+      continue;
+    }
+    
+    if (/^(?:!{3}|\?{3})\+?\s+\w+/.test(stripped)) {
+      inAdmonition = true;
+      currentBlock.push(line);
+      continue;
+    }
+
+    if (inCodeFence || inMathFence) {
+      currentBlock.push(line);
+      continue;
+    }
+    
+    if (inAdmonition) {
+      if (stripped === '' || line.startsWith('    ') || line.startsWith('\t')) {
+        currentBlock.push(line);
+        continue;
+      } else {
+        inAdmonition = false;
+      }
+    }
+
+    if (stripped === '') {
+      if (currentBlock.length > 0) {
+        const blockText = currentBlock.join('\n').trim();
+        if (blockText) blocks.push(blockText);
+        currentBlock = [];
+      }
+    } else {
+      currentBlock.push(line);
+    }
+  }
+
+  if (currentBlock.length > 0) {
+    const blockText = currentBlock.join('\n').trim();
+    if (blockText) blocks.push(blockText);
+  }
+
+  return blocks;
+}
+
 function LessonContent({ markdownContent, lessonId = 'lc' }) {
   const containerRef = useRef(null);
   const { cmsData } = useContext(AdminContext || createContext({}));
@@ -20,50 +86,61 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
 
   // Re-executa o Mermaid sempre que os blocos renderizarem
   useEffect(() => {
-    if (window.mermaid && containerRef.current) {
-      try {
-        const theme = document.documentElement.getAttribute('data-theme') || 'brasil-atlas';
-        const isDark = theme.includes('dark');
-        
-        window.mermaid.initialize({
-          startOnLoad: false,
-          theme: isDark ? 'dark' : 'neutral',
-          securityLevel: 'loose',
-          fontFamily: 'Plus Jakarta Sans, sans-serif',
-          themeVariables: isDark ? {
-            darkMode: true,
-            background: '#0F172A',
-            primaryColor: '#1E293B',
-            primaryBorderColor: '#334155',
-            primaryTextColor: '#F8FAFC',
-            lineColor: '#38BDF8',
-            secondaryColor: '#059669',
-            tertiaryColor: '#1E293B'
-          } : {
-            primaryColor: '#F8FAFC',
-            primaryBorderColor: '#E2E8F0',
-            primaryTextColor: '#0F172A',
-            lineColor: '#0284C7',
-            secondaryColor: '#E6F4EA',
-            tertiaryColor: '#F1F5F9'
-          }
-        });
+    if (!window.mermaid || !containerRef.current) return;
 
-        const mermaidNodes = containerRef.current.querySelectorAll('.mermaid');
-        if (mermaidNodes.length > 0) {
-          window.mermaid.run({ nodes: mermaidNodes });
+    try {
+      const theme = document.documentElement.getAttribute('data-theme') || 'brasil-atlas';
+      const isDark = theme.includes('dark');
+      
+      window.mermaid.initialize({
+        startOnLoad: false,
+        theme: isDark ? 'dark' : 'neutral',
+        securityLevel: 'loose',
+        fontFamily: 'Plus Jakarta Sans, sans-serif',
+        themeVariables: isDark ? {
+          darkMode: true,
+          background: '#0F172A',
+          primaryColor: '#1E293B',
+          primaryBorderColor: '#334155',
+          primaryTextColor: '#F8FAFC',
+          lineColor: '#38BDF8',
+          secondaryColor: '#059669',
+          tertiaryColor: '#1E293B'
+        } : {
+          primaryColor: '#F8FAFC',
+          primaryBorderColor: '#E2E8F0',
+          primaryTextColor: '#0F172A',
+          lineColor: '#0284C7',
+          secondaryColor: '#E6F4EA',
+          tertiaryColor: '#F1F5F9'
         }
-      } catch (err) {
-        console.warn('Erro ao processar diagramas Mermaid:', err);
-      }
+      });
+
+      const mermaidDivs = containerRef.current.querySelectorAll('.mermaid-target');
+      mermaidDivs.forEach((mDiv, idx) => {
+        if (!mDiv.getAttribute('data-processed')) {
+          const rawCode = mDiv.getAttribute('data-mermaid-code');
+          if (rawCode) {
+            const uniqueId = `mermaid-render-${lessonId}-${idx}-${Math.random().toString(36).substring(2, 7)}`;
+            window.mermaid.render(uniqueId, rawCode).then(({ svg }) => {
+              mDiv.innerHTML = svg;
+              mDiv.setAttribute('data-processed', 'true');
+            }).catch(e => {
+              console.warn('Mermaid render error:', e);
+              mDiv.innerHTML = `<pre style="font-size:0.8rem;text-align:left;">${rawCode}</pre>`;
+            });
+          }
+        }
+      });
+    } catch (err) {
+      console.warn('Erro ao inicializar Mermaid:', err);
     }
   });
 
-  // Parse markdown into granular editable blocks
+  // Parse markdown into granular editable blocks with smart boundary detection
   const blocks = useMemo(() => {
     if (!markdownContent) return [];
-    const text = markdownContent.replace(/\r\n/g, '\n');
-    const rawBlocks = text.split(/\n\s*\n/);
+    const rawBlocks = smartSplitMarkdown(markdownContent);
     const result = [];
 
     rawBlocks.forEach((b, idx) => {
@@ -95,7 +172,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     const mermaidBlocks = [];
     formatted = formatted.replace(/```mermaid\s*\n([\s\S]*?)```/g, (m, code) => {
       mermaidBlocks.push(code.trim());
-      return `@@BFAMERMAID${mermaidBlocks.length - 1}@@`;
+      return `\n\n@@BFAMERMAID_${mermaidBlocks.length - 1}@@\n\n`;
     });
 
     // 2. Render Admonitions
@@ -122,7 +199,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       }
     );
 
-    // 3. Render collapsible details: ??? type "title" or ???+ type "title"
+    // 3. Render collapsible details
     formatted = formatted.replace(
       /\?\?\?(\+)?\s*(\w+)(?:\s*"([^"]+)")?\n([\s\S]*?)(?=\n\?\?\?|\n!!!|\n#|\n\n\n|$)/g,
       (match, isOpen, type, title, body) => {
@@ -156,7 +233,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     const formulas = [];
     const guardar = (tex, emDestaque) => {
       formulas.push({ tex, emDestaque });
-      return `@@BFAMATH${formulas.length - 1}@@`;
+      return `@@BFAMATH_${formulas.length - 1}@@`;
     };
 
     formatted = formatted
@@ -167,6 +244,17 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
 
     let parsedHtml = (window.marked && window.marked.parse) ? window.marked.parse(formatted) : formatted;
 
+    // Normalizar links relativos .md para rotas SPA hash
+    parsedHtml = parsedHtml.replace(/href="([^"]+?\.md)"/g, (match, url) => {
+      let cleanUrl = url.replace(/^\.\.\//, '').replace(/^matematica-aplicada-a-financas\//, 'matematica/');
+      if (cleanUrl.endsWith('/index.md')) {
+        cleanUrl = cleanUrl.replace('/index.md', '');
+      } else if (cleanUrl.endsWith('.md')) {
+        cleanUrl = cleanUrl.replace('.md', '');
+      }
+      return `href="#/${cleanUrl}"`;
+    });
+
     // Sanitização com DOMPurify
     if (window.DOMPurify && window.DOMPurify.sanitize) {
       parsedHtml = window.DOMPurify.sanitize(parsedHtml);
@@ -175,7 +263,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     }
 
     // 5. Recolocar KaTeX
-    parsedHtml = parsedHtml.replace(/@@BFAMATH(\d+)@@/g, (marcador, i) => {
+    parsedHtml = parsedHtml.replace(/@@BFAMATH_(\d+)@@/g, (marcador, i) => {
       const f = formulas[Number(i)];
       if (!f) return marcador;
       const html = renderizarTex(f.tex, f.emDestaque);
@@ -185,14 +273,20 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       return `<span class="bfa-math-inline">${html}</span>`;
     });
 
-    // 6. Recolocar diagramas Mermaid
-    parsedHtml = parsedHtml.replace(/@@BFAMERMAID(\d+)@@/g, (marcador, i) => {
+    // 6. Limpar wrappers de parágrafo ao redor de diagramas Mermaid e recolocar
+    parsedHtml = parsedHtml.replace(/<p>\s*@@BFAMERMAID_(\d+)@@\s*<\/p>/g, '@@BFAMERMAID_$1@@');
+    parsedHtml = parsedHtml.replace(/@@BFAMERMAID_(\d+)@@/g, (marcador, i) => {
       const code = mermaidBlocks[Number(i)];
       if (!code) return marcador;
-      return `<div class="mermaid-wrapper" style="margin: 1.5rem 0; overflow-x: auto; background: var(--surface-strong); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
-        <div class="mermaid">${code}</div>
+      // Encode safe
+      const encoded = code.replace(/"/g, '&quot;');
+      return `<div class="mermaid-wrapper">
+        <div class="mermaid-target" data-mermaid-code="${encoded}"></div>
       </div>`;
     });
+
+    // 7. Envolver tabelas para rolagem responsiva
+    parsedHtml = parsedHtml.replace(/<table>([\s\S]*?)<\/table>/g, '<div class="bfa-table-wrapper"><table>$1</table></div>');
 
     return parsedHtml;
   };
