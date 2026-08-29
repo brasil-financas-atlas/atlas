@@ -7,6 +7,11 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [inputVideoUrl, setInputVideoUrl] = useState('');
+  const [activeTab, setActiveTab] = useState('teoria'); // 'teoria' | 'quiz' | 'forum'
+
+  useEffect(() => {
+    setActiveTab('teoria');
+  }, [aulaSlug]);
 
   const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
   if (!subjectData) {
@@ -196,173 +201,191 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           </p>
         </div>
 
-        {/* Quick In-Lesson TOC Bar */}
-        <div className="bfa-quick-toc">
-          <span className="bfa-quick-toc__label">Navegação da Aula:</span>
-          <button
-            type="button"
-            className="bfa-quick-toc__chip"
-            onClick={() => {
-              const el = document.querySelector('.bfa-lesson-article');
-              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }}
-          >
-            <BfaIcon name="book" size={13} />
-            <span>Teoria & Fundamentação</span>
-          </button>
-          <button
-            type="button"
-            className="bfa-quick-toc__chip"
-            onClick={() => {
-              const el = document.getElementById('quiz-section');
-              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }}
-          >
-            <BfaIcon name="target" size={13} />
-            <span>Exercícios de Fixação</span>
-          </button>
-          <button
-            type="button"
-            className="bfa-quick-toc__chip"
-            onClick={() => {
-              const el = document.getElementById('forum-section');
-              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }}
-          >
-            <BfaIcon name="chat" size={13} />
-            <span>Fórum & Dúvidas</span>
-          </button>
-        </div>
-
-        {/* Video Player & Admin Controls */}
-        <div style={{ marginBottom: '2.5rem' }}>
-          {isAuthenticated && inlineEditActive && (
-            <div className="bfa-admin-video-box" style={{ marginBottom: '1rem', padding: '0.85rem 1.25rem', background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <BfaIcon name="video" size={18} color="var(--color-azul)" />
-                <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--foreground)' }}>
-                  Gerenciador de Vídeo da Aula (Admin)
-                </span>
-                <span className="mono-tag" style={{ color: videoUrl ? 'var(--market)' : 'var(--muted-foreground)', background: 'var(--card)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
-                  {videoUrl ? 'Vídeo Ativo' : 'Sem vídeo'}
-                </span>
-              </div>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <button
-                  type="button"
-                  className="bfa-btn bfa-btn--sm bfa-btn--ouro"
-                  onClick={() => {
-                    setInputVideoUrl(videoUrl);
-                    setShowVideoModal(true);
-                  }}
-                  style={{ fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                >
-                  <BfaIcon name="pencil" size={13} /> {videoUrl ? 'Editar Vídeo' : 'Adicionar Vídeo'}
-                </button>
-                {videoUrl && (
-                  <button
-                    type="button"
-                    className="bfa-btn bfa-btn--sm bfa-btn--ghost"
-                    onClick={() => updateLesson(lessonId, { videoUrl: '' })}
-                    style={{ fontSize: '0.8rem', color: '#EF4444', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                  >
-                    <BfaIcon name="trash" size={13} /> Remover Vídeo
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
-
-          {videoUrl && (
-            <div className="bfa-video-responsive" style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', boxShadow: '0 10px 30px -10px rgba(0,0,0,0.3)', background: '#000' }}>
-              <iframe
-                src={videoUrl.replace('watch?v=', 'embed/')}
-                title={aulaObj.titulo}
-                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          )}
-        </div>
-
-        {/* Video Admin Modal */}
-        {showVideoModal && (
-          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '1.5rem' }}>
-            <div style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '2rem', maxWidth: '500px', width: '100%', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.5rem' }}>
-                Vincular Vídeo do YouTube
-              </h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginBottom: '1.25rem' }}>
-                Insira a URL completa do vídeo (ex: <code>https://www.youtube.com/watch?v=XXXXX</code>).
-              </p>
-              <input
-                type="text"
-                value={inputVideoUrl}
-                onChange={(e) => setInputVideoUrl(e.target.value)}
-                placeholder="https://www.youtube.com/watch?v=..."
-                style={{ width: '100%', padding: '0.75rem 1rem', background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', color: 'var(--foreground)', fontSize: '0.9rem', marginBottom: '1.5rem', outline: 'none' }}
-              />
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
-                <button
-                  type="button"
-                  className="bfa-btn bfa-btn--ghost bfa-btn--sm"
-                  onClick={() => setShowVideoModal(false)}
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="button"
-                  className="bfa-btn bfa-btn--verde bfa-btn--sm"
-                  onClick={() => {
-                    updateLesson(lessonId, { videoUrl: inputVideoUrl });
-                    setShowVideoModal(false);
-                  }}
-                >
-                  Salvar Vídeo
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Markdown Theory Article */}
-        <article className="bfa-lesson-article" style={{ fontSize: '1rem', lineHeight: 1.75 }}>
-          <LessonContent markdownContent={markdownContent} lessonId={lessonId} />
-        </article>
-
-        {/* Dynamic Interactive Lesson Visualizer (Chart.js / Simulation) */}
-        {window.LessonVisualizerRouter && (
-          <div style={{ marginTop: '2rem' }}>
-            <LessonVisualizerRouter lessonSlug={aulaSlug} />
-          </div>
-        )}
-
-        {/* Quiz Engine */}
-        <div id="quiz-section" style={{ marginTop: '3.5rem', paddingTop: '2.5rem', borderTop: '1px solid var(--border)' }}>
-          {(() => {
-            const richData = subjectKey === 'financas' ? window.financasData : (subjectKey === 'matematica' ? window.matematicaData : null);
-            let richAula = null;
-            if (richData && richData.modulos) {
-              const rMod = richData.modulos.find(m => m.slug === moduloSlug);
-              if (rMod && rMod.aulas) {
-                richAula = rMod.aulas.find(a => a.slug === aulaSlug);
-              }
+        {/* Quick In-Lesson Segmented Mode Navigation Bar */}
+        {(() => {
+          const richData = subjectKey === 'financas' ? window.financasData : (subjectKey === 'matematica' ? window.matematicaData : null);
+          let richAula = null;
+          if (richData && richData.modulos) {
+            const rMod = richData.modulos.find(m => m.slug === moduloSlug);
+            if (rMod && rMod.aulas) {
+              richAula = rMod.aulas.find(a => a.slug === aulaSlug);
             }
-            let lessonQuestions = [];
-            if (richAula && richAula.quiz) {
-              lessonQuestions = richAula.quiz;
-            } else if (aulaObj && aulaObj.quiz) {
-              lessonQuestions = aulaObj.quiz;
-            }
-            return <QuizEngine questions={lessonQuestions} lessonId={lessonId} />;
-          })()}
-        </div>
+          }
+          let lessonQuestions = [];
+          if (richAula && richAula.quiz && richAula.quiz.length > 0) {
+            lessonQuestions = richAula.quiz;
+          } else if (aulaObj && aulaObj.quiz) {
+            lessonQuestions = aulaObj.quiz;
+          }
 
-        {/* Timestamps Forum */}
-        <div id="forum-section" style={{ marginTop: '3.5rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
-          <ForumTimestamps lessonId={lessonId} />
-        </div>
+          return (
+            <div>
+              {/* Top Segmented Tabs for Instant Access */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem', marginBottom: '2rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.85rem' }}>
+                <button
+                  type="button"
+                  className={`bfa-btn bfa-btn--sm ${activeTab === 'teoria' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+                  onClick={() => setActiveTab('teoria')}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
+                >
+                  <BfaIcon name="book" size={14} />
+                  <span>Teoria & Estudo</span>
+                </button>
+                <button
+                  type="button"
+                  className={`bfa-btn bfa-btn--sm ${activeTab === 'quiz' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+                  onClick={() => {
+                    setActiveTab('quiz');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
+                >
+                  <BfaIcon name="target" size={14} />
+                  <span>Exercícios de Fixação ({lessonQuestions.length})</span>
+                </button>
+                <button
+                  type="button"
+                  className={`bfa-btn bfa-btn--sm ${activeTab === 'forum' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+                  onClick={() => setActiveTab('forum')}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
+                >
+                  <BfaIcon name="chat" size={14} />
+                  <span>Fórum da Aula</span>
+                </button>
+              </div>
+
+              {/* TAB 1: TEORIA */}
+              {activeTab === 'teoria' && (
+                <div>
+                  {/* Video Player & Admin Controls */}
+                  <div style={{ marginBottom: '2.5rem' }}>
+                    {isAuthenticated && inlineEditActive && (
+                      <div className="bfa-admin-video-box" style={{ marginBottom: '1rem', padding: '0.85rem 1.25rem', background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <BfaIcon name="video" size={18} color="var(--color-azul)" />
+                          <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                            Gerenciador de Vídeo da Aula (Admin)
+                          </span>
+                          <span className="mono-tag" style={{ color: videoUrl ? 'var(--market)' : 'var(--muted-foreground)', background: 'var(--card)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
+                            {videoUrl ? 'Vídeo Ativo' : 'Sem vídeo'}
+                          </span>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button
+                            type="button"
+                            className="bfa-btn bfa-btn--sm bfa-btn--ouro"
+                            onClick={() => {
+                              setInputVideoUrl(videoUrl);
+                              setShowVideoModal(true);
+                            }}
+                            style={{ fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                          >
+                            <BfaIcon name="pencil" size={13} /> {videoUrl ? 'Editar Vídeo' : 'Adicionar Vídeo'}
+                          </button>
+                          {videoUrl && (
+                            <button
+                              type="button"
+                              className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+                              onClick={() => updateLesson(lessonId, { videoUrl: '' })}
+                              style={{ fontSize: '0.8rem', color: '#EF4444', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                            >
+                              <BfaIcon name="trash" size={13} /> Remover Vídeo
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {videoUrl && (
+                      <div className="bfa-video-responsive" style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', boxShadow: '0 10px 30px -10px rgba(0,0,0,0.3)', background: '#000' }}>
+                        <iframe
+                          src={videoUrl.replace('watch?v=', 'embed/')}
+                          title={aulaObj.titulo}
+                          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Markdown Theory Article */}
+                  <article className="bfa-lesson-article" style={{ fontSize: '1rem', lineHeight: 1.75 }}>
+                    <LessonContent markdownContent={markdownContent} lessonId={lessonId} />
+                  </article>
+
+                  {/* Dynamic Interactive Lesson Visualizer (Chart.js / Simulation) */}
+                  {window.LessonVisualizerRouter && (
+                    <div style={{ marginTop: '2rem' }}>
+                      <LessonVisualizerRouter lessonSlug={aulaSlug} />
+                    </div>
+                  )}
+
+                  {/* Practice CTA Card leading to Quiz */}
+                  {lessonQuestions.length > 0 && (
+                    <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', textAlign: 'center', boxShadow: '0 4px 20px -5px rgba(0,0,0,0.1)' }}>
+                      <h3 style={{ margin: '0 0 0.5rem 0', fontWeight: 800, color: 'var(--foreground)', fontSize: '1.2rem' }}>
+                        Pronto para testar sua retenção?
+                      </h3>
+                      <p style={{ margin: '0 0 1.5rem 0', color: 'var(--muted-foreground)', fontSize: '0.9rem', maxWidth: '500px', marginLeft: 'auto', marginRight: 'auto' }}>
+                        Resolva os {lessonQuestions.length} exercícios práticos de fixação com cálculo passo a passo para consolidar o aprendizado.
+                      </p>
+                      <button
+                        type="button"
+                        className="bfa-btn bfa-btn--verde"
+                        onClick={() => {
+                          setActiveTab('quiz');
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '0.75rem 1.5rem', fontWeight: 700 }}
+                      >
+                        <BfaIcon name="target" size={16} />
+                        <span>Praticar Exercícios de Fixação ({lessonQuestions.length} Questões)</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* TAB 2: QUIZ (Positioned right at the top for instant practice) */}
+              {activeTab === 'quiz' && (
+                <div id="quiz-section" style={{ marginTop: '1rem' }}>
+                  <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <button
+                      type="button"
+                      className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+                      onClick={() => setActiveTab('teoria')}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                    >
+                      <span>← Voltar para a Teoria</span>
+                    </button>
+                    <span className="mono-tag" style={{ color: 'var(--market)', fontSize: '0.75rem' }}>
+                      {lessonQuestions.length} Questões Disponíveis
+                    </span>
+                  </div>
+                  <QuizEngine questions={lessonQuestions} lessonId={lessonId} />
+                </div>
+              )}
+
+              {/* TAB 3: FORUM */}
+              {activeTab === 'forum' && (
+                <div id="forum-section" style={{ marginTop: '1rem' }}>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <button
+                      type="button"
+                      className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+                      onClick={() => setActiveTab('teoria')}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                    >
+                      <span>← Voltar para a Teoria</span>
+                    </button>
+                  </div>
+                  <ForumTimestamps lessonId={lessonId} />
+                </div>
+              )}
+            </div>
+          );
+        })()}
 
         {/* Bottom Lesson Navigation */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4rem', paddingTop: '1.75rem', borderTop: '1px solid var(--border)' }}>
