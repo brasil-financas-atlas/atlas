@@ -1854,3 +1854,21 @@
 .bfa-markdown-body tr:hover td {
   background: rgba(150, 150, 150, 0.04);
 }
+
+/* ==========================================================================
+   Learning Pathway & Rich Lesson Cards
+   ========================================================================== */
+.bfa-lesson-card-rich:hover {
+  border-color: var(--ring) !important;
+  background: var(--card) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.08);
+}
+
+.bfa-module-milestone-card {
+  transition: all 0.2s ease;
+}
+
+.bfa-module-milestone-card:hover {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.12);
+}
