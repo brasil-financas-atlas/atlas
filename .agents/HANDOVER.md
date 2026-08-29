@@ -1,50 +1,59 @@
 # Handoff Briefing
 
 ## Environment Metadata
-- **Timestamp:** 2026-08-28T11:28:30-03:00
-- **Git Branch:** `inovador` (sandbox de features inovadoras / Suíte BRHSIC)
-- **Last Commit:** `c5feb48 - chore(auto-sync): atualiza arquivos locais [2026-08-28 11:22:29]`
+- **Timestamp:** 2026-08-29T01:49:30-03:00
+- **Git Branch:** inovador
+- **Last Commit:** 6b8f47 - fix(ui): ensure 100% visibility and high contrast on quiz option choices and add quick track buttons to mobile navbar
 - **Uncommitted Changes:** None (working tree clean, 100% in sync with GitHub origin)
 
 ## Goal & Objective
-Consolidação do **Manual Oficial de Administração do Administrador Chefe (`admin_chief`)** e ativação da branch **`inovador`** como ambiente experimental de novos recursos, restaurando e rodando a **Suíte Olímpica BRHSIC** (Simulador de Alocação de Carteira de Investimentos, Simulados Oficiais com Timer, Ranking Leaderboard e Badges).
+Desenvolvimento da plataforma Brasil Finanças Atlas (BFA), modernização do ecossistema de trilhas e aulas, resolução de bugs de finalização de quiz e introdução de módulo, documentação oficial de deploy (Cloudflare Pages https://atlas-c2i.pages.dev/ e MkDocs), e implementação completa de responsividade mobile de alta performance (Home split reordenada, Drawer lateral compacta, Navbar modal sem scroll horizontal e opções de quiz com alto contraste).
 
 ## Current Status
 - **Completed in this session:**
-  - Criação do documento oficial [`MANUAL_ADMIN_CHIEF.md`](file:///C:/codigos/bfa-main/MANUAL_ADMIN_CHIEF.md) no repositório com o passo a passo completo de cadastro no Supabase Auth e promoção via SQL, além de vincular a documentação no `README.md`.
-  - Mapeamento e explicação de todas as branches locais e remotas para o usuário.
-  - Ativação e sincronização da branch `inovador` baseada no `main` mais recente.
-  - Resgate do histórico Git dos 5 arquivos da Suíte Olímpica BRHSIC:
-    - `plataforma/src/components/SimuladorCarteiraInvestimentos.jsx` (770 linhas, 6 classes de ativos, projeção patrimonial, renda passiva, volatilidade e Sharpe ratio)
-    - `plataforma/src/components/SimuladosEngine.jsx` (784 linhas, provas cronometradas Nível 1, 2 e Geral)
-    - `plataforma/src/components/RankingLeaderboard.jsx`
-    - `plataforma/src/components/BadgesConquistas.jsx`
-    - `plataforma/src/data/simuladosData.js`
-  - Registro de rotas e scripts em `index.html`, `App.jsx`, `NavbarFooter.jsx` e `ExtraPages.jsx` (`#/simulador-carteira`, `#/simulados`, `#/ranking`, `#/conquistas`).
-  - Validação de 100% dos scripts no Babel (zero erros) e servidor local ativo em `http://localhost:8080`.
+  1. **Correção do Bug de Finalização de Quiz (QuizEngine.jsx & ProgressContext.jsx):**
+     - Corrigido crash assíncrono em uth.getUser(), adicionando checagens defensivas completas.
+     - Tela de resultado renderizada com pontuação de maestria, barra de progresso e botões de ação ('Revisar Conceitos' e 'Próxima Aula').
+  2. **Restauração da Arquitetura Dual (plataforma/ + docs/):**
+     - Restaurados docs/, mkdocs.yml, 
+etlify.toml e 
+equirements.txt para deploy contínuo do MkDocs / GitHub Pages.
+     - Pasta plataforma/ sincronizada com todo o código React Standalone moderno e atualizado para deploy no Cloudflare Pages.
+  3. **README Oficial Completo:**
+     - Criado README.md com arquitetura do projeto, links para https://atlas-c2i.pages.dev/ e https://brasil-financas-atlas.github.io/bfa/, e instruções de execução local via Python HTTP Server.
+  4. **Correção do Acordeão na Introdução do Módulo (DisciplinaOverview.jsx):**
+     - ModuloIntroPage agora utiliza o mesmo acordeão modular inteligente com módulos colapsados por padrão, evitando a reversão para barra plana antiga.
+  5. **Responsividade Mobile Completa:**
+     - **Home:** Ordem estrita das colunas nas trilhas: texto primeiro no topo, card de ementa abaixo.
+     - **Aula (AulaPage.jsx):** Header unificado e limpo com [ ☰ Trilha ], breadcrumb compacto, botão [ ✓ Concluída ], abas segmentadas nativas [ 📖 Teoria ] [ 🎯 Exercícios ] [ 💬 Fórum ], e gaveta lateral compacta com backdrop com desfoque e fechamento automático com 1 toque.
+     - **Navbar Mobile (NavbarFooter.jsx & components.css):** Removido scroll horizontal; adicionado botão hamburger [ ☰ ] com gaveta modal categorizada (Trilhas, Ferramentas, Institucional, Tema) e atalhos rápidos das trilhas principais ([Matemática] e [Finanças]) no topo.
+     - **Quiz Options (QuizEngine.jsx):** Contraste 100% garantido com ar(--foreground), alinhamento superior com as letras (A, B, C, D) e touch targets de 48px.
 
 - **In-Progress:**
-  - Branch `inovador` ativa para testes de novos simuladores e recursos interativos.
-  - Branch `main` estável com a versão oficial de produção.
+  - Branch inovador atualizada e testada com 100% dos scripts passando na compilação do Babel.
 
 - **Blockers / Known Issues:**
-  - Nenhum. Todos os componentes compilam limpos e estão disponíveis para navegação.
+  - Nenhum. Todas as correções validadas e testadas localmente em http://localhost:8080.
 
 ## Decisions Made (Locked)
-- **Separação de Papéis de Branch:** A branch `main` é a versão oficial de produção (sóbria, editorial e estável). A branch `inovador` é o laboratório de experimentação de features interativas e simuladores complexos (como o Simulador de Carteira BRHSIC).
-- **Manual do Admin:** Promoção a `admin_chief` é restrita exclusivamente ao SQL no Supabase para manter segurança máxima contra escalada de privilégios.
+- **Deploy Dual:** plataforma/ é a pasta raiz do app React Standalone no Cloudflare Pages. docs/ e mkdocs.yml mantêm a documentação original.
+- **Mobile First Navigation:** Barras horizontais com scroll no topo são anti-pattern; o mobile utiliza gaveta modal categorizada + atalhos diretos das trilhas principais.
+- **Sincronização Automática:** Sempre execute python scratch/sync_plataforma.py e 
+ode scratch/test_babel.js após modificar arquivos em src/.
 
 ## Failed Approaches & Anti-Patterns (Do Not Retry)
-- Não sobrescrever `main` com recursos experimentais sem validação prévia na branch `inovador`.
-- Não criar botões na UI pública para promoção de privilégios administrativos.
+- Não usar overflow-x: auto na barra de navegação no mobile (gera experiência ruim de scroll horizontal).
+- Não declarar colunas visuais antes do texto em seções de conteúdo no HTML da Home (no mobile a caixa de ementa ficava por cima do título/descrição).
+- Não esquecer de sincronizar as alterações de src/ para plataforma/src/.
 
 ## Attention Routing (Key Pointers)
 - **Primary Code Files:**
-  - `plataforma/src/components/SimuladorCarteiraInvestimentos.jsx` (Simulador de carteira de investimentos com 6 ativos e cálculo de Sharpe)
-  - `plataforma/src/components/SimuladosEngine.jsx` (Motor de simulados com cronômetro)
-  - `plataforma/src/data/simuladosData.js` (Banco de questões de simulados da olimpíada)
-  - `plataforma/src/pages/ExtraPages.jsx` (Hub de preparação BRHSIC com links dos simuladores)
-  - `MANUAL_ADMIN_CHIEF.md` (Manual oficial do administrador chefe)
+  - src/components/NavbarFooter.jsx & src/styles/components.css (Menu superior e gaveta modal mobile)
+  - src/pages/AulaPage.jsx (Header integrado de aula, abas segmentadas e gaveta de trilha compacta)
+  - src/components/QuizEngine.jsx (Motor de quiz e formatação das alternativas)
+  - src/pages/DisciplinaOverview.jsx (Visão geral da trilha e introdução aos módulos)
+  - src/pages/Home.jsx (Landing page e ordem das seções no mobile)
+  - README.md (Documentação com links de deploy do Cloudflare Pages e MkDocs)
 
 ## Immediate Next Step
-- Apresentar o Simulador de Carteira BRHSIC aos colegas via `http://localhost:8080/#/simulador-carteira` ou testar novas funcionalidades na branch `inovador`.
+- Apresentar a interface mobile refinada ao usuário e, quando solicitado, realizar o merge da branch inovador na branch main e gh-pages.
