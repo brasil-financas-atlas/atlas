@@ -405,39 +405,46 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
               onClick={() => handleSelectOption(idx)}
               style={{
                 display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '0.85rem 1rem',
+                alignItems: 'flex-start',
+                gap: '0.85rem',
+                padding: '0.9rem 1.15rem',
                 borderRadius: 'var(--radius-md)',
                 background: bg,
                 border: border,
-                color: color,
+                color: 'var(--foreground)',
                 textAlign: 'left',
+                width: '100%',
                 cursor: submitted ? 'default' : 'pointer',
-                fontSize: '0.9rem',
+                fontSize: '0.92rem',
                 fontWeight: isSelected ? 700 : 500,
-                transition: 'all 0.15s ease'
+                transition: 'all 0.15s ease',
+                boxShadow: isSelected ? '0 0 0 1px var(--track-math)' : 'none',
+                minHeight: '48px'
               }}
             >
               <span
                 style={{
-                  width: '24px',
-                  height: '24px',
-                  minWidth: '24px',
+                  width: '26px',
+                  height: '26px',
+                  minWidth: '26px',
                   borderRadius: '50%',
                   background: isSelected ? 'var(--track-math)' : 'var(--card)',
-                  color: isSelected ? '#FFFFFF' : 'var(--muted-foreground)',
+                  color: isSelected ? '#FFFFFF' : 'var(--foreground)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '0.75rem',
+                  fontSize: '0.78rem',
                   fontWeight: 800,
-                  border: '1px solid var(--border)'
+                  border: isSelected ? '1px solid var(--track-math)' : '1px solid var(--border)',
+                  marginTop: '1px',
+                  flexShrink: 0
                 }}
               >
                 {String.fromCharCode(65 + idx)}
               </span>
-              <span>{alt}</span>
+              <span style={{ flex: 1, color: 'var(--foreground)', lineHeight: 1.55, fontSize: '0.92rem', wordBreak: 'break-word' }}>
+                {alt}
+              </span>
             </button>
           );
         })}

@@ -178,6 +178,42 @@ function Navbar() {
           })}
         </nav>
 
+        {/* Quick mobile track pills */}
+        <div className="bfa-mobile-quick-tracks" style={{ display: 'none', alignItems: 'center', gap: '0.35rem' }}>
+          <a
+            href="#/matematica"
+            className="mono-tag"
+            style={{
+              color: currentPath.startsWith('/matematica') ? '#FFFFFF' : 'var(--foreground)',
+              background: currentPath.startsWith('/matematica') ? 'var(--track-math)' : 'var(--surface-strong)',
+              border: '1px solid var(--border)',
+              padding: '0.35rem 0.6rem',
+              borderRadius: '9999px',
+              textDecoration: 'none',
+              fontSize: '0.72rem',
+              fontWeight: 700
+            }}
+          >
+            Matemática
+          </a>
+          <a
+            href="#/financas"
+            className="mono-tag"
+            style={{
+              color: currentPath.startsWith('/financas') ? '#FFFFFF' : 'var(--foreground)',
+              background: currentPath.startsWith('/financas') ? 'var(--track-finance)' : 'var(--surface-strong)',
+              border: '1px solid var(--border)',
+              padding: '0.35rem 0.6rem',
+              borderRadius: '9999px',
+              textDecoration: 'none',
+              fontSize: '0.72rem',
+              fontWeight: 700
+            }}
+          >
+            Finanças
+          </a>
+        </div>
+
         <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
           {/* Botão de Alternância Dark/Light (Desktop) */}
           <button
