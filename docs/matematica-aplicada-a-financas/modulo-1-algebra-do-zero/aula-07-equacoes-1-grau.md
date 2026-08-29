@@ -48,8 +48,7 @@ $$
 | Qual o gasto máximo com salário de R$ 3.000 e economia de R$ 500? | x + 500 = 3.000 |
 | Em quantos meses junto R$ 2.400 poupando R$ 300/mês? | 300x = 2.400 |
 
-!!! note "Em construção"
-    Exemplo resolvido, mini quiz e PBL serão adicionados em breve.
+
 
 ## Resumo
 

@@ -37,8 +37,7 @@ Você conhece três valores e quer descobrir o quarto.
 | Desconto proporcional | Se 200g custa R$ 4, quanto custa 350g? |
 | Taxa mensal vs anual | Se a taxa anual é 12%, qual é a proporcional mensal? |
 
-!!! note "Em construção"
-    Exemplo resolvido, mini quiz e PBL serão adicionados em breve.
+
 
 ## Resumo
 
