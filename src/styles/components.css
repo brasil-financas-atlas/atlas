@@ -1007,7 +1007,23 @@
   min-width: 0;
 }
 
+/* Mobile Responsive Drawer & Classroom Optimization */
+.aula-sidebar-backdrop {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  .aula-sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 95;
+    transition: opacity 0.25s ease;
+  }
+
   .navbar-search {
     margin-left: 0;
     flex: 1 1 100%;
@@ -1031,17 +1047,41 @@
     left: 0;
     z-index: 100;
     height: calc(100vh - 4rem);
-    width: 100%;
+    width: 85%;
     max-width: 320px;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    transform: translateX(0);
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .aula-sidebar.closed {
     width: 0px;
     max-width: 0px;
     transform: translateX(-100%);
+    box-shadow: none;
   }
   .aula-main {
-    padding: 1.5rem 1rem;
+    padding: 1.25rem 1rem !important;
+  }
+
+  .bfa-tabs-segmented {
+    width: 100% !important;
+    display: flex !important;
+  }
+
+  .bfa-tabs-segmented button {
+    flex: 1 !important;
+    padding: 0.55rem 0.4rem !important;
+    font-size: 0.78rem !important;
+    justify-content: center !important;
+  }
+
+  .bfa-split-hero {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .bfa-tech-card {
+    padding: 1.25rem 1rem !important;
   }
 }
 

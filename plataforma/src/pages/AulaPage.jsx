@@ -4,7 +4,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const { EXACT_CONTENT } = window;
   const { completedLessons, toggleLessonComplete } = useContext(ProgressContext || createContext({}));
   const { isAuthenticated, inlineEditActive, cmsData, updateLesson } = useContext(AdminContext || createContext({}));
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 768);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [inputVideoUrl, setInputVideoUrl] = useState('');
   const [activeTab, setActiveTab] = useState('teoria'); // 'teoria' | 'quiz' | 'forum'
@@ -15,6 +15,9 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   useEffect(() => {
     setActiveTab('teoria');
     setExpandedMods({ [moduloSlug]: true });
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setSidebarOpen(false);
+    }
     if (activeLessonRef.current) {
       activeLessonRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
@@ -58,6 +61,15 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
   return (
     <div className="aula-layout">
+      {/* Mobile Sidebar Backdrop */}
+      {sidebarOpen && (
+        <div
+          className="aula-sidebar-backdrop"
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Sidebar - Curriculum Tree */}
       <aside className={`aula-sidebar ${!sidebarOpen ? 'closed' : ''}`} style={{ borderRight: '1px solid var(--border)', background: 'var(--card)' }}>
         <div style={{ padding: '1.15rem 1.25rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -278,7 +290,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           return (
             <div>
               {/* Top Segmented Tabs for Instant Access */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem', marginBottom: '2rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.85rem' }}>
+              <div className="bfa-tabs-segmented" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.85rem' }}>
                 <button
                   type="button"
                   className={`bfa-btn bfa-btn--sm ${activeTab === 'teoria' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
@@ -286,7 +298,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
                 >
                   <BfaIcon name="book" size={14} />
-                  <span>Teoria & Estudo</span>
+                  <span>Teoria</span>
                 </button>
                 <button
                   type="button"
@@ -298,7 +310,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
                 >
                   <BfaIcon name="target" size={14} />
-                  <span>Exercícios de Fixação ({lessonQuestions.length})</span>
+                  <span>Exercícios ({lessonQuestions.length})</span>
                 </button>
                 <button
                   type="button"
@@ -307,7 +319,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
                 >
                   <BfaIcon name="chat" size={14} />
-                  <span>Fórum da Aula</span>
+                  <span>Fórum</span>
                 </button>
               </div>
 

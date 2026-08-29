@@ -212,11 +212,14 @@ function DisciplinaOverview({ subjectKey }) {
 function ModuloIntroPage({ subjectKey, moduloSlug }) {
   const { EXACT_CONTENT } = window;
   const { completedLessons } = useContext(ProgressContext || createContext({}));
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 768);
   const [expandedMods, setExpandedMods] = useState({ [moduloSlug]: true });
 
   useEffect(() => {
     setExpandedMods({ [moduloSlug]: true });
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setSidebarOpen(false);
+    }
   }, [moduloSlug]);
 
   const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
@@ -240,6 +243,15 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
 
   return (
     <div className="aula-layout">
+      {/* Mobile Sidebar Backdrop */}
+      {sidebarOpen && (
+        <div
+          className="aula-sidebar-backdrop"
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Sidebar - Curriculum Tree */}
       <aside className={`aula-sidebar ${!sidebarOpen ? 'closed' : ''}`} style={{ borderRight: '1px solid var(--border)', background: 'var(--card)' }}>
         <div style={{ padding: '1.15rem 1.25rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
