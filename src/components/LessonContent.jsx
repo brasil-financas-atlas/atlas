@@ -298,7 +298,10 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
           key={block.id}
           id={block.id}
           content={block.raw}
-          style={{ marginBottom: '1.25rem' }}
+          style={{
+            marginTop: block.type === 'heading' ? '2.25rem' : '0',
+            marginBottom: '1.35rem'
+          }}
         >
           <div dangerouslySetInnerHTML={{ __html: renderSingleBlock(block.raw) }} />
         </EditableBlock>

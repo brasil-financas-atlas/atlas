@@ -381,8 +381,8 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
         </div>
 
         {/* Artigo Markdown de Introdução (Exatamente como o MkDocs index.md) */}
-        <article className="bfa-lesson-article" style={{ fontSize: '1.05rem', lineHeight: 1.8 }}>
-          <LessonContent markdownContent={moduloObj.indexContent} />
+        <article className="bfa-lesson-article" style={{ fontSize: '1.05rem', lineHeight: 1.85 }}>
+          <LessonContent markdownContent={moduloObj.index || moduloObj.indexContent || ""} lessonId={`intro-${moduloSlug}`} />
         </article>
 
         {/* Grade de Aulas do Módulo */}
