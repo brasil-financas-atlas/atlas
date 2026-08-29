@@ -147,7 +147,7 @@ function App() {
         <div className="bfa-section__container bfa-text-center">
           <h2>Página não encontrada</h2>
           <a href="#/" className="bfa-btn bfa-btn--verde" style={{ marginTop: '1rem' }}>
-            Ir para a Página Inicial ➔
+            Ir para a Página Inicial →
           </a>
         </div>
       </div>
