@@ -58,9 +58,9 @@ const DEFAULT_FIXATION_QUESTIONS = [
   }
 ];
 
-function QuizEngine({ questions, lessonId }) {
+function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
   const { isAuthenticated, inlineEditActive, cmsData, updateLesson } = useContext(AdminContext || createContext({}));
-  const { saveQuizScore, getQuizScore } = useContext(ProgressContext || createContext({}));
+  const { saveQuizScore, getQuizScore, toggleLessonComplete, completedLessons } = useContext(ProgressContext || createContext({}));
 
   const quizQuestions = useMemo(() => {
     let rawList = null;
@@ -236,8 +236,20 @@ function QuizEngine({ questions, lessonId }) {
       setSubmitted(false);
     } else {
       setFinished(true);
+      const finalScore = score;
       if (saveQuizScore) {
-        saveQuizScore(lessonId, score, quizQuestions.length);
+        try {
+          saveQuizScore(lessonId, finalScore, quizQuestions.length);
+        } catch (err) {
+          console.warn('[BFA] saveQuizScore error:', err);
+        }
+      }
+      if (toggleLessonComplete && completedLessons && !completedLessons.includes(lessonId)) {
+        try {
+          toggleLessonComplete(lessonId);
+        } catch (err) {
+          console.warn('[BFA] toggleLessonComplete error:', err);
+        }
       }
     }
   };
@@ -271,14 +283,35 @@ function QuizEngine({ questions, lessonId }) {
           <div style={{ height: '100%', width: `${pct}%`, background: pct >= 70 ? 'var(--track-finance)' : 'var(--track-brhsic)', borderRadius: '999px' }} />
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
           <button
+            type="button"
             onClick={handleRestart}
-            className="bfa-btn bfa-btn--verde"
+            className="bfa-btn bfa-btn--ghost"
             style={{ padding: '0.65rem 1.35rem', fontSize: '0.88rem' }}
           >
             Refazer Exercícios
           </button>
+          {onBackToTheory && (
+            <button
+              type="button"
+              onClick={onBackToTheory}
+              className="bfa-btn bfa-btn--secondary-glass"
+              style={{ padding: '0.65rem 1.35rem', fontSize: '0.88rem' }}
+            >
+              Voltar para a Teoria
+            </button>
+          )}
+          {nextLessonUrl && (
+            <a
+              href={nextLessonUrl}
+              className="bfa-btn bfa-btn--verde"
+              style={{ padding: '0.65rem 1.35rem', fontSize: '0.88rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+            >
+              <span>Próxima Aula</span>
+              <span>→</span>
+            </a>
+          )}
         </div>
       </div>
     );

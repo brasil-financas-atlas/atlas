@@ -45,11 +45,17 @@ function ProgressProvider({ children }) {
       const isCompleted = !prev.includes(lessonId);
       const next = isCompleted ? [...prev, lessonId] : prev.filter(id => id !== lessonId);
       
-      if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-        const user = window.BfaSupabase.client?.auth?.user();
-        if (user) {
-          window.BfaSupabase.syncLessonProgress(user.id, lessonId, isCompleted);
+      try {
+        if (window.BfaSupabase && window.BfaSupabase.isConfigured() && window.BfaSupabase.client) {
+          window.BfaSupabase.client.auth.getUser().then(res => {
+            const user = res?.data?.user;
+            if (user) {
+              window.BfaSupabase.syncLessonProgress(user.id, lessonId, isCompleted);
+            }
+          }).catch(err => console.warn('[BFA] Supabase sync skipped:', err));
         }
+      } catch (err) {
+        console.warn('[BFA] Supabase sync skipped:', err);
       }
       return next;
     });
@@ -57,14 +63,21 @@ function ProgressProvider({ children }) {
 
   const saveQuizScore = (lessonId, score, maxScore) => {
     setQuizScores(prev => {
-      const newScore = Math.max(prev[lessonId] || 0, score);
-      if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-        const user = window.BfaSupabase.client?.auth?.user();
-        if (user) {
-          window.BfaSupabase.saveQuizAttempt(user.id, lessonId, score, maxScore);
+      const prevObj = (prev && typeof prev === 'object') ? prev : {};
+      const newScore = Math.max(prevObj[lessonId] || 0, score);
+      try {
+        if (window.BfaSupabase && window.BfaSupabase.isConfigured() && window.BfaSupabase.client) {
+          window.BfaSupabase.client.auth.getUser().then(res => {
+            const user = res?.data?.user;
+            if (user) {
+              window.BfaSupabase.saveQuizAttempt(user.id, lessonId, score, maxScore);
+            }
+          }).catch(err => console.warn('[BFA] Supabase sync skipped:', err));
         }
+      } catch (err) {
+        console.warn('[BFA] Supabase sync skipped:', err);
       }
-      return { ...prev, [lessonId]: newScore };
+      return { ...prevObj, [lessonId]: newScore };
     });
   };
 
