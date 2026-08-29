@@ -10,8 +10,11 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const [activeTab, setActiveTab] = useState('teoria'); // 'teoria' | 'quiz' | 'forum'
   const activeLessonRef = useRef(null);
 
+  const [expandedMods, setExpandedMods] = useState({ [moduloSlug]: true });
+
   useEffect(() => {
     setActiveTab('teoria');
+    setExpandedMods(prev => ({ ...prev, [moduloSlug]: true }));
     if (activeLessonRef.current) {
       activeLessonRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
@@ -57,91 +60,136 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
     <div className="aula-layout">
       {/* Sidebar - Curriculum Tree */}
       <aside className={`aula-sidebar ${!sidebarOpen ? 'closed' : ''}`} style={{ borderRight: '1px solid var(--border)', background: 'var(--card)' }}>
-        <div style={{ padding: '1.25rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <a href={`#/${subjectKey}`} className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.78rem' }}>
+        <div style={{ padding: '1.15rem 1.25rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <a href={`#/${subjectKey}`} className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.78rem', textDecoration: 'none' }}>
             ← Voltar para {isMatematica ? 'Matemática' : 'Finanças'}
           </a>
         </div>
 
-        <div className="aula-sidebar-content" style={{ padding: '1.25rem 1rem' }}>
+        <div className="aula-sidebar-content" style={{ padding: '1rem 0.85rem' }}>
           {subjectData.modulos.map((m, idx) => {
             const isCurrentMod = m.slug === moduloSlug;
-            return (
-              <div key={m.slug} style={{ marginBottom: '1.5rem' }}>
-                <div style={{ marginBottom: '0.5rem' }}>
-                  <a
-                    href={`#/${subjectKey}/${m.slug}`}
-                    className="mono-tag"
-                    style={{
-                      color: isCurrentMod ? trackColor : 'var(--muted-foreground)',
-                      fontSize: '0.72rem',
-                      fontWeight: 800,
-                      textDecoration: 'none'
-                    }}
-                  >
-                    MÓDULO {idx + 1} · {m.titulo}
-                  </a>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  {/* Link da Introdução do Módulo */}
-                  <a
-                    href={`#/${subjectKey}/${m.slug}`}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      fontSize: '0.82rem',
-                      fontWeight: 600,
-                      backgroundColor: 'transparent',
-                      color: 'var(--muted-foreground)',
-                      padding: '0.45rem 0.65rem',
-                      borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
-                      textDecoration: 'none',
-                      transition: 'all 0.15s ease'
-                    }}
-                  >
-                    <BfaIcon name="book" size={13} color="var(--muted-foreground)" />
-                    <span>Introdução do Módulo</span>
-                  </a>
-                  {m.aulas.map((a, aIdx) => {
-                    const itemLessonId = `${subjectKey}-${m.slug}-${a.slug}`;
-                    const itemDone = completedLessons && completedLessons.includes(itemLessonId);
-                    const isCurrent = a.slug === aulaSlug && m.slug === moduloSlug;
+            const isExpanded = expandedMods[m.slug] !== false;
+            const modCompletedCount = m.aulas.filter(a => completedLessons && completedLessons.includes(`${subjectKey}-${m.slug}-${a.slug}`)).length;
+            const modTotalCount = m.aulas.length;
+            const isAllDone = modCompletedCount === modTotalCount;
 
-                    return (
-                      <a
-                        key={a.slug}
-                        ref={isCurrent ? activeLessonRef : null}
-                        href={`#/${subjectKey}/${m.slug}/${a.slug}`}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          fontSize: '0.85rem',
-                          fontWeight: isCurrent ? 800 : 500,
-                          backgroundColor: isCurrent ? 'var(--surface-strong)' : 'transparent',
-                          borderLeft: isCurrent ? `3px solid ${trackColor}` : '3px solid transparent',
-                          color: isCurrent ? 'var(--foreground)' : 'var(--muted-foreground)',
-                          padding: '0.55rem 0.75rem',
-                          borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
-                          textDecoration: 'none',
-                          transition: 'all 0.15s ease'
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
-                          <span className="tabular-numbers" style={{ fontSize: '0.75rem', color: isCurrent ? trackColor : 'var(--muted-foreground)', fontWeight: 800 }}>
-                            {String(aIdx + 1).padStart(2, '0')}
-                          </span>
-                          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.titulo}</span>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0, marginLeft: '0.5rem' }}>
-                          {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.68rem', fontWeight: 800 }}>✓</span>}
-                          {isCurrent && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: trackColor }} />}
-                        </div>
-                      </a>
-                    );
-                  })}
+            return (
+              <div
+                key={m.slug}
+                style={{
+                  marginBottom: '0.85rem',
+                  border: isCurrentMod ? `1px solid ${trackColor}40` : '1px solid var(--border)',
+                  borderRadius: 'var(--radius-md)',
+                  background: isCurrentMod ? 'var(--surface-strong)' : 'var(--card)',
+                  overflow: 'hidden',
+                  transition: 'border-color 0.2s ease'
+                }}
+              >
+                {/* Module Header Bar Accordion */}
+                <div
+                  onClick={() => setExpandedMods(prev => ({ ...prev, [m.slug]: !isExpanded }))}
+                  style={{
+                    padding: '0.75rem 0.85rem',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    userSelect: 'none',
+                    borderBottom: isExpanded ? '1px solid var(--border)' : 'none',
+                    background: isCurrentMod ? 'rgba(255, 255, 255, 0.03)' : 'transparent'
+                  }}
+                >
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <span className="mono-tag" style={{ color: isCurrentMod ? trackColor : 'var(--muted-foreground)', fontSize: '0.65rem', fontWeight: 800 }}>
+                        MÓDULO {idx + 1}
+                      </span>
+                      {isCurrentMod && (
+                        <span className="mono-tag" style={{ color: trackColor, background: 'rgba(56, 189, 248, 0.1)', fontSize: '0.62rem', fontWeight: 700, padding: '0.1rem 0.35rem' }}>
+                          Ativo
+                        </span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--foreground)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {m.titulo}
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0, marginLeft: '0.5rem' }}>
+                    <span className="mono-tag" style={{ color: isAllDone ? '#059669' : 'var(--muted-foreground)', fontSize: '0.68rem', fontWeight: 700 }}>
+                      {modCompletedCount}/{modTotalCount}
+                    </span>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--muted-foreground)', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease', display: 'inline-block' }}>
+                      ▶
+                    </span>
+                  </div>
                 </div>
+
+                {/* Expanded Module Content */}
+                {isExpanded && (
+                  <div style={{ padding: '0.35rem 0.4rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                    {/* Link da Introdução do Módulo */}
+                    <a
+                      href={`#/${subjectKey}/${m.slug}`}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        fontSize: '0.78rem',
+                        fontWeight: 600,
+                        color: 'var(--muted-foreground)',
+                        padding: '0.4rem 0.6rem',
+                        borderRadius: 'var(--radius-sm)',
+                        textDecoration: 'none'
+                      }}
+                    >
+                      <BfaIcon name="book" size={12} color="var(--muted-foreground)" />
+                      <span>Introdução & Ementa</span>
+                    </a>
+
+                    {/* Aulas do Módulo */}
+                    {m.aulas.map((a, aIdx) => {
+                      const itemLessonId = `${subjectKey}-${m.slug}-${a.slug}`;
+                      const itemDone = completedLessons && completedLessons.includes(itemLessonId);
+                      const isCurrent = a.slug === aulaSlug && m.slug === moduloSlug;
+
+                      return (
+                        <a
+                          key={a.slug}
+                          ref={isCurrent ? activeLessonRef : null}
+                          href={`#/${subjectKey}/${m.slug}/${a.slug}`}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            fontSize: '0.82rem',
+                            fontWeight: isCurrent ? 800 : 500,
+                            backgroundColor: isCurrent ? 'var(--card)' : 'transparent',
+                            borderLeft: isCurrent ? `3px solid ${trackColor}` : '3px solid transparent',
+                            boxShadow: isCurrent ? '0 1px 4px rgba(0, 0, 0, 0.08)' : 'none',
+                            color: isCurrent ? 'var(--foreground)' : 'var(--muted-foreground)',
+                            padding: '0.5rem 0.65rem',
+                            borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+                            textDecoration: 'none',
+                            transition: 'all 0.15s ease'
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
+                            <span className="tabular-numbers" style={{ fontSize: '0.72rem', color: isCurrent ? trackColor : 'var(--muted-foreground)', fontWeight: 800 }}>
+                              {String(aIdx + 1).padStart(2, '0')}
+                            </span>
+                            <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.titulo}</span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0, marginLeft: '0.4rem' }}>
+                            {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.65rem', fontWeight: 800 }}>✓</span>}
+                            {isCurrent && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: trackColor }} />}
+                          </div>
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             );
           })}
