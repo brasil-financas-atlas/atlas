@@ -261,7 +261,7 @@ function QuizEngine({ questions, lessonId }) {
           {pct >= 70 ? 'DESEMPENHO APROVADO' : 'REVISÃO RECOMENDADA'}
         </span>
         <h3 className="headline-punch" style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0.5rem 0', color: 'var(--foreground)' }}>
-          Resultado do Quiz de Fixação
+          Resultado da Avaliação
         </h3>
         <p style={{ color: 'var(--muted-foreground)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
           Você acertou <strong>{finalScore}</strong> de <strong>{quizQuestions.length}</strong> questões ({pct}% de aproveitamento).
@@ -277,7 +277,7 @@ function QuizEngine({ questions, lessonId }) {
             className="bfa-btn bfa-btn--verde"
             style={{ padding: '0.65rem 1.35rem', fontSize: '0.88rem' }}
           >
-            Refazer Quiz
+            Refazer Exercícios
           </button>
         </div>
       </div>
@@ -290,7 +290,7 @@ function QuizEngine({ questions, lessonId }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.75rem', borderBottom: '1px solid var(--border)' }}>
         <div>
           <span className="mono-tag" style={{ color: 'var(--track-math)', fontWeight: 800, fontSize: '0.72rem' }}>
-            QUIZ DE FIXAÇÃO · KHAN STYLE
+            VERIFICAÇÃO DE APRENDIZAGEM
           </span>
           <div style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '2px' }}>
             Questão {currentIdx + 1} de {quizQuestions.length}

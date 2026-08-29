@@ -136,7 +136,7 @@ function DisciplinaOverview({ subjectKey }) {
                         }}
                       >
                         <span>{mod.titulo}</span>
-                        <span style={{ color: trackColor, fontSize: '1.1rem', transition: 'transform 0.2s ease' }}>➔</span>
+                        <span style={{ color: trackColor, fontSize: '1.1rem', transition: 'transform 0.2s ease' }}>→</span>
                       </h3>
                     </a>
                   </div>
@@ -148,9 +148,9 @@ function DisciplinaOverview({ subjectKey }) {
                     <a
                       href={`#/${subjectKey}/${mod.slug}`}
                       className="bfa-btn bfa-btn--sm bfa-btn--secondary-glass"
-                      style={{ padding: '0.45rem 0.95rem', fontSize: '0.82rem', fontWeight: 700, borderRadius: 'var(--radius-sm)' }}
+                      style={{ padding: '0.45rem 0.95rem', fontSize: '0.82rem', fontWeight: 700, borderRadius: 'var(--radius-sm)', textDecoration: 'none' }}
                     >
-                      📖 Introdução ao Módulo ➔
+                      Introdução do Módulo →
                     </a>
                   </div>
                 </div>
@@ -282,7 +282,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                       transition: 'all 0.15s ease'
                     }}
                   >
-                    <span>📖</span>
+                    <BfaIcon name="book" size={13} color="var(--muted-foreground)" />
                     <span>Introdução do Módulo</span>
                   </a>
 
@@ -403,7 +403,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                 className="bfa-btn bfa-btn--verde"
                 style={{ padding: '0.75rem 1.5rem', fontSize: '0.95rem', fontWeight: 800, borderRadius: 'var(--radius-md)', textDecoration: 'none' }}
               >
-                Começar Módulo: Aula 1 ➔
+                Começar Módulo: Aula 1 →
               </a>
             )}
           </div>
@@ -467,7 +467,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
               className="bfa-btn bfa-btn--verde"
               style={{ textDecoration: 'none', padding: '0.65rem 1.35rem', fontSize: '0.88rem', fontWeight: 700 }}
             >
-              Ir para Aula 1: {firstAula.titulo} ➔
+              Ir para Aula 1: {firstAula.titulo} →
             </a>
           )}
         </div>
