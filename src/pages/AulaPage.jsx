@@ -8,10 +8,14 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [inputVideoUrl, setInputVideoUrl] = useState('');
   const [activeTab, setActiveTab] = useState('teoria'); // 'teoria' | 'quiz' | 'forum'
+  const activeLessonRef = useRef(null);
 
   useEffect(() => {
     setActiveTab('teoria');
-  }, [aulaSlug]);
+    if (activeLessonRef.current) {
+      activeLessonRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [aulaSlug, moduloSlug]);
 
   const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
   if (!subjectData) {
@@ -107,6 +111,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                     return (
                       <a
                         key={a.slug}
+                        ref={isCurrent ? activeLessonRef : null}
                         href={`#/${subjectKey}/${m.slug}/${a.slug}`}
                         style={{
                           display: 'flex',
@@ -117,18 +122,22 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                           backgroundColor: isCurrent ? 'var(--surface-strong)' : 'transparent',
                           borderLeft: isCurrent ? `3px solid ${trackColor}` : '3px solid transparent',
                           color: isCurrent ? 'var(--foreground)' : 'var(--muted-foreground)',
-                          padding: '0.5rem 0.65rem',
+                          padding: '0.55rem 0.75rem',
                           borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+                          textDecoration: 'none',
                           transition: 'all 0.15s ease'
                         }}
                       >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <span className="tabular-numbers" style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
+                          <span className="tabular-numbers" style={{ fontSize: '0.75rem', color: isCurrent ? trackColor : 'var(--muted-foreground)', fontWeight: 800 }}>
                             {String(aIdx + 1).padStart(2, '0')}
                           </span>
-                          <span>{a.titulo}</span>
+                          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.titulo}</span>
                         </div>
-                        {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.68rem', fontWeight: 800 }}>Concluída</span>}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0, marginLeft: '0.5rem' }}>
+                          {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.68rem', fontWeight: 800 }}>✓</span>}
+                          {isCurrent && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: trackColor }} />}
+                        </div>
                       </a>
                     );
                   })}

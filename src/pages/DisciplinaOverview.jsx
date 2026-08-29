@@ -1,60 +1,8 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
-// Metadata for modules in each track
-const TRACK_METADATA = {
-  matematica: {
-    "modulo-1-algebra-do-zero": {
-      subtitle: "Fundamentos Algébricos e Operações Aritméticas",
-      duration: "~2h 30m",
-      level: "Nível Fundamental",
-      competencies: ["Aritmética Rápida", "Frações & Decimais", "Regra de Três", "Potenciação", "Equações 1º Grau"]
-    },
-    "modulo-2-aplicada": {
-      subtitle: "Juros Compostos, Inflação, IPCA e Equivalência de Taxas",
-      duration: "~3h 15m",
-      level: "Nível Intermediário",
-      competencies: ["Juros Compostos", "Juro Real vs Nominal", "Selic vs CDI", "Tabela Regressiva IR", "Rentabilidade Líquida"]
-    },
-    "modulo-3-funcoes-e-probabilidade": {
-      subtitle: "Funções Exponenciais, Logaritmos, PA/PG e Modelagem Estocástica",
-      duration: "~4h 45m",
-      level: "Nível Avançado",
-      competencies: ["Função Exponencial", "Logaritmos", "Amortização SAC/Price", "Somatório (Σ)", "Valor Esperado E[X]"]
-    },
-    "modulo-4-estatistica": {
-      subtitle: "Métricas de Dispersão, Risco, Z-Score, Volatilidade e Beta",
-      duration: "~4h 30m",
-      level: "Nível Quantitativo",
-      competencies: ["Média, Mediana & Moda", "Desvio Padrão", "Z-Score & CV", "Covariância & Correlação", "Regressão Linear"]
-    }
-  },
-  financas: {
-    "modulo-1-fundamentos": {
-      subtitle: "Topologia do SFN, Renda Fixa, Ações, FIIs e Macroeconomia",
-      duration: "~4h 15m",
-      level: "Nível Fundamental",
-      competencies: ["Topologia SFN", "Tesouro Direto", "CDB, LCI & LCA", "Mercado de Ações", "Macroeconomia"]
-    },
-    "modulo-2-analise-fundamentalista": {
-      subtitle: "Leitura Contábil (Balanço, DRE, DFC), Margens, Múltiplos e FCD",
-      duration: "~5h 00m",
-      level: "Nível Analítico",
-      competencies: ["Balanço Patrimonial", "Escada da DRE", "EBITDA & DFC", "ROE & ROIC", "Múltiplos P/L & EV", "Valuation por FCD"]
-    },
-    "modulo-3-portfolio": {
-      subtitle: "Alocação Tática, Rebalanceamento, Gestão de Risco e Portfólio Real",
-      duration: "~4h 00m",
-      level: "Nível Estratégico",
-      competencies: ["Perfil de Risco", "Matriz de Correlação", "Alocação de Ativos", "Rebalanceamento", "Gestão Tributária"]
-    }
-  }
-};
-
 function DisciplinaOverview({ subjectKey }) {
   const { EXACT_CONTENT } = window;
   const { completedLessons } = useContext(ProgressContext || createContext({}));
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedModuleFilter, setSelectedModuleFilter] = useState('all');
 
   const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
 
@@ -65,48 +13,33 @@ function DisciplinaOverview({ subjectKey }) {
   const isMatematica = subjectKey === 'matematica';
   const trackColor = isMatematica ? 'var(--track-math)' : 'var(--track-finance)';
 
-  // Build flat list of all lessons with global indexing
-  const allLessons = useMemo(() => {
-    const list = [];
-    subjectData.modulos.forEach((m, mIdx) => {
-      m.aulas.forEach((a, aIdx) => {
-        const lessonId = `${subjectKey}-${m.slug}-${a.slug}`;
-        const isDone = completedLessons && completedLessons.includes(lessonId);
-        list.push({
-          ...a,
-          moduloSlug: m.slug,
-          moduloTitulo: m.titulo,
-          moduloIdx: mIdx + 1,
-          lessonIdx: aIdx + 1,
-          lessonId,
-          isDone
-        });
-      });
+  let totalLessons = 0;
+  let doneCount = 0;
+
+  subjectData.modulos.forEach(mod => {
+    mod.aulas.forEach(aula => {
+      totalLessons++;
+      const lessonId = `${subjectKey}-${mod.slug}-${aula.slug}`;
+      if (completedLessons && completedLessons.includes(lessonId)) {
+        doneCount++;
+      }
     });
-    return list;
-  }, [subjectData, subjectKey, completedLessons]);
+  });
 
-  const totalLessons = allLessons.length;
-  const doneCount = allLessons.filter(l => l.isDone).length;
   const progressPct = totalLessons > 0 ? Math.round((doneCount / totalLessons) * 100) : 0;
-
-  // Identify next uncompleted lesson for 1-click resume
-  const nextLessonToStudy = useMemo(() => {
-    return allLessons.find(l => !l.isDone) || allLessons[0];
-  }, [allLessons]);
 
   return (
     <div>
-      {/* ── 1. Hero Split-Screen ────────────────────────────────────────── */}
-      <section className="hero-gradient" style={{ padding: '4.5rem 0 3.5rem 0', position: 'relative', overflow: 'hidden' }}>
+      {/* ── 1. Hero Split-Screen 50/50 ──────────────────────────────────── */}
+      <section className="hero-gradient" style={{ padding: '5rem 0 4rem 0', position: 'relative', overflow: 'hidden' }}>
         <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.35 }} />
         <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="bfa-split-hero">
             
             {/* Coluna Esquerda: Ementa da Trilha */}
             <div className="bfa-split-col--text">
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
-                <span className="mono-tag" style={{ color: '#FFFFFF', background: 'rgba(255, 255, 255, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255, 255, 255, 0.25)', fontWeight: 700 }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.95)', background: 'rgba(255, 255, 255, 0.12)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255, 255, 255, 0.25)', fontWeight: 700 }}>
                   {isMatematica ? 'TRILHA 01 · MATEMÁTICA' : 'TRILHA 02 · FINANÇAS'}
                 </span>
                 <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(52, 211, 153, 0.35)', fontWeight: 700 }}>
@@ -114,23 +47,23 @@ function DisciplinaOverview({ subjectKey }) {
                 </span>
               </div>
 
-              <h1 className="headline-punch" style={{ fontSize: '2.75rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.035em', margin: 0, lineHeight: 1.15 }}>
+              <EditableBlock id={`overview-${subjectKey}-hero-title`} as="h1" className="headline-punch" style={{ fontSize: '3.2rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.5rem', letterSpacing: '-0.035em' }}>
                 {isMatematica ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}
-              </h1>
+              </EditableBlock>
 
-              <p style={{ fontSize: '1.05rem', lineHeight: 1.65, color: 'rgba(241, 245, 249, 0.9)', marginTop: '0.75rem', maxWidth: '600px' }}>
+              <p style={{ fontSize: '1.1rem', lineHeight: 1.65, color: 'rgba(241, 245, 249, 0.9)', marginTop: '0.5rem' }}>
                 {isMatematica
-                  ? 'Do zero algébrico à modelagem estocástica de portfólios: juros compostos contínuos, logaritmos, anuidades SAC/Price, covariância e regressão linear.'
-                  : 'Da topologia do Sistema Financeiro Nacional ao valuation por Fluxo de Caixa Descontado: análise contábil profunda de DRE, balanço e alocação tática.'}
+                  ? 'Domine a álgebra de juros compostos contínuos, taxas equivalentes, amortização SAC/Price e modelagem quantitativa para o mercado financeiro.'
+                  : 'Compreenda a arquitetura do Sistema Financeiro Nacional, renda fixa soberana, fundos imobiliários, leitura contábil e valuation de empresas.'}
               </p>
             </div>
 
             {/* Coluna Direita: Ilha de Telemetria de Progresso */}
             <div className="bfa-split-col--visual">
-              <div className="bfa-tech-card" style={{ background: 'rgba(15, 23, 42, 0.92)', border: '1px solid rgba(255, 255, 255, 0.14)', boxShadow: '0 20px 40px -15px rgba(0,0,0,0.5)', padding: '1.75rem' }}>
+              <div className="bfa-tech-card" style={{ background: 'rgba(15, 23, 42, 0.88)', border: '1px solid rgba(255, 255, 255, 0.12)', boxShadow: '0 20px 40px -15px rgba(0,0,0,0.5)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
                   <span className="mono-tag" style={{ color: '#94A3B8', fontWeight: 800, fontSize: '0.72rem' }}>
-                    STATUS DO ESTUDANTE
+                    TELEMETRIA DO ALUNO
                   </span>
                   <span className="tabular-numbers" style={{ color: '#10B981', fontWeight: 800, fontSize: '1.1rem' }}>
                     {progressPct}% Concluído
@@ -143,7 +76,7 @@ function DisciplinaOverview({ subjectKey }) {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
                   <div>
-                    <span style={{ fontSize: '0.72rem', color: '#94A3B8', display: 'block', fontWeight: 600 }}>AULAS FINALIZADAS</span>
+                    <span style={{ fontSize: '0.72rem', color: '#94A3B8', display: 'block', fontWeight: 600 }}>AULAS CONCLUÍDAS</span>
                     <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: '#FFFFFF' }}>{doneCount} / {totalLessons}</div>
                   </div>
                   <div>
@@ -160,289 +93,113 @@ function DisciplinaOverview({ subjectKey }) {
         </div>
       </section>
 
-      {/* ── 2. Banner de Retomada Rápida (1 Clique para Continuar) ────────── */}
-      {nextLessonToStudy && (
-        <section className="bfa-container" style={{ marginTop: '-1.5rem', position: 'relative', zIndex: 10 }}>
-          <div style={{
-            background: 'var(--card)',
-            border: '1px solid var(--border)',
-            borderRadius: 'var(--radius-lg)',
-            padding: '1.25rem 1.75rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '1rem',
-            boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <div style={{
-                width: '42px',
-                height: '42px',
-                borderRadius: '50%',
-                background: 'rgba(16, 185, 129, 0.12)',
-                border: '1px solid rgba(16, 185, 129, 0.35)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#10B981',
-                flexShrink: 0
-              }}>
-                <BfaIcon name="target" size={20} />
-              </div>
-              <div>
-                <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.75rem', fontWeight: 700 }}>
-                  {doneCount === 0 ? 'COMECE AQUI SEUS ESTUDOS' : 'CONTINUAR DE ONDE PAROU'} · MÓDULO {nextLessonToStudy.moduloIdx}
-                </span>
-                <h4 style={{ margin: '0.15rem 0 0 0', fontWeight: 800, color: 'var(--foreground)', fontSize: '1.1rem' }}>
-                  {nextLessonToStudy.titulo}
-                </h4>
-              </div>
-            </div>
+      {/* ── 2. Grade de Módulos Compacta & Limpa ───────────────────────── */}
+      <section className="bfa-container" style={{ padding: '3.5rem 1.5rem 5rem 1.5rem' }}>
+        <div style={{ display: 'grid', gap: '2.5rem' }}>
+          {subjectData.modulos.map((mod, idx) => {
+            const modCompletedCount = mod.aulas.filter(a => completedLessons && completedLessons.includes(`${subjectKey}-${mod.slug}-${a.slug}`)).length;
+            const modTotalCount = mod.aulas.length;
+            const modProgress = Math.round((modCompletedCount / modTotalCount) * 100);
 
-            <a
-              href={`#/${subjectKey}/${nextLessonToStudy.moduloSlug}/${nextLessonToStudy.slug}`}
-              className="bfa-btn bfa-btn--verde"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '0.65rem 1.35rem',
-                fontWeight: 700,
-                fontSize: '0.9rem',
-                borderRadius: 'var(--radius-md)',
-                textDecoration: 'none'
-              }}
-            >
-              <span>{doneCount === 0 ? 'Iniciar Aula 1' : 'Continuar Aula'}</span>
-              <span>→</span>
-            </a>
-          </div>
-        </section>
-      )}
+            return (
+              <article key={mod.slug} className="bfa-tech-card" style={{ borderTop: `4px solid ${trackColor}`, padding: '1.75rem 2rem' }}>
+                
+                {/* Cabeçalho do Módulo */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem', paddingBottom: '1rem', borderBottom: '1px solid var(--border)' }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
+                      <span className="mono-tag" style={{ color: trackColor, background: 'rgba(15, 23, 42, 0.06)', padding: '0.25rem 0.55rem', borderRadius: '4px', fontWeight: 800 }}>
+                        MÓDULO {idx + 1}
+                      </span>
+                      <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>
+                        {mod.aulas.length} Aulas com Quiz
+                      </span>
+                    </div>
 
-      {/* ── 3. Cartografia da Trilha: Stepper Vertical & Módulos ───────── */}
-      <section className="bfa-container" style={{ padding: '3.5rem 1.5rem 6rem 1.5rem' }}>
-        
-        {/* Barra de Filtro e Busca Rápida */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2.5rem' }}>
-          <div>
-            <h2 className="headline-punch" style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--foreground)', margin: 0, letterSpacing: '-0.025em' }}>
-              Roteiro de Formação & Ementa Oficial
-            </h2>
-            <p style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', margin: '0.25rem 0 0 0' }}>
-              Siga os marcos sequenciais de aprendizado para desenvolver proficiência matemática e financeira.
-            </p>
-          </div>
-
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-            <button
-              type="button"
-              className={`bfa-btn bfa-btn--sm ${selectedModuleFilter === 'all' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
-              onClick={() => setSelectedModuleFilter('all')}
-              style={{ fontWeight: 700, fontSize: '0.8rem' }}
-            >
-              Todos os Módulos ({subjectData.modulos.length})
-            </button>
-            {subjectData.modulos.map((m, idx) => (
-              <button
-                key={m.slug}
-                type="button"
-                className={`bfa-btn bfa-btn--sm ${selectedModuleFilter === m.slug ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
-                onClick={() => setSelectedModuleFilter(m.slug)}
-                style={{ fontWeight: 700, fontSize: '0.8rem' }}
-              >
-                Módulo {idx + 1}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Vertical Pathway Pipeline */}
-        <div className="bfa-track-pathway" style={{ display: 'flex', flexDirection: 'column', gap: '3rem', position: 'relative' }}>
-          {subjectData.modulos
-            .filter(m => selectedModuleFilter === 'all' || selectedModuleFilter === m.slug)
-            .map((mod, idx) => {
-              const modMeta = TRACK_METADATA[subjectKey] && TRACK_METADATA[subjectKey][mod.slug] ? TRACK_METADATA[subjectKey][mod.slug] : {};
-              const modAulas = mod.aulas || [];
-              const modCompletedCount = modAulas.filter(a => completedLessons && completedLessons.includes(`${subjectKey}-${mod.slug}-${a.slug}`)).length;
-              const modTotalCount = modAulas.length;
-              const modProgress = modTotalCount > 0 ? Math.round((modCompletedCount / modTotalCount) * 100) : 0;
-              const isModCompleted = modProgress === 100;
-              const isModInProgress = modProgress > 0 && modProgress < 100;
-
-              return (
-                <div
-                  key={mod.slug}
-                  className="bfa-module-milestone-card"
-                  style={{
-                    background: 'var(--card)',
-                    border: '1px solid var(--border)',
-                    borderTop: `4px solid ${trackColor}`,
-                    borderRadius: 'var(--radius-lg)',
-                    padding: '2rem',
-                    boxShadow: '0 4px 20px -5px rgba(0, 0, 0, 0.06)',
-                    position: 'relative'
-                  }}
-                >
-                  {/* Cabeçalho do Marco / Módulo */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '1.5rem', paddingBottom: '1.25rem', borderBottom: '1px solid var(--border)' }}>
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.4rem', flexWrap: 'wrap' }}>
-                        <span className="mono-tag" style={{ color: trackColor, background: 'rgba(15, 23, 42, 0.06)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.75rem' }}>
-                          MARCO {idx + 1}
-                        </span>
-                        {modMeta.level && (
-                          <span className="mono-tag" style={{ color: 'var(--muted-foreground)', background: 'var(--surface-strong)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontSize: '0.75rem' }}>
-                            {modMeta.level}
-                          </span>
-                        )}
-                        {modMeta.duration && (
-                          <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.75rem' }}>
-                            ⏱ {modMeta.duration}
-                          </span>
-                        )}
-                        <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.75rem' }}>
-                          · {modTotalCount} Aulas com Exercícios
-                        </span>
-                      </div>
-
-                      <a
-                        href={`#/${subjectKey}/${mod.slug}`}
-                        style={{ textDecoration: 'none', color: 'inherit' }}
-                        title="Ver ementa completa deste módulo"
+                    <a
+                      href={`#/${subjectKey}/${mod.slug}`}
+                      style={{ textDecoration: 'none', color: 'inherit' }}
+                      title="Clique para ler a introdução do módulo"
+                    >
+                      <h3
+                        className="headline-punch"
+                        style={{
+                          fontSize: '1.6rem',
+                          fontWeight: 800,
+                          color: 'var(--foreground)',
+                          letterSpacing: '-0.025em',
+                          margin: '0.2rem 0',
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px'
+                        }}
                       >
-                        <h3 className="headline-punch" style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em', margin: '0.25rem 0', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                          <span>{mod.titulo}</span>
-                          <span style={{ color: trackColor, fontSize: '1.1rem' }}>→</span>
-                        </h3>
-                      </a>
-
-                      {modMeta.subtitle && (
-                        <p style={{ margin: '0.35rem 0 0 0', color: 'var(--muted-foreground)', fontSize: '0.92rem', lineHeight: 1.5 }}>
-                          {modMeta.subtitle}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Botões de Ação do Módulo */}
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.65rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                        <span className="mono-tag" style={{ color: isModCompleted ? '#059669' : 'var(--muted-foreground)', fontWeight: 700, fontSize: '0.8rem' }}>
-                          {modCompletedCount}/{modTotalCount} Concluídas ({modProgress}%)
-                        </span>
-                        <a
-                          href={`#/${subjectKey}/${mod.slug}`}
-                          className="bfa-btn bfa-btn--sm bfa-btn--secondary-glass"
-                          style={{ padding: '0.45rem 0.95rem', fontSize: '0.82rem', fontWeight: 700, borderRadius: 'var(--radius-sm)', textDecoration: 'none' }}
-                        >
-                          Introdução & Ementa →
-                        </a>
-                      </div>
-
-                      {/* Mini Barra de Progresso do Módulo */}
-                      <div style={{ width: '160px', height: '6px', background: 'var(--surface-strong)', borderRadius: '999px', overflow: 'hidden' }}>
-                        <div style={{ width: `${modProgress}%`, height: '100%', background: isModCompleted ? '#10B981' : trackColor, borderRadius: '999px', transition: 'width 0.3s ease' }} />
-                      </div>
-                    </div>
+                        <span>{mod.titulo}</span>
+                        <span style={{ color: trackColor, fontSize: '1.1rem', transition: 'transform 0.2s ease' }}>→</span>
+                      </h3>
+                    </a>
                   </div>
 
-                  {/* Pílulas de Competências de Mercado */}
-                  {modMeta.competencies && modMeta.competencies.length > 0 && (
-                    <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                        Competências:
-                      </span>
-                      {modMeta.competencies.map((comp, cIdx) => (
-                        <span
-                          key={cIdx}
-                          style={{
-                            fontSize: '0.75rem',
-                            fontWeight: 600,
-                            padding: '0.2rem 0.6rem',
-                            borderRadius: 'var(--radius-sm)',
-                            background: 'var(--surface-strong)',
-                            border: '1px solid var(--border)',
-                            color: 'var(--foreground)'
-                          }}
-                        >
-                          #{comp}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Lista de Aulas Ricas com Metadados e Status */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '0.85rem' }}>
-                    {modAulas.map((aula, aIdx) => {
-                      const lessonId = `${subjectKey}-${mod.slug}-${aula.slug}`;
-                      const isDone = completedLessons && completedLessons.includes(lessonId);
-
-                      return (
-                        <a
-                          key={aula.slug}
-                          href={`#/${subjectKey}/${mod.slug}/${aula.slug}`}
-                          className="bfa-lesson-card-rich"
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            padding: '1rem 1.25rem',
-                            borderRadius: 'var(--radius-md)',
-                            border: isDone ? '1px solid rgba(16, 185, 129, 0.45)' : '1px solid var(--border)',
-                            background: isDone ? 'rgba(16, 185, 129, 0.04)' : 'var(--surface-strong)',
-                            textDecoration: 'none',
-                            transition: 'all 0.18s ease'
-                          }}
-                        >
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', minWidth: 0 }}>
-                            {/* Número ou Check */}
-                            <div style={{
-                              width: '28px',
-                              height: '28px',
-                              borderRadius: '50%',
-                              background: isDone ? '#10B981' : 'var(--card)',
-                              border: isDone ? 'none' : '1px solid var(--border)',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontSize: '0.75rem',
-                              fontWeight: 800,
-                              color: isDone ? '#FFFFFF' : 'var(--muted-foreground)',
-                              flexShrink: 0
-                            }}>
-                              {isDone ? '✓' : String(aIdx + 1).padStart(2, '0')}
-                            </div>
-
-                            {/* Título da Aula */}
-                            <div style={{ minWidth: 0 }}>
-                              <span style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--foreground)', display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                {aula.titulo}
-                              </span>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.15rem' }}>
-                                <span style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)' }}>⚡ 15 min</span>
-                                <span style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)' }}>· 🎯 Quiz</span>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Status */}
-                          <div style={{ marginLeft: '0.75rem', flexShrink: 0 }}>
-                            {isDone ? (
-                              <span className="mono-tag" style={{ color: '#059669', background: '#ECFDF5', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.72rem' }}>
-                                Concluída
-                              </span>
-                            ) : (
-                              <span style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', fontWeight: 600 }}>→</span>
-                            )}
-                          </div>
-                        </a>
-                      );
-                    })}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <span className="mono-tag" style={{ color: modProgress === 100 ? '#059669' : 'var(--muted-foreground)', fontWeight: 700 }}>
+                      {modCompletedCount}/{modTotalCount} Concluídas ({modProgress}%)
+                    </span>
+                    <a
+                      href={`#/${subjectKey}/${mod.slug}`}
+                      className="bfa-btn bfa-btn--sm bfa-btn--secondary-glass"
+                      style={{ padding: '0.45rem 0.95rem', fontSize: '0.82rem', fontWeight: 700, borderRadius: 'var(--radius-sm)', textDecoration: 'none' }}
+                    >
+                      Introdução do Módulo →
+                    </a>
                   </div>
                 </div>
-              );
-            })}
+
+                {/* Grade de Aulas do Módulo */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.85rem' }}>
+                  {mod.aulas.map((aula, aIdx) => {
+                    const lessonId = `${subjectKey}-${mod.slug}-${aula.slug}`;
+                    const isDone = completedLessons && completedLessons.includes(lessonId);
+
+                    return (
+                      <a
+                        key={aula.slug}
+                        href={`#/${subjectKey}/${mod.slug}/${aula.slug}`}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '0.95rem 1.15rem',
+                          borderRadius: 'var(--radius-md)',
+                          border: isDone ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border)',
+                          background: isDone ? 'rgba(16, 185, 129, 0.05)' : 'var(--surface-strong)',
+                          transition: 'all 0.2s ease',
+                          textDecoration: 'none'
+                        }}
+                        className="card-lift"
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                          <span className="tabular-numbers" style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--muted-foreground)' }}>
+                            {String(aIdx + 1).padStart(2, '0')}
+                          </span>
+                          <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                            {aula.titulo}
+                          </span>
+                        </div>
+                        {isDone ? (
+                          <span className="mono-tag" style={{ color: '#059669', background: '#ECFDF5', padding: '0.2rem 0.45rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.72rem' }}>
+                            Concluída
+                          </span>
+                        ) : (
+                          <span style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem' }}>→</span>
+                        )}
+                      </a>
+                    );
+                  })}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
     </div>
@@ -472,7 +229,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
 
   const modCompletedCount = moduloObj.aulas.filter(a => completedLessons && completedLessons.includes(`${subjectKey}-${moduloObj.slug}-${a.slug}`)).length;
   const modTotalCount = moduloObj.aulas.length;
-  const modProgress = modTotalCount > 0 ? Math.round((modCompletedCount / modTotalCount) * 100) : 0;
+  const modProgress = Math.round((modCompletedCount / modTotalCount) * 100);
 
   const firstAula = moduloObj.aulas[0];
 
@@ -694,6 +451,27 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
           </div>
         </div>
 
+        {/* Rodapé de Navegação */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4rem', paddingTop: '1.75rem', borderTop: '1px solid var(--border)' }}>
+          <a
+            href={`#/${subjectKey}`}
+            className="bfa-btn bfa-btn--secondary-glass"
+            style={{ textDecoration: 'none', padding: '0.65rem 1.25rem', fontSize: '0.88rem' }}
+          >
+            ← Voltar para a Trilha Completa
+          </a>
+
+          {firstAula && (
+            <a
+              href={`#/${subjectKey}/${moduloSlug}/${firstAula.slug}`}
+              className="bfa-btn bfa-btn--verde"
+              style={{ textDecoration: 'none', padding: '0.65rem 1.35rem', fontSize: '0.88rem', fontWeight: 700 }}
+            >
+              Ir para Aula 1: {firstAula.titulo} →
+            </a>
+          )}
+        </div>
+
       </main>
     </div>
   );
@@ -701,3 +479,4 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
 
 window.DisciplinaOverview = DisciplinaOverview;
 window.ModuloIntroPage = ModuloIntroPage;
+
