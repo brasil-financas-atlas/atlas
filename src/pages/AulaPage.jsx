@@ -72,13 +72,30 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
       {/* Sidebar - Curriculum Tree */}
       <aside className={`aula-sidebar ${!sidebarOpen ? 'closed' : ''}`} style={{ borderRight: '1px solid var(--border)', background: 'var(--card)' }}>
-        <div style={{ padding: '1.15rem 1.25rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <a href={`#/${subjectKey}`} className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.78rem', textDecoration: 'none' }}>
+        <div style={{ padding: '0.85rem 1rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <a href={`#/${subjectKey}`} className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.75rem', textDecoration: 'none' }}>
             ← Voltar para {isMatematica ? 'Matemática' : 'Finanças'}
           </a>
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(false)}
+            className="aula-sidebar-close-btn"
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--muted-foreground)',
+              fontSize: '1.1rem',
+              cursor: 'pointer',
+              padding: '0.2rem 0.4rem',
+              lineHeight: 1
+            }}
+            aria-label="Fechar menu"
+          >
+            ✕
+          </button>
         </div>
 
-        <div className="aula-sidebar-content" style={{ padding: '1rem 0.85rem' }}>
+        <div className="aula-sidebar-content" style={{ padding: '0.75rem 0.65rem' }}>
           {subjectData.modulos.map((m, idx) => {
             const isCurrentMod = m.slug === moduloSlug;
             const isExpanded = !!expandedMods[m.slug];
@@ -90,7 +107,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               <div
                 key={m.slug}
                 style={{
-                  marginBottom: '0.85rem',
+                  marginBottom: '0.65rem',
                   border: isCurrentMod ? `1px solid ${trackColor}40` : '1px solid var(--border)',
                   borderRadius: 'var(--radius-md)',
                   background: isCurrentMod ? 'var(--surface-strong)' : 'var(--card)',
@@ -102,7 +119,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 <div
                   onClick={() => setExpandedMods(prev => ({ ...prev, [m.slug]: !prev[m.slug] }))}
                   style={{
-                    padding: '0.75rem 0.85rem',
+                    padding: '0.65rem 0.75rem',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -123,7 +140,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                         </span>
                       )}
                     </div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--foreground)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {m.titulo}
                     </div>
                   </div>
@@ -144,33 +161,47 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                     {/* Link da Introdução do Módulo */}
                     <a
                       href={`#/${subjectKey}/${m.slug}`}
+                      onClick={() => {
+                        if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                          setSidebarOpen(false);
+                        }
+                      }}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '0.5rem',
+                        justifyContent: 'space-between',
                         fontSize: '0.78rem',
                         fontWeight: 600,
+                        backgroundColor: 'transparent',
+                        borderLeft: '3px solid transparent',
                         color: 'var(--muted-foreground)',
                         padding: '0.4rem 0.6rem',
-                        borderRadius: 'var(--radius-sm)',
+                        borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
                         textDecoration: 'none'
                       }}
                     >
-                      <BfaIcon name="book" size={12} color="var(--muted-foreground)" />
-                      <span>Introdução & Ementa</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <BfaIcon name="book" size={12} color="var(--muted-foreground)" />
+                        <span>Introdução & Ementa</span>
+                      </div>
                     </a>
 
                     {/* Aulas do Módulo */}
                     {m.aulas.map((a, aIdx) => {
                       const itemLessonId = `${subjectKey}-${m.slug}-${a.slug}`;
                       const itemDone = completedLessons && completedLessons.includes(itemLessonId);
-                      const isCurrent = a.slug === aulaSlug && m.slug === moduloSlug;
+                      const isActive = isCurrentMod && a.slug === aulaSlug;
 
                       return (
                         <a
                           key={a.slug}
-                          ref={isCurrent ? activeLessonRef : null}
+                          ref={isActive ? activeLessonRef : null}
                           href={`#/${subjectKey}/${m.slug}/${a.slug}`}
+                          onClick={() => {
+                            if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                              setSidebarOpen(false);
+                            }
+                          }}
                           style={{
                             display: 'flex',
                             alignItems: 'center',
@@ -210,9 +241,9 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
       {/* Main Classroom Canvas */}
       <main className="aula-main">
-        {/* Top Breadcrumb & Actions */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', paddingBottom: '1.25rem', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+        {/* Sleek Unified Lesson Header Bar */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem', borderBottom: '1px solid var(--border)', paddingBottom: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', minWidth: 0 }}>
             <button
               type="button"
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -220,54 +251,56 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               style={{
                 cursor: 'pointer',
                 border: '1px solid var(--border)',
-                background: 'var(--surface-strong)',
+                background: sidebarOpen ? 'var(--surface-strong)' : 'transparent',
                 color: 'var(--foreground)',
                 fontSize: '0.8rem',
                 fontWeight: 700,
                 padding: '0.45rem 0.85rem',
-                borderRadius: 'var(--radius-sm)'
+                borderRadius: 'var(--radius-sm)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px'
               }}
             >
-              {sidebarOpen ? 'Ocultar Trilha' : 'Ver Trilha'}
+              <span>☰</span>
+              <span>{sidebarOpen ? 'Ocultar Trilha' : 'Trilha'}</span>
             </button>
-            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.78rem' }}>
-              {isMatematica ? 'Matemática' : 'Finanças'} / {moduloObj.titulo} / <strong style={{ color: 'var(--foreground)' }}>{aulaObj.titulo}</strong>
+            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.75rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {moduloObj.titulo}
             </span>
           </div>
 
-          <button
-            onClick={() => toggleLessonComplete(lessonId)}
-            className="bfa-btn"
-            style={{
-              backgroundColor: isDone ? '#059669' : 'var(--surface-strong)',
-              color: isDone ? '#FFFFFF' : 'var(--foreground)',
-              border: isDone ? '1px solid #059669' : '1px solid var(--border)',
-              padding: '0.55rem 1.15rem',
-              borderRadius: 'var(--radius-md)',
-              fontWeight: 700,
-              fontSize: '0.85rem'
-            }}
-          >
-            {isDone ? 'Concluída' : 'Marcar como Concluída'}
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <button
+              onClick={() => toggleLessonComplete(lessonId)}
+              className="bfa-btn"
+              style={{
+                backgroundColor: isDone ? '#059669' : 'var(--surface-strong)',
+                color: isDone ? '#FFFFFF' : 'var(--foreground)',
+                border: isDone ? '1px solid #059669' : '1px solid var(--border)',
+                padding: '0.45rem 0.95rem',
+                borderRadius: 'var(--radius-sm)',
+                fontWeight: 700,
+                fontSize: '0.82rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px'
+              }}
+            >
+              <span>{isDone ? '✓ Aula Concluída' : 'Marcar Concluída'}</span>
+            </button>
+          </div>
         </div>
 
-        {/* Audio Reader Accessibility */}
-        <AudioReader markdownContent={markdownContent} lessonTitle={aulaObj.titulo} />
-
-        {/* Briefing Technical Card */}
-        <div className="bfa-tech-card" style={{ marginBottom: '2rem', padding: '1.5rem 1.75rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.35rem' }}>
-            <span className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.72rem' }}>
-              OBJETIVO DA AULA
-            </span>
-          </div>
-          <h2 className="headline-punch" style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em', margin: '0.25rem 0 0.5rem 0' }}>
+        {/* Lesson Title & Audio Header */}
+        <div style={{ marginBottom: '1.5rem' }}>
+          <span className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.72rem', display: 'inline-block', marginBottom: '0.4rem' }}>
+            {isMatematica ? 'MATEMÁTICA APLICADA' : 'FINANÇAS & MERCADO'} · {moduloObj.titulo.toUpperCase()}
+          </span>
+          <h1 className="headline-punch" style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.35rem)', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.03em', margin: '0 0 0.75rem 0', lineHeight: 1.25 }}>
             {aulaObj.titulo}
-          </h2>
-          <p style={{ fontSize: '0.95rem', color: 'var(--muted-foreground)', margin: 0, lineHeight: 1.6 }}>
-            Estudo analítico com fundamentação teórica, resolução de casos práticos e modelagem aplicada para tomada de decisão financeira.
-          </p>
+          </h1>
+          <AudioReader markdownContent={markdownContent} lessonTitle={aulaObj.titulo} />
         </div>
 
         {/* Quick In-Lesson Segmented Mode Navigation Bar */}
@@ -289,36 +322,92 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
           return (
             <div>
-              {/* Top Segmented Tabs for Instant Access */}
-              <div className="bfa-tabs-segmented" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.85rem' }}>
+              {/* Top Integrated Segmented Tabs */}
+              <div
+                style={{
+                  display: 'flex',
+                  background: 'var(--surface-strong)',
+                  padding: '4px',
+                  borderRadius: 'var(--radius-md)',
+                  border: '1px solid var(--border)',
+                  marginBottom: '2rem',
+                  maxWidth: '540px',
+                  width: '100%'
+                }}
+              >
                 <button
                   type="button"
-                  className={`bfa-btn bfa-btn--sm ${activeTab === 'teoria' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
                   onClick={() => setActiveTab('teoria')}
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
+                  style={{
+                    flex: 1,
+                    padding: '0.55rem 0.75rem',
+                    fontSize: '0.82rem',
+                    fontWeight: activeTab === 'teoria' ? 800 : 600,
+                    borderRadius: 'var(--radius-sm)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    background: activeTab === 'teoria' ? 'var(--card)' : 'transparent',
+                    color: activeTab === 'teoria' ? 'var(--foreground)' : 'var(--muted-foreground)',
+                    boxShadow: activeTab === 'teoria' ? '0 1px 3px rgba(0, 0, 0, 0.12)' : 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    transition: 'all 0.15s ease'
+                  }}
                 >
-                  <BfaIcon name="book" size={14} />
+                  <BfaIcon name="book" size={13} />
                   <span>Teoria</span>
                 </button>
                 <button
                   type="button"
-                  className={`bfa-btn bfa-btn--sm ${activeTab === 'quiz' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
                   onClick={() => {
                     setActiveTab('quiz');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
+                  style={{
+                    flex: 1,
+                    padding: '0.55rem 0.75rem',
+                    fontSize: '0.82rem',
+                    fontWeight: activeTab === 'quiz' ? 800 : 600,
+                    borderRadius: 'var(--radius-sm)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    background: activeTab === 'quiz' ? 'var(--card)' : 'transparent',
+                    color: activeTab === 'quiz' ? 'var(--foreground)' : 'var(--muted-foreground)',
+                    boxShadow: activeTab === 'quiz' ? '0 1px 3px rgba(0, 0, 0, 0.12)' : 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    transition: 'all 0.15s ease'
+                  }}
                 >
-                  <BfaIcon name="target" size={14} />
+                  <BfaIcon name="target" size={13} />
                   <span>Exercícios ({lessonQuestions.length})</span>
                 </button>
                 <button
                   type="button"
-                  className={`bfa-btn bfa-btn--sm ${activeTab === 'forum' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
                   onClick={() => setActiveTab('forum')}
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
+                  style={{
+                    flex: 1,
+                    padding: '0.55rem 0.75rem',
+                    fontSize: '0.82rem',
+                    fontWeight: activeTab === 'forum' ? 800 : 600,
+                    borderRadius: 'var(--radius-sm)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    background: activeTab === 'forum' ? 'var(--card)' : 'transparent',
+                    color: activeTab === 'forum' ? 'var(--foreground)' : 'var(--muted-foreground)',
+                    boxShadow: activeTab === 'forum' ? '0 1px 3px rgba(0, 0, 0, 0.12)' : 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    transition: 'all 0.15s ease'
+                  }}
                 >
-                  <BfaIcon name="chat" size={14} />
+                  <BfaIcon name="chat" size={13} />
                   <span>Fórum</span>
                 </button>
               </div>
