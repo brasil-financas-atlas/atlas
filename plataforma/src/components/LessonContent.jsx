@@ -2,16 +2,7 @@ const { useState, useEffect, useContext, createContext, useMemo, useRef } = Reac
 
 function LessonContent({ markdownContent, lessonId = 'lc' }) {
   const containerRef = useRef(null);
-  const { cmsData, saveOverride } = useContext(AdminContext || createContext({}));
-
-  /* Não existe mais uma varredura de KaTeX no DOM depois da renderização.
-     Antes havia um renderMathInElement aqui com "$" como delimitador inline —
-     e em texto brasileiro isso é fatal: cada "R$" abre uma fórmula, então o
-     texto entre dois "R$" era renderizado como matemática. O aluno lia coisas
-     como "a cada R100𝑣𝑒𝑛𝑑𝑖𝑑𝑜𝑠,𝑅100vendidos,R 40 sobram".
-
-     Agora a matemática é convertida em HTML dentro de renderSingleBlock, antes
-     de chegar ao DOM. Nenhum "$" de dinheiro sobrevive para ser interpretado. */
+  const { cmsData } = useContext(AdminContext || createContext({}));
 
   const renderizarTex = (tex, emDestaque) => {
     if (!(window.katex && window.katex.renderToString)) return tex;
@@ -27,6 +18,47 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     }
   };
 
+  // Re-executa o Mermaid sempre que os blocos renderizarem
+  useEffect(() => {
+    if (window.mermaid && containerRef.current) {
+      try {
+        const theme = document.documentElement.getAttribute('data-theme') || 'brasil-atlas';
+        const isDark = theme.includes('dark');
+        
+        window.mermaid.initialize({
+          startOnLoad: false,
+          theme: isDark ? 'dark' : 'neutral',
+          securityLevel: 'loose',
+          fontFamily: 'Plus Jakarta Sans, sans-serif',
+          themeVariables: isDark ? {
+            darkMode: true,
+            background: '#0F172A',
+            primaryColor: '#1E293B',
+            primaryBorderColor: '#334155',
+            primaryTextColor: '#F8FAFC',
+            lineColor: '#38BDF8',
+            secondaryColor: '#059669',
+            tertiaryColor: '#1E293B'
+          } : {
+            primaryColor: '#F8FAFC',
+            primaryBorderColor: '#E2E8F0',
+            primaryTextColor: '#0F172A',
+            lineColor: '#0284C7',
+            secondaryColor: '#E6F4EA',
+            tertiaryColor: '#F1F5F9'
+          }
+        });
+
+        const mermaidNodes = containerRef.current.querySelectorAll('.mermaid');
+        if (mermaidNodes.length > 0) {
+          window.mermaid.run({ nodes: mermaidNodes });
+        }
+      } catch (err) {
+        console.warn('Erro ao processar diagramas Mermaid:', err);
+      }
+    }
+  });
+
   // Parse markdown into granular editable blocks
   const blocks = useMemo(() => {
     if (!markdownContent) return [];
@@ -40,7 +72,6 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
 
       const blockId = `${lessonId}-b${idx}`;
       
-      // Check if this block has an individual override
       const overrideVal = cmsData && cmsData.overrides ? cmsData.overrides[blockId] : null;
       const contentToUse = overrideVal !== null && overrideVal !== undefined ? overrideVal : trimmed;
 
@@ -60,6 +91,14 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     if (!rawText) return "";
     let formatted = rawText;
 
+    // 1. Interceptar blocos ```mermaid ... ```
+    const mermaidBlocks = [];
+    formatted = formatted.replace(/```mermaid\s*\n([\s\S]*?)```/g, (m, code) => {
+      mermaidBlocks.push(code.trim());
+      return `@@BFAMERMAID${mermaidBlocks.length - 1}@@`;
+    });
+
+    // 2. Render Admonitions
     formatted = formatted.replace(
       /!!!\s*(\w+)(?:\s*"([^"]+)")?\n([\s\S]*?)(?=\n!!!|\n#|\n\n\n|$)/g,
       (match, type, title, body) => {
@@ -68,8 +107,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
           note: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14l-1.5-6h-11L5 17z"/><path d="M9 11V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v7"/></svg>`,
           warning: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
           tip: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>`,
-          important: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
-          construcao: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`
+          important: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`
         };
         const iconSvg = iconSvgMap[type] || `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`;
         const bodyText = (window.marked && window.marked.parse) ? window.marked.parse(body.trim()) : body.trim();
@@ -84,7 +122,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       }
     );
 
-    // Render collapsible details: ??? type "title" or ???+ type "title"
+    // 3. Render collapsible details: ??? type "title" or ???+ type "title"
     formatted = formatted.replace(
       /\?\?\?(\+)?\s*(\w+)(?:\s*"([^"]+)")?\n([\s\S]*?)(?=\n\?\?\?|\n!!!|\n#|\n\n\n|$)/g,
       (match, isOpen, type, title, body) => {
@@ -114,26 +152,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       }
     );
 
-    /* ----------------------------------------------------------------------
-       Retira a matemática do caminho do Markdown, guarda cada fórmula, e só
-       recoloca já como HTML no fim. Três detalhes aqui não são estilo, são
-       correção de bug:
-
-       1. O marcador é `@@BFAMATHn@@`, não `___MATH_TOK_n___`. Em Markdown,
-          `___texto___` é negrito com itálico — o marcador antigo virava
-          `<em><strong>MATH_TOK_0</strong></em>`, a string original deixava de
-          existir, e o replace no fim falhava calado. Resultado: 511
-          "MATH_TOK_0" apareciam como texto cru nas unidades.
-
-       2. A recolocação usa FUNÇÃO como segundo argumento do replace. Com
-          string, `$$` significa "um $ literal" — então toda fórmula em
-          destaque era rebaixada para fórmula em linha. Havia 84 blocos `$$`
-          no conteúdo e zero renderizados em destaque no site.
-
-       3. O padrão inline recusa abrir depois de `R` e antes de espaço, senão
-          casa com o `R$` de dinheiro e transforma prosa em fórmula.
-       ---------------------------------------------------------------------- */
-
+    // 4. Salvar fórmulas KaTeX
     const formulas = [];
     const guardar = (tex, emDestaque) => {
       formulas.push({ tex, emDestaque });
@@ -141,27 +160,22 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     };
 
     formatted = formatted
-      // Destaque primeiro: senão o padrão inline abriria dentro de um `$$`.
       .replace(/\$\$([\s\S]*?)\$\$/g, (m, tex) => guardar(tex, true))
       .replace(/\\\[([\s\S]*?)\\\]/g, (m, tex) => guardar(tex, true))
       .replace(/\\\(([\s\S]*?)\\\)/g, (m, tex) => guardar(tex, false))
-      // Inline: `$` não precedido de `R` nem de `\`, e não seguido de espaço.
-      // O corpo aceita `\$` escapado, que o conteúdo usa para cifrão dentro
-      // de fórmula.
       .replace(/(?<![\\R])\$(?!\s)((?:[^$\n\\]|\\[\s\S])+?)\$/g, (m, tex) => guardar(tex, false));
 
     let parsedHtml = (window.marked && window.marked.parse) ? window.marked.parse(formatted) : formatted;
 
-    // Hard-fail de segurança: Se o DOMPurify estiver disponível, sanitiza o HTML renderizado.
-    // Caso o script CDN do DOMPurify falhe ou seja bloqueado, lança um aviso e sanitiza tags por segurança.
+    // Sanitização com DOMPurify
     if (window.DOMPurify && window.DOMPurify.sanitize) {
       parsedHtml = window.DOMPurify.sanitize(parsedHtml);
     } else {
-      console.error('[Security Warning] DOMPurify não carregado! Ignorando injeção bruta de HTML.');
       parsedHtml = parsedHtml.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    return parsedHtml.replace(/@@BFAMATH(\d+)@@/g, (marcador, i) => {
+    // 5. Recolocar KaTeX
+    parsedHtml = parsedHtml.replace(/@@BFAMATH(\d+)@@/g, (marcador, i) => {
       const f = formulas[Number(i)];
       if (!f) return marcador;
       const html = renderizarTex(f.tex, f.emDestaque);
@@ -170,6 +184,17 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       }
       return `<span class="bfa-math-inline">${html}</span>`;
     });
+
+    // 6. Recolocar diagramas Mermaid
+    parsedHtml = parsedHtml.replace(/@@BFAMERMAID(\d+)@@/g, (marcador, i) => {
+      const code = mermaidBlocks[Number(i)];
+      if (!code) return marcador;
+      return `<div class="mermaid-wrapper" style="margin: 1.5rem 0; overflow-x: auto; background: var(--surface-strong); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
+        <div class="mermaid">${code}</div>
+      </div>`;
+    });
+
+    return parsedHtml;
   };
 
   return (
@@ -187,3 +212,5 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     </div>
   );
 }
+
+window.LessonContent = LessonContent;
