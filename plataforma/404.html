@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brasil Finanças Atlas — Trilhas abertas de matemática e finanças</title>
+  <meta name="description" content="Matemática e finanças explicadas de um jeito simples, para quem está no ensino médio e nunca estudou o assunto. Gratuito, sem enrolação e no seu ritmo." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet" />
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+
+  <!-- App Styles -->
+  <link rel="stylesheet" href="./src/styles/globals.css" />
+  <link rel="stylesheet" href="./src/styles/typography.css" />
+  <link rel="stylesheet" href="./src/styles/components.css" />
+  <link rel="stylesheet" href="./src/styles/animations.css" />
+  <link rel="stylesheet" href="./src/styles/admin.css" />
+  <link rel="stylesheet" href="./src/styles/themes.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- React + ReactDOM (CDN) -->
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Global Error Handler -->
+  <script>
+    window.addEventListener('error', function(e) {
+      document.body.innerHTML = '<div style="color:red; padding:20px; font-family:monospace; background:white; z-index:9999; position:relative;"><h3>App Error</h3><p>' + e.message + '</p><pre>' + (e.error ? e.error.stack : '') + '</pre></div>';
+    });
+  </script>
+
+  <!-- Babel Standalone (JSX transform) -->
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.min.js"></script>
+
+  <!-- KaTeX -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Marked (Markdown parser) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@13/marked.min.js"></script>
+
+  <!-- DOMPurify (sanitize HTML) -->
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+
+  <!-- Chart.js (Financial & Statistical Charts) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
+  <!-- Mermaid.js (Diagrams & Flowcharts) -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+
+  <!-- Supabase JS Client (BaaS) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./src/utils/env.js"></script>
+  <script src="./src/utils/supabaseClient.js"></script>
+
+  <!-- Data & Utilities -->
+  <script type="text/babel" src="./src/data/financasData.js?v=20260828_02"></script>
+  <script type="text/babel" src="./src/data/matematicaData.js?v=20260828_02"></script>
+  <script type="text/babel" src="./src/data/simuladosData.js?v=20260828_02"></script>
+  <script type="text/babel" src="./src/data/contentData.js?v=20260828_02"></script>
+  <script type="text/babel" src="./src/utils/helpers.js?v=20260828_02"></script>
+  
+  <!-- Contexts -->
+  <script type="text/babel" src="./src/context/AdminContext.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/context/ProgressContext.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/router.jsx?v=20260828_02"></script>
+
+  <!-- Components -->
+  <script type="text/babel" src="./src/components/Icons.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/ThemeSelector.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/MarketTickerRibbon.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/HeroCompoundVisualizer.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/LessonVisualizers.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/NavbarFooter.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/CookieConsent.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/EditableBlock.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/LessonContent.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/VideoAndForum.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/QuizEngine.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/SimuladorCarteiraInvestimentos.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/SimuladosEngine.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/RankingLeaderboard.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/BadgesConquistas.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/CalculadoraJurosCompostos.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/AudioReader.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/components/CertificadoGenerator.jsx?v=20260828_02"></script>
+
+  <!-- Pages -->
+  <script type="text/babel" src="./src/pages/Home.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/pages/DisciplinaOverview.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/pages/AulaPage.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/pages/ExtraPages.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/pages/AdminPages.jsx?v=20260828_02"></script>
+
+  <!-- App Entry -->
+  <script type="text/babel" src="./src/App.jsx?v=20260828_02"></script>
+  <script type="text/babel" src="./src/main.jsx?v=20260828_02"></script>
+</body>
+</html>

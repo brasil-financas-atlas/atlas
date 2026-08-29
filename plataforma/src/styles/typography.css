@@ -1,0 +1,190 @@
+/* ==========================================================================
+   Brasil Finanças Atlas (BFA) — High-End Modern Typography System
+   Base: Plus Jakarta Sans (UI & Headlines) + JetBrains Mono (Financial Data)
+   ========================================================================== */
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+}
+
+h1 { font-size: 2.35rem; margin-bottom: 1.25rem; }
+h2 { font-size: 1.85rem; margin-top: 2.25rem; margin-bottom: 1rem; }
+h3 { font-size: 1.35rem; margin-top: 1.75rem; margin-bottom: 0.85rem; }
+h4 { font-size: 1.15rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.headline-punch {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.tabular-numbers {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+p {
+  color: var(--foreground);
+  line-height: 1.85;
+  margin-bottom: 1.35rem;
+}
+
+code, pre, kbd, samp {
+  font-family: var(--font-mono);
+}
+
+.bfa-code-block {
+  font-family: var(--font-mono);
+  background-color: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.35rem;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+
+/* ── Math & Calculation Spacing System ─────────────────────────────────── */
+.bfa-math-inline {
+  display: inline-block;
+  margin: 0 0.32em;
+  padding: 0 0.08em;
+  vertical-align: baseline;
+}
+
+.bfa-math-block {
+  margin: 1.75rem 0;
+  overflow-x: auto;
+}
+
+.katex {
+  font-size: 1.06em;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.katex-display {
+  background-color: var(--surface-strong);
+  border-left: 4px solid var(--track-math);
+  padding: 1.35rem 1.75rem;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin: 1.85rem 0 !important;
+  overflow-x: auto;
+  line-height: 1.95;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark-obsidian"] .katex-display,
+.dark .katex-display {
+  background-color: rgba(56, 189, 248, 0.08);
+  border-left-color: #38BDF8;
+}
+
+/* ── Lesson Article Typography & Spacing ──────────────────────────────── */
+.bfa-lesson-article,
+.bfa-markdown-body {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+}
+
+.bfa-markdown-body h2 {
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+}
+
+.bfa-markdown-body h3 {
+  font-size: 1.3rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+  margin-top: 2.35rem;
+  margin-bottom: 1rem;
+  color: var(--foreground);
+}
+
+.bfa-markdown-body h4 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  margin-top: 1.85rem;
+  margin-bottom: 0.75rem;
+  color: var(--foreground);
+}
+
+.bfa-markdown-body p {
+  margin-top: 0;
+  margin-bottom: 1.6rem;
+  line-height: 1.9;
+  color: var(--foreground);
+}
+
+.bfa-markdown-body ul,
+.bfa-markdown-body ol {
+  padding-left: 1.85rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1.65rem;
+}
+
+.bfa-markdown-body li {
+  margin-bottom: 0.85rem;
+  line-height: 1.85;
+  color: var(--foreground);
+}
+
+.bfa-markdown-body li > p {
+  margin-bottom: 0.5rem;
+}
+
+.bfa-markdown-body strong {
+  font-weight: 800;
+  color: var(--foreground);
+}
+
+.bfa-markdown-body blockquote {
+  margin: 2rem 0;
+  padding: 1.15rem 1.65rem;
+  border-left: 4px solid var(--track-finance);
+  background: var(--surface-strong);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--foreground);
+  font-size: 1.02rem;
+}
+
+.bfa-markdown-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 3rem 0;
+}
+
+.bfa-markdown-body code:not(.katex code) {
+  padding: 0.2rem 0.45rem;
+  margin: 0 0.25rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--surface-strong);
+  border: 1px solid var(--border);
+  font-size: 0.88em;
+  font-family: var(--font-mono);
+}

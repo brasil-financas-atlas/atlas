@@ -1,0 +1,145 @@
+/* ══════════════════════════════════════════════════════════════════════
+   🎨  PAINEL DE CONTROLE DO DESIGN — Brasil Finanças Atlas
+   ══════════════════════════════════════════════════════════════════════
+
+   Este é O arquivo das cores e do visual do site.
+   Você NÃO precisa saber programar para mexer aqui.
+
+   ─── COMO USAR ────────────────────────────────────────────────────────
+   1. Ache a linha que quer mudar (cada uma tem nome em português).
+   2. Troque só o código da cor — o pedacinho que começa com #.
+   3. Salve o arquivo. Se o preview local estiver rodando, o site
+      atualiza sozinho no navegador.
+
+   ─── ONDE PEGAR CÓDIGO DE COR ─────────────────────────────────────────
+   • Paletas prontas:  https://coolors.co
+   • Escolher na mão:  https://htmlcolorcodes.com/color-picker/
+   Um código de cor é sempre # seguido de 6 caracteres. Ex.: #011e50
+
+   ─── REGRAS DE OURO (pra não quebrar nada) ────────────────────────────
+   ✔ Mexa só no valor (o #xxxxxx ou o número).
+   ✘ Não apague o ponto-e-vírgula ( ; ) no fim da linha.
+   ✘ Não apague os dois tracinhos ( -- ) do começo do nome.
+   ✘ Não renomeie as variáveis — o resto do site depende desses nomes.
+   💡 Quebrou? Ctrl+Z desfaz. Ou `git checkout docs/stylesheets/design.css`
+      volta o arquivo ao último estado salvo no Git.
+   ══════════════════════════════════════════════════════════════════════ */
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   1. CORES PRINCIPAIS (modo claro)
+   ══════════════════════════════════════════════════════════════════════ */
+:root {
+
+  /* A cor da marca. Aparece no topo do site, nos títulos e nos botões. */
+  --bfa-cor-principal:        #011e50;   /* azul-marinho */
+
+  /* Variações da cor principal (mais clara e mais escura).
+     Dica: use o color-picker e mova só o brilho. */
+  --bfa-cor-principal-clara:  #0a2d6e;
+  --bfa-cor-principal-escura: #010f2a;
+
+  /* A cor de destaque. Usada em links, hover, detalhes e chamadas. */
+  --bfa-cor-destaque:         #ca9e43;   /* dourado */
+  --bfa-cor-destaque-clara:   #e8c06a;
+
+  /* Fundo geral da página (o "papel de parede" atrás do conteúdo). */
+  --bfa-cor-fundo:            #f7f8fc;
+
+  /* Fundo das caixas de conteúdo e dos cards. Normalmente branco. */
+  --bfa-cor-caixa:            #ffffff;
+
+  /* Cor do texto comum e do texto secundário (mais apagado). */
+  --bfa-cor-texto:            #1a1f36;
+  --bfa-cor-texto-suave:      #6b7280;
+
+  /* Cor das linhas e bordas finas. */
+  --bfa-cor-borda:            #e2e6f0;
+
+  /* A barra do topo do site (onde fica o nome e a busca). */
+  --bfa-cor-header:           #011e50;
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   2. CORES DAS MATÉRIAS
+   Cada matéria tem sua cor. Ela pinta a barrinha de cima do card
+   na página inicial — ajuda o aluno a se localizar.
+   ══════════════════════════════════════════════════════════════════════ */
+
+  --bfa-cor-matematica:       #2f6fb0;   /* azul */
+  --bfa-cor-financas:         #1f9d6b;   /* verde */
+  --bfa-cor-brhsic:           #ca9e43;   /* dourado */
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   3. FORMATO E PROFUNDIDADE
+   ══════════════════════════════════════════════════════════════════════ */
+
+  /* Quanto os cantos são arredondados.
+     0px = quadrado   |   12px = padrão   |   24px = bem redondinho */
+  --bfa-arredondamento:       14px;
+  --bfa-arredondamento-p:     8px;    /* cantos pequenos (código, tags) */
+
+  /* Sombra das caixas. Deixe suave — sombra forte deixa o site pesado. */
+  --bfa-sombra:               0 2px 10px rgba(1, 30, 80, 0.08);
+  --bfa-sombra-forte:         0 8px 24px rgba(1, 30, 80, 0.15);
+
+  /* Quanto o card "levanta" quando o mouse passa por cima.
+     0px = não levanta   |   -4px = padrão   |   -8px = bem saltitante */
+  --bfa-levantar-hover:       -4px;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   4. MODO ESCURO
+   Quando o aluno clica no botãozinho de lua/sol lá em cima.
+   Mesmos nomes, cores diferentes.
+   ══════════════════════════════════════════════════════════════════════ */
+[data-md-color-scheme="slate"] {
+
+  --bfa-cor-principal:        #ca9e43;   /* no escuro, o dourado lidera */
+  --bfa-cor-principal-clara:  #e8c06a;
+  --bfa-cor-principal-escura: #a07830;
+
+  --bfa-cor-destaque:         #e8c06a;
+  --bfa-cor-destaque-clara:   #f2d894;
+
+  --bfa-cor-fundo:            #071840;
+  --bfa-cor-caixa:            #0d2a5e;
+
+  --bfa-cor-texto:            #e8eaf6;
+  --bfa-cor-texto-suave:      #a8b2d1;
+  --bfa-cor-borda:            #1a3a7a;
+
+  --bfa-cor-header:           #010f2a;
+
+  --bfa-cor-matematica:       #6ba8e5;
+  --bfa-cor-financas:         #4ecfa0;
+  --bfa-cor-brhsic:           #e8c06a;
+
+  --bfa-sombra:               0 2px 10px rgba(0, 0, 0, 0.3);
+  --bfa-sombra-forte:         0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   5. LIGAÇÃO COM O TEMA (não precisa mexer)
+   Aqui as cores acima são entregues ao motor do site.
+   ══════════════════════════════════════════════════════════════════════ */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:             var(--bfa-cor-principal);
+  --md-primary-fg-color--light:      var(--bfa-cor-principal-clara);
+  --md-primary-fg-color--dark:       var(--bfa-cor-principal-escura);
+  --md-primary-bg-color:             #ffffff;
+  --md-accent-fg-color:              var(--bfa-cor-destaque);
+  --md-accent-fg-color--transparent: rgba(202, 158, 67, 0.15);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:             var(--bfa-cor-principal);
+  --md-primary-fg-color--light:      var(--bfa-cor-principal-clara);
+  --md-primary-fg-color--dark:       var(--bfa-cor-principal-escura);
+  --md-primary-bg-color:             #011e50;
+  --md-accent-fg-color:              var(--bfa-cor-destaque);
+  --md-accent-fg-color--transparent: rgba(232, 192, 106, 0.15);
+}
