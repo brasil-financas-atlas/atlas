@@ -8,6 +8,40 @@ Alguém precisa organizar o mercado financeiro, definir regras, punir fraudes e 
 
 O sistema financeiro brasileiro tem três camadas: quem define a política monetária (Banco Central), quem regula o mercado de capitais (CVM), e quem operacionaliza a negociação de ativos (B3 e corretoras). Cada um tem um papel diferente.
 
+```mermaid
+flowchart TD
+    subgraph NORMATIVO["1. Órgãos Normativos (Diretrizes)"]
+        CMN["CMN - Conselho Monetário Nacional"]
+    end
+
+    subgraph SUPERVISOR["2. Entidades Supervisoras (Fiscalização)"]
+        BACEN["BACEN (Banco Central do Brasil)"]
+        CVM["CVM (Comissão de Valores Mobiliários)"]
+    end
+
+    subgraph OPERADOR["3. Operadores e Infraestrutura"]
+        B3["B3 (Bolsa de Valores & Liquidação)"]
+        BANCOS["Bancos Comerciais e Múltiplos"]
+        CORRETORAS["Corretoras & Distribuidoras (DTVM)"]
+    end
+
+    subgraph MERCADO["4. Mercado e Sociedade"]
+        INVESTIDOR["Investidores e Poupadores"]
+        EMPRESAS["Empresas e Tomadores de Recursos"]
+    end
+
+    CMN --> BACEN
+    CMN --> CVM
+    BACEN --> BANCOS
+    BACEN --> CORRETORAS
+    CVM --> B3
+    CVM --> CORRETORAS
+    CORRETORAS --> B3
+    BANCOS --> INVESTIDOR
+    INVESTIDOR --> CORRETORAS
+    B3 --> EMPRESAS
+```
+
 ## Conceitos essenciais
 
 | Instituição | O que faz |

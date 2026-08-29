@@ -36,6 +36,17 @@ Cada bilhete "vale" −R$ 4: quem joga muitas vezes perde, em média, R$ 4 por j
 
 ## Análise de cenários: o valor esperado do analista
 
+```mermaid
+flowchart LR
+    DECISAO["Decisão de Investimento"] --> OTIMISTA["Cenário Otimista (p = 25%)<br/>Retorno: +35%"]
+    DECISAO --> BASE["Cenário Base (p = 50%)<br/>Retorno: +12%"]
+    DECISAO --> PESSIMISTA["Cenário Pessimista (p = 25%)<br/>Retorno: -10%"]
+    
+    OTIMISTA --> CALC["Valor Esperado Ponderado<br/>E[X] = 0,25(35) + 0,50(12) + 0,25(-10) = +12,25%"]
+    BASE --> CALC
+    PESSIMISTA --> CALC
+```
+
 É assim que analistas usam $E[X]$ na prática (e que a BRHSIC espera ver num pitch):
 
 | Cenário | Probabilidade | Retorno da ação |

@@ -27,6 +27,15 @@ O valuation por FCD aplica essa conta a **todos** os fluxos de caixa futuros da 
 
 ## A receita do FCD em 4 passos
 
+```mermaid
+flowchart LR
+    P1["1. Projeção FCL (Anos 1 a 5)<br/>Receitas, Margens e Capex"] --> P2["2. Definição da Taxa WACC (k)<br/>Custo de Oportunidade + Risco"]
+    P2 --> P3["3. Desconto a Valor Presente (VP)<br/>VP = FCL / (1+k)^t"]
+    P3 --> P4["4. Perpetuidade de Gordon (VP_perp)<br/>Fluxos além do ano 5"]
+    P4 --> P5["5. Valor da Firma (EV)<br/>Soma de todos os fluxos descontados"]
+    P5 --> P6["6. Preço Justo da Ação<br/>(EV - Dívida Líquida) / Ações"]
+```
+
 1. **Projete** o fluxo de caixa livre dos próximos anos (ex.: 5 anos), com premissas realistas de crescimento.
 2. **Escolha a taxa de desconto**: no mínimo, o que você ganharia sem risco (Tesouro) **mais** um prêmio pelo risco da empresa.
 3. **Desconte** cada fluxo: $VP = FC_n \div (1+i)^n$. Some os VPs. Estime a perpetuidade para o que vem depois.

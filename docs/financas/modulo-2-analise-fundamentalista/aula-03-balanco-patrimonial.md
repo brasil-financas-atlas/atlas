@@ -14,6 +14,22 @@ $$
 
 Tudo o que a empresa tem foi financiado por uma de duas fontes: dinheiro de terceiros (passivo) ou dinheiro dos sócios (patrimônio líquido). O balanço mostra de onde veio o dinheiro e onde ele está aplicado.
 
+```mermaid
+flowchart LR
+    subgraph ATIVOS["ATIVO TOTAL (Onde o Capital Está Aplicado)"]
+        AC["Ativo Circulante (Até 12m)<br/>• Caixa e Bancos<br/>• Contas a Receber<br/>• Estoques"]
+        ANC["Ativo Não Circulante (+12m)<br/>• Fábricas, Imóveis e Frotas<br/>• Marcas & Intangíveis"]
+    end
+
+    subgraph PASSIVOS["ORIGENS DE CAPITAL (Quem Financiou)"]
+        PC["Passivo Circulante (Até 12m)<br/>• Fornecedores e Empréstimos"]
+        PNC["Passivo Não Circulante (+12m)<br/>• Dívidas Bancárias e Debêntures"]
+        PL["Patrimônio Líquido (Sócios)<br/>• Capital Social & Lucros Acumulados"]
+    end
+
+    ATIVOS --- PASSIVOS
+```
+
 ## Conceitos essenciais
 
 | Conceito | Significado simples |
