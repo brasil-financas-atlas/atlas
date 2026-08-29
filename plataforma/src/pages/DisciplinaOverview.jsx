@@ -282,7 +282,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                       transition: 'all 0.15s ease'
                     }}
                   >
-                    <span>📖</span>
+                    <BfaIcon name="book" size={13} color="var(--muted-foreground)" />
                     <span>Introdução do Módulo</span>
                   </a>
 
