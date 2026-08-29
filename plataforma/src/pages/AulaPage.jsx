@@ -91,7 +91,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                       transition: 'all 0.15s ease'
                     }}
                   >
-                    <span>📖</span>
+                    <BfaIcon name="book" size={13} color="var(--muted-foreground)" />
                     <span>Introdução do Módulo</span>
                   </a>
                   {m.aulas.map((a, aIdx) => {
@@ -140,7 +140,9 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', paddingBottom: '1.25rem', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
             <button
+              type="button"
               onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="bfa-btn"
               style={{
                 cursor: 'pointer',
                 border: '1px solid var(--border)',
@@ -196,7 +198,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
         {/* Quick In-Lesson TOC Bar */}
         <div className="bfa-quick-toc">
-          <span className="bfa-quick-toc__label">Roteiro da Aula:</span>
+          <span className="bfa-quick-toc__label">Navegação da Aula:</span>
           <button
             type="button"
             className="bfa-quick-toc__chip"
@@ -205,7 +207,8 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }}
           >
-            📖 Teoria & Fórmulas
+            <BfaIcon name="book" size={13} />
+            <span>Teoria & Fundamentação</span>
           </button>
           <button
             type="button"
@@ -215,7 +218,8 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }}
           >
-            🎯 Quiz Interativo (Khan)
+            <BfaIcon name="target" size={13} />
+            <span>Exercícios de Fixação</span>
           </button>
           <button
             type="button"
@@ -225,7 +229,8 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }}
           >
-            💬 Fórum de Dúvidas
+            <BfaIcon name="chat" size={13} />
+            <span>Fórum & Dúvidas</span>
           </button>
         </div>
 
