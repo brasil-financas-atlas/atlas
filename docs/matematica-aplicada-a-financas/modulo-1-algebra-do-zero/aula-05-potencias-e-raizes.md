@@ -37,8 +37,7 @@ $$
 
 Raiz cúbica do fator de crescimento, menos 1, dá a taxa por período.
 
-!!! note "Em construção"
-    Exemplo resolvido, mini quiz e PBL serão adicionados em breve.
+
 
 ## Resumo
 

@@ -38,8 +38,7 @@ Se a Selic foi de 10% para 12%, ela subiu **2 pontos percentuais** — não 2%. 
 
 Banco e governo adoram misturar os dois pra confundir. Saber a diferença é o primeiro passo pra não cair nessa.
 
-!!! note "Em construção"
-    Exemplo resolvido, mini quiz e PBL serão adicionados em breve.
+
 
 ## Resumo
 

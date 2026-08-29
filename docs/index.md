@@ -39,14 +39,14 @@ Matemática e finanças explicadas de um jeito simples, para quem está no ensin
 
     [Ver os módulos](financas/index.md)
 
--   <span class="bfa-card__icone">🏆</span> **Preparação BRHSIC** <span class="selo-construcao">Em breve</span>
+-   <span class="bfa-card__icone">🏆</span> **Preparação BRHSIC** <span class="selo-pronto">Ativo</span>
     { .card-brhsic }
 
     ---
 
     Treino direcionado para a maior competição de investimentos do ensino médio do Brasil: relatório, valuation e pitch.
 
-    [Espiar o que vem](preparacao-brhsic/index.md)
+    [Acessar Guia](preparacao-brhsic/index.md)
 
 </div>
 
