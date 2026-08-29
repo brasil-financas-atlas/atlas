@@ -6,6 +6,7 @@ function Navbar() {
     useContext(AdminContext || createContext({}));
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isDark = currentTheme === 'dark-obsidian' || currentTheme === 'dark';
 
@@ -177,11 +178,48 @@ function Navbar() {
           })}
         </nav>
 
+        {/* Quick mobile track pills */}
+        <div className="bfa-mobile-quick-tracks" style={{ display: 'none', alignItems: 'center', gap: '0.35rem' }}>
+          <a
+            href="#/matematica"
+            className="mono-tag"
+            style={{
+              color: currentPath.startsWith('/matematica') ? '#FFFFFF' : 'var(--foreground)',
+              background: currentPath.startsWith('/matematica') ? 'var(--track-math)' : 'var(--surface-strong)',
+              border: '1px solid var(--border)',
+              padding: '0.35rem 0.6rem',
+              borderRadius: '9999px',
+              textDecoration: 'none',
+              fontSize: '0.72rem',
+              fontWeight: 700
+            }}
+          >
+            Matemática
+          </a>
+          <a
+            href="#/financas"
+            className="mono-tag"
+            style={{
+              color: currentPath.startsWith('/financas') ? '#FFFFFF' : 'var(--foreground)',
+              background: currentPath.startsWith('/financas') ? 'var(--track-finance)' : 'var(--surface-strong)',
+              border: '1px solid var(--border)',
+              padding: '0.35rem 0.6rem',
+              borderRadius: '9999px',
+              textDecoration: 'none',
+              fontSize: '0.72rem',
+              fontWeight: 700
+            }}
+          >
+            Finanças
+          </a>
+        </div>
+
         <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          {/* Botão de Alternância Dark/Light */}
+          {/* Botão de Alternância Dark/Light (Desktop) */}
           <button
             type="button"
             onClick={toggleDarkLight}
+            className="navbar-theme-btn"
             title={isDark ? "Mudar para modo claro" : "Mudar para modo escuro"}
             style={{
               display: 'inline-flex',
@@ -223,6 +261,16 @@ function Navbar() {
             )}
           </button>
 
+          {/* Botão Hamburger Mobile */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="bfa-mobile-nav-toggle"
+            aria-label="Abrir menu de funções"
+          >
+            {mobileMenuOpen ? '✕' : '☰'}
+          </button>
+
           {adminUser ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               {isAdmin && (
@@ -241,20 +289,140 @@ function Navbar() {
                 </button>
               )}
               <a href="#/admin" className="nav-link active">
-                Admin ({adminUser.name || adminUser.email})
+                Admin
               </a>
-              <button onClick={logout} className="nav-link" title="Sair">
-                Sair
-              </button>
             </div>
           ) : (
-            <a href="#/admin/login" className="btn-primary" style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem', backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)' }}>
+            <a href="#/admin/login" className="btn-primary navbar-admin-btn" style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem', backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)' }}>
               Admin
             </a>
           )}
         </div>
 
       </div>
+
+      {/* Mobile Drawer Modal (Elimina a necessidade de scrollar a barra de cima) */}
+      {mobileMenuOpen && (
+        <>
+          <div
+            className="bfa-mobile-nav-backdrop"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <div className="bfa-mobile-nav-drawer">
+            <div className="bfa-mobile-nav-header">
+              <span className="mono-tag" style={{ color: 'var(--track-finance)', fontWeight: 800 }}>
+                EXPLORAR O ATLAS
+              </span>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: 'var(--foreground)',
+                  fontSize: '1.25rem',
+                  cursor: 'pointer',
+                  padding: '0.3rem 0.6rem',
+                  lineHeight: 1
+                }}
+                aria-label="Fechar menu"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="bfa-mobile-nav-content">
+              {/* Grupo 1: Trilhas */}
+              <div className="bfa-mobile-nav-group">
+                <div className="bfa-mobile-nav-grouptitle">TRILHAS DE ESTUDO</div>
+                <a href="#/matematica" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                  <span className="mono-tag" style={{ color: 'var(--track-math)', fontWeight: 800 }}>01</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Matemática Aplicada</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Álgebra, Finanças, Probabilidade e Estatística</div>
+                  </div>
+                  <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                </a>
+                <a href="#/financas" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                  <span className="mono-tag" style={{ color: 'var(--track-finance)', fontWeight: 800 }}>02</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Finanças & Mercado</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Sistema Financeiro, Ações, FIIs e Contabilidade</div>
+                  </div>
+                  <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                </a>
+                <a href="#/preparacao-brhsic" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                  <span className="mono-tag" style={{ color: 'var(--track-brhsic)', fontWeight: 800 }}>03</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Olimpíada BRHSIC</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Guia de Equity Research, DCF e Pitch</div>
+                  </div>
+                  <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                </a>
+              </div>
+
+              {/* Grupo 2: Ferramentas */}
+              <div className="bfa-mobile-nav-group">
+                <div className="bfa-mobile-nav-grouptitle">FERRAMENTAS & TREINAMENTO</div>
+                <a href="#/simulador-carteira" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                  <span style={{ fontSize: '1.1rem' }}>📊</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Simulador de Carteira</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Alocação e projeção de renda passiva</div>
+                  </div>
+                  <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                </a>
+                <a href="#/simulados" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                  <span style={{ fontSize: '1.1rem' }}>⏱️</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Simulados Cronometrados</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Provas reais com gabarito passo a passo</div>
+                  </div>
+                  <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                </a>
+                <a href="#/exercicios" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                  <span style={{ fontSize: '1.1rem' }}>📝</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Banco de Exercícios</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Questões de fixação comentadas</div>
+                  </div>
+                  <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                </a>
+              </div>
+
+              {/* Grupo 3: Institucional */}
+              <div className="bfa-mobile-nav-group">
+                <div className="bfa-mobile-nav-grouptitle">INSTITUCIONAL</div>
+                <a href="#/sobre" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                  <span style={{ fontSize: '1.1rem' }}>🏛️</span>
+                  <div style={{ flex: 1, fontWeight: 700, color: 'var(--foreground)' }}>Sobre o Atlas & NIF</div>
+                  <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                </a>
+                <a href="#/cronograma" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                  <span style={{ fontSize: '1.1rem' }}>📅</span>
+                  <div style={{ flex: 1, fontWeight: 700, color: 'var(--foreground)' }}>Cronograma de Estudos</div>
+                  <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                </a>
+              </div>
+
+              {/* Rodapé do Menu */}
+              <div style={{ marginTop: '1.5rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <button
+                  type="button"
+                  onClick={toggleDarkLight}
+                  className="bfa-btn bfa-btn--ghost bfa-btn--sm"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem' }}
+                >
+                  <span>{isDark ? '☀️ Modo Claro' : '🌙 Modo Escuro'}</span>
+                </button>
+                <a href="#/admin/login" onClick={() => setMobileMenuOpen(false)} className="mono-tag" style={{ color: 'var(--muted-foreground)', textDecoration: 'none', fontSize: '0.75rem' }}>
+                  Área do Professor →
+                </a>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </header>
     </>
   );

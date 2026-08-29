@@ -212,11 +212,14 @@ function DisciplinaOverview({ subjectKey }) {
 function ModuloIntroPage({ subjectKey, moduloSlug }) {
   const { EXACT_CONTENT } = window;
   const { completedLessons } = useContext(ProgressContext || createContext({}));
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 768);
   const [expandedMods, setExpandedMods] = useState({ [moduloSlug]: true });
 
   useEffect(() => {
     setExpandedMods({ [moduloSlug]: true });
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setSidebarOpen(false);
+    }
   }, [moduloSlug]);
 
   const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
@@ -240,15 +243,41 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
 
   return (
     <div className="aula-layout">
+      {/* Mobile Sidebar Backdrop */}
+      {sidebarOpen && (
+        <div
+          className="aula-sidebar-backdrop"
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Sidebar - Curriculum Tree */}
       <aside className={`aula-sidebar ${!sidebarOpen ? 'closed' : ''}`} style={{ borderRight: '1px solid var(--border)', background: 'var(--card)' }}>
-        <div style={{ padding: '1.15rem 1.25rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <a href={`#/${subjectKey}`} className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.78rem', textDecoration: 'none' }}>
+        <div style={{ padding: '0.85rem 1rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <a href={`#/${subjectKey}`} className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.75rem', textDecoration: 'none' }}>
             ← Voltar para {isMatematica ? 'Matemática' : 'Finanças'}
           </a>
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(false)}
+            className="aula-sidebar-close-btn"
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--muted-foreground)',
+              fontSize: '1.1rem',
+              cursor: 'pointer',
+              padding: '0.2rem 0.4rem',
+              lineHeight: 1
+            }}
+            aria-label="Fechar menu"
+          >
+            ✕
+          </button>
         </div>
 
-        <div className="aula-sidebar-content" style={{ padding: '1rem 0.85rem' }}>
+        <div className="aula-sidebar-content" style={{ padding: '0.75rem 0.65rem' }}>
           {subjectData.modulos.map((m, idx) => {
             const isCurrentMod = m.slug === moduloSlug;
             const isExpanded = !!expandedMods[m.slug];
@@ -260,7 +289,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
               <div
                 key={m.slug}
                 style={{
-                  marginBottom: '0.85rem',
+                  marginBottom: '0.65rem',
                   border: isCurrentMod ? `1px solid ${trackColor}40` : '1px solid var(--border)',
                   borderRadius: 'var(--radius-md)',
                   background: isCurrentMod ? 'var(--surface-strong)' : 'var(--card)',
@@ -272,7 +301,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                 <div
                   onClick={() => setExpandedMods(prev => ({ ...prev, [m.slug]: !prev[m.slug] }))}
                   style={{
-                    padding: '0.75rem 0.85rem',
+                    padding: '0.65rem 0.75rem',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -293,7 +322,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                         </span>
                       )}
                     </div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--foreground)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {m.titulo}
                     </div>
                   </div>
@@ -314,6 +343,11 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                     {/* Link da Introdução do Módulo */}
                     <a
                       href={`#/${subjectKey}/${m.slug}`}
+                      onClick={() => {
+                        if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                          setSidebarOpen(false);
+                        }
+                      }}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -324,7 +358,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                         borderLeft: isCurrentMod ? `3px solid ${trackColor}` : '3px solid transparent',
                         boxShadow: isCurrentMod ? '0 1px 4px rgba(0, 0, 0, 0.08)' : 'none',
                         color: isCurrentMod ? 'var(--foreground)' : 'var(--muted-foreground)',
-                        padding: '0.45rem 0.6rem',
+                        padding: '0.4rem 0.6rem',
                         borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
                         textDecoration: 'none'
                       }}
@@ -345,6 +379,11 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                         <a
                           key={a.slug}
                           href={`#/${subjectKey}/${m.slug}/${a.slug}`}
+                          onClick={() => {
+                            if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                              setSidebarOpen(false);
+                            }
+                          }}
                           style={{
                             display: 'flex',
                             alignItems: 'center',
