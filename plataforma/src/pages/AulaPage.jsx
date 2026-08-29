@@ -207,11 +207,11 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                             alignItems: 'center',
                             justifyContent: 'space-between',
                             fontSize: '0.82rem',
-                            fontWeight: isCurrent ? 800 : 500,
-                            backgroundColor: isCurrent ? 'var(--card)' : 'transparent',
-                            borderLeft: isCurrent ? `3px solid ${trackColor}` : '3px solid transparent',
-                            boxShadow: isCurrent ? '0 1px 4px rgba(0, 0, 0, 0.08)' : 'none',
-                            color: isCurrent ? 'var(--foreground)' : 'var(--muted-foreground)',
+                            fontWeight: isActive ? 800 : 500,
+                            backgroundColor: isActive ? 'var(--card)' : 'transparent',
+                            borderLeft: isActive ? `3px solid ${trackColor}` : '3px solid transparent',
+                            boxShadow: isActive ? '0 1px 4px rgba(0, 0, 0, 0.08)' : 'none',
+                            color: isActive ? 'var(--foreground)' : 'var(--muted-foreground)',
                             padding: '0.5rem 0.65rem',
                             borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
                             textDecoration: 'none',
@@ -219,14 +219,14 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                           }}
                         >
                           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
-                            <span className="tabular-numbers" style={{ fontSize: '0.72rem', color: isCurrent ? trackColor : 'var(--muted-foreground)', fontWeight: 800 }}>
+                            <span className="tabular-numbers" style={{ fontSize: '0.72rem', color: isActive ? trackColor : 'var(--muted-foreground)', fontWeight: 800 }}>
                               {String(aIdx + 1).padStart(2, '0')}
                             </span>
                             <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.titulo}</span>
                           </div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0, marginLeft: '0.4rem' }}>
                             {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.65rem', fontWeight: 800 }}>✓</span>}
-                            {isCurrent && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: trackColor }} />}
+                            {isActive && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: trackColor }} />}
                           </div>
                         </a>
                       );
