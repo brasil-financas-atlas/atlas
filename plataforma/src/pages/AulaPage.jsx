@@ -54,7 +54,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           </a>
         </div>
 
-        <div style={{ flex: 1, overflowY: 'auto', padding: '1.25rem 1rem' }}>
+        <div className="aula-sidebar-content" style={{ padding: '1.25rem 1rem' }}>
           {subjectData.modulos.map((m, idx) => {
             const isCurrentMod = m.slug === moduloSlug;
             return (
