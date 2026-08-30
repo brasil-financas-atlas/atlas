@@ -92,6 +92,28 @@ function CalculadoraJurosCompostos() {
 
   const maxVal = Math.max(calculations.finalCompound, 1);
 
+  const { hapticTap } = (window.useHaptics ? window.useHaptics() : { hapticTap: () => {} });
+
+  const setDepositWithHaptic = (val) => {
+    hapticTap();
+    setInitialDeposit(val);
+  };
+
+  const setMonthlyWithHaptic = (val) => {
+    hapticTap();
+    setMonthlyContribution(val);
+  };
+
+  const setRateWithHaptic = (val) => {
+    hapticTap();
+    setAnnualRate(val);
+  };
+
+  const setYearsWithHaptic = (val) => {
+    hapticTap();
+    setYears(val);
+  };
+
   return (
     <div className="bfa-card" style={{ padding: '2.5rem', marginBottom: '3rem' }}>
       {/* Header */}
@@ -133,10 +155,27 @@ function CalculadoraJurosCompostos() {
               onChange={(e) => setInitialDeposit(Number(e.target.value))}
               style={{ width: '100%', accentColor: 'var(--color-verde)', cursor: 'pointer' }}
             />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-              <span>R$ 0</span>
-              <span>R$ 25.000</span>
-              <span>R$ 50.000</span>
+            <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: '0.4rem' }}>
+              {[0, 1000, 5000, 10000, 20000].map(val => (
+                <button
+                  key={val}
+                  type="button"
+                  onClick={() => setDepositWithHaptic(val)}
+                  className="bfa-touch-stepper-btn"
+                  style={{
+                    background: initialDeposit === val ? 'var(--color-verde)' : '#FFFFFF',
+                    color: initialDeposit === val ? '#FFFFFF' : 'var(--text-primary)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '6px',
+                    padding: '0.2rem 0.5rem',
+                    fontSize: '0.72rem',
+                    fontWeight: 700,
+                    cursor: 'pointer'
+                  }}
+                >
+                  {val === 0 ? 'R$ 0' : `R$ ${val >= 1000 ? `${val / 1000}k` : val}`}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -159,10 +198,27 @@ function CalculadoraJurosCompostos() {
               onChange={(e) => setMonthlyContribution(Number(e.target.value))}
               style={{ width: '100%', accentColor: 'var(--color-azul)', cursor: 'pointer' }}
             />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-              <span>R$ 0</span>
-              <span>R$ 2.500</span>
-              <span>R$ 5.000</span>
+            <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: '0.4rem' }}>
+              {[50, 100, 200, 500, 1000, 2000].map(val => (
+                <button
+                  key={val}
+                  type="button"
+                  onClick={() => setMonthlyWithHaptic(val)}
+                  className="bfa-touch-stepper-btn"
+                  style={{
+                    background: monthlyContribution === val ? 'var(--color-azul)' : '#FFFFFF',
+                    color: monthlyContribution === val ? '#FFFFFF' : 'var(--text-primary)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '6px',
+                    padding: '0.2rem 0.5rem',
+                    fontSize: '0.72rem',
+                    fontWeight: 700,
+                    cursor: 'pointer'
+                  }}
+                >
+                  + R$ {val}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -185,10 +241,32 @@ function CalculadoraJurosCompostos() {
               onChange={(e) => setAnnualRate(Number(e.target.value))}
               style={{ width: '100%', accentColor: 'var(--color-ouro)', cursor: 'pointer' }}
             />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-              <span>0,5%</span>
-              <span>15%</span>
-              <span>30%</span>
+            <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: '0.4rem' }}>
+              {[
+                { label: '6% Poupança', rate: 6 },
+                { label: '10.5% Selic', rate: 10.5 },
+                { label: '12% CDI', rate: 12 },
+                { label: '15% Ações', rate: 15 }
+              ].map(item => (
+                <button
+                  key={item.rate}
+                  type="button"
+                  onClick={() => setRateWithHaptic(item.rate)}
+                  className="bfa-touch-stepper-btn"
+                  style={{
+                    background: annualRate === item.rate ? 'var(--color-ouro)' : '#FFFFFF',
+                    color: annualRate === item.rate ? '#000000' : 'var(--text-primary)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '6px',
+                    padding: '0.2rem 0.5rem',
+                    fontSize: '0.72rem',
+                    fontWeight: 700,
+                    cursor: 'pointer'
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -211,10 +289,27 @@ function CalculadoraJurosCompostos() {
               onChange={(e) => setYears(Number(e.target.value))}
               style={{ width: '100%', accentColor: 'var(--color-slate-700)', cursor: 'pointer' }}
             />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-              <span>1 ano</span>
-              <span>20 anos</span>
-              <span>40 anos</span>
+            <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: '0.4rem' }}>
+              {[1, 5, 10, 15, 20, 30].map(y => (
+                <button
+                  key={y}
+                  type="button"
+                  onClick={() => setYearsWithHaptic(y)}
+                  className="bfa-touch-stepper-btn"
+                  style={{
+                    background: years === y ? 'var(--color-slate-700)' : '#FFFFFF',
+                    color: years === y ? '#FFFFFF' : 'var(--text-primary)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '6px',
+                    padding: '0.2rem 0.5rem',
+                    fontSize: '0.72rem',
+                    fontWeight: 700,
+                    cursor: 'pointer'
+                  }}
+                >
+                  {y} {y === 1 ? 'ano' : 'anos'}
+                </button>
+              ))}
             </div>
           </div>
         </div>

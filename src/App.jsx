@@ -163,7 +163,11 @@ function App() {
         {renderCurrentPage()}
       </div>
       {!isAulaRoute && <Footer />}
+      {window.FloatingAudioBar && <FloatingAudioBar />}
+      {window.BottomNavBar && <BottomNavBar />}
       <CookieConsent />
     </div>
   );
 }
+
+window.App = App;
