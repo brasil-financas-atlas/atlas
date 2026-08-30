@@ -61,7 +61,7 @@ function Navbar() {
     { label: "Matemática", path: "/matematica" },
     { label: "Finanças", path: "/financas" },
     { label: "Preparação BRHSIC", path: "/preparacao-brhsic" },
-    { label: "Simulador de Carteira", path: "/simulador-carteira" },
+    { label: "Calculadora", path: "/calculadora-juros-compostos" },
     { label: "Simulados", path: "/simulados" },
     { label: "Exercícios", path: "/exercicios" },
     { label: "Sobre", path: "/sobre" },
@@ -364,11 +364,11 @@ function Navbar() {
             {/* Grupo 2: Ferramentas */}
             <div className="bfa-mobile-nav-group">
               <div className="bfa-mobile-nav-grouptitle">FERRAMENTAS & TREINAMENTO</div>
-              <a href="#/simulador-carteira" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
-                <BfaIcon name="chart" size={18} color="var(--track-finance)" />
+              <a href="#/calculadora-juros-compostos" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                <BfaIcon name="calculator" size={18} color="var(--track-finance)" />
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Simulador de Carteira</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Alocação e projeção de renda passiva</div>
+                  <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Calculadora de Juros Compostos</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Projeções com aportes mensais e inflação</div>
                 </div>
                 <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
               </a>
