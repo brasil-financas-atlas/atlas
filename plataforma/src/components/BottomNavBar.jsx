@@ -25,15 +25,9 @@ function BottomNavBar() {
   const toolsList = [
     {
       title: 'Calculadora de Juros Compostos',
-      desc: 'Simule investimentos periódicos e rentabilidade real',
+      desc: 'Simule investimentos periódicos, prazos e rentabilidade real',
       iconName: 'calculator',
       path: '/calculadora-juros-compostos'
-    },
-    {
-      title: 'Simulador de Carteira & Risco',
-      desc: 'Monte seu portfólio e analise correlação de ativos',
-      iconName: 'briefcase',
-      path: '/simulador-carteira'
     },
     {
       title: 'Simulados & Provas Interativas',
@@ -42,10 +36,16 @@ function BottomNavBar() {
       path: '/simulados'
     },
     {
-      title: 'Feed de Notícias & Macro',
-      desc: 'Acompanhe Selic, IPCA, Dólar e atualizações financeiras',
-      iconName: 'newspaper',
-      path: '/noticias'
+      title: 'Banco de Exercícios',
+      desc: 'Fixação de conceitos, fórmulas e problemas resolvidos',
+      iconName: 'edit',
+      path: '/exercicios'
+    },
+    {
+      title: 'Cronograma de Estudos',
+      desc: 'Roteiro de estudos semanais do básico ao avançado',
+      iconName: 'calendar',
+      path: '/cronograma'
     }
   ];
 

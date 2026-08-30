@@ -75,18 +75,18 @@ function BrhsicPage() {
           <div className="bfa-tech-card card-lift" style={{ border: '1px solid rgba(251, 191, 36, 0.35)', background: 'linear-gradient(180deg, var(--card) 0%, rgba(251, 191, 36, 0.04) 100%)', padding: '2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
               <span className="mono-tag" style={{ color: '#FBBF24', background: 'rgba(251, 191, 36, 0.15)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800 }}>
-                LABORATÓRIO INTERATIVO
+                FERRAMENTA INTERATIVA
               </span>
-              <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>6 Classes de Ativos</span>
+              <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>Cálculo Exato</span>
             </div>
             <h3 style={{ fontSize: '1.45rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em', marginBottom: '0.65rem' }}>
-              Simulador de Alocação de Carteira
+              Calculadora de Juros Compostos
             </h3>
             <p style={{ color: 'var(--muted-foreground)', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '1.75rem' }}>
-              Monte e teste carteiras de investimento com Selic, IPCA+, Prefixados, FIIs, Ações e S&P 500. Projete patrimônio futuro, renda passiva mensal e analise o Índice de Sharpe.
+              Simule o efeito dos juros compostos com aportes mensais, cálculo de rentabilidade real descontando a inflação e comparativo direto contra juros simples.
             </p>
-            <a href="#/simulador-carteira" className="bfa-btn bfa-btn--primary-solid" style={{ width: '100%', justifyContent: 'center', padding: '0.85rem 1.25rem', fontSize: '0.95rem', background: '#D97706', borderColor: '#D97706' }}>
-              Abrir Simulador de Carteira →
+            <a href="#/calculadora-juros-compostos" className="bfa-btn bfa-btn--primary-solid" style={{ width: '100%', justifyContent: 'center', padding: '0.85rem 1.25rem', fontSize: '0.95rem', background: '#D97706', borderColor: '#D97706' }}>
+              Abrir Calculadora →
             </a>
           </div>
 
