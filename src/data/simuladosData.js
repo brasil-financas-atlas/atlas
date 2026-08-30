@@ -293,7 +293,7 @@ const SIMULADOS_DATA = [
   },
   {
     id: 'sprint-financas',
-    titulo: '⚡ Sprint Rápido — 5 Questões Essenciais BRHSIC',
+    titulo: 'Sprint Rápido — 5 Questões Essenciais BRHSIC',
     subtitulo: 'Treino de velocidade para aquecimento e teste rápido de conceitos-chave.',
     duracaoMinutos: 15,
     totalQuestoes: 5,

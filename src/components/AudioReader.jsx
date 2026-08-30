@@ -193,13 +193,13 @@ function AudioReader({ markdownContent, lessonTitle }) {
           <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-azul-dark)', display: 'flex', alignItems: 'center', gap: '6px' }}>
             Ouvir Aula em Áudio (pt-BR)
             {isPlaying && (
-              <span className="bfa-badge bfa-badge--verde" style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem' }}>
-                ▶ Lendo...
+              <span className="bfa-badge bfa-badge--verde" style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                <BfaIcon name="play" size={10} /> Lendo...
               </span>
             )}
             {isPaused && (
-              <span className="bfa-badge bfa-badge--ouro" style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem' }}>
-                ⏸ Pausado
+              <span className="bfa-badge bfa-badge--ouro" style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                <BfaIcon name="pause" size={10} /> Pausado
               </span>
             )}
           </div>
@@ -220,7 +220,8 @@ function AudioReader({ markdownContent, lessonTitle }) {
               style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
               title="Iniciar / Retomar Leitura"
             >
-              ▶ {isPaused ? 'Continuar' : 'Ouvir Aula'}
+              <BfaIcon name="play" size={12} />
+              <span>{isPaused ? 'Continuar' : 'Ouvir Aula'}</span>
             </button>
           ) : (
             <button
@@ -229,7 +230,8 @@ function AudioReader({ markdownContent, lessonTitle }) {
               style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
               title="Pausar Leitura"
             >
-              ⏸ Pausar
+              <BfaIcon name="pause" size={12} />
+              <span>Pausar</span>
             </button>
           )}
 
@@ -240,7 +242,8 @@ function AudioReader({ markdownContent, lessonTitle }) {
               style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', color: 'var(--status-danger)' }}
               title="Parar Leitura"
             >
-              ⏹ Parar
+              <BfaIcon name="stop" size={12} />
+              <span>Parar</span>
             </button>
           )}
         </div>

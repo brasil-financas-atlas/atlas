@@ -65,8 +65,10 @@ function RankingLeaderboard() {
           </p>
         </div>
 
-        <a href="#/simulados" className="bfa-btn bfa-btn--ouro" style={{ padding: '0.65rem 1.25rem' }}>
-          ⏱️ Fazer Simulado Agora ➔
+        <a href="#/simulados" className="bfa-btn bfa-btn--ouro" style={{ padding: '0.65rem 1.25rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+          <BfaIcon name="timer" size={16} />
+          <span>Fazer Simulado Agora</span>
+          <BfaIcon name="arrowRight" size={14} />
         </a>
       </div>
 
@@ -75,40 +77,61 @@ function RankingLeaderboard() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '3rem', alignItems: 'end' }}>
           {/* 2º Lugar (Prata) */}
           <div className="bfa-bento-card" style={{ textAlign: 'center', padding: '1.5rem', borderTop: '4px solid #94A3B8', background: 'var(--surface-strong)' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '0.25rem' }}>🥈</div>
-            <span className="mono-tag" style={{ color: '#94A3B8', fontWeight: 800 }}>2º LUGAR NACIONAL</span>
+            <div style={{ display: 'inline-flex', padding: '0.5rem', borderRadius: '50%', background: 'rgba(148, 163, 184, 0.15)', marginBottom: '0.5rem' }}>
+              <BfaIcon name="medal" size={32} color="#94A3B8" />
+            </div>
+            <div>
+              <span className="mono-tag" style={{ color: '#94A3B8', fontWeight: 800 }}>2º LUGAR NACIONAL</span>
+            </div>
             <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.5rem 0 0.2rem 0' }}>{top3[1].name}</h4>
             <p style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)', margin: 0 }}>{top3[1].school} · {top3[1].uf}</p>
             <div style={{ marginTop: '0.75rem', fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-verde-dark)', fontFamily: 'var(--font-mono)' }}>
               {top3[1].score}/{top3[1].total} ({top3[1].percentage}%)
             </div>
-            <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>⏱️ {top3[1].timeFormatted}</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)', display: 'inline-flex', alignItems: 'center', gap: '4px', marginTop: '0.35rem' }}>
+              <BfaIcon name="clock" size={12} />
+              <span>{top3[1].timeFormatted}</span>
+            </span>
           </div>
 
           {/* 1º Lugar (Ouro - Destaque Central) */}
           <div className="bfa-bento-card" style={{ textAlign: 'center', padding: '2rem 1.5rem', borderTop: '4px solid var(--color-ouro)', background: 'linear-gradient(135deg, var(--surface-strong) 0%, rgba(245, 158, 11, 0.08) 100%)', transform: 'scale(1.03)', boxShadow: '0 12px 28px rgba(0,0,0,0.12)' }}>
-            <div style={{ fontSize: '2.5rem', marginBottom: '0.25rem' }}>👑</div>
-            <span className="mono-tag" style={{ color: 'var(--color-ouro)', fontWeight: 800, background: 'rgba(245, 158, 11, 0.15)', padding: '0.25rem 0.6rem', borderRadius: '4px' }}>
-              1º LUGAR NACIONAL (OURO)
-            </span>
+            <div style={{ display: 'inline-flex', padding: '0.65rem', borderRadius: '50%', background: 'rgba(245, 158, 11, 0.2)', marginBottom: '0.5rem' }}>
+              <BfaIcon name="crown" size={36} color="var(--color-ouro)" />
+            </div>
+            <div>
+              <span className="mono-tag" style={{ color: 'var(--color-ouro)', fontWeight: 800, background: 'rgba(245, 158, 11, 0.15)', padding: '0.25rem 0.6rem', borderRadius: '4px' }}>
+                1º LUGAR NACIONAL (OURO)
+              </span>
+            </div>
             <h4 style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.6rem 0 0.2rem 0' }}>{top3[0].name}</h4>
             <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', margin: 0 }}>{top3[0].school} · {top3[0].uf}</p>
             <div style={{ marginTop: '0.85rem', fontSize: '1.45rem', fontWeight: 800, color: 'var(--color-ouro)', fontFamily: 'var(--font-mono)' }}>
               {top3[0].score}/{top3[0].total} ({top3[0].percentage}%)
             </div>
-            <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>⏱️ {top3[0].timeFormatted}</span>
+            <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', display: 'inline-flex', alignItems: 'center', gap: '4px', marginTop: '0.35rem' }}>
+              <BfaIcon name="clock" size={12} />
+              <span>{top3[0].timeFormatted}</span>
+            </span>
           </div>
 
           {/* 3º Lugar (Bronze) */}
           <div className="bfa-bento-card" style={{ textAlign: 'center', padding: '1.5rem', borderTop: '4px solid #D97706', background: 'var(--surface-strong)' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '0.25rem' }}>🥉</div>
-            <span className="mono-tag" style={{ color: '#D97706', fontWeight: 800 }}>3º LUGAR NACIONAL</span>
+            <div style={{ display: 'inline-flex', padding: '0.5rem', borderRadius: '50%', background: 'rgba(217, 119, 6, 0.15)', marginBottom: '0.5rem' }}>
+              <BfaIcon name="award" size={32} color="#D97706" />
+            </div>
+            <div>
+              <span className="mono-tag" style={{ color: '#D97706', fontWeight: 800 }}>3º LUGAR NACIONAL</span>
+            </div>
             <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.5rem 0 0.2rem 0' }}>{top3[2].name}</h4>
             <p style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)', margin: 0 }}>{top3[2].school} · {top3[2].uf}</p>
             <div style={{ marginTop: '0.75rem', fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-verde-dark)', fontFamily: 'var(--font-mono)' }}>
               {top3[2].score}/{top3[2].total} ({top3[2].percentage}%)
             </div>
-            <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>⏱️ {top3[2].timeFormatted}</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)', display: 'inline-flex', alignItems: 'center', gap: '4px', marginTop: '0.35rem' }}>
+              <BfaIcon name="clock" size={12} />
+              <span>{top3[2].timeFormatted}</span>
+            </span>
           </div>
         </div>
       )}
@@ -119,34 +142,50 @@ function RankingLeaderboard() {
         <div style={{ flex: '1', minWidth: '220px' }}>
           <input
             type="text"
-            placeholder="Buscar por estudante ou escola..."
+            placeholder="Buscar por estudante ou colégio..."
             value={searchFilter}
             onChange={(e) => setSearchFilter(e.target.value)}
-            style={{ width: '100%', padding: '0.45rem 0.85rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--card)', color: 'var(--foreground)', fontSize: '0.85rem' }}
+            style={{
+              width: '100%',
+              padding: '0.55rem 0.85rem',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid var(--border)',
+              backgroundColor: 'var(--card)',
+              color: 'var(--foreground)',
+              fontSize: '0.85rem'
+            }}
           />
         </div>
 
         {/* Filtro por UF */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <label style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--muted-foreground)' }}>Filtrar por UF:</label>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--muted-foreground)' }}>Estado (UF):</span>
           <select
             value={selectedUF}
             onChange={(e) => setSelectedUF(e.target.value)}
-            style={{ padding: '0.45rem 0.85rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--card)', color: 'var(--foreground)', fontSize: '0.85rem' }}
+            style={{
+              padding: '0.55rem 0.85rem',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid var(--border)',
+              backgroundColor: 'var(--card)',
+              color: 'var(--foreground)',
+              fontSize: '0.85rem',
+              fontWeight: 700
+            }}
           >
-            {ufsList.map(uf => (
-              <option key={uf} value={uf}>{uf === 'TODOS' ? 'Brasil (Todos os Estados)' : uf}</option>
+            {ufsDisponiveis.map(uf => (
+              <option key={uf} value={uf}>{uf === 'TODOS' ? 'Todo o Brasil (Geral)' : uf}</option>
             ))}
           </select>
         </div>
       </div>
 
       {/* Tabela de Classificação */}
-      <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
+      <div style={{ overflowX: 'auto', background: 'var(--card)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem', textAlign: 'left' }}>
           <thead>
-            <tr style={{ borderBottom: '2px solid var(--border)', textAlign: 'left', color: 'var(--muted-foreground)' }}>
-              <th style={{ padding: '0.85rem 0.5rem', width: '60px', textAlign: 'center' }}>Pos.</th>
+            <tr style={{ background: 'var(--surface-strong)', borderBottom: '2px solid var(--border)', color: 'var(--muted-foreground)', fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <th style={{ padding: '0.85rem 0.5rem', textAlign: 'center', width: '60px' }}>Pos.</th>
               <th style={{ padding: '0.85rem' }}>Estudante</th>
               <th style={{ padding: '0.85rem' }}>Escola / Instituição</th>
               <th style={{ padding: '0.85rem', textAlign: 'center' }}>UF</th>
@@ -162,9 +201,9 @@ function RankingLeaderboard() {
               const isTop3 = idx === 2 && selectedUF === 'TODOS' && !searchFilter;
 
               let badgePos = `#${idx + 1}`;
-              if (isTop1) badgePos = '🥇 1º';
-              if (isTop2) badgePos = '🥈 2º';
-              if (isTop3) badgePos = '🥉 3º';
+              if (isTop1) badgePos = '1º';
+              if (isTop2) badgePos = '2º';
+              if (isTop3) badgePos = '3º';
 
               return (
                 <tr

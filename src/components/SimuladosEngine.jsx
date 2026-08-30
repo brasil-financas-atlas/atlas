@@ -229,9 +229,10 @@ function SimuladosEngine() {
                   type="button"
                   onClick={() => startExam(simulado.id)}
                   className="bfa-btn bfa-btn--ouro"
-                  style={{ padding: '0.55rem 1.1rem', fontSize: '0.85rem' }}
+                  style={{ padding: '0.55rem 1.1rem', fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                 >
-                  Iniciar Simulado ➔
+                  <span>Iniciar Simulado</span>
+                  <BfaIcon name="arrowRight" size={14} />
                 </button>
               </div>
             </div>
@@ -245,7 +246,7 @@ function SimuladosEngine() {
           </h4>
           <ul style={{ paddingLeft: '1.25rem', fontSize: '0.88rem', color: 'var(--muted-foreground)', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
             <li>O cronômetro regressivo começa assim que você clica em <strong>Iniciar Simulado</strong>.</li>
-            <li>Você pode navegar livremente entre as questões pela barra lateral e marcar itens para revisão (🚩).</li>
+            <li>Você pode navegar livremente entre as questões pela barra lateral e marcar itens para revisão.</li>
             <li>Ao final do tempo limite, o sistema encerra automaticamente e gera seu relatório diagnóstico.</li>
             <li>Sua pontuação pode ser registrada no <strong>Ranking Nacional de Escolas da BRHSIC</strong>.</li>
           </ul>
@@ -258,33 +259,17 @@ function SimuladosEngine() {
   if (examState === 'running') {
     const q = activeSimulado.questoes[currentIdx];
     const isAnswered = answers[q.id] !== undefined;
-    const isFlagged = !!flags[q.id];
+    const isFlagged = flags[q.id] || false;
     const answeredCount = Object.keys(answers).length;
     const totalQ = activeSimulado.questoes.length;
-    const isTimeUrgent = timeLeft < 300; // Menos de 5 minutos
 
     return (
-      <div style={{ marginBottom: '3.5rem' }}>
-        {/* Barra Superior Fixa da Prova */}
-        <div style={{
-          background: 'var(--surface-strong)',
-          padding: '1rem 1.5rem',
-          borderRadius: 'var(--radius-lg)',
-          border: '1px solid var(--border)',
-          marginBottom: '1.5rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '1rem'
-        }}>
+      <div className="bfa-simulado-running" style={{ padding: '1rem 0 3rem 0' }}>
+        {/* Top Header com Timer e Ações */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', background: 'var(--surface-strong)', padding: '1rem 1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', marginBottom: '1.5rem' }}>
           <div>
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-ouro)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              {activeSimulado.titulo}
-            </span>
-            <div style={{ fontSize: '0.9rem', color: 'var(--foreground)', fontWeight: 600 }}>
-              Progresso: {answeredCount} de {totalQ} respondidas ({Math.round((answeredCount / totalQ) * 100)}%)
-            </div>
+            <span className="mono-tag" style={{ color: 'var(--color-ouro)', fontWeight: 800 }}>PROVA OFICIAL EM ANDAMENTO</span>
+            <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.25rem 0 0 0' }}>{activeSimulado.titulo}</h3>
           </div>
 
           {/* Cronômetro */}
@@ -292,20 +277,18 @@ function SimuladosEngine() {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            padding: '0.5rem 1rem',
+            background: timeLeft <= 300 ? 'rgba(239, 68, 68, 0.15)' : 'var(--card)',
+            color: timeLeft <= 300 ? '#EF4444' : 'var(--foreground)',
+            padding: '0.5rem 1.25rem',
             borderRadius: '9999px',
-            background: isTimeUrgent ? 'rgba(239, 68, 68, 0.15)' : 'var(--card)',
-            border: isTimeUrgent ? '1px solid #EF4444' : '1px solid var(--border)'
+            border: `1px solid ${timeLeft <= 300 ? '#EF4444' : 'var(--border)'}`,
+            fontFamily: 'var(--font-mono)',
+            fontWeight: 800,
+            fontSize: '1.2rem',
+            boxShadow: 'var(--shadow-sm)'
           }}>
-            <BfaIcon name="clock" size={18} color={isTimeUrgent ? '#EF4444' : 'var(--foreground)'} />
-            <span style={{
-              fontSize: '1.2rem',
-              fontWeight: 800,
-              fontFamily: 'var(--font-mono)',
-              color: isTimeUrgent ? '#EF4444' : 'var(--foreground)'
-            }}>
-              {formatTime(timeLeft)}
-            </span>
+            <BfaIcon name="timer" size={18} color={timeLeft <= 300 ? "#EF4444" : "var(--color-ouro)"} />
+            <span>{formatTime(timeLeft)}</span>
           </div>
 
           {/* Botão de Finalizar */}
@@ -313,9 +296,10 @@ function SimuladosEngine() {
             type="button"
             onClick={() => setIsConfirmOpen(true)}
             className="bfa-btn bfa-btn--verde"
-            style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}
+            style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
           >
-            Finalizar Prova ➔
+            <span>Finalizar Prova</span>
+            <BfaIcon name="arrowRight" size={14} />
           </button>
         </div>
 
@@ -349,7 +333,8 @@ function SimuladosEngine() {
                   gap: '6px'
                 }}
               >
-                🚩 {isFlagged ? 'Marcada p/ Revisão' : 'Marcar p/ Revisão'}
+                <BfaIcon name="bookmark" size={14} color={isFlagged ? "var(--color-ouro)" : "currentColor"} />
+                <span>{isFlagged ? 'Marcada p/ Revisão' : 'Marcar p/ Revisão'}</span>
               </button>
             </div>
 
@@ -489,7 +474,7 @@ function SimuladosEngine() {
                 <span style={{ width: '12px', height: '12px', borderRadius: '3px', background: 'rgba(16, 185, 129, 0.2)', border: '1px solid var(--color-verde-dark)' }} /> Respondida
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ width: '12px', height: '12px', borderRadius: '3px', background: 'rgba(245, 158, 11, 0.2)', border: '1px solid var(--color-ouro)' }} /> Marcada p/ Revisão (🚩)
+                <span style={{ width: '12px', height: '12px', borderRadius: '3px', background: 'rgba(245, 158, 11, 0.2)', border: '1px solid var(--color-ouro)' }} /> Marcada p/ Revisão
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span style={{ width: '12px', height: '12px', borderRadius: '3px', background: 'var(--card)', border: '1px solid var(--border)' }} /> Em Branco
@@ -525,8 +510,9 @@ function SimuladosEngine() {
               <p style={{ fontSize: '0.9rem', color: 'var(--muted-foreground)', lineHeight: 1.6, marginBottom: '1.5rem' }}>
                 Você respondeu <strong>{answeredCount}</strong> de <strong>{totalQ}</strong> questões.
                 {totalQ - answeredCount > 0 && (
-                  <span style={{ color: '#EF4444', display: 'block', marginTop: '0.4rem', fontWeight: 600 }}>
-                    ⚠️ Atenção: {totalQ - answeredCount} questão(ões) continuam em branco!
+                  <span style={{ color: '#EF4444', display: 'flex', alignItems: 'center', gap: '6px', marginTop: '0.4rem', fontWeight: 600 }}>
+                    <BfaIcon name="alert" size={14} color="#EF4444" />
+                    <span>Atenção: {totalQ - answeredCount} questão(ões) continuam em branco!</span>
                   </span>
                 )}
               </p>
@@ -542,8 +528,10 @@ function SimuladosEngine() {
                   type="button"
                   onClick={finishExam}
                   className="bfa-btn bfa-btn--verde"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                 >
-                  Confirmar e Ver Gabarito ➔
+                  <span>Confirmar e Ver Gabarito</span>
+                  <BfaIcon name="arrowRight" size={14} />
                 </button>
               </div>
             </div>
@@ -558,8 +546,9 @@ function SimuladosEngine() {
     <div className="bfa-card" style={{ padding: '2.5rem', marginBottom: '3.5rem' }}>
       {/* Cabeçalho do Resultado */}
       <div style={{ textAlign: 'center', marginBottom: '2.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '2rem' }}>
-        <span className="bfa-badge bfa-badge--ouro" style={{ marginBottom: '0.75rem' }}>
-          🏆 Resultado Oficial — Simulado BRHSIC
+        <span className="bfa-badge bfa-badge--ouro" style={{ marginBottom: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+          <BfaIcon name="trophy" size={16} color="var(--color-ouro)" />
+          <span>Resultado Oficial — Simulado BRHSIC</span>
         </span>
         <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.35rem 0' }}>
           {examStats.correctCount} / {examStats.total} Acertos ({examStats.percentage}%)
@@ -586,15 +575,8 @@ function SimuladosEngine() {
                     {data.correct}/{data.total} ({pct}%)
                   </span>
                 </div>
-                <div style={{ height: '8px', width: '100%', background: 'var(--border)', borderRadius: '4px', overflow: 'hidden' }}>
-                  <div
-                    style={{
-                      height: '100%',
-                      width: `${pct}%`,
-                      backgroundColor: pct >= 70 ? 'var(--color-verde-dark)' : (pct >= 50 ? 'var(--color-ouro)' : '#EF4444'),
-                      transition: 'width 0.5s ease'
-                    }}
-                  />
+                <div style={{ height: '8px', background: 'var(--border)', borderRadius: '9999px', overflow: 'hidden' }}>
+                  <div style={{ width: `${pct}%`, height: '100%', background: pct >= 70 ? 'var(--color-verde-dark)' : (pct >= 40 ? 'var(--color-ouro)' : '#EF4444'), transition: 'width 0.3s ease' }} />
                 </div>
               </div>
             );
@@ -613,14 +595,16 @@ function SimuladosEngine() {
               Veja sua posição entre estudantes de todo o Brasil e represente sua escola!
             </p>
           </div>
-          <a href="#/ranking" className="bfa-btn bfa-btn--outline" style={{ fontSize: '0.8rem', padding: '0.4rem 0.85rem' }}>
-            Ver Leaderboard Completo ➔
+          <a href="#/ranking" className="bfa-btn bfa-btn--outline" style={{ fontSize: '0.8rem', padding: '0.4rem 0.85rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <span>Ver Leaderboard Completo</span>
+            <BfaIcon name="arrowRight" size={12} />
           </a>
         </div>
 
         {isSubmitted ? (
-          <div style={{ padding: '1rem', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid var(--color-verde-dark)', borderRadius: 'var(--radius-md)', color: 'var(--color-verde-dark)', fontWeight: 700, fontSize: '0.9rem' }}>
-            ✓ Pontuação registrada com sucesso no Ranking Nacional!
+          <div style={{ padding: '1rem', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid var(--color-verde-dark)', borderRadius: 'var(--radius-md)', color: 'var(--color-verde-dark)', fontWeight: 700, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <BfaIcon name="check" size={16} color="var(--color-verde-dark)" />
+            <span>Pontuação registrada com sucesso no Ranking Nacional!</span>
           </div>
         ) : (
           <form onSubmit={handleSubmitRanking} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', alignItems: 'flex-end' }}>
@@ -660,9 +644,10 @@ function SimuladosEngine() {
             <button
               type="submit"
               className="bfa-btn bfa-btn--ouro"
-              style={{ padding: '0.55rem 1.25rem', height: '38px' }}
+              style={{ padding: '0.55rem 1.25rem', height: '38px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
             >
-              Publicar no Ranking ➔
+              <span>Publicar no Ranking</span>
+              <BfaIcon name="arrowRight" size={14} />
             </button>
           </form>
         )}
@@ -690,8 +675,9 @@ function SimuladosEngine() {
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                <strong style={{ fontSize: '0.95rem', color: isCorrect ? 'var(--color-verde-dark)' : '#EF4444' }}>
-                  Questão {idx + 1} · {isCorrect ? '✓ Acertou' : (isBlank ? '○ Em Branco' : '✗ Errou')}
+                <strong style={{ fontSize: '0.95rem', color: isCorrect ? 'var(--color-verde-dark)' : '#EF4444', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                  <BfaIcon name={isCorrect ? "check" : (isBlank ? "circle" : "close")} size={14} />
+                  <span>Questão {idx + 1} · {isCorrect ? 'Acertou' : (isBlank ? 'Em Branco' : 'Errou')}</span>
                 </strong>
                 <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.75rem' }}>
                   {item.competenciaNome}
@@ -740,8 +726,8 @@ function SimuladosEngine() {
                       <span>
                         <strong>{String.fromCharCode(65 + optIdx)})</strong> {alt}
                       </span>
-                      {isThisCorrect && <span style={{ fontWeight: 700, fontSize: '0.8rem' }}>Gabarito Oficial ✓</span>}
-                      {isThisUserAns && !isThisCorrect && <span style={{ fontWeight: 700, fontSize: '0.8rem' }}>Sua Escolha ✗</span>}
+                      {isThisCorrect && <span style={{ fontWeight: 700, fontSize: '0.8rem' }}>Gabarito Oficial</span>}
+                      {isThisUserAns && !isThisCorrect && <span style={{ fontWeight: 700, fontSize: '0.8rem' }}>Sua Escolha</span>}
                     </div>
                   );
                 })}
@@ -749,7 +735,10 @@ function SimuladosEngine() {
 
               {/* Resolução Comentada */}
               <div style={{ padding: '0.85rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', fontSize: '0.85rem', color: 'var(--muted-foreground)', borderLeft: '3px solid var(--color-ouro)' }}>
-                <strong style={{ color: 'var(--foreground)', display: 'block', marginBottom: '0.2rem' }}>💡 Resolução Comentada:</strong>
+                <strong style={{ color: 'var(--foreground)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '0.2rem' }}>
+                  <BfaIcon name="lightbulb" size={15} color="var(--color-ouro)" />
+                  <span>Resolução Comentada:</span>
+                </strong>
                 {item.explicacao}
               </div>
             </div>
@@ -770,11 +759,14 @@ function SimuladosEngine() {
           type="button"
           onClick={() => startExam(activeSimulado.id)}
           className="bfa-btn bfa-btn--ouro"
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
         >
-          Refazer este Simulado ➔
+          <span>Refazer este Simulado</span>
+          <BfaIcon name="arrowRight" size={14} />
         </button>
-        <a href="#/conquistas" className="bfa-btn bfa-btn--verde">
-          Ver Conquistas & Badges 🎖️
+        <a href="#/conquistas" className="bfa-btn bfa-btn--verde" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+          <span>Ver Conquistas & Badges</span>
+          <BfaIcon name="award" size={14} />
         </a>
       </div>
     </div>

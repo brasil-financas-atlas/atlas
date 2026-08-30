@@ -268,7 +268,7 @@ function Navbar() {
             className="bfa-mobile-nav-toggle"
             aria-label="Abrir menu de funções"
           >
-            {mobileMenuOpen ? '✕' : '☰'}
+            <BfaIcon name={mobileMenuOpen ? "close" : "menu"} size={18} />
           </button>
 
           {adminUser ? (
@@ -327,7 +327,7 @@ function Navbar() {
               }}
               aria-label="Fechar menu"
             >
-              ✕
+              <BfaIcon name="close" size={16} />
             </button>
           </div>
 
@@ -365,28 +365,28 @@ function Navbar() {
             <div className="bfa-mobile-nav-group">
               <div className="bfa-mobile-nav-grouptitle">FERRAMENTAS & TREINAMENTO</div>
               <a href="#/simulador-carteira" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
-                <span style={{ fontSize: '1.1rem' }}>📊</span>
+                <BfaIcon name="chart" size={18} color="var(--track-finance)" />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Simulador de Carteira</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Alocação e projeção de renda passiva</div>
                 </div>
-                <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
               </a>
               <a href="#/simulados" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
-                <span style={{ fontSize: '1.1rem' }}>⏱️</span>
+                <BfaIcon name="timer" size={18} color="var(--track-math)" />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Simulados Cronometrados</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Provas reais com gabarito passo a passo</div>
                 </div>
-                <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
               </a>
               <a href="#/exercicios" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
-                <span style={{ fontSize: '1.1rem' }}>📝</span>
+                <BfaIcon name="edit" size={18} color="var(--track-brhsic)" />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Banco de Exercícios</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Questões de fixação comentadas</div>
                 </div>
-                <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
               </a>
             </div>
 
@@ -394,14 +394,14 @@ function Navbar() {
             <div className="bfa-mobile-nav-group">
               <div className="bfa-mobile-nav-grouptitle">INSTITUCIONAL</div>
               <a href="#/sobre" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
-                <span style={{ fontSize: '1.1rem' }}>🏛️</span>
+                <BfaIcon name="institution" size={18} color="var(--color-azul)" />
                 <div style={{ flex: 1, fontWeight: 700, color: 'var(--foreground)' }}>Sobre o Atlas & NIF</div>
-                <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
               </a>
               <a href="#/cronograma" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
-                <span style={{ fontSize: '1.1rem' }}>📅</span>
+                <BfaIcon name="calendar" size={18} color="var(--track-finance)" />
                 <div style={{ flex: 1, fontWeight: 700, color: 'var(--foreground)' }}>Cronograma de Estudos</div>
-                <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
               </a>
             </div>
 
@@ -413,10 +413,11 @@ function Navbar() {
                 className="bfa-btn bfa-btn--ghost bfa-btn--sm"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem' }}
               >
+                <BfaIcon name={isDark ? "sun" : "moon"} size={15} />
                 <span>{isDark ? 'Modo Claro' : 'Modo Escuro'}</span>
               </button>
               <a href="#/admin/login" onClick={() => setMobileMenuOpen(false)} className="mono-tag" style={{ color: 'var(--muted-foreground)', textDecoration: 'none', fontSize: '0.75rem' }}>
-                Área do Professor →
+                Área do Professor
               </a>
             </div>
           </div>

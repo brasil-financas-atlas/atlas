@@ -26,25 +26,25 @@ function BottomNavBar() {
     {
       title: 'Calculadora de Juros Compostos',
       desc: 'Simule investimentos periódicos e rentabilidade real',
-      icon: '📈',
+      iconName: 'calculator',
       path: '/calculadora-juros-compostos'
     },
     {
       title: 'Simulador de Carteira & Risco',
       desc: 'Monte seu portfólio e analise correlação de ativos',
-      icon: '💼',
+      iconName: 'briefcase',
       path: '/simulador-carteira'
     },
     {
       title: 'Simulados & Provas Interativas',
       desc: 'Teste seu conhecimento com questões cronometradas',
-      icon: '⏱️',
+      iconName: 'timer',
       path: '/simulados'
     },
     {
       title: 'Feed de Notícias & Macro',
       desc: 'Acompanhe Selic, IPCA, Dólar e atualizações financeiras',
-      icon: '📰',
+      iconName: 'newspaper',
       path: '/noticias'
     }
   ];
@@ -60,7 +60,9 @@ function BottomNavBar() {
           onClick={() => handleNavClick('/')}
           aria-label="Início"
         >
-          <span className="bfa-bottom-nav__icon">🏠</span>
+          <span className="bfa-bottom-nav__icon">
+            <BfaIcon name="home" size={20} />
+          </span>
           <span className="bfa-bottom-nav__label">Início</span>
         </button>
 
@@ -69,7 +71,9 @@ function BottomNavBar() {
           onClick={() => handleNavClick('/matematica')}
           aria-label="Trilha de Matemática"
         >
-          <span className="bfa-bottom-nav__icon">📐</span>
+          <span className="bfa-bottom-nav__icon">
+            <BfaIcon name="math" size={20} />
+          </span>
           <span className="bfa-bottom-nav__label">Matemática</span>
         </button>
 
@@ -78,7 +82,9 @@ function BottomNavBar() {
           onClick={() => handleNavClick('/financas')}
           aria-label="Trilha de Finanças"
         >
-          <span className="bfa-bottom-nav__icon">💰</span>
+          <span className="bfa-bottom-nav__icon">
+            <BfaIcon name="finance" size={20} />
+          </span>
           <span className="bfa-bottom-nav__label">Finanças</span>
         </button>
 
@@ -87,7 +93,9 @@ function BottomNavBar() {
           onClick={() => handleNavClick('tools')}
           aria-label="Ferramentas Interativas"
         >
-          <span className="bfa-bottom-nav__icon">🧮</span>
+          <span className="bfa-bottom-nav__icon">
+            <BfaIcon name="calculator" size={20} />
+          </span>
           <span className="bfa-bottom-nav__label">Ferramentas</span>
         </button>
 
@@ -96,7 +104,9 @@ function BottomNavBar() {
           onClick={() => handleNavClick('/progresso')}
           aria-label="Meu Progresso e Conquistas"
         >
-          <span className="bfa-bottom-nav__icon">🏆</span>
+          <span className="bfa-bottom-nav__icon">
+            <BfaIcon name="trophy" size={20} />
+          </span>
           <span className="bfa-bottom-nav__label">Progresso</span>
         </button>
       </nav>
@@ -120,12 +130,16 @@ function BottomNavBar() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             >
-              <div className="bfa-tools-sheet-card__icon">{tool.icon}</div>
+              <div className="bfa-tools-sheet-card__icon">
+                <BfaIcon name={tool.iconName} size={24} color="var(--ring)" />
+              </div>
               <div className="bfa-tools-sheet-card__info">
                 <div className="bfa-tools-sheet-card__title">{tool.title}</div>
                 <div className="bfa-tools-sheet-card__desc">{tool.desc}</div>
               </div>
-              <span className="bfa-tools-sheet-card__arrow">➔</span>
+              <span className="bfa-tools-sheet-card__arrow">
+                <BfaIcon name="arrowRight" size={16} />
+              </span>
             </button>
           ))}
         </div>

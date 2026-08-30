@@ -273,7 +273,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
             }}
             aria-label="Fechar menu"
           >
-            ✕
+            <BfaIcon name="close" size={14} />
           </button>
         </div>
 
@@ -406,7 +406,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                             <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.titulo}</span>
                           </div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0, marginLeft: '0.4rem' }}>
-                            {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.65rem', fontWeight: 800 }}>✓</span>}
+                            {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.65rem', fontWeight: 800 }}><BfaIcon name="check" size={10} color="#059669" /></span>}
                           </div>
                         </a>
                       );

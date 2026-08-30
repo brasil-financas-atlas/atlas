@@ -1,6 +1,13 @@
 # Directivas Globais do Projeto — Brasil Finanças Atlas (BFA) & Virtual Lab Simulator
 
-## 🚀 Protocolo de Início de Sessão (/session-start)
+## Regra de Ouro: Proibição Estrita de Emojis
+1. **NUNCA UTILIZAR EMOJIS:** Emojis (como emojis de casa, gráfico, dinheiro, foguete, troféu, medalhas, etc.) estão terminantemente proibidos no projeto.
+2. **Utilizar Sempre Ícones SVG Limpos:** Toda representação gráfica deve ser feita através de componentes SVG vetoriais (`BfaIcon` ou SVG inline).
+3. **Comunicação do Agente:** Em todas as respostas de chat, planos e briefings, o agente não deve utilizar nenhum emoji.
+
+---
+
+## Protocolo de Início de Sessão (/session-start)
 
 Sempre que a skill `/session-start` for executada neste repositório, o agente DEVE seguir estes passos automaticamente:
 
@@ -17,11 +24,11 @@ Sempre que a skill `/session-start` for executada neste repositório, o agente D
 
 ---
 
-## 🔬 Diretrizes de Desenvolvimento do Simulador Virtual 3D (C:\codigos\labs)
+## Diretrizes de Desenvolvimento do Simulador Virtual 3D (C:\codigos\labs)
 
 ### Regras de Qualidade Visual & UX (Invioláveis):
 1. **NUNCA iniciar a câmera encarando paredes cinzas soltas**: A câmera deve sempre nascer apontada para a bancada principal de experimentos com iluminação focada.
-2. **Indicação Clara de Interatividade (Tooltips & Cursor)**: Todo objeto interativo (bancada, instrumento, botão, knob) DEVE exibir um tooltip flutuante visível ao passar o mouse (ex: `🔬 Clique para inspecionar Osciloscópio DSO`).
+2. **Indicação Clara de Interatividade (Tooltips & Cursor)**: Todo objeto interativo (bancada, instrumento, botão, knob) DEVE exibir um tooltip flutuante visível ao passar o mouse (ex: `Clique para inspecionar Osciloscópio DSO`).
 3. **Navegação de Câmera Fluida**: 
    - Exploração FPS livre (WASD) → Clicar na bancada passa para órbita → Clicar no instrumento ativa zoom Macro direto nos controles (distância ~0.25m).
    - A tecla `Escape` regressa exatamente um nível de câmera de cada vez (Macro → Órbita → FPS com pointerlock desativado).
