@@ -68,19 +68,19 @@ const ASSET_CLASSES = [
 const PORTFOLIO_PRESETS = [
   {
     id: 'conservador',
-    name: '🛡️ Conservador (Reserva & Preservação)',
+    name: 'Conservador (Reserva & Preservação)',
     desc: 'Foco em liquidez, segurança e proteção patrimonial contra oscilações de curto prazo.',
     allocations: { selic: 60, ipca: 25, prefixado: 0, fiis: 15, acoes: 0, global: 0 }
   },
   {
     id: 'moderado',
-    name: '⚖️ Moderado (Equilíbrio & Proventos)',
+    name: 'Moderado (Equilíbrio & Proventos)',
     desc: 'Combinação clássica de renda fixa robusta com geração de renda passiva mensal em FIIs e crescimento em Ações.',
     allocations: { selic: 30, ipca: 25, prefixado: 10, fiis: 20, acoes: 10, global: 5 }
   },
   {
     id: 'arrojado',
-    name: '🚀 Estrategista BRHSIC (Fronteira Eficiente)',
+    name: 'Estrategista BRHSIC (Fronteira Eficiente)',
     desc: 'Otimização de Sharpe com alta exposição a ativos produtivos, dividendos crescentes e diversificação global.',
     allocations: { selic: 15, ipca: 20, prefixado: 5, fiis: 20, acoes: 25, global: 15 }
   }
@@ -531,10 +531,14 @@ function SimuladorCarteiraInvestimentos() {
             fontWeight: activeTab === 'projection' ? 700 : 500,
             borderBottom: activeTab === 'projection' ? '2px solid var(--color-verde-dark)' : '2px solid transparent',
             cursor: 'pointer',
-            fontSize: '0.9rem'
+            fontSize: '0.9rem',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px'
           }}
         >
-          📈 Gráfico Comparativo & Benchmark
+          <BfaIcon name="chart" size={16} />
+          <span>Gráfico Comparativo & Benchmark</span>
         </button>
         <button
           type="button"
@@ -547,10 +551,14 @@ function SimuladorCarteiraInvestimentos() {
             fontWeight: activeTab === 'breakdown' ? 700 : 500,
             borderBottom: activeTab === 'breakdown' ? '2px solid var(--color-verde-dark)' : '2px solid transparent',
             cursor: 'pointer',
-            fontSize: '0.9rem'
+            fontSize: '0.9rem',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px'
           }}
         >
-          📋 Detalhamento por Ativo
+          <BfaIcon name="fileText" size={16} />
+          <span>Detalhamento por Ativo</span>
         </button>
         <button
           type="button"
@@ -569,7 +577,8 @@ function SimuladorCarteiraInvestimentos() {
             gap: '6px'
           }}
         >
-          🏆 Missões BRHSIC {challenges.allCompleted ? '✓ (100%)' : `(${challenges.completedCount}/4)`}
+          <BfaIcon name="trophy" size={16} />
+          <span>Missões BRHSIC {challenges.allCompleted ? '(100%)' : `(${challenges.completedCount}/4)`}</span>
         </button>
       </div>
 
@@ -707,8 +716,9 @@ function SimuladorCarteiraInvestimentos() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: challenges.c1 ? '1px solid var(--color-verde-dark)' : '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <strong style={{ color: challenges.c1 ? 'var(--color-verde-dark)' : 'var(--foreground)', fontSize: '0.95rem' }}>
-                  {challenges.c1 ? '✓' : '○'} Missão 1: Batedor de Inflação
+                <strong style={{ color: challenges.c1 ? 'var(--color-verde-dark)' : 'var(--foreground)', fontSize: '0.95rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                  <BfaIcon name={challenges.c1 ? "check" : "circle"} size={14} />
+                  <span>Missão 1: Batedor de Inflação</span>
                 </strong>
                 <p style={{ fontSize: '0.82rem', color: 'var(--muted-foreground)', margin: '0.2rem 0 0 0' }}>
                   Obtenha retorno real acima de 5.0% ao ano mantendo volatilidade moderada (&le; 10%). (Atual: {portfolioMetrics.realReturn.toFixed(1)}% real / {portfolioMetrics.portfolioVolatility.toFixed(1)}% vol)
@@ -721,8 +731,9 @@ function SimuladorCarteiraInvestimentos() {
 
             <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: challenges.c2 ? '1px solid var(--color-verde-dark)' : '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <strong style={{ color: challenges.c2 ? 'var(--color-verde-dark)' : 'var(--foreground)', fontSize: '0.95rem' }}>
-                  {challenges.c2 ? '✓' : '○'} Missão 2: Máquina de Renda Passiva
+                <strong style={{ color: challenges.c2 ? 'var(--color-verde-dark)' : 'var(--foreground)', fontSize: '0.95rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                  <BfaIcon name={challenges.c2 ? "check" : "circle"} size={14} />
+                  <span>Missão 2: Máquina de Renda Passiva</span>
                 </strong>
                 <p style={{ fontSize: '0.82rem', color: 'var(--muted-foreground)', margin: '0.2rem 0 0 0' }}>
                   Construa uma carteira com Dividend Yield médio ponderado de pelo menos 4.0% ao ano. (Atual: {portfolioMetrics.weightedDividendYield.toFixed(1)}% yield)
@@ -735,8 +746,9 @@ function SimuladorCarteiraInvestimentos() {
 
             <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: challenges.c3 ? '1px solid var(--color-verde-dark)' : '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <strong style={{ color: challenges.c3 ? 'var(--color-verde-dark)' : 'var(--foreground)', fontSize: '0.95rem' }}>
-                  {challenges.c3 ? '✓' : '○'} Missão 3: Alocador Global
+                <strong style={{ color: challenges.c3 ? 'var(--color-verde-dark)' : 'var(--foreground)', fontSize: '0.95rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                  <BfaIcon name={challenges.c3 ? "check" : "circle"} size={14} />
+                  <span>Missão 3: Alocador Global</span>
                 </strong>
                 <p style={{ fontSize: '0.82rem', color: 'var(--muted-foreground)', margin: '0.2rem 0 0 0' }}>
                   Aloque pelo menos 10% em Ativos Globais/Dólar e 15% em Ações Brasileiras. (Atual: {allocations.global || 0}% Global / {allocations.acoes || 0}% Ações)
@@ -749,8 +761,9 @@ function SimuladorCarteiraInvestimentos() {
 
             <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: challenges.c4 ? '1px solid var(--color-verde-dark)' : '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <strong style={{ color: challenges.c4 ? 'var(--color-verde-dark)' : 'var(--foreground)', fontSize: '0.95rem' }}>
-                  {challenges.c4 ? '✓' : '○'} Missão 4: Eficiência de Sharpe Olímpica
+                <strong style={{ color: challenges.c4 ? 'var(--color-verde-dark)' : 'var(--foreground)', fontSize: '0.95rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                  <BfaIcon name={challenges.c4 ? "check" : "circle"} size={14} />
+                  <span>Missão 4: Eficiência de Sharpe Olímpica</span>
                 </strong>
                 <p style={{ fontSize: '0.82rem', color: 'var(--muted-foreground)', margin: '0.2rem 0 0 0' }}>
                   Atinja um Índice de Sharpe &ge; 0.25 (otimização entre retorno excedente e risco). (Atual: {portfolioMetrics.sharpeRatio.toFixed(2)})

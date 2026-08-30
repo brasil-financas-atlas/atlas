@@ -89,7 +89,7 @@ function BottomSheet({ isOpen, onClose, title, subtitle, children, maxHeight = '
               }}
               aria-label="Fechar gaveta"
             >
-              ✕
+              <BfaIcon name="close" size={16} />
             </button>
           </div>
         )}

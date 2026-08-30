@@ -152,8 +152,8 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                     MÓDULO {mIdx + 1}
                   </span>
                   {isAllDone && (
-                    <span style={{ color: '#059669', fontSize: '0.75rem', fontWeight: 800 }}>
-                      ✓
+                    <span style={{ color: '#059669', display: 'inline-flex' }}>
+                      <BfaIcon name="check" size={12} color="#059669" />
                     </span>
                   )}
                 </div>
@@ -166,8 +166,8 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 <span className="mono-tag" style={{ color: isAllDone ? '#059669' : 'var(--muted-foreground)', fontSize: '0.68rem', fontWeight: 700 }}>
                   {modCompletedCount}/{modTotalCount}
                 </span>
-                <span style={{ fontSize: '0.65rem', color: 'var(--muted-foreground)', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease', display: 'inline-block' }}>
-                  ▶
+                <span style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease', display: 'inline-flex' }}>
+                  <BfaIcon name="arrowRight" size={10} color="var(--muted-foreground)" />
                 </span>
               </div>
             </div>
@@ -236,9 +236,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                       }}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
-                        <span style={{ fontSize: '0.72rem', color: itemDone ? '#059669' : 'var(--muted-foreground)' }}>
-                          {itemDone ? '✓' : '○'}
-                        </span>
+                        <BfaIcon name={itemDone ? "check" : "circle"} size={12} color={itemDone ? "#059669" : "var(--muted-foreground)"} />
                         <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {a.titulo}
                         </span>
@@ -272,8 +270,9 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
       <aside className={`aula-sidebar ${!sidebarOpen ? 'closed' : ''}`} style={{ borderRight: '1px solid var(--border)', background: 'var(--card)' }}>
         <div style={{ padding: '0.85rem 1rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <span className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.7rem' }}>
-              {isMatematica ? '📐 TRILHA MATEMÁTICA' : '💰 TRILHA FINANÇAS'}
+            <span className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.7rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <BfaIcon name={isMatematica ? "math" : "finance"} size={13} />
+              <span>{isMatematica ? 'TRILHA MATEMÁTICA' : 'TRILHA FINANÇAS'}</span>
             </span>
             <div style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--foreground)' }}>
               Índice da Trilha
@@ -286,7 +285,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
             style={{ fontSize: '0.8rem', padding: '0.2rem 0.5rem' }}
             aria-label="Fechar índice"
           >
-            ✕
+            <BfaIcon name="close" size={14} />
           </button>
         </div>
 
@@ -319,7 +318,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 gap: '6px'
               }}
             >
-              <span>☰</span>
+              <BfaIcon name="menu" size={14} />
               <span>{sidebarOpen ? 'Ocultar Trilha' : 'Trilha'}</span>
             </button>
             <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.75rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -346,7 +345,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               }}
               title="Compartilhar Aula"
             >
-              <span>↗</span>
+              <BfaIcon name="share" size={14} />
               <span className="bfa-share-btn-text">Compartilhar</span>
             </button>
 
@@ -366,14 +365,16 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 gap: '5px'
               }}
             >
-              <span>{isDone ? '✓ Concluída' : 'Marcar Concluída'}</span>
+              <BfaIcon name={isDone ? "check" : "circle"} size={14} />
+              <span>{isDone ? 'Concluída' : 'Marcar Concluída'}</span>
             </button>
           </div>
         </div>
 
         {shareToast && (
-          <div className="bfa-toast-banner">
-            ✓ Link da aula copiado para a área de transferência!
+          <div className="bfa-toast-banner" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <BfaIcon name="check" size={14} color="#059669" />
+            <span>Link da aula copiado para a área de transferência!</span>
           </div>
         )}
 

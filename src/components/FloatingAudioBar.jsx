@@ -136,7 +136,7 @@ function FloatingAudioBar() {
             }}
             aria-label={audioState.isPlaying ? 'Pausar' : 'Reproduzir'}
           >
-            {audioState.isPlaying ? '⏸' : '▶'}
+            <BfaIcon name={audioState.isPlaying ? 'pause' : 'play'} size={16} />
           </button>
 
           <button
@@ -147,7 +147,7 @@ function FloatingAudioBar() {
             }}
             aria-label="Fechar player"
           >
-            ✕
+            <BfaIcon name="close" size={14} />
           </button>
         </div>
       </div>
