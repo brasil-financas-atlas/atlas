@@ -212,4 +212,7 @@ def main():
                 syncer.sync()
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        logging.exception(f"[AUTO-SYNC] Fatal exception in main: {e}")

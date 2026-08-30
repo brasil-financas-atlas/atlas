@@ -100,6 +100,19 @@
   /* Typography */
   --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+
+  /* Safe Area Insets for Modern Mobile OS (iOS Notch / Dynamic Island / Android Gesture Bar) */
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+/* Touch & Mobile UX Optimizations */
+html, body {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior-y: contain;
 }
 
 @media (max-width: 768px) {
@@ -111,6 +124,10 @@
   }
   .bfa-bento-card {
     padding: 1.25rem;
+  }
+  /* Espaço inferior para a barra de navegação móvel e safe area */
+  .bfa-app-body {
+    padding-bottom: calc(72px + var(--sab));
   }
 }
 

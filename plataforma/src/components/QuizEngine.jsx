@@ -210,9 +210,11 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
 
   const currentQ = quizQuestions[currentIdx] || quizQuestions[0];
   const previousHighScore = getQuizScore ? getQuizScore(lessonId) : null;
+  const { hapticTap, hapticSuccess, hapticError, hapticMilestone } = (window.useHaptics ? window.useHaptics() : { hapticTap: () => {}, hapticSuccess: () => {}, hapticError: () => {}, hapticMilestone: () => {} });
 
   const handleSelectOption = (idx) => {
     if (submitted) return;
+    hapticTap();
     setSelectedOption(idx);
   };
 
@@ -225,18 +227,25 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
     setSubmitted(true);
 
     if (isCorrect) {
+      hapticSuccess();
       setScore((prev) => prev + 1);
+    } else {
+      hapticError();
     }
   };
 
   const handleNextQuestion = () => {
+    hapticTap();
     if (currentIdx + 1 < quizQuestions.length) {
       setCurrentIdx((prev) => prev + 1);
       setSelectedOption(null);
       setSubmitted(false);
     } else {
       setFinished(true);
-      const finalScore = score;
+      const finalScore = score + (selectedOption === currentQ.correta && !submitted ? 1 : 0);
+      if (finalScore === quizQuestions.length) {
+        hapticMilestone();
+      }
       if (saveQuizScore) {
         try {
           saveQuizScore(lessonId, finalScore, quizQuestions.length);
@@ -255,12 +264,24 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
   };
 
   const handleRestart = () => {
+    hapticTap();
     setCurrentIdx(0);
     setSelectedOption(null);
     setSubmitted(false);
     setScore(0);
     setFinished(false);
     setAnswers([]);
+  };
+
+  const handleShareScore = async () => {
+    hapticTap();
+    if (window.shareContent) {
+      await window.shareContent({
+        title: 'Quiz Brasil Finanças Atlas',
+        text: `Acertei ${score} de ${quizQuestions.length} questões no quiz do Brasil Finanças Atlas!`,
+        url: window.location.href
+      });
+    }
   };
 
   if (finished) {
@@ -284,6 +305,15 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
         </div>
 
         <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={handleShareScore}
+            className="bfa-btn bfa-btn--ouro"
+            style={{ padding: '0.65rem 1.35rem', fontSize: '0.88rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+          >
+            <span>↗</span>
+            <span>Compartilhar Resultado</span>
+          </button>
           <button
             type="button"
             onClick={handleRestart}
