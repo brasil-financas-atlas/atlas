@@ -1,62 +1,63 @@
 # Handoff Briefing
 
 ## Environment Metadata
-- **Timestamp:** 2026-08-29T23:48:30-03:00
+- **Timestamp:** 2026-08-30T00:08:00-03:00
 - **Git Branch:** main (100% synchronized with GitHub origin)
-- **Last Commit:** 933858f - docs: update handoff briefing for mobile responsiveness and quiz visibility
+- **Last Commit:** chore(auto-sync): implement native mobile features, PWA shell, bottom navigation, haptics and touch gestures
 - **Uncommitted Changes:** None (working tree clean)
 
 ## Goal & Objective
-Consolidação e deploy da versão estável da plataforma Brasil Finanças Atlas (BFA) na branch main, integrando todas as correções de quiz, responsividade mobile de alto padrão (ordem split na Home, gaveta lateral compacta, menu modal sem scroll horizontal, opções de quiz com alto contraste), dual architecture (plataforma/ para Cloudflare Pages e docs/ para MkDocs/GitHub Pages) e README com links oficiais.
+Evolução da plataforma Brasil Finanças Atlas (BFA) para uma verdadeira aplicação móvel de alto desempenho (Real Mobile App), superando a barreira de apenas layout responsivo empilhado. Implementação de PWA completo com Service Worker offline, Barra de Navegação Inferior na zona do polegar (Thumb Zone) com auto-hide inteligente, Gestos de Swipe entre abas de aula, Feedback Háptico (Vibração tátil), Bottom Sheets deslizantes com suporte a arrasto, Mini-Player de Áudio persistente e Web Share API.
 
 ## Current Status
 - **Completed in this session:**
-  1. **Correção do Bug de Finalização de Quiz (QuizEngine.jsx & ProgressContext.jsx):**
-     - Corrigido crash assíncrono em uth.getUser(), adicionando checagens defensivas.
-     - Tela de resultado renderizada com pontuação de maestria, barra de progresso e botões de ação ('Revisar Conceitos' e 'Próxima Aula').
-  2. **Restauração da Arquitetura Dual (plataforma/ + docs/):**
-     - Restaurados docs/, mkdocs.yml, 
-etlify.toml e 
-equirements.txt para deploy contínuo do MkDocs / GitHub Pages.
-     - Pasta plataforma/ sincronizada com todo o código React Standalone moderno e atualizado para deploy no Cloudflare Pages.
-  3. **README Oficial Completo:**
-     - Criado README.md com arquitetura do projeto, links para https://atlas-c2i.pages.dev/ e https://brasil-financas-atlas.github.io/bfa/, e instruções de execução local via Python HTTP Server.
-  4. **Correção do Acordeão na Introdução do Módulo (DisciplinaOverview.jsx):**
-     - ModuloIntroPage agora utiliza o mesmo acordeão modular inteligente com módulos colapsados por padrão, evitando a reversão para barra plana antiga.
-  5. **Responsividade Mobile Completa:**
-     - **Home:** Ordem estrita das colunas nas trilhas: texto primeiro no topo, card de ementa abaixo.
-     - **Aula (AulaPage.jsx):** Header unificado e limpo com [ ☰ Trilha ], breadcrumb compacto, botão [ ✓ Concluída ], abas segmentadas nativas [ 📖 Teoria ] [ 🎯 Exercícios ] [ 💬 Fórum ], e gaveta lateral compacta com backdrop com desfoque e fechamento automático com 1 toque.
-     - **Navbar Mobile (NavbarFooter.jsx & components.css):** Removido scroll horizontal; adicionado botão hamburger [ ☰ ] com gaveta modal categorizada (Trilhas, Ferramentas, Institucional, Tema) e atalhos rápidos das trilhas principais ([Matemática] e [Finanças]) no topo.
-     - **Quiz Options (QuizEngine.jsx):** Contraste 100% garantido com ar(--foreground), alinhamento superior com as letras (A, B, C, D) e touch targets de 48px.
-  6. **Merge & Deploy Oficial:**
-     - Merge da branch inovador na main e push para origin/main.
-     - Deploy sincronizado na branch gh-pages.
+  1. **PWA Shell & OS Integration:**
+     - Criado `manifest.json` (Standalone, portrait-primary, theme_color, app shortcuts) e `sw.js` (Service Worker cache-first para estudo offline).
+     - Configurado `viewport-fit=cover` e variáveis CSS Safe-Area (`--sat`, `--sab`, `--sal`, `--sar`) em `globals.css`.
+     - Adicionados `touch-action: manipulation`, `-webkit-tap-highlight-color: transparent` e `overscroll-behavior-y: contain`.
+  2. **Thumb-Zone Persistent Bottom Navigation (`BottomNavBar.jsx`):**
+     - 5 Pilares na ponta do polegar: [ 🏠 Início ] [ 📐 Matemática ] [ 💰 Finanças ] [ 🧮 Ferramentas ] [ 🏆 Progresso ].
+     - Auto-hide dinâmico ao rolar a página para baixo e reexibição instantânea ao rolar para cima.
+  3. **Draggable Bottom Sheets (`BottomSheet.jsx`):**
+     - Modal deslizante de baixo para cima com drag-to-dismiss e backdrop com blur.
+     - Integrado no menu de ferramentas da barra inferior e no índice da trilha.
+  4. **Touch Gestures & Haptics Engine (`touchGestures.js`):**
+     - Hook `useSwipeGesture`: transição por deslize horizontal entre as abas [ 📖 Teoria ], [ 🎯 Exercícios ] e [ 💬 Fórum ] em `AulaPage.jsx`.
+     - Hook `useHaptics`: pulsos táteis em respostas corretas/incorretas de quiz, toques de navegação e marcos de conclusão.
+  5. **Persistent Floating Audio Player (`FloatingAudioBar.jsx`):**
+     - Mini-player acoplado no rodapé que continua a reprodução de texto narrado das aulas enquanto o aluno navega por conteúdos e fórmulas.
+  6. **Touch-First Forms & Native Web Share API (`nativeShare.js`):**
+     - Stepper pills de incremento rápido (+ R$ 50, + R$ 100, + R$ 500, + 1 ano) e `inputmode="decimal"` na Calculadora de Juros.
+     - Botão de compartilhamento nativo para WhatsApp/Instagram em certificados de conclusão e resultados de quiz.
+  7. **Scripts de Sincronização & Teste Automático:**
+     - `scratch/sync_plataforma.py`: sincronização instantânea com `plataforma/`.
+     - `scratch/test_babel.js`: validação de 43 arquivos com Babel Standalone sem erros.
 
 - **In-Progress:**
-  - Branch main estável, 100% validada no Babel e em produção.
+  - Branch main 100% atualizada, testada e em sincronia com GitHub.
 
 - **Blockers / Known Issues:**
-  - Nenhum. Todas as correções validadas e testadas localmente em http://localhost:8080.
+  - Nenhum. Todas as 43 fontes JSX compilam sem erros e a sincronização dual está ativa.
 
 ## Decisions Made (Locked)
-- **Deploy Dual:** plataforma/ é a pasta raiz do app React Standalone no Cloudflare Pages (https://atlas-c2i.pages.dev/). docs/ e mkdocs.yml mantêm a documentação original no GitHub Pages (https://brasil-financas-atlas.github.io/bfa/).
-- **Mobile First Navigation:** Barras horizontais com scroll no topo foram abolidas; o mobile utiliza gaveta modal categorizada + atalhos diretos das trilhas principais.
-- **Sincronização Automática:** Sempre execute python scratch/sync_plataforma.py e 
-ode scratch/test_babel.js após modificar arquivos em src/.
+- **Deploy Dual:** plataforma/ é a pasta raiz do app React Standalone no Cloudflare Pages (https://atlas-c2i.pages.dev/). docs/ e mkdocs.yml mantêm a documentação original no GitHub Pages.
+- **Mobile First Navigation:** A navegação móvel prioriza a barra inferior (Bottom Nav) na zona do polegar com safe-area insets.
+- **Sincronização Automática:** Sempre execute `python scratch/sync_plataforma.py` e `node scratch/test_babel.js` após modificar arquivos em `src/`.
 
 ## Failed Approaches & Anti-Patterns (Do Not Retry)
-- Não usar overflow-x: auto na barra de navegação no mobile (gera experiência ruim de scroll horizontal).
-- Não declarar colunas visuais antes do texto em seções de conteúdo no HTML da Home (no mobile a caixa de ementa ficava por cima do título/descrição).
-- Não esquecer de sincronizar as alterações de src/ para plataforma/src/.
+- Não usar popups centralizados estilo desktop no mobile quando uma Bottom Sheet deslizante oferece ergonomia superior.
+- Não depender apenas de menus superiores tipo hambúrguer para ações frequentes em smartphones grandes.
+- Não esquecer de rodar `python scratch/sync_plataforma.py` para espelhar as alterações na pasta `plataforma/`.
 
 ## Attention Routing (Key Pointers)
-- **Primary Code Files:**
-  - src/components/NavbarFooter.jsx & src/styles/components.css (Menu superior e gaveta modal mobile)
-  - src/pages/AulaPage.jsx (Header integrado de aula, abas segmentadas e gaveta de trilha compacta)
-  - src/components/QuizEngine.jsx (Motor de quiz e formatação das alternativas)
-  - src/pages/DisciplinaOverview.jsx (Visão geral da trilha e introdução aos módulos)
-  - src/pages/Home.jsx (Landing page e ordem das seções no mobile)
-  - README.md (Documentação com links de deploy do Cloudflare Pages e MkDocs)
+- `src/components/BottomNavBar.jsx`: Barra de navegação inferior mobile com auto-hide
+- `src/components/BottomSheet.jsx`: Modal deslizante estilo nativo
+- `src/components/FloatingAudioBar.jsx`: Mini-player de áudio desacoplado
+- `src/utils/touchGestures.js`: Gestos de swipe e haptic feedback
+- `src/utils/nativeShare.js`: Web Share API nativa
+- `src/pages/AulaPage.jsx`: Página de aula com swipe entre abas e compartilhamento
+- `src/components/CalculadoraJurosCompostos.jsx`: Calculadora touch-friendly com steppers
+- `scratch/test_babel.js`: Validador de compilação JSX
 
 ## Immediate Next Step
-- Continuar desenvolvimento de novos módulos ou aprofundamento das trilhas na branch inovador ou main.
+- Apresentar o novo ecossistema mobile nativo ao usuário e continuar expandindo conteúdos das trilhas conforme demanda.
