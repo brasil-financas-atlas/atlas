@@ -1,18 +1,18 @@
 # Handoff Briefing
 
 ## Environment Metadata
-- **Timestamp:** 2026-08-29T01:49:30-03:00
-- **Git Branch:** inovador
-- **Last Commit:** 6b8f47 - fix(ui): ensure 100% visibility and high contrast on quiz option choices and add quick track buttons to mobile navbar
-- **Uncommitted Changes:** None (working tree clean, 100% in sync with GitHub origin)
+- **Timestamp:** 2026-08-29T23:48:30-03:00
+- **Git Branch:** main (100% synchronized with GitHub origin)
+- **Last Commit:** 933858f - docs: update handoff briefing for mobile responsiveness and quiz visibility
+- **Uncommitted Changes:** None (working tree clean)
 
 ## Goal & Objective
-Desenvolvimento da plataforma Brasil Finanças Atlas (BFA), modernização do ecossistema de trilhas e aulas, resolução de bugs de finalização de quiz e introdução de módulo, documentação oficial de deploy (Cloudflare Pages https://atlas-c2i.pages.dev/ e MkDocs), e implementação completa de responsividade mobile de alta performance (Home split reordenada, Drawer lateral compacta, Navbar modal sem scroll horizontal e opções de quiz com alto contraste).
+Consolidação e deploy da versão estável da plataforma Brasil Finanças Atlas (BFA) na branch main, integrando todas as correções de quiz, responsividade mobile de alto padrão (ordem split na Home, gaveta lateral compacta, menu modal sem scroll horizontal, opções de quiz com alto contraste), dual architecture (plataforma/ para Cloudflare Pages e docs/ para MkDocs/GitHub Pages) e README com links oficiais.
 
 ## Current Status
 - **Completed in this session:**
   1. **Correção do Bug de Finalização de Quiz (QuizEngine.jsx & ProgressContext.jsx):**
-     - Corrigido crash assíncrono em uth.getUser(), adicionando checagens defensivas completas.
+     - Corrigido crash assíncrono em uth.getUser(), adicionando checagens defensivas.
      - Tela de resultado renderizada com pontuação de maestria, barra de progresso e botões de ação ('Revisar Conceitos' e 'Próxima Aula').
   2. **Restauração da Arquitetura Dual (plataforma/ + docs/):**
      - Restaurados docs/, mkdocs.yml, 
@@ -28,16 +28,19 @@ equirements.txt para deploy contínuo do MkDocs / GitHub Pages.
      - **Aula (AulaPage.jsx):** Header unificado e limpo com [ ☰ Trilha ], breadcrumb compacto, botão [ ✓ Concluída ], abas segmentadas nativas [ 📖 Teoria ] [ 🎯 Exercícios ] [ 💬 Fórum ], e gaveta lateral compacta com backdrop com desfoque e fechamento automático com 1 toque.
      - **Navbar Mobile (NavbarFooter.jsx & components.css):** Removido scroll horizontal; adicionado botão hamburger [ ☰ ] com gaveta modal categorizada (Trilhas, Ferramentas, Institucional, Tema) e atalhos rápidos das trilhas principais ([Matemática] e [Finanças]) no topo.
      - **Quiz Options (QuizEngine.jsx):** Contraste 100% garantido com ar(--foreground), alinhamento superior com as letras (A, B, C, D) e touch targets de 48px.
+  6. **Merge & Deploy Oficial:**
+     - Merge da branch inovador na main e push para origin/main.
+     - Deploy sincronizado na branch gh-pages.
 
 - **In-Progress:**
-  - Branch inovador atualizada e testada com 100% dos scripts passando na compilação do Babel.
+  - Branch main estável, 100% validada no Babel e em produção.
 
 - **Blockers / Known Issues:**
   - Nenhum. Todas as correções validadas e testadas localmente em http://localhost:8080.
 
 ## Decisions Made (Locked)
-- **Deploy Dual:** plataforma/ é a pasta raiz do app React Standalone no Cloudflare Pages. docs/ e mkdocs.yml mantêm a documentação original.
-- **Mobile First Navigation:** Barras horizontais com scroll no topo são anti-pattern; o mobile utiliza gaveta modal categorizada + atalhos diretos das trilhas principais.
+- **Deploy Dual:** plataforma/ é a pasta raiz do app React Standalone no Cloudflare Pages (https://atlas-c2i.pages.dev/). docs/ e mkdocs.yml mantêm a documentação original no GitHub Pages (https://brasil-financas-atlas.github.io/bfa/).
+- **Mobile First Navigation:** Barras horizontais com scroll no topo foram abolidas; o mobile utiliza gaveta modal categorizada + atalhos diretos das trilhas principais.
 - **Sincronização Automática:** Sempre execute python scratch/sync_plataforma.py e 
 ode scratch/test_babel.js após modificar arquivos em src/.
 
@@ -56,4 +59,4 @@ ode scratch/test_babel.js após modificar arquivos em src/.
   - README.md (Documentação com links de deploy do Cloudflare Pages e MkDocs)
 
 ## Immediate Next Step
-- Apresentar a interface mobile refinada ao usuário e, quando solicitado, realizar o merge da branch inovador na branch main e gh-pages.
+- Continuar desenvolvimento de novos módulos ou aprofundamento das trilhas na branch inovador ou main.
