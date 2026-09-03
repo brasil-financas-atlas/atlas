@@ -164,7 +164,6 @@ function App() {
       </div>
       {!isAulaRoute && <Footer />}
       {window.FloatingAudioBar && <FloatingAudioBar />}
-      {window.BottomNavBar && <BottomNavBar />}
       <CookieConsent />
     </div>
   );

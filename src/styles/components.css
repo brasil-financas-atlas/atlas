@@ -2041,24 +2041,9 @@
    Mobile-Native Experience & Thumb-Zone Components (BFA)
    ========================================================================== */
 
-/* ── Bottom Navigation Bar ─────────────────────────────────────────────── */
+/* ── Bottom Navigation Bar (Desativado) ─────────────────────────────────── */
 .bfa-bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: calc(60px + var(--sab));
-  padding-bottom: var(--sab);
-  background: var(--card);
-  border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 900;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  display: none !important;
 }
 
 .bfa-bottom-nav--hidden {
