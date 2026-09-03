@@ -211,6 +211,186 @@
 
 
 /* ══════════════════════════════════════════════════════════════════════
+   DIAGRAMAS DE CONTEÚDO
+   Esquemas visuais feitos em HTML/CSS em vez de imagem: acompanham o
+   modo escuro, funcionam no celular e o texto continua buscável.
+   Receitas de uso em DESIGN.md.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Grade de conceitos (ex.: as 4 operações) ─── */
+.bfa-ops {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin: 1.5rem 0;
+}
+
+.bfa-ops__item {
+  background: var(--bfa-cor-caixa);
+  border: 1px solid var(--bfa-cor-borda);
+  border-radius: var(--bfa-arredondamento);
+  padding: 1.1rem 1.2rem;
+  box-shadow: var(--bfa-sombra);
+  border-top: 5px solid var(--bfa-cor-destaque);
+}
+
+.bfa-ops__sinal {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  display: block;
+  color: var(--bfa-cor-destaque);
+}
+
+.bfa-ops__nome {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--bfa-cor-texto-suave);
+  margin: 0.45rem 0 0.3rem;
+}
+
+/* A pergunta é a estrela: mais visível que a conta */
+.bfa-ops__pergunta {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--bfa-cor-texto);
+  margin: 0 0 0.6rem;
+  line-height: 1.3;
+}
+
+.bfa-ops__exemplo {
+  font-family: var(--md-code-font-family, monospace);
+  font-size: 0.82rem;
+  color: var(--bfa-cor-texto-suave);
+  background: rgba(1, 30, 80, 0.05);
+  border-radius: var(--bfa-arredondamento-p);
+  padding: 0.25em 0.55em;
+  display: inline-block;
+}
+
+[data-md-color-scheme="slate"] .bfa-ops__exemplo {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* Cores por operação */
+.bfa-ops__item--soma  { border-top-color: #1f9d6b; }
+.bfa-ops__item--soma  .bfa-ops__sinal { color: #1f9d6b; }
+.bfa-ops__item--sub   { border-top-color: #e05252; }
+.bfa-ops__item--sub   .bfa-ops__sinal { color: #e05252; }
+.bfa-ops__item--mult  { border-top-color: #2f6fb0; }
+.bfa-ops__item--mult  .bfa-ops__sinal { color: #2f6fb0; }
+.bfa-ops__item--div   { border-top-color: #ca9e43; }
+.bfa-ops__item--div   .bfa-ops__sinal { color: #ca9e43; }
+
+/* ─── Barras de comparação ─── */
+.bfa-barras {
+  margin: 1.5rem 0;
+  padding: 1.2rem 1.3rem;
+  background: var(--bfa-cor-caixa);
+  border: 1px solid var(--bfa-cor-borda);
+  border-radius: var(--bfa-arredondamento);
+  box-shadow: var(--bfa-sombra);
+}
+
+.bfa-barra { margin-bottom: 1rem; }
+.bfa-barra:last-of-type { margin-bottom: 0.6rem; }
+
+.bfa-barra__rotulo {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--bfa-cor-texto-suave);
+  margin-bottom: 0.3rem;
+}
+
+.bfa-barra__trilho {
+  background: rgba(1, 30, 80, 0.07);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+[data-md-color-scheme="slate"] .bfa-barra__trilho {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.bfa-barra__preenchimento {
+  background: var(--bfa-cor-principal-clara);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.bfa-barra__preenchimento--destaque {
+  background: var(--bfa-cor-destaque);
+  color: var(--bfa-cor-principal-escura);
+}
+
+.bfa-barras__nota {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--bfa-cor-destaque);
+  margin: 0.8rem 0 0;
+  text-align: center;
+}
+
+/* ─── Reta numérica (SVG) ─── */
+.bfa-reta {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 660px;
+  margin: 1.6rem auto;
+  font-family: inherit;
+}
+
+.bfa-reta__negativo { stroke: #e05252; stroke-width: 4; stroke-linecap: round; }
+.bfa-reta__positivo { stroke: #1f9d6b; stroke-width: 4; stroke-linecap: round; }
+.bfa-reta__tick     { stroke: var(--bfa-cor-texto-suave); stroke-width: 1.5; }
+
+.bfa-reta__zero {
+  fill: var(--bfa-cor-caixa);
+  stroke: var(--bfa-cor-texto);
+  stroke-width: 2.5;
+}
+
+.bfa-reta text { text-anchor: middle; }
+.bfa-reta__num           { fill: var(--bfa-cor-texto-suave); font-size: 13px; }
+.bfa-reta__num--destaque { fill: var(--bfa-cor-destaque); font-size: 13px; font-weight: 700; }
+.bfa-reta__num--zero     { fill: var(--bfa-cor-texto); font-size: 14px; font-weight: 800; }
+
+.bfa-reta__zona {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+}
+.bfa-reta__zona--neg  { fill: #e05252; }
+.bfa-reta__zona--pos  { fill: #1f9d6b; }
+.bfa-reta__zona--zero { fill: var(--bfa-cor-texto-suave); }
+
+.bfa-reta__seta       { stroke: var(--bfa-cor-destaque); stroke-width: 2.5; fill: none; }
+.bfa-reta__seta-ponta { fill: var(--bfa-cor-destaque); }
+.bfa-reta__legenda    { fill: var(--bfa-cor-destaque); font-size: 13px; font-weight: 600; }
+
+/* No modo escuro, vermelho e verde precisam clarear para manter contraste */
+[data-md-color-scheme="slate"] .bfa-reta__negativo,
+[data-md-color-scheme="slate"] .bfa-reta__zona--neg { stroke: #ff7b7b; fill: #ff7b7b; }
+[data-md-color-scheme="slate"] .bfa-reta__negativo  { fill: none; }
+[data-md-color-scheme="slate"] .bfa-reta__positivo,
+[data-md-color-scheme="slate"] .bfa-reta__zona--pos { stroke: #4ecfa0; fill: #4ecfa0; }
+[data-md-color-scheme="slate"] .bfa-reta__positivo  { fill: none; }
+
+/* Celular: uma coluna */
+@media screen and (max-width: 44em) {
+  .bfa-ops { grid-template-columns: 1fr; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
    BOTÕES no meio do conteúdo
    ══════════════════════════════════════════════════════════════════════ */
 .md-typeset .md-button {
