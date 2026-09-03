@@ -28,6 +28,26 @@ function ProgressProvider({ children }) {
     }
   });
 
+  // Instancia o hook de autenticação e sincronização
+  const studentAuth = window.useStudentAuth ? window.useStudentAuth() : null;
+
+  // Escuta atualizações remotas de progresso mescladas pelo hook
+  React.useEffect(() => {
+    const handleProgressUpdate = (e) => {
+      if (e.detail) {
+        if (e.detail.completedLessons) {
+          setCompletedLessons(e.detail.completedLessons);
+        }
+        if (e.detail.quizScores) {
+          setQuizScores(e.detail.quizScores);
+        }
+      }
+    };
+
+    window.addEventListener('bfa_progress_updated', handleProgressUpdate);
+    return () => window.removeEventListener('bfa_progress_updated', handleProgressUpdate);
+  }, []);
+
   React.useEffect(() => {
     localStorage.setItem('bfa_user_progress', JSON.stringify(completedLessons));
   }, [completedLessons]);
@@ -45,17 +65,9 @@ function ProgressProvider({ children }) {
       const isCompleted = !prev.includes(lessonId);
       const next = isCompleted ? [...prev, lessonId] : prev.filter(id => id !== lessonId);
       
-      try {
-        if (window.BfaSupabase && window.BfaSupabase.isConfigured() && window.BfaSupabase.client) {
-          window.BfaSupabase.client.auth.getUser().then(res => {
-            const user = res?.data?.user;
-            if (user) {
-              window.BfaSupabase.syncLessonProgress(user.id, lessonId, isCompleted);
-            }
-          }).catch(err => console.warn('[BFA] Supabase sync skipped:', err));
-        }
-      } catch (err) {
-        console.warn('[BFA] Supabase sync skipped:', err);
+      // Dispara sincronização com debounce no Supabase se logado
+      if (studentAuth && studentAuth.syncProgressDebounced) {
+        studentAuth.syncProgressDebounced(next, quizScores);
       }
       return next;
     });
@@ -65,19 +77,13 @@ function ProgressProvider({ children }) {
     setQuizScores(prev => {
       const prevObj = (prev && typeof prev === 'object') ? prev : {};
       const newScore = Math.max(prevObj[lessonId] || 0, score);
-      try {
-        if (window.BfaSupabase && window.BfaSupabase.isConfigured() && window.BfaSupabase.client) {
-          window.BfaSupabase.client.auth.getUser().then(res => {
-            const user = res?.data?.user;
-            if (user) {
-              window.BfaSupabase.saveQuizAttempt(user.id, lessonId, score, maxScore);
-            }
-          }).catch(err => console.warn('[BFA] Supabase sync skipped:', err));
-        }
-      } catch (err) {
-        console.warn('[BFA] Supabase sync skipped:', err);
+      const nextScores = { ...prevObj, [lessonId]: newScore };
+      
+      // Dispara sincronização com debounce no Supabase se logado
+      if (studentAuth && studentAuth.syncProgressDebounced) {
+        studentAuth.syncProgressDebounced(completedLessons, nextScores);
       }
-      return { ...prevObj, [lessonId]: newScore };
+      return nextScores;
     });
   };
 
@@ -121,7 +127,8 @@ function ProgressProvider({ children }) {
     getQuizScore,
     comments,
     addComment,
-    addReply
+    addReply,
+    studentAuth
   };
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
