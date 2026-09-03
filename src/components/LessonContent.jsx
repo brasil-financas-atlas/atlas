@@ -9,6 +9,7 @@ function smartSplitMarkdown(text) {
   let inCodeFence = false;
   let inMathFence = false;
   let inAdmonition = false;
+  let inTable = false;
   
   for (const line of lines) {
     const stripped = line.trim();
@@ -36,6 +37,15 @@ function smartSplitMarkdown(text) {
     if (inCodeFence || inMathFence) {
       currentBlock.push(line);
       continue;
+    }
+
+    // Preservar tabelas Markdown intactas em um único bloco
+    if (stripped.startsWith('|') && (stripped.endsWith('|') || stripped.includes('|'))) {
+      inTable = true;
+      currentBlock.push(line);
+      continue;
+    } else if (inTable) {
+      inTable = false;
     }
     
     if (inAdmonition) {
@@ -274,13 +284,16 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       parsedHtml = parsedHtml.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    // 5. Recolocar KaTeX
+    // 5. Recolocar KaTeX com estilo de Cartão Matemático Editorial
     parsedHtml = parsedHtml.replace(/@@BFAMATH_(\d+)@@/g, (marcador, i) => {
       const f = formulas[Number(i)];
       if (!f) return marcador;
       const html = renderizarTex(f.tex, f.emDestaque);
       if (f.emDestaque) {
-        return `<div class="bfa-math-block">${html}</div>`;
+        return `<div class="bfa-math-card">
+          <div class="bfa-math-card__badge">EQUAÇÃO FUNDAMENTAL</div>
+          <div class="bfa-math-block">${html}</div>
+        </div>`;
       }
       return `<span class="bfa-math-inline">${html}</span>`;
     });
@@ -297,8 +310,10 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       </div>`;
     });
 
-    // 7. Envolver tabelas para rolagem responsiva
-    parsedHtml = parsedHtml.replace(/<table>([\s\S]*?)<\/table>/g, '<div class="bfa-table-wrapper"><table>$1</table></div>');
+    // 7. Envolver tabelas com wrapper executivo centralizado e destacado
+    parsedHtml = parsedHtml.replace(/<table(\s*[^>]*)>([\s\S]*?)<\/table>/gi, (match, attrs, content) => {
+      return `<div class="bfa-table-wrapper"><table${attrs}>${content}</table></div>`;
+    });
 
     return parsedHtml;
   };
