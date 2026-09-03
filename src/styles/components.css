@@ -1947,20 +1947,13 @@
    Mermaid Diagrams & Responsive Ledger Tables
    ========================================================================== */
 .mermaid-wrapper {
-  margin: 2rem 0;
-  overflow-x: auto;
-  background: var(--surface-strong);
-  border: 1px solid var(--border);
-/* ==========================================================================
-   Mermaid Diagrams & Responsive Ledger Tables
-   ========================================================================== */
-.mermaid-wrapper {
-  margin: 2rem 0;
+  margin: 2.25rem auto;
+  max-width: 820px;
   overflow-x: auto;
   background: var(--surface-strong);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  padding: 1.5rem;
+  padding: 1.75rem;
   text-align: center;
   box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05);
 }
@@ -1972,15 +1965,16 @@
   margin: 0 auto;
 }
 
-/* Markdown Ledger Tables & Responsive Wrapper */
+/* ─── Markdown Tables (Centralizadas, Elegantes e com Alto Contraste) ─── */
 .bfa-table-wrapper {
   width: 100%;
+  max-width: 900px;
   overflow-x: auto;
-  margin: 1.75rem 0;
+  margin: 2.25rem auto;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background: var(--card);
-  box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.06);
   scrollbar-width: thin;
 }
 
@@ -1988,35 +1982,256 @@
   width: 100%;
   border-collapse: collapse;
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   border: none;
   background: transparent;
 }
 
 .bfa-markdown-body th {
   background: var(--surface-strong);
-  color: var(--foreground);
-  font-weight: 700;
+  color: var(--foreground) !important;
+  font-weight: 800;
   text-align: left;
-  padding: 0.85rem 1.15rem;
+  padding: 0.95rem 1.25rem;
   border-bottom: 2px solid var(--border);
   letter-spacing: -0.01em;
   white-space: nowrap;
 }
 
 .bfa-markdown-body td {
-  padding: 0.75rem 1.15rem;
+  padding: 0.85rem 1.25rem;
   border-bottom: 1px solid var(--border);
-  color: var(--foreground);
-  line-height: 1.6;
+  color: var(--foreground) !important;
+  line-height: 1.65;
 }
 
 .bfa-markdown-body tr:last-child td {
   border-bottom: none;
 }
 
+.bfa-markdown-body tr:nth-child(even) td {
+  background: rgba(150, 150, 150, 0.025);
+}
+
 .bfa-markdown-body tr:hover td {
-  background: rgba(150, 150, 150, 0.04);
+  background: rgba(150, 150, 150, 0.06);
+}
+
+/* ==========================================================================
+   ADMONITIONS (!!! caixas de destaque com alto contraste)
+   ========================================================================== */
+.bfa-admonition {
+  margin: 2rem 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--ring);
+  background: var(--surface-strong);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.bfa-admonition__header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1.15rem;
+  background: rgba(15, 23, 42, 0.03);
+  border-bottom: 1px solid var(--border);
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--foreground) !important;
+  letter-spacing: -0.01em;
+}
+
+.bfa-admonition__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ring);
+}
+
+.bfa-admonition__title {
+  color: var(--foreground) !important;
+  font-weight: 800;
+}
+
+.bfa-admonition__content {
+  padding: 1.1rem 1.25rem;
+  color: var(--foreground) !important;
+  font-size: 0.96rem;
+  line-height: 1.8;
+}
+
+.bfa-admonition__content > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Cores específicas de Admonitions */
+.bfa-admonition--note, .bfa-admonition--info {
+  border-left-color: #2563EB;
+}
+.bfa-admonition--note .bfa-admonition__icon,
+.bfa-admonition--info .bfa-admonition__icon { color: #2563EB; }
+
+.bfa-admonition--tip, .bfa-admonition--abstract {
+  border-left-color: #10B981;
+}
+.bfa-admonition--tip .bfa-admonition__icon,
+.bfa-admonition--abstract .bfa-admonition__icon { color: #10B981; }
+
+.bfa-admonition--warning {
+  border-left-color: #F59E0B;
+}
+.bfa-admonition--warning .bfa-admonition__icon { color: #F59E0B; }
+
+.bfa-admonition--danger {
+  border-left-color: #EF4444;
+}
+.bfa-admonition--danger .bfa-admonition__icon { color: #EF4444; }
+
+.bfa-admonition--math {
+  border-left-color: #8B5CF6;
+}
+.bfa-admonition--math .bfa-admonition__icon { color: #8B5CF6; }
+
+/* ==========================================================================
+   COLLAPSIBLES / GABARITOS RETRÁTEIS (??? e ???+)
+   ========================================================================== */
+.bfa-collapsible {
+  margin: 1.75rem 0;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--ring);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.bfa-collapsible__summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.15rem;
+  background: var(--surface-strong);
+  cursor: pointer;
+  user-select: none;
+  font-weight: 750;
+  font-size: 0.92rem;
+  color: var(--foreground) !important;
+  list-style: none;
+}
+
+.bfa-collapsible__summary::-webkit-details-marker {
+  display: none;
+}
+
+.bfa-collapsible__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ring);
+}
+
+.bfa-collapsible__title {
+  flex: 1;
+  color: var(--foreground) !important;
+}
+
+.bfa-collapsible__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted-foreground);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bfa-collapsible[open] .bfa-collapsible__chevron {
+  transform: rotate(90deg);
+}
+
+.bfa-collapsible[open] .bfa-collapsible__summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.bfa-collapsible__content {
+  padding: 1.15rem 1.35rem;
+  color: var(--foreground) !important;
+  font-size: 0.96rem;
+  line-height: 1.85;
+  background: var(--card);
+}
+
+.bfa-collapsible__content > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Modificadores de cor para Collapsibles */
+.bfa-collapsible--solution, .bfa-collapsible--tip {
+  border-left-color: #10B981;
+}
+.bfa-collapsible--solution .bfa-collapsible__icon,
+.bfa-collapsible--tip .bfa-collapsible__icon { color: #10B981; }
+
+.bfa-collapsible--note, .bfa-collapsible--info {
+  border-left-color: #2563EB;
+}
+.bfa-collapsible--note .bfa-collapsible__icon,
+.bfa-collapsible--info .bfa-collapsible__icon { color: #2563EB; }
+
+.bfa-collapsible--math {
+  border-left-color: #8B5CF6;
+}
+.bfa-collapsible--math .bfa-collapsible__icon { color: #8B5CF6; }
+
+.bfa-collapsible--warning {
+  border-left-color: #F59E0B;
+}
+.bfa-collapsible--warning .bfa-collapsible__icon { color: #F59E0B; }
+
+/* Suporte de Alto Contraste para Temas Escuros */
+[data-theme="dark-obsidian"] .bfa-admonition,
+[data-theme="dark"] .bfa-admonition,
+.dark .bfa-admonition,
+[data-theme="dark-obsidian"] .bfa-collapsible,
+[data-theme="dark"] .bfa-collapsible,
+.dark .bfa-collapsible {
+  background: #0E131F !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark-obsidian"] .bfa-collapsible__summary,
+[data-theme="dark"] .bfa-collapsible__summary,
+.dark .bfa-collapsible__summary,
+[data-theme="dark-obsidian"] .bfa-admonition__header,
+[data-theme="dark"] .bfa-admonition__header,
+.dark .bfa-admonition__header {
+  background: #141B2B !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark-obsidian"] .bfa-collapsible__content,
+[data-theme="dark"] .bfa-collapsible__content,
+.dark .bfa-collapsible__content,
+[data-theme="dark-obsidian"] .bfa-admonition__content,
+[data-theme="dark"] .bfa-admonition__content,
+.dark .bfa-admonition__content {
+  background: #0E131F !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark-obsidian"] .bfa-markdown-body table th,
+[data-theme="dark"] .bfa-markdown-body table th,
+.dark .bfa-markdown-body table th {
+  background: #141B2B !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark-obsidian"] .bfa-markdown-body table td,
+[data-theme="dark"] .bfa-markdown-body table td,
+.dark .bfa-markdown-body table td {
+  background: #0E131F;
+  color: #E2E8F0 !important;
 }
 
 /* ==========================================================================
