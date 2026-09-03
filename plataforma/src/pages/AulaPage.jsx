@@ -561,7 +561,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                   </div>
 
                   {/* Markdown Theory Article */}
-                  <article className="bfa-lesson-article" style={{ fontSize: '1rem', lineHeight: 1.75 }}>
+                  <article className="bfa-lesson-article" style={{ maxWidth: '860px', margin: '0 auto' }}>
                     <LessonContent markdownContent={markdownContent} lessonId={lessonId} />
                   </article>
 
