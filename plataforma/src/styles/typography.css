@@ -62,39 +62,47 @@ code, pre, kbd, samp {
 /* ── Math & Calculation Spacing System ─────────────────────────────────── */
 .bfa-math-inline {
   display: inline-block;
-  margin: 0 0.32em;
-  padding: 0 0.08em;
-  vertical-align: baseline;
+  margin: 0 0.35em;
+  padding: 0.05em 0.15em;
+  vertical-align: -0.08em;
 }
 
 .bfa-math-block {
-  margin: 1.75rem 0;
+  margin: 2.25rem auto;
   overflow-x: auto;
 }
 
 .katex {
-  font-size: 1.06em;
+  font-size: 1.08em;
   letter-spacing: 0.02em;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .katex-display {
   background-color: var(--surface-strong);
-  border-left: 4px solid var(--track-math);
-  padding: 1.15rem 1.35rem;
+  border-left: 4px solid var(--ring);
+  padding: 1.25rem 1.65rem;
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  margin: 1.85rem 0 !important;
+  margin: 2.25rem 0 !important;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  line-height: 1.95;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  line-height: 2.1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 [data-theme="dark-obsidian"] .katex-display,
+[data-theme="dark"] .katex-display,
 .dark .katex-display {
   background-color: rgba(56, 189, 248, 0.08);
   border-left-color: #38BDF8;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark-obsidian"] .katex,
+[data-theme="dark"] .katex,
+.dark .katex {
+  color: #F8FAFC !important;
 }
 
 /* ── Lesson Article Typography & Spacing ──────────────────────────────── */
