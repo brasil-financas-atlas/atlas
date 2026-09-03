@@ -193,7 +193,9 @@ function AdminDashboard() {
               allLessons.push({
                 id: lessonId,
                 title: aula.titulo,
-                subject: subjKey === 'matematica' ? 'Matemática' : 'Finanças',
+                subject: subjKey,
+                subjectLabel: subjKey === 'matematica' ? 'Matemática' : 'Finanças',
+                moduleSlug: mod.slug,
                 module: mod.titulo,
                 videoUrl: currentVideo
               });
@@ -203,6 +205,14 @@ function AdminDashboard() {
       }
     });
   }
+
+  const handleSaveVideoUrl = (e) => {
+    e.preventDefault();
+    if (!editingVideoLessonId) return;
+    updateLesson(editingVideoLessonId, { videoUrl: videoUrlInput.trim() });
+    setEditingVideoLessonId(null);
+    setVideoUrlInput('');
+  };
 
   const handleCreateModule = (e) => {
     e.preventDefault();
@@ -366,7 +376,7 @@ function AdminDashboard() {
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
-            {adminLessons.map((aula) => (
+            {allLessons.map((aula) => (
               <div
                 key={aula.id}
                 style={{
@@ -383,9 +393,9 @@ function AdminDashboard() {
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '0.25rem' }}>
                     <span className="mono-tag" style={{ color: aula.subject === 'matematica' ? 'var(--track-math)' : 'var(--track-finance)', fontSize: '0.7rem' }}>
-                      {aula.subject.toUpperCase()}
+                      {aula.subjectLabel.toUpperCase()}
                     </span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>· {aula.moduleSlug}</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>· {aula.module}</span>
                   </div>
                   <strong style={{ fontSize: '0.9rem', color: 'var(--foreground)' }}>{aula.title}</strong>
                 </div>
