@@ -344,7 +344,7 @@ a {
 }
 
 /* Responsive Tables */
-.bfa-lesson-article table,
+.bfa-table-wrapper,
 .bfa-table {
   display: block;
   max-width: 100%;
