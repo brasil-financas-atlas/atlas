@@ -1967,42 +1967,57 @@
 
 /* ─── Markdown Tables (Centralizadas, Elegantes e com Alto Contraste) ─── */
 .bfa-table-wrapper {
+/* ─── Markdown Tables (Executive Financial Ledger Standard — Centralizadas e Destacadas) ─── */
+.bfa-table-wrapper {
+  display: block;
   width: 100%;
-  max-width: 900px;
+  max-width: 860px;
+  margin: 2.75rem auto !important;
   overflow-x: auto;
-  margin: 2.25rem auto;
+  border-radius: 12px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-top: 4px solid var(--ring);
   background: var(--card);
-  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.05);
   scrollbar-width: thin;
 }
 
 .bfa-markdown-body table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin: 0;
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   border: none;
   background: transparent;
+  table-layout: auto;
+}
+
+.bfa-markdown-body thead {
+  background: var(--surface-strong);
 }
 
 .bfa-markdown-body th {
   background: var(--surface-strong);
   color: var(--foreground) !important;
+  font-family: var(--font-sans);
   font-weight: 800;
-  text-align: left;
-  padding: 0.95rem 1.25rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 1.15rem 1.4rem;
   border-bottom: 2px solid var(--border);
-  letter-spacing: -0.01em;
   white-space: nowrap;
+  vertical-align: middle;
 }
 
 .bfa-markdown-body td {
-  padding: 0.85rem 1.25rem;
+  padding: 1rem 1.4rem;
   border-bottom: 1px solid var(--border);
   color: var(--foreground) !important;
-  line-height: 1.65;
+  line-height: 1.75;
+  font-size: 0.94rem;
+  vertical-align: middle;
 }
 
 .bfa-markdown-body tr:last-child td {
@@ -2014,31 +2029,70 @@
 }
 
 .bfa-markdown-body tr:hover td {
-  background: rgba(150, 150, 150, 0.06);
+  background: rgba(56, 189, 248, 0.06) !important;
+}
+
+/* ==========================================================================
+   CARTÃO MATEMÁTICO EDITORIAL (Fórmulas KaTeX em Destaque)
+   ========================================================================== */
+.bfa-math-card {
+  display: block;
+  margin: 2.5rem auto;
+  max-width: 860px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--ring);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 8px 25px -4px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.bfa-math-card__badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 0.85rem;
+  background: var(--surface-strong);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+.bfa-math-card .katex-display {
+  margin: 0.5rem 0 0 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 /* ==========================================================================
    ADMONITIONS (!!! caixas de destaque com alto contraste)
    ========================================================================== */
 .bfa-admonition {
-  margin: 2rem 0;
-  border-radius: var(--radius-md);
+  margin: 2.25rem 0;
+  border-radius: 12px;
   border: 1px solid var(--border);
   border-left: 5px solid var(--ring);
-  background: var(--surface-strong);
+  background: var(--card);
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.06);
 }
 
 .bfa-admonition__header {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.75rem 1.15rem;
-  background: rgba(15, 23, 42, 0.03);
+  gap: 0.75rem;
+  padding: 0.95rem 1.35rem;
+  background: var(--surface-strong);
   border-bottom: 1px solid var(--border);
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--foreground) !important;
   letter-spacing: -0.01em;
 }
@@ -2056,10 +2110,10 @@
 }
 
 .bfa-admonition__content {
-  padding: 1.1rem 1.25rem;
+  padding: 1.35rem 1.5rem;
   color: var(--foreground) !important;
-  font-size: 0.96rem;
-  line-height: 1.8;
+  font-size: 0.98rem;
+  line-height: 1.85;
 }
 
 .bfa-admonition__content > p:last-child {
@@ -2098,26 +2152,26 @@
    COLLAPSIBLES / GABARITOS RETRÁTEIS (??? e ???+)
    ========================================================================== */
 .bfa-collapsible {
-  margin: 1.75rem 0;
+  margin: 2rem 0;
   border: 1px solid var(--border);
-  border-left: 4px solid var(--ring);
-  border-radius: var(--radius-md);
+  border-left: 5px solid var(--ring);
+  border-radius: 12px;
   background: var(--card);
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-  transition: all 0.2s ease;
+  box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bfa-collapsible__summary {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.85rem 1.15rem;
+  padding: 1rem 1.35rem;
   background: var(--surface-strong);
   cursor: pointer;
   user-select: none;
   font-weight: 750;
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   color: var(--foreground) !important;
   list-style: none;
 }
@@ -2155,9 +2209,9 @@
 }
 
 .bfa-collapsible__content {
-  padding: 1.15rem 1.35rem;
+  padding: 1.35rem 1.5rem;
   color: var(--foreground) !important;
-  font-size: 0.96rem;
+  font-size: 0.98rem;
   line-height: 1.85;
   background: var(--card);
 }
