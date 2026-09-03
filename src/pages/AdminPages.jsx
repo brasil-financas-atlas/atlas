@@ -336,13 +336,13 @@ function AdminDashboard() {
                     </div>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
                       <button
-                        onClick={() => approveEdit(edit.id)}
+                        onClick={() => approvePendingEdit(edit.id)}
                         className="bfa-btn bfa-btn--verde bfa-btn--sm"
                       >
                         Aprovar Edição
                       </button>
                       <button
-                        onClick={() => rejectEdit(edit.id)}
+                        onClick={() => rejectPendingEdit(edit.id)}
                         className="bfa-btn bfa-btn--ghost bfa-btn--sm"
                         style={{ color: 'var(--status-danger)' }}
                       >

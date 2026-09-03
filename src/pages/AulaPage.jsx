@@ -3,7 +3,7 @@ const { useState, useEffect, useContext, createContext, useMemo, useRef } = Reac
 function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const { EXACT_CONTENT } = window;
   const { completedLessons, toggleLessonComplete } = useContext(ProgressContext || createContext({}));
-  const { isAuthenticated, inlineEditActive, cmsData, updateLesson } = useContext(AdminContext || createContext({}));
+  const { isAuthenticated, inlineEditActive, toggleInlineEdit, isAdmin, cmsData, updateLesson } = useContext(AdminContext || createContext({}));
   const [sidebarOpen, setSidebarOpen] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 768);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [inputVideoUrl, setInputVideoUrl] = useState('');
@@ -682,6 +682,62 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           ) : <div />}
         </div>
       </main>
+
+      {/* Floating In-Context Admin Quick Edit Toggle */}
+      {isAuthenticated && (
+        <div
+          className="bfa-admin-floating-bar"
+          style={{
+            position: 'fixed',
+            bottom: '2rem',
+            right: '2rem',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            background: 'var(--card)',
+            padding: '0.45rem 0.75rem',
+            borderRadius: '9999px',
+            border: '1px solid var(--border)',
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
+          }}
+        >
+          <button
+            type="button"
+            onClick={toggleInlineEdit}
+            className={`bfa-btn bfa-btn--sm ${inlineEditActive ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontWeight: 700,
+              fontSize: '0.8rem',
+              borderRadius: '9999px',
+              padding: '0.35rem 0.85rem',
+              cursor: 'pointer'
+            }}
+          >
+            <BfaIcon name="pencil" size={13} />
+            <span>{inlineEditActive ? 'Edição Ativa' : 'Editar Conteúdo'}</span>
+          </button>
+          {isAdmin && (
+            <a
+              href="#/admin"
+              className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px',
+                fontSize: '0.78rem',
+                textDecoration: 'none'
+              }}
+              title="Ir para o Painel CMS"
+            >
+              <span>Painel</span>
+            </a>
+          )}
+        </div>
+      )}
     </div>
   );
 }
