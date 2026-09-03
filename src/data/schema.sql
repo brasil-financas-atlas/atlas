@@ -554,3 +554,79 @@ NOTIFY pgrst, 'reload schema';
 -- Daí em diante, promover alguém é sempre por aqui — de propósito. Se virar
 -- botão na tela, volta a ser um caminho para escalar privilégio.
 -- ==========================================================================
+
+
+-- ============================================================================
+-- 12. TABELA COMPACTA DE PROGRESSO DE ALUNOS (MICRO-STORAGE FOOTPRINT)
+-- ============================================================================
+
+CREATE TABLE IF NOT EXISTS public.student_profiles (
+    id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    name VARCHAR(80) NOT NULL DEFAULT 'Estudante',
+    role VARCHAR(15) NOT NULL DEFAULT 'student' CHECK (role IN ('student', 'mentor', 'admin')),
+    streak_days SMALLINT NOT NULL DEFAULT 0 CHECK (streak_days >= 0),
+    progress JSONB NOT NULL DEFAULT '{
+        "completed_lessons": [],
+        "quiz_scores": {},
+        "badges": []
+    }'::jsonb,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT TIMEZONE('utc'::text, NOW()),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT TIMEZONE('utc'::text, NOW())
+);
+
+CREATE INDEX IF NOT EXISTS idx_student_profiles_id ON public.student_profiles(id);
+CREATE INDEX IF NOT EXISTS idx_student_profiles_role ON public.student_profiles(role);
+
+DROP TRIGGER IF EXISTS set_student_profiles_updated_at ON public.student_profiles;
+CREATE TRIGGER set_student_profiles_updated_at
+    BEFORE UPDATE ON public.student_profiles
+    FOR EACH ROW
+    EXECUTE FUNCTION public.handle_updated_at();
+
+CREATE OR REPLACE FUNCTION public.handle_new_student_signup()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO public.student_profiles (id, name, role, progress)
+    VALUES (
+        NEW.id,
+        COALESCE(NEW.raw_user_meta_data->>'name', split_part(NEW.email, '@', 1), 'Estudante'),
+        'student',
+        '{
+            "completed_lessons": [],
+            "quiz_scores": {},
+            "badges": []
+        }'::jsonb
+    )
+    ON CONFLICT (id) DO NOTHING;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+DROP TRIGGER IF EXISTS on_auth_user_created_student ON auth.users;
+CREATE TRIGGER on_auth_user_created_student
+    AFTER INSERT ON auth.users
+    FOR EACH ROW
+    EXECUTE FUNCTION public.handle_new_student_signup();
+
+ALTER TABLE public.student_profiles ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Aluno le proprio perfil" ON public.student_profiles;
+CREATE POLICY "Aluno le proprio perfil"
+ON public.student_profiles
+FOR SELECT
+USING (auth.uid() = id);
+
+DROP POLICY IF EXISTS "Aluno atualiza proprio perfil" ON public.student_profiles;
+CREATE POLICY "Aluno atualiza proprio perfil"
+ON public.student_profiles
+FOR UPDATE
+USING (auth.uid() = id)
+WITH CHECK (auth.uid() = id);
+
+DROP POLICY IF EXISTS "Aluno insere proprio perfil" ON public.student_profiles;
+CREATE POLICY "Aluno insere proprio perfil"
+ON public.student_profiles
+FOR INSERT
+WITH CHECK (auth.uid() = id);
+
+NOTIFY pgrst, 'reload schema';
