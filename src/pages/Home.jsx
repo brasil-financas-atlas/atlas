@@ -237,7 +237,7 @@ function Home() {
               <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
                 Compare o resultado de aplicações em juros simples e compostos ao longo do tempo.
               </p>
-              <a href="#/cronograma" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--track-math)' }}>
+              <a href="#/calculadora-juros-compostos" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--track-math)' }}>
                 Abrir Calculadora →
               </a>
             </div>
