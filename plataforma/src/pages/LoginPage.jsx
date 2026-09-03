@@ -122,6 +122,7 @@ function LoginPage() {
       if (error) throw error;
 
       if (data?.user) {
+        // 1. Tenta salvar na tabela compacta student_profiles
         try {
           await supabase.from('student_profiles').upsert({
             id: data.user.id,
@@ -131,18 +132,37 @@ function LoginPage() {
             updated_at: new Date().toISOString()
           });
         } catch (dbErr) {
-          console.warn('[BFA DB] Trigger já provisionou ou erro controlado:', dbErr);
+          console.warn('[BFA DB] student_profiles ignorado ou gerenciado por trigger:', dbErr?.message);
+        }
+
+        // 2. Tenta salvar também na tabela profiles tradicional (role: student)
+        try {
+          await supabase.from('profiles').upsert({
+            id: data.user.id,
+            email: email.trim(),
+            full_name: name.trim(),
+            role: 'student',
+            updated_at: new Date().toISOString()
+          });
+        } catch (pErr) {
+          console.warn('[BFA DB] profiles ignorado ou gerenciado por trigger:', pErr?.message);
         }
       }
 
-      setSuccessMsg('Cadastro realizado com sucesso! Você já está conectado.');
-      if (studentAuth?.reloadProfile) {
-        await studentAuth.reloadProfile();
+      if (data?.session) {
+        setSuccessMsg('Cadastro realizado com sucesso! Conectando...');
+        if (studentAuth?.reloadProfile) {
+          await studentAuth.reloadProfile();
+        }
+        setTimeout(() => {
+          window.location.hash = '#/';
+        }, 1000);
+      } else {
+        setSuccessMsg('Conta de aluno criada com sucesso! Caso a confirmação de e-mail esteja ativada no seu Supabase, verifique sua caixa de entrada para confirmar o acesso.');
+        setTimeout(() => {
+          setActiveTab('student-login');
+        }, 2500);
       }
-
-      setTimeout(() => {
-        window.location.hash = '#/';
-      }, 1200);
     } catch (err) {
       console.warn('[BFA Register] Erro no cadastro:', err);
       let msg = err.message || 'Falha ao criar conta.';
