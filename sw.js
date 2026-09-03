@@ -1,5 +1,5 @@
 // Service Worker para Brasil Finanças Atlas (BFA)
-const CACHE_NAME = 'bfa-cache-v20260903_05';
+const CACHE_NAME = 'bfa-cache-v20260903_06';
 
 const STATIC_ASSETS = [
   './',
