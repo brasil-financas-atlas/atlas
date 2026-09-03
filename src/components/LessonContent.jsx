@@ -1,81 +1,5 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
-function smartSplitMarkdown(text) {
-  if (!text) return [];
-  const lines = text.replace(/\r\n/g, '\n').split('\n');
-  const blocks = [];
-  let currentBlock = [];
-  
-  let inCodeFence = false;
-  let inMathFence = false;
-  let inAdmonition = false;
-  let inTable = false;
-  
-  for (const line of lines) {
-    const stripped = line.trim();
-    
-    if (stripped.startsWith('```')) {
-      inCodeFence = !inCodeFence;
-      currentBlock.push(line);
-      continue;
-    }
-    
-    if (stripped.startsWith('$$') || stripped === '\\]' || stripped === '\\[') {
-      if ((stripped.match(/\$\$/g) || []).length % 2 === 1) {
-        inMathFence = !inMathFence;
-      }
-      currentBlock.push(line);
-      continue;
-    }
-    
-    if (/^(?:!{3}|\?{3})\+?\s+\w+/.test(stripped)) {
-      inAdmonition = true;
-      currentBlock.push(line);
-      continue;
-    }
-
-    if (inCodeFence || inMathFence) {
-      currentBlock.push(line);
-      continue;
-    }
-
-    // Preservar tabelas Markdown intactas em um único bloco
-    if (stripped.startsWith('|') && (stripped.endsWith('|') || stripped.includes('|'))) {
-      inTable = true;
-      currentBlock.push(line);
-      continue;
-    } else if (inTable) {
-      inTable = false;
-    }
-    
-    if (inAdmonition) {
-      if (stripped === '' || line.startsWith('  ') || line.startsWith('\t')) {
-        currentBlock.push(line);
-        continue;
-      } else {
-        inAdmonition = false;
-      }
-    }
-
-    if (stripped === '') {
-      if (currentBlock.length > 0) {
-        const blockText = currentBlock.join('\n').trim();
-        if (blockText) blocks.push(blockText);
-        currentBlock = [];
-      }
-    } else {
-      currentBlock.push(line);
-    }
-  }
-
-  if (currentBlock.length > 0) {
-    const blockText = currentBlock.join('\n').trim();
-    if (blockText) blocks.push(blockText);
-  }
-
-  return blocks;
-}
-
 function LessonContent({ markdownContent, lessonId = 'lc' }) {
   const containerRef = useRef(null);
   const { cmsData } = useContext(AdminContext || createContext({}));
@@ -147,10 +71,11 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     }
   });
 
-  // Parse markdown into granular editable blocks with smart boundary detection
+  // Parse markdown into granular editable blocks using double newlines
   const blocks = useMemo(() => {
     if (!markdownContent) return [];
-    const rawBlocks = smartSplitMarkdown(markdownContent);
+    const text = markdownContent.replace(/\r\n/g, '\n');
+    const rawBlocks = text.split(/\n\s*\n/);
     const result = [];
 
     rawBlocks.forEach((b, idx) => {
@@ -280,22 +205,13 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
         ADD_TAGS: ['details', 'summary', 'svg', 'path', 'line', 'circle', 'polygon', 'polyline', 'g', 'rect', 'text', 'tspan', 'defs', 'marker', 'use'],
         ADD_ATTR: ['open', 'target', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'data-mermaid-code', 'data-processed', 'class', 'style', 'id', 'x', 'y', 'dx', 'dy', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'width', 'height', 'text-anchor', 'transform', 'marker-end', 'marker-start']
       });
-    } else {
-      parsedHtml = parsedHtml.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    // 5. Recolocar KaTeX com estilo de Cartão Matemático Editorial
+    // 5. Recolocar KaTeX
     parsedHtml = parsedHtml.replace(/@@BFAMATH_(\d+)@@/g, (marcador, i) => {
       const f = formulas[Number(i)];
       if (!f) return marcador;
-      const html = renderizarTex(f.tex, f.emDestaque);
-      if (f.emDestaque) {
-        return `<div class="bfa-math-card">
-          <div class="bfa-math-card__badge">EQUAÇÃO FUNDAMENTAL</div>
-          <div class="bfa-math-block">${html}</div>
-        </div>`;
-      }
-      return `<span class="bfa-math-inline">${html}</span>`;
+      return renderizarTex(f.tex, f.emDestaque);
     });
 
     // 6. Limpar wrappers de parágrafo ao redor de diagramas Mermaid e recolocar
@@ -303,11 +219,8 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     parsedHtml = parsedHtml.replace(/@@BFAMERMAID_(\d+)@@/g, (marcador, i) => {
       const code = mermaidBlocks[Number(i)];
       if (!code) return marcador;
-      // Encode safe
       const encoded = code.replace(/"/g, '&quot;');
-      return `<div class="mermaid-wrapper">
-        <div class="mermaid-target" data-mermaid-code="${encoded}"></div>
-      </div>`;
+      return `<div class="mermaid-wrapper"><div class="mermaid-target" data-mermaid-code="${encoded}"></div></div>`;
     });
 
     // 7. Envolver tabelas com wrapper executivo centralizado e destacado
@@ -325,10 +238,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
           key={block.id}
           id={block.id}
           content={block.raw}
-          style={{
-            marginTop: block.type === 'heading' ? '2.25rem' : '0',
-            marginBottom: '1.35rem'
-          }}
+          style={{ marginBottom: '1.25rem' }}
         >
           <div dangerouslySetInnerHTML={{ __html: renderSingleBlock(block.raw) }} />
         </EditableBlock>
