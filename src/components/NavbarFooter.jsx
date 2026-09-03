@@ -1,6 +1,15 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
 function Navbar() {
+  const { studentAuth, completedLessons, quizScores } = useContext(window.ProgressContext || createContext({}));
+  const [studentModalOpen, setStudentModalOpen] = useState(false);
+  const [authStep, setAuthStep] = useState('email'); // 'email' | 'otp' | 'profile'
+  const [authEmail, setAuthEmail] = useState('');
+  const [authName, setAuthName] = useState('');
+  const [authOtp, setAuthOtp] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [authMessage, setAuthMessage] = useState('');
+  const [authLoading, setAuthLoading] = useState(false);
   const { currentPath } = useRouter();
   const { adminUser, isAdmin, logout, publicarConteudo, statusPublicacao, erroPublicacao, currentTheme, setTheme: setContextTheme } =
     useContext(AdminContext || createContext({}));
@@ -215,6 +224,76 @@ function Navbar() {
         </div>
 
         <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          {/* Botão de Autenticação / Perfil do Aluno */}
+          {studentAuth && studentAuth.isAuthenticated ? (
+            <button
+              type="button"
+              onClick={() => {
+                setAuthStep('profile');
+                setStudentModalOpen(true);
+              }}
+              className="navbar-student-btn"
+              title="Meu Perfil e Progresso Sincronizado"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '7px',
+                padding: '0.42rem 0.85rem',
+                borderRadius: '9999px',
+                border: '1px solid var(--border)',
+                background: 'var(--surface-strong)',
+                color: 'var(--foreground)',
+                fontSize: '0.8rem',
+                fontWeight: 750,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              <span style={{
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                backgroundColor: studentAuth.isSyncing ? '#38BDF8' : '#10B981',
+                boxShadow: studentAuth.isSyncing ? '0 0 8px #38BDF8' : '0 0 6px #10B981'
+              }} />
+              <span style={{ maxWidth: '110px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {studentAuth.profile?.name || studentAuth.user?.email?.split('@')[0] || 'Aluno'}
+              </span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                setAuthStep('email');
+                setAuthError('');
+                setAuthMessage('');
+                setStudentModalOpen(true);
+              }}
+              className="navbar-student-btn"
+              title="Entrar para sincronizar seu progresso na nuvem"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '0.42rem 0.85rem',
+                borderRadius: '9999px',
+                border: '1px solid var(--border)',
+                background: 'var(--surface-strong)',
+                color: 'var(--foreground)',
+                fontSize: '0.8rem',
+                fontWeight: 750,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <span>Entrar</span>
+            </button>
+          )}
+
           {/* Botão de Alternância Dark/Light (Desktop) */}
           <button
             type="button"
@@ -300,6 +379,255 @@ function Navbar() {
         </div>
       </div>
     </header>
+
+    
+      {/* Modal de Autenticação e Perfil de Aluno */}
+      {studentModalOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(4px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10000,
+            padding: '1rem'
+          }}
+          onClick={() => setStudentModalOpen(false)}
+        >
+          <div
+            style={{
+              backgroundColor: 'var(--card)',
+              border: '1px solid var(--border)',
+              borderRadius: '16px',
+              padding: '2rem',
+              width: '100%',
+              maxWidth: '440px',
+              boxShadow: '0 20px 50px -10px rgba(0,0,0,0.3)',
+              color: 'var(--foreground)'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header do Modal */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.85rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ display: 'inline-flex', padding: '6px', borderRadius: '8px', background: 'var(--surface-strong)', color: 'var(--ring)' }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                </span>
+                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800 }}>
+                  {authStep === 'profile' ? 'Meu Perfil de Aprendizado' : (authStep === 'otp' ? 'Confirmar Código' : 'Acessar o Atlas')}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setStudentModalOpen(false)}
+                style={{ background: 'transparent', border: 'none', color: 'var(--muted-foreground)', cursor: 'pointer', padding: '4px' }}
+              >
+                <BfaIcon name="close" size={18} />
+              </button>
+            </div>
+
+            {authError && (
+              <div style={{ padding: '0.75rem 1rem', borderRadius: '8px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#EF4444', fontSize: '0.85rem', marginBottom: '1rem' }}>
+                {authError}
+              </div>
+            )}
+
+            {authMessage && (
+              <div style={{ padding: '0.75rem 1rem', borderRadius: '8px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)', color: '#10B981', fontSize: '0.85rem', marginBottom: '1rem' }}>
+                {authMessage}
+              </div>
+            )}
+
+            {/* Passo 1: Solicitar E-mail */}
+            {authStep === 'email' && (
+              <div>
+                <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', lineHeight: 1.6, marginBottom: '1.25rem' }}>
+                  Informe seu e-mail para receber um código de acesso seguro sem necessidade de senha. Seu progresso será sincronizado na nuvem.
+                </p>
+                <form onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!authEmail.trim()) {
+                    setAuthError('Por favor, informe um e-mail válido.');
+                    return;
+                  }
+                  setAuthLoading(true);
+                  setAuthError('');
+                  try {
+                    if (studentAuth?.signInWithEmail) {
+                      await studentAuth.signInWithEmail(authEmail, authName);
+                      setAuthMessage('Código de acesso enviado para seu e-mail!');
+                      setAuthStep('otp');
+                    } else {
+                      setAuthError('Módulo de autenticação Supabase indisponível no momento.');
+                    }
+                  } catch (err) {
+                    setAuthError(err?.message || 'Erro ao enviar código.');
+                  } finally {
+                    setAuthLoading(false);
+                  }
+                }}>
+                  <div style={{ marginBottom: '1rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.35rem' }}>Seu Nome ou Apelido (Opcional):</label>
+                    <input
+                      type="text"
+                      placeholder="Ex: Ana Silva"
+                      value={authName}
+                      onChange={(e) => setAuthName(e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.9rem' }}
+                    />
+                  </div>
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.35rem' }}>E-mail:</label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="seu.email@exemplo.com"
+                      value={authEmail}
+                      onChange={(e) => setAuthEmail(e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.9rem' }}
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={authLoading}
+                    className="btn-primary"
+                    style={{ width: '100%', padding: '0.85rem', fontSize: '0.92rem', fontWeight: 750, borderRadius: '8px' }}
+                  >
+                    {authLoading ? 'Enviando código...' : 'Continuar com E-mail'}
+                  </button>
+                </form>
+              </div>
+            )}
+
+            {/* Passo 2: Confirmar Código OTP */}
+            {authStep === 'otp' && (
+              <div>
+                <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', lineHeight: 1.6, marginBottom: '1.25rem' }}>
+                  Digite o código de 6 dígitos enviado para <strong>{authEmail}</strong>:
+                </p>
+                <form onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!authOtp.trim()) {
+                    setAuthError('Por favor, informe o código.');
+                    return;
+                  }
+                  setAuthLoading(true);
+                  setAuthError('');
+                  try {
+                    if (studentAuth?.verifyOtpCode) {
+                      await studentAuth.verifyOtpCode(authEmail, authOtp);
+                      setAuthStep('profile');
+                      setAuthMessage('Login realizado com sucesso!');
+                    }
+                  } catch (err) {
+                    setAuthError(err?.message || 'Código inválido ou expirado.');
+                  } finally {
+                    setAuthLoading(false);
+                  }
+                }}>
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <input
+                      type="text"
+                      required
+                      maxLength={10}
+                      placeholder="Código de 6 dígitos"
+                      value={authOtp}
+                      onChange={(e) => setAuthOtp(e.target.value)}
+                      style={{ width: '100%', padding: '0.85rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '1.1rem', textAlign: 'center', letterSpacing: '0.2em', fontFamily: 'var(--font-mono)' }}
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={authLoading}
+                    className="btn-primary"
+                    style={{ width: '100%', padding: '0.85rem', fontSize: '0.92rem', fontWeight: 750, borderRadius: '8px', marginBottom: '0.75rem' }}
+                  >
+                    {authLoading ? 'Verificando...' : 'Confirmar e Entrar'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setAuthStep('email'); setAuthError(''); setAuthMessage(''); }}
+                    style={{ width: '100%', padding: '0.5rem', background: 'transparent', border: 'none', color: 'var(--muted-foreground)', fontSize: '0.8rem', cursor: 'pointer' }}
+                  >
+                    Voltar e alterar e-mail
+                  </button>
+                </form>
+              </div>
+            )}
+
+            {/* Passo 3: Perfil do Aluno Conectado */}
+            {authStep === 'profile' && (
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem', padding: '1rem', borderRadius: '12px', background: 'var(--surface-strong)', border: '1px solid var(--border)' }}>
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--track-finance), #0F172A)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1.2rem' }}>
+                    {(studentAuth?.profile?.name || studentAuth?.user?.email || 'A').charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 800, fontSize: '1rem' }}>
+                      {studentAuth?.profile?.name || 'Estudante BFA'}
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', fontFamily: 'var(--font-mono)' }}>
+                      {studentAuth?.user?.email}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Estatísticas Rápidas de Progresso */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                  <div style={{ padding: '0.85rem', borderRadius: '10px', background: 'var(--surface-strong)', border: '1px solid var(--border)', textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--muted-foreground)', fontWeight: 700, letterSpacing: '0.04em' }}>Aulas Concluídas</div>
+                    <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '4px' }}>
+                      {completedLessons?.length || 0} <span style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>/ 55</span>
+                    </div>
+                  </div>
+                  <div style={{ padding: '0.85rem', borderRadius: '10px', background: 'var(--surface-strong)', border: '1px solid var(--border)', textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--muted-foreground)', fontWeight: 700, letterSpacing: '0.04em' }}>Quizzes Respondidos</div>
+                    <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--track-finance)', marginTop: '4px' }}>
+                      {Object.keys(quizScores || {}).length}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Status de Sincronização */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 1rem', borderRadius: '8px', background: 'var(--background)', border: '1px solid var(--border)', marginBottom: '1.5rem', fontSize: '0.82rem' }}>
+                  <span style={{ color: 'var(--muted-foreground)' }}>Sincronização na Nuvem:</span>
+                  <span style={{ fontWeight: 750, color: studentAuth?.isSyncing ? '#38BDF8' : '#10B981', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: studentAuth?.isSyncing ? '#38BDF8' : '#10B981' }} />
+                    {studentAuth?.isSyncing ? 'Sincronizando...' : 'Progresso Salvo'}
+                  </span>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (studentAuth?.signOut) studentAuth.signOut();
+                      setStudentModalOpen(false);
+                    }}
+                    style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', border: '1px solid rgba(239, 68, 68, 0.3)', background: 'rgba(239, 68, 68, 0.08)', color: '#EF4444', fontWeight: 750, fontSize: '0.88rem', cursor: 'pointer' }}
+                  >
+                    Sair da Conta
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStudentModalOpen(false)}
+                    className="btn-primary"
+                    style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', fontWeight: 750, fontSize: '0.88rem' }}
+                  >
+                    Fechar
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
     {/* Mobile Drawer Modal (Renderizado fora do header para evitar stacking context bugs com backdrop-filter) */}
     {mobileMenuOpen && (
