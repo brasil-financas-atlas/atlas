@@ -31,9 +31,9 @@ function ThemeSelector() {
               color: themePreference === t.id ? '#FFFFFF' : 'var(--foreground)'
             }}
           >
-            <strong style={{ fontSize: '0.95rem' }}>
-              {themePreference === t.id && '✓ '}
-              {t.name}
+            <strong style={{ fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              {themePreference === t.id && <BfaIcon name="check" size={14} color="#FFFFFF" />}
+              <span>{t.name}</span>
             </strong>
             <span style={{ fontSize: '0.78rem', opacity: 0.8, marginTop: '0.2rem' }}>{t.desc}</span>
           </button>
@@ -56,7 +56,7 @@ function AdminLogin() {
       <div className="bfa-container" style={{ padding: '4rem 1.5rem', maxWidth: '500px', margin: '0 auto' }}>
         <div className="tool-card" style={{ padding: '2.5rem', textAlign: 'center' }}>
           <div style={{ margin: '0 auto 1rem auto', display: 'inline-flex', padding: '1rem', borderRadius: '50%', background: 'rgba(52, 211, 153, 0.15)' }}>
-            <span style={{ fontSize: '2rem' }}>✓</span>
+            <BfaIcon name="check" size={32} color="#059669" />
           </div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--foreground)' }}>
             Sessão Ativa: <strong>{adminUser.name || adminUser.email}</strong>
@@ -336,13 +336,13 @@ function AdminDashboard() {
                     </div>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
                       <button
-                        onClick={() => approveEdit(edit.id)}
+                        onClick={() => approvePendingEdit(edit.id)}
                         className="bfa-btn bfa-btn--verde bfa-btn--sm"
                       >
                         Aprovar Edição
                       </button>
                       <button
-                        onClick={() => rejectEdit(edit.id)}
+                        onClick={() => rejectPendingEdit(edit.id)}
                         className="bfa-btn bfa-btn--ghost bfa-btn--sm"
                         style={{ color: 'var(--status-danger)' }}
                       >
@@ -356,41 +356,60 @@ function AdminDashboard() {
           </div>
         )}
 
-        {/* Gerenciador Central de Vídeos das Aulas */}
-        <div className="tool-card" style={{ padding: '2rem' }}>
-          <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            Gerenciador de Vídeo-Aulas (Admin)
+        {/* Gerenciamento de Vídeos das Aulas */}
+        <div className="tool-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <BfaIcon name="video" size={20} color="var(--primary)" /> Gerenciamento de Vídeo Aulas (YouTube)
           </h3>
           <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginBottom: '1.5rem' }}>
-            Adicione, altere ou remova os links do YouTube de qualquer aula do Brasil Finanças Atlas.
+            Insira o link do YouTube para cada aula. O vídeo ficará disponível na aba dedicada dentro da sala de aula.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem', maxHeight: '420px', overflowY: 'auto', paddingRight: '0.5rem' }}>
-            {allLessons.map(aula => (
-              <div key={aula.id} style={{ padding: '1rem', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', background: 'var(--card)' }}>
-                <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)', marginBottom: '0.2rem' }}>
-                  {aula.subject} / {aula.module}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+            {adminLessons.map((aula) => (
+              <div
+                key={aula.id}
+                style={{
+                  background: 'var(--surface-strong)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '1rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  gap: '0.75rem'
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '0.25rem' }}>
+                    <span className="mono-tag" style={{ color: aula.subject === 'matematica' ? 'var(--track-math)' : 'var(--track-finance)', fontSize: '0.7rem' }}>
+                      {aula.subject.toUpperCase()}
+                    </span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>· {aula.moduleSlug}</span>
+                  </div>
+                  <strong style={{ fontSize: '0.9rem', color: 'var(--foreground)' }}>{aula.title}</strong>
                 </div>
-                <strong style={{ fontSize: '0.925rem', color: 'var(--foreground)', display: 'block', marginBottom: '0.5rem' }}>
-                  {aula.title}
-                </strong>
 
                 {editingVideoLessonId === aula.id ? (
-                  <form onSubmit={(e) => {
-                    e.preventDefault();
-                    updateLesson(aula.id, { videoUrl: videoUrlInput.trim() });
-                    setEditingVideoLessonId(null);
-                  }} style={{ marginTop: '0.5rem' }}>
+                  <form onSubmit={handleSaveVideoUrl} style={{ marginTop: '0.5rem' }}>
                     <input
                       type="url"
+                      placeholder="https://www.youtube.com/watch?v=..."
                       value={videoUrlInput}
                       onChange={(e) => setVideoUrlInput(e.target.value)}
-                      placeholder="https://www.youtube.com/watch?v=..."
-                      className="bfa-input"
-                      style={{ width: '100%', fontSize: '0.8rem', padding: '0.4rem 0.6rem', marginBottom: '0.5rem' }}
+                      style={{
+                        width: '100%',
+                        padding: '0.4rem 0.6rem',
+                        fontSize: '0.8rem',
+                        borderRadius: '4px',
+                        border: '1px solid var(--border)',
+                        background: 'var(--card)',
+                        color: 'var(--foreground)',
+                        marginBottom: '0.5rem'
+                      }}
                       autoFocus
                     />
-                    <div style={{ display: 'flex', gap: '0.4rem' }}>
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
                       <button type="submit" className="bfa-btn bfa-btn--sm bfa-btn--verde" style={{ fontSize: '0.75rem' }}>Salvar</button>
                       <button type="button" className="bfa-btn bfa-btn--sm bfa-btn--ghost" onClick={() => setEditingVideoLessonId(null)} style={{ fontSize: '0.75rem' }}>Cancelar</button>
                     </div>
@@ -398,7 +417,7 @@ function AdminDashboard() {
                 ) : (
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
                     <span className="mono-tag" style={{ color: aula.videoUrl ? 'var(--market)' : 'var(--muted-foreground)', fontSize: '0.7rem' }}>
-                      {aula.videoUrl ? '✓ Vídeo configurado' : 'Sem vídeo'}
+                      {aula.videoUrl ? 'Vídeo configurado' : 'Sem vídeo'}
                     </span>
                     <div style={{ display: 'flex', gap: '0.4rem' }}>
                       <button
@@ -423,7 +442,7 @@ function AdminDashboard() {
                           }}
                           style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', color: 'var(--status-danger)' }}
                         >
-                          ✕
+                          <BfaIcon name="close" size={12} />
                         </button>
                       )}
                     </div>

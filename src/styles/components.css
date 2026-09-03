@@ -1019,11 +1019,90 @@
 .bfa-mobile-nav-toggle {
   display: none;
 }
-.bfa-mobile-nav-drawer {
-  display: none;
-}
+
 .bfa-mobile-nav-backdrop {
-  display: none;
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99998;
+  animation: bfaFadeIn 0.2s ease;
+}
+
+.bfa-mobile-nav-drawer {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 88vw;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--card);
+  border-left: 1px solid var(--border);
+  z-index: 99999;
+  flex-direction: column;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+  animation: bfaSlideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes bfaSlideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.bfa-mobile-nav-header {
+  padding: 1.15rem 1.25rem 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bfa-mobile-nav-content {
+  padding: 1rem 1.15rem;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bfa-mobile-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.bfa-mobile-nav-grouptitle {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--muted-foreground);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.35rem;
+}
+
+.bfa-mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  transition: all 0.15s ease;
+  min-height: 48px;
+}
+
+.bfa-mobile-nav-link:active {
+  background: var(--card);
+  border-color: var(--track-finance);
 }
 
 @media (max-width: 768px) {
@@ -1075,88 +1154,6 @@
     color: var(--foreground);
     font-size: 1.15rem;
     cursor: pointer;
-  }
-
-  /* Mobile Drawer */
-  .bfa-mobile-nav-backdrop {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.7);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    z-index: 9998;
-  }
-
-  .bfa-mobile-nav-drawer {
-    display: flex;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 320px;
-    max-width: 88vw;
-    background: var(--card);
-    border-left: 1px solid var(--border);
-    z-index: 9999;
-    flex-direction: column;
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
-    animation: bfaSlideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  @keyframes bfaSlideInRight {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
-  }
-
-  .bfa-mobile-nav-header {
-    padding: 1.15rem 1.25rem 1rem 1.25rem;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .bfa-mobile-nav-content {
-    padding: 1rem 1.15rem;
-    overflow-y: auto;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
-  .bfa-mobile-nav-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-
-  .bfa-mobile-nav-grouptitle {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 800;
-    color: var(--muted-foreground);
-    letter-spacing: 0.08em;
-    margin-bottom: 0.35rem;
-  }
-
-  .bfa-mobile-nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.65rem 0.85rem;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    background: var(--surface-strong);
-    border: 1px solid var(--border);
-    transition: all 0.15s ease;
-    min-height: 48px;
-  }
-
-  .bfa-mobile-nav-link:active {
-    background: var(--surface-hover);
-    border-color: var(--track-finance);
   }
 
   .navbar-actions {
@@ -2038,4 +2035,377 @@
 
 .bfa-module-milestone-card:hover {
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   Mobile-Native Experience & Thumb-Zone Components (BFA)
+   ========================================================================== */
+
+/* ── Bottom Navigation Bar ─────────────────────────────────────────────── */
+.bfa-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(60px + var(--sab));
+  padding-bottom: var(--sab);
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 900;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.bfa-bottom-nav--hidden {
+  transform: translateY(100%);
+}
+
+.bfa-bottom-nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 100%;
+  background: transparent;
+  border: none;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  padding: 0.35rem 0.25rem;
+  transition: all 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.bfa-bottom-nav__icon {
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.bfa-bottom-nav__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  transition: color 0.15s ease;
+}
+
+.bfa-bottom-nav__item--active {
+  color: var(--foreground) !important;
+}
+
+.bfa-bottom-nav__item--active .bfa-bottom-nav__icon {
+  transform: scale(1.12);
+}
+
+.bfa-bottom-nav__item--active .bfa-bottom-nav__label {
+  font-weight: 800;
+  color: var(--ring);
+}
+
+@media (min-width: 769px) {
+  .bfa-bottom-nav {
+    display: none !important;
+  }
+}
+
+/* ── Bottom Sheet Component ───────────────────────────────────────────── */
+.bfa-bottom-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  animation: bfaFadeIn 0.2s ease;
+}
+
+.bfa-bottom-sheet {
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  border-radius: 20px 20px 0 0;
+  padding: 0 1.25rem calc(1.5rem + var(--sab)) 1.25rem;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.25);
+  animation: bfaSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  touch-action: pan-y;
+  transition: transform 0.1s ease-out;
+}
+
+.bfa-bottom-sheet--dragging {
+  transition: none !important;
+}
+
+.bfa-bottom-sheet__handle-wrapper {
+  padding: 0.75rem 0 0.5rem 0;
+  cursor: grab;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.bfa-bottom-sheet__handle {
+  width: 44px;
+  height: 5px;
+  background: var(--border);
+  border-radius: 999px;
+}
+
+.bfa-bottom-sheet__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+
+.bfa-bottom-sheet__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.bfa-bottom-sheet__subtitle {
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+  margin: 0.15rem 0 0 0;
+}
+
+.bfa-bottom-sheet__close-btn {
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--foreground);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bfa-bottom-sheet__content {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: calc(75vh - 60px);
+}
+
+/* ── Tools Sheet Grid & Cards ─────────────────────────────────────────── */
+.bfa-tools-sheet-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.bfa-tools-sheet-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 100%;
+}
+
+.bfa-tools-sheet-card:hover, .bfa-tools-sheet-card:active {
+  background: var(--card);
+  border-color: var(--ring);
+  transform: scale(0.99);
+}
+
+.bfa-tools-sheet-card__icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.bfa-tools-sheet-card__info {
+  flex: 1;
+}
+
+.bfa-tools-sheet-card__title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--foreground);
+  margin-bottom: 0.15rem;
+}
+
+.bfa-tools-sheet-card__desc {
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+  line-height: 1.35;
+}
+
+.bfa-tools-sheet-card__arrow {
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+/* ── Floating Mini Audio Bar ──────────────────────────────────────────── */
+.bfa-floating-audio-bar {
+  position: fixed;
+  bottom: calc(70px + var(--sab));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 520px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  z-index: 890;
+  overflow: hidden;
+  animation: bfaSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.bfa-floating-audio-bar__progress-track {
+  height: 3px;
+  width: 100%;
+  background: var(--surface-strong);
+}
+
+.bfa-floating-audio-bar__progress-fill {
+  height: 100%;
+  background: var(--market);
+  transition: width 0.2s ease;
+}
+
+.bfa-floating-audio-bar__body {
+  display: flex;
+  align-items: center;
+  padding: 0.65rem 0.85rem;
+  gap: 0.75rem;
+}
+
+.bfa-floating-audio-bar__wave-icon {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 16px;
+}
+
+.bfa-audio-bar-wave {
+  width: 3px;
+  height: 10px;
+  background: var(--market);
+  border-radius: 2px;
+}
+
+.bfa-audio-bar-wave--anim:nth-child(1) { animation: bfaWave 0.6s infinite alternate ease-in-out; }
+.bfa-audio-bar-wave--anim:nth-child(2) { animation: bfaWave 0.8s infinite alternate ease-in-out 0.2s; }
+.bfa-audio-bar-wave--anim:nth-child(3) { animation: bfaWave 0.7s infinite alternate ease-in-out 0.4s; }
+
+@keyframes bfaWave {
+  0% { height: 4px; }
+  100% { height: 18px; }
+}
+
+.bfa-floating-audio-bar__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.bfa-floating-audio-bar__title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bfa-floating-audio-bar__sub {
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
+}
+
+.bfa-floating-audio-bar__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.bfa-floating-audio-bar__play-btn {
+  background: var(--market);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.4);
+}
+
+.bfa-floating-audio-bar__close-btn {
+  background: transparent;
+  color: var(--muted-foreground);
+  border: none;
+  font-size: 0.85rem;
+  padding: 0.3rem;
+  cursor: pointer;
+}
+
+/* ── Toast Banner ─────────────────────────────────────────────────────── */
+.bfa-toast-banner {
+  position: fixed;
+  top: calc(20px + var(--sat));
+  left: 50%;
+  transform: translateX(-50%);
+  background: #059669;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+  animation: bfaSlideDown 0.3s ease;
+  white-space: nowrap;
+}
+
+@keyframes bfaSlideDown {
+  from { opacity: 0; transform: translate(-50%, -15px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes bfaSlideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bfaFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 480px) {
+  .bfa-share-btn-text {
+    display: none !important;
+  }
 }

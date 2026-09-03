@@ -126,7 +126,22 @@ function CertificadoGenerator() {
               className="bfa-btn bfa-btn--ouro"
               style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '0.75rem 1.5rem', fontWeight: 700 }}
             >
-              <BfaIcon name="paper" size={16} /> Imprimir / Baixar PDF Certificado
+              <BfaIcon name="paper" size={16} /> Imprimir / Baixar PDF
+            </button>
+            <button
+              onClick={async () => {
+                if (window.shareContent) {
+                  await window.shareContent({
+                    title: `Certificado BFA — ${studentName}`,
+                    text: `Concluí o módulo ${moduleObj?.titulo} no Brasil Finanças Atlas! Código de validação: ${authHash}`,
+                    url: window.location.href
+                  });
+                }
+              }}
+              className="bfa-btn bfa-btn--verde"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '0.75rem 1.5rem', fontWeight: 700 }}
+            >
+              <span>↗</span> Compartilhar Conquista
             </button>
           </div>
         </div>

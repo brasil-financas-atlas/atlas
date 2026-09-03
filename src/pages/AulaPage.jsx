@@ -3,12 +3,15 @@ const { useState, useEffect, useContext, createContext, useMemo, useRef } = Reac
 function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const { EXACT_CONTENT } = window;
   const { completedLessons, toggleLessonComplete } = useContext(ProgressContext || createContext({}));
-  const { isAuthenticated, inlineEditActive, cmsData, updateLesson } = useContext(AdminContext || createContext({}));
+  const { isAuthenticated, inlineEditActive, toggleInlineEdit, isAdmin, cmsData, updateLesson } = useContext(AdminContext || createContext({}));
   const [sidebarOpen, setSidebarOpen] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 768);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [inputVideoUrl, setInputVideoUrl] = useState('');
   const [activeTab, setActiveTab] = useState('teoria'); // 'teoria' | 'quiz' | 'forum'
   const activeLessonRef = useRef(null);
+  const [shareToast, setShareToast] = useState(false);
+
+  const { hapticTap, hapticSuccess } = (window.useHaptics ? window.useHaptics() : { hapticTap: () => {}, hapticSuccess: () => {} });
 
   const [expandedMods, setExpandedMods] = useState({ [moduloSlug]: true });
 
@@ -59,8 +62,201 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const isMatematica = subjectKey === 'matematica';
   const trackColor = isMatematica ? 'var(--track-math)' : 'var(--track-finance)';
 
+  // Gestos de Swipe entre Abas
+  const tabs = ['teoria', 'quiz', 'forum'];
+  const handleSwipeLeft = () => {
+    const nextIdx = tabs.indexOf(activeTab) + 1;
+    if (nextIdx < tabs.length) {
+      hapticTap();
+      setActiveTab(tabs[nextIdx]);
+    }
+  };
+
+  const handleSwipeRight = () => {
+    const prevIdx = tabs.indexOf(activeTab) - 1;
+    if (prevIdx >= 0) {
+      hapticTap();
+      setActiveTab(tabs[prevIdx]);
+    }
+  };
+
+  const { handlers: swipeHandlers } = window.useSwipeGesture ?
+    window.useSwipeGesture({ onSwipeLeft: handleSwipeLeft, onSwipeRight: handleSwipeRight, threshold: 60 }) :
+    { handlers: {} };
+
+  const handleToggleDone = () => {
+    if (!isDone) {
+      hapticSuccess();
+    } else {
+      hapticTap();
+    }
+    toggleLessonComplete(lessonId);
+  };
+
+  const handleShare = async () => {
+    hapticTap();
+    if (window.shareContent) {
+      const res = await window.shareContent({
+        title: `${aulaObj.titulo} — Brasil Finanças Atlas`,
+        text: `Estudando "${aulaObj.titulo}" no Brasil Finanças Atlas!`,
+        url: window.location.href
+      });
+      if (res && res.method === 'clipboard') {
+        setShareToast(true);
+        setTimeout(() => setShareToast(false), 2500);
+      }
+    }
+  };
+
+  const renderCurriculumContent = () => (
+    <div style={{ padding: '0.75rem 0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      {subjectData.modulos.map((m, mIdx) => {
+        const isCurrentMod = m.slug === moduloSlug;
+        const isExpanded = expandedMods[m.slug] !== false;
+        const modTotalCount = m.aulas.length;
+        const modCompletedCount = m.aulas.filter(a => {
+          const itemLessonId = `${subjectKey}-${m.slug}-${a.slug}`;
+          return completedLessons && completedLessons.includes(itemLessonId);
+        }).length;
+        const isAllDone = modTotalCount > 0 && modCompletedCount === modTotalCount;
+
+        return (
+          <div
+            key={m.slug}
+            style={{
+              borderRadius: 'var(--radius-md)',
+              border: isCurrentMod ? `1px solid ${trackColor}` : '1px solid var(--border)',
+              background: isCurrentMod ? 'var(--surface-strong)' : 'var(--card)',
+              overflow: 'hidden',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            {/* Module Accordion Header */}
+            <div
+              onClick={() => {
+                hapticTap();
+                setExpandedMods(prev => ({ ...prev, [m.slug]: !prev[m.slug] }));
+              }}
+              style={{
+                padding: '0.65rem 0.85rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                userSelect: 'none'
+              }}
+            >
+              <div style={{ minWidth: 0, flex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="mono-tag" style={{ color: trackColor, fontSize: '0.68rem', fontWeight: 800 }}>
+                    MÓDULO {mIdx + 1}
+                  </span>
+                  {isAllDone && (
+                    <span style={{ color: '#059669', display: 'inline-flex' }}>
+                      <BfaIcon name="check" size={12} color="#059669" />
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {m.titulo}
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0, marginLeft: '0.5rem' }}>
+                <span className="mono-tag" style={{ color: isAllDone ? '#059669' : 'var(--muted-foreground)', fontSize: '0.68rem', fontWeight: 700 }}>
+                  {modCompletedCount}/{modTotalCount}
+                </span>
+                <span style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease', display: 'inline-flex' }}>
+                  <BfaIcon name="arrowRight" size={10} color="var(--muted-foreground)" />
+                </span>
+              </div>
+            </div>
+
+            {/* Expanded Module Content */}
+            {isExpanded && (
+              <div style={{ padding: '0.35rem 0.4rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                <a
+                  href={`#/${subjectKey}/${m.slug}`}
+                  onClick={() => {
+                    hapticTap();
+                    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                      setSidebarOpen(false);
+                    }
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    fontSize: '0.78rem',
+                    fontWeight: 600,
+                    backgroundColor: 'transparent',
+                    borderLeft: '3px solid transparent',
+                    color: 'var(--muted-foreground)',
+                    padding: '0.4rem 0.6rem',
+                    borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+                    textDecoration: 'none'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <BfaIcon name="book" size={12} color="var(--muted-foreground)" />
+                    <span>Introdução & Ementa</span>
+                  </div>
+                </a>
+
+                {m.aulas.map((a) => {
+                  const itemLessonId = `${subjectKey}-${m.slug}-${a.slug}`;
+                  const itemDone = completedLessons && completedLessons.includes(itemLessonId);
+                  const isActive = isCurrentMod && a.slug === aulaSlug;
+
+                  return (
+                    <a
+                      key={a.slug}
+                      ref={isActive ? activeLessonRef : null}
+                      href={`#/${subjectKey}/${m.slug}/${a.slug}`}
+                      onClick={() => {
+                        hapticTap();
+                        if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                          setSidebarOpen(false);
+                        }
+                      }}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        fontSize: '0.82rem',
+                        fontWeight: isActive ? 800 : 500,
+                        backgroundColor: isActive ? 'var(--card)' : 'transparent',
+                        borderLeft: isActive ? `3px solid ${trackColor}` : '3px solid transparent',
+                        boxShadow: isActive ? '0 1px 4px rgba(0, 0, 0, 0.08)' : 'none',
+                        color: isActive ? 'var(--foreground)' : 'var(--muted-foreground)',
+                        padding: '0.5rem 0.65rem',
+                        borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+                        textDecoration: 'none',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
+                        <BfaIcon name={itemDone ? "check" : "circle"} size={12} color={itemDone ? "#059669" : "var(--muted-foreground)"} />
+                        <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          {a.titulo}
+                        </span>
+                      </div>
+                      {isActive && (
+                        <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: trackColor, flexShrink: 0, marginLeft: '0.4rem' }} />
+                      )}
+                    </a>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+
   return (
-    <div className="aula-layout">
+    <div className="aula-layout" {...swipeHandlers}>
       {/* Mobile Sidebar Backdrop */}
       {sidebarOpen && (
         <div
@@ -73,170 +269,27 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
       {/* Sidebar - Curriculum Tree */}
       <aside className={`aula-sidebar ${!sidebarOpen ? 'closed' : ''}`} style={{ borderRight: '1px solid var(--border)', background: 'var(--card)' }}>
         <div style={{ padding: '0.85rem 1rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <a href={`#/${subjectKey}`} className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.75rem', textDecoration: 'none' }}>
-            ← Voltar para {isMatematica ? 'Matemática' : 'Finanças'}
-          </a>
+          <div>
+            <span className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.7rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <BfaIcon name={isMatematica ? "math" : "finance"} size={13} />
+              <span>{isMatematica ? 'TRILHA MATEMÁTICA' : 'TRILHA FINANÇAS'}</span>
+            </span>
+            <div style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--foreground)' }}>
+              Índice da Trilha
+            </div>
+          </div>
           <button
             type="button"
             onClick={() => setSidebarOpen(false)}
-            className="aula-sidebar-close-btn"
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: 'var(--muted-foreground)',
-              fontSize: '1.1rem',
-              cursor: 'pointer',
-              padding: '0.2rem 0.4rem',
-              lineHeight: 1
-            }}
-            aria-label="Fechar menu"
+            className="bfa-btn bfa-btn--ghost bfa-btn--sm"
+            style={{ fontSize: '0.8rem', padding: '0.2rem 0.5rem' }}
+            aria-label="Fechar índice"
           >
-            ✕
+            <BfaIcon name="close" size={14} />
           </button>
         </div>
 
-        <div className="aula-sidebar-content" style={{ padding: '0.75rem 0.65rem' }}>
-          {subjectData.modulos.map((m, idx) => {
-            const isCurrentMod = m.slug === moduloSlug;
-            const isExpanded = !!expandedMods[m.slug];
-            const modCompletedCount = m.aulas.filter(a => completedLessons && completedLessons.includes(`${subjectKey}-${m.slug}-${a.slug}`)).length;
-            const modTotalCount = m.aulas.length;
-            const isAllDone = modCompletedCount === modTotalCount;
-
-            return (
-              <div
-                key={m.slug}
-                style={{
-                  marginBottom: '0.65rem',
-                  border: isCurrentMod ? `1px solid ${trackColor}40` : '1px solid var(--border)',
-                  borderRadius: 'var(--radius-md)',
-                  background: isCurrentMod ? 'var(--surface-strong)' : 'var(--card)',
-                  overflow: 'hidden',
-                  transition: 'border-color 0.2s ease'
-                }}
-              >
-                {/* Module Header Bar Accordion */}
-                <div
-                  onClick={() => setExpandedMods(prev => ({ ...prev, [m.slug]: !prev[m.slug] }))}
-                  style={{
-                    padding: '0.65rem 0.75rem',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                    userSelect: 'none',
-                    borderBottom: isExpanded ? '1px solid var(--border)' : 'none',
-                    background: isCurrentMod ? 'rgba(255, 255, 255, 0.03)' : 'transparent'
-                  }}
-                >
-                  <div style={{ minWidth: 0 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <span className="mono-tag" style={{ color: isCurrentMod ? trackColor : 'var(--muted-foreground)', fontSize: '0.65rem', fontWeight: 800 }}>
-                        MÓDULO {idx + 1}
-                      </span>
-                      {isCurrentMod && (
-                        <span className="mono-tag" style={{ color: trackColor, background: 'rgba(56, 189, 248, 0.1)', fontSize: '0.62rem', fontWeight: 700, padding: '0.1rem 0.35rem' }}>
-                          Ativo
-                        </span>
-                      )}
-                    </div>
-                    <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {m.titulo}
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0, marginLeft: '0.5rem' }}>
-                    <span className="mono-tag" style={{ color: isAllDone ? '#059669' : 'var(--muted-foreground)', fontSize: '0.68rem', fontWeight: 700 }}>
-                      {modCompletedCount}/{modTotalCount}
-                    </span>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--muted-foreground)', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease', display: 'inline-block' }}>
-                      ▶
-                    </span>
-                  </div>
-                </div>
-
-                {/* Expanded Module Content */}
-                {isExpanded && (
-                  <div style={{ padding: '0.35rem 0.4rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-                    {/* Link da Introdução do Módulo */}
-                    <a
-                      href={`#/${subjectKey}/${m.slug}`}
-                      onClick={() => {
-                        if (typeof window !== 'undefined' && window.innerWidth < 768) {
-                          setSidebarOpen(false);
-                        }
-                      }}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        fontSize: '0.78rem',
-                        fontWeight: 600,
-                        backgroundColor: 'transparent',
-                        borderLeft: '3px solid transparent',
-                        color: 'var(--muted-foreground)',
-                        padding: '0.4rem 0.6rem',
-                        borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
-                        textDecoration: 'none'
-                      }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <BfaIcon name="book" size={12} color="var(--muted-foreground)" />
-                        <span>Introdução & Ementa</span>
-                      </div>
-                    </a>
-
-                    {/* Aulas do Módulo */}
-                    {m.aulas.map((a, aIdx) => {
-                      const itemLessonId = `${subjectKey}-${m.slug}-${a.slug}`;
-                      const itemDone = completedLessons && completedLessons.includes(itemLessonId);
-                      const isActive = isCurrentMod && a.slug === aulaSlug;
-
-                      return (
-                        <a
-                          key={a.slug}
-                          ref={isActive ? activeLessonRef : null}
-                          href={`#/${subjectKey}/${m.slug}/${a.slug}`}
-                          onClick={() => {
-                            if (typeof window !== 'undefined' && window.innerWidth < 768) {
-                              setSidebarOpen(false);
-                            }
-                          }}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            fontSize: '0.82rem',
-                            fontWeight: isActive ? 800 : 500,
-                            backgroundColor: isActive ? 'var(--card)' : 'transparent',
-                            borderLeft: isActive ? `3px solid ${trackColor}` : '3px solid transparent',
-                            boxShadow: isActive ? '0 1px 4px rgba(0, 0, 0, 0.08)' : 'none',
-                            color: isActive ? 'var(--foreground)' : 'var(--muted-foreground)',
-                            padding: '0.5rem 0.65rem',
-                            borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
-                            textDecoration: 'none',
-                            transition: 'all 0.15s ease'
-                          }}
-                        >
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
-                            <span className="tabular-numbers" style={{ fontSize: '0.72rem', color: isActive ? trackColor : 'var(--muted-foreground)', fontWeight: 800 }}>
-                              {String(aIdx + 1).padStart(2, '0')}
-                            </span>
-                            <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.titulo}</span>
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0, marginLeft: '0.4rem' }}>
-                            {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.65rem', fontWeight: 800 }}>✓</span>}
-                            {isActive && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: trackColor }} />}
-                          </div>
-                        </a>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+        {renderCurriculumContent()}
       </aside>
 
       {/* Main Classroom Canvas */}
@@ -246,7 +299,10 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', minWidth: 0 }}>
             <button
               type="button"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
+              onClick={() => {
+                hapticTap();
+                setSidebarOpen(!sidebarOpen);
+              }}
               className="bfa-btn"
               style={{
                 cursor: 'pointer',
@@ -262,7 +318,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 gap: '6px'
               }}
             >
-              <span>☰</span>
+              <BfaIcon name="menu" size={14} />
               <span>{sidebarOpen ? 'Ocultar Trilha' : 'Trilha'}</span>
             </button>
             <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.75rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -270,9 +326,31 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <button
-              onClick={() => toggleLessonComplete(lessonId)}
+              type="button"
+              onClick={handleShare}
+              className="bfa-btn"
+              style={{
+                background: 'var(--surface-strong)',
+                color: 'var(--foreground)',
+                border: '1px solid var(--border)',
+                padding: '0.45rem 0.75rem',
+                borderRadius: 'var(--radius-sm)',
+                fontWeight: 700,
+                fontSize: '0.82rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}
+              title="Compartilhar Aula"
+            >
+              <BfaIcon name="share" size={14} />
+              <span className="bfa-share-btn-text">Compartilhar</span>
+            </button>
+
+            <button
+              onClick={handleToggleDone}
               className="bfa-btn"
               style={{
                 backgroundColor: isDone ? '#059669' : 'var(--surface-strong)',
@@ -287,10 +365,18 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 gap: '5px'
               }}
             >
-              <span>{isDone ? '✓ Aula Concluída' : 'Marcar Concluída'}</span>
+              <BfaIcon name={isDone ? "check" : "circle"} size={14} />
+              <span>{isDone ? 'Concluída' : 'Marcar Concluída'}</span>
             </button>
           </div>
         </div>
+
+        {shareToast && (
+          <div className="bfa-toast-banner" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <BfaIcon name="check" size={14} color="#059669" />
+            <span>Link da aula copiado para a área de transferência!</span>
+          </div>
+        )}
 
         {/* Lesson Title & Audio Header */}
         <div style={{ marginBottom: '1.5rem' }}>
@@ -322,7 +408,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
           return (
             <div>
-              {/* Top Integrated Segmented Tabs */}
+              {/* Top Integrated Segmented Tabs with Swipe indicator */}
               <div
                 style={{
                   display: 'flex',
@@ -337,7 +423,10 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               >
                 <button
                   type="button"
-                  onClick={() => setActiveTab('teoria')}
+                  onClick={() => {
+                    hapticTap();
+                    setActiveTab('teoria');
+                  }}
                   style={{
                     flex: 1,
                     padding: '0.55rem 0.75rem',
@@ -362,6 +451,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 <button
                   type="button"
                   onClick={() => {
+                    hapticTap();
                     setActiveTab('quiz');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
@@ -388,7 +478,10 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setActiveTab('forum')}
+                  onClick={() => {
+                    hapticTap();
+                    setActiveTab('forum');
+                  }}
                   style={{
                     flex: 1,
                     padding: '0.55rem 0.75rem',
@@ -492,6 +585,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                         type="button"
                         className="bfa-btn bfa-btn--verde"
                         onClick={() => {
+                          hapticTap();
                           setActiveTab('quiz');
                           window.scrollTo({ top: 0, behavior: 'smooth' });
                         }}
@@ -505,14 +599,17 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 </div>
               )}
 
-              {/* TAB 2: QUIZ (Positioned right at the top for instant practice) */}
+              {/* TAB 2: QUIZ */}
               {activeTab === 'quiz' && (
                 <div id="quiz-section" style={{ marginTop: '1rem' }}>
                   <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <button
                       type="button"
                       className="bfa-btn bfa-btn--sm bfa-btn--ghost"
-                      onClick={() => setActiveTab('teoria')}
+                      onClick={() => {
+                        hapticTap();
+                        setActiveTab('teoria');
+                      }}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                     >
                       <span>← Voltar para a Teoria</span>
@@ -537,7 +634,10 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                     <button
                       type="button"
                       className="bfa-btn bfa-btn--sm bfa-btn--ghost"
-                      onClick={() => setActiveTab('teoria')}
+                      onClick={() => {
+                        hapticTap();
+                        setActiveTab('teoria');
+                      }}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                     >
                       <span>← Voltar para a Teoria</span>
@@ -555,6 +655,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           {prevAula ? (
             <a
               href={`#/${subjectKey}/${prevAula.moduloSlug}/${prevAula.slug}`}
+              onClick={() => hapticTap()}
               style={{
                 border: '1px solid var(--border)',
                 background: 'var(--surface-strong)',
@@ -572,6 +673,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           {nextAula ? (
             <a
               href={`#/${subjectKey}/${nextAula.moduloSlug}/${nextAula.slug}`}
+              onClick={() => hapticTap()}
               className="bfa-btn bfa-btn--verde"
               style={{ padding: '0.65rem 1.35rem', borderRadius: 'var(--radius-md)', fontWeight: 700, fontSize: '0.85rem' }}
             >
@@ -580,6 +682,62 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           ) : <div />}
         </div>
       </main>
+
+      {/* Floating In-Context Admin Quick Edit Toggle */}
+      {isAuthenticated && (
+        <div
+          className="bfa-admin-floating-bar"
+          style={{
+            position: 'fixed',
+            bottom: '2rem',
+            right: '2rem',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            background: 'var(--card)',
+            padding: '0.45rem 0.75rem',
+            borderRadius: '9999px',
+            border: '1px solid var(--border)',
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
+          }}
+        >
+          <button
+            type="button"
+            onClick={toggleInlineEdit}
+            className={`bfa-btn bfa-btn--sm ${inlineEditActive ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontWeight: 700,
+              fontSize: '0.8rem',
+              borderRadius: '9999px',
+              padding: '0.35rem 0.85rem',
+              cursor: 'pointer'
+            }}
+          >
+            <BfaIcon name="pencil" size={13} />
+            <span>{inlineEditActive ? 'Edição Ativa' : 'Editar Conteúdo'}</span>
+          </button>
+          {isAdmin && (
+            <a
+              href="#/admin"
+              className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px',
+                fontSize: '0.78rem',
+                textDecoration: 'none'
+              }}
+              title="Ir para o Painel CMS"
+            >
+              <span>Painel</span>
+            </a>
+          )}
+        </div>
+      )}
     </div>
   );
 }
