@@ -660,6 +660,35 @@ function Navbar() {
           </div>
 
           <div className="bfa-mobile-nav-content">
+            {/* Grupo 0: Perfil / Acesso do Aluno */}
+            <div className="bfa-mobile-nav-group" style={{ background: 'var(--surface-strong)', padding: '0.85rem 1rem', borderRadius: '12px', border: '1px solid var(--border)' }}>
+              <a
+                href="#/login"
+                onClick={() => setMobileMenuOpen(false)}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', color: 'var(--foreground)' }}
+              >
+                <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--track-finance), #0F172A)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.95rem' }}>
+                  {studentAuth?.isAuthenticated ? (
+                    (studentAuth?.profile?.name || studentAuth?.user?.email || 'A').charAt(0).toUpperCase()
+                  ) : (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
+                    </svg>
+                  )}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 800, fontSize: '0.9rem' }}>
+                    {studentAuth?.isAuthenticated ? (studentAuth.profile?.name || 'Meu Perfil de Aluno') : 'Entrar na Conta de Aluno'}
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
+                    {studentAuth?.isAuthenticated ? (studentAuth.isSyncing ? 'Sincronizando...' : 'Progresso Salvo na Nuvem') : 'Salvar progresso em 55 aulas'}
+                  </div>
+                </div>
+                <span style={{ color: 'var(--muted-foreground)', fontWeight: 700 }}>→</span>
+              </a>
+            </div>
+
             {/* Grupo 1: Trilhas */}
             <div className="bfa-mobile-nav-group">
               <div className="bfa-mobile-nav-grouptitle">TRILHAS DE ESTUDO</div>

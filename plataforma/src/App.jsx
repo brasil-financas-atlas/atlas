@@ -111,6 +111,34 @@ function App() {
       return <Sobre />;
     }
 
+    if (currentPath === '/calculadora-juros-compostos' || currentPath === '/calculadora') {
+      return (
+        <div>
+          <section className="hero-gradient" style={{ padding: '4rem 0 3rem 0', position: 'relative' }}>
+            <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.4 }} />
+            <div className="bfa-container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+              <span className="mono-tag" style={{ color: '#10B981', background: 'rgba(16, 185, 129, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(16, 185, 129, 0.35)', fontWeight: 800 }}>
+                FERRAMENTA INTERATIVA
+              </span>
+              <h1 className="headline-punch" style={{ fontSize: '2.75rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.75rem', letterSpacing: '-0.03em' }}>
+                Calculadora de Juros Compostos
+              </h1>
+              <p style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.85)', marginTop: '0.5rem', maxWidth: '720px', margin: '0.5rem auto 0 auto' }}>
+                Modele o acúmulo de capital ao longo do tempo, compare juros simples vs. compostos e calcule o impacto de aportes mensais com inflação.
+              </p>
+            </div>
+          </section>
+          <div className="bfa-container" style={{ padding: '3rem 1.5rem' }}>
+            <CalculadoraJurosCompostos />
+          </div>
+        </div>
+      );
+    }
+
+    if (currentPath === '/login' || currentPath === '/auth' || currentPath === '/perfil' || currentPath === '/minha-conta') {
+      return <LoginPage />;
+    }
+
     if (currentPath === '/admin/login') {
       return <AdminLogin />;
     }
