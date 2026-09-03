@@ -267,8 +267,8 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     // Sanitização com DOMPurify
     if (window.DOMPurify && window.DOMPurify.sanitize) {
       parsedHtml = window.DOMPurify.sanitize(parsedHtml, {
-        ADD_TAGS: ['details', 'summary', 'svg', 'path', 'line', 'circle', 'polygon', 'polyline', 'g', 'rect'],
-        ADD_ATTR: ['open', 'target', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'data-mermaid-code', 'data-processed', 'class', 'style', 'id']
+        ADD_TAGS: ['details', 'summary', 'svg', 'path', 'line', 'circle', 'polygon', 'polyline', 'g', 'rect', 'text', 'tspan', 'defs', 'marker', 'use'],
+        ADD_ATTR: ['open', 'target', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'data-mermaid-code', 'data-processed', 'class', 'style', 'id', 'x', 'y', 'dx', 'dy', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'width', 'height', 'text-anchor', 'transform', 'marker-end', 'marker-start']
       });
     } else {
       parsedHtml = parsedHtml.replace(/</g, "&lt;").replace(/>/g, "&gt;");
