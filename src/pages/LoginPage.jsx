@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Brasil Finanças Atlas (BFA) — Página de Autenticação e Perfil do Aluno
+   Brasil Finanças Atlas (BFA) — Página de Autenticação Unificada (Alunos & Admin)
    Arquivo: src/pages/LoginPage.jsx
    ========================================================================== */
 
@@ -7,7 +7,8 @@ const { useState, useEffect, useContext, createContext } = React;
 
 function LoginPage() {
   const { studentAuth, completedLessons, quizScores } = useContext(window.ProgressContext || createContext({}));
-  const [activeTab, setActiveTab] = useState('login'); // 'login' | 'register' | 'otp'
+  const adminCtx = useContext(window.AdminContext || createContext({}));
+  const [activeTab, setActiveTab] = useState('student-login'); // 'student-login' | 'student-register' | 'admin-login' | 'otp-verify'
   
   // Form fields
   const [name, setName] = useState('');
@@ -15,6 +16,10 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [otpToken, setOtpToken] = useState('');
   
+  // Admin form fields
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
+
   // UI states
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -27,8 +32,8 @@ function LoginPage() {
     setSuccessMsg('');
   };
 
-  // Login com E-mail e Senha
-  const handlePasswordLogin = async (e) => {
+  // Login de Aluno com E-mail e Senha
+  const handleStudentPasswordLogin = async (e) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
       setErrorMsg('Por favor, informe seu e-mail e senha.');
@@ -52,7 +57,7 @@ function LoginPage() {
 
       if (error) throw error;
 
-      setSuccessMsg('Login realizado com sucesso! Sincronizando progresso...');
+      setSuccessMsg('Login realizado com sucesso! Sincronizando seu progresso...');
       if (studentAuth?.reloadProfile) {
         await studentAuth.reloadProfile();
       }
@@ -61,10 +66,10 @@ function LoginPage() {
         window.location.hash = '#/';
       }, 1000);
     } catch (err) {
-      console.warn('[BFA Login] Erro no login com senha:', err);
+      console.warn('[BFA Login] Erro no login do aluno:', err);
       let msg = err.message || 'Falha ao autenticar.';
       if (msg.includes('Invalid login credentials')) {
-        msg = 'E-mail ou senha incorretos. Verifique suas credenciais ou use o código de acesso por e-mail.';
+        msg = 'E-mail ou senha incorretos. Verifique suas credenciais ou use o acesso sem senha via OTP.';
       }
       setErrorMsg(msg);
     } finally {
@@ -73,7 +78,7 @@ function LoginPage() {
   };
 
   // Cadastro de Novo Aluno
-  const handleRegister = async (e) => {
+  const handleStudentRegister = async (e) => {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !password.trim()) {
       setErrorMsg('Por favor, preencha todos os campos obrigatórios.');
@@ -95,8 +100,6 @@ function LoginPage() {
       }
 
       const supabase = window.BfaSupabase.client;
-      
-      // Captura progresso local existente para não perder nada ao criar a conta
       const localLessons = JSON.parse(localStorage.getItem('bfa_user_progress') || '[]');
       const localScores = JSON.parse(localStorage.getItem('bfa_quiz_scores') || '{}');
 
@@ -118,7 +121,6 @@ function LoginPage() {
 
       if (error) throw error;
 
-      // Se o usuário foi criado, tenta garantir a linha em student_profiles
       if (data?.user) {
         try {
           await supabase.from('student_profiles').upsert({
@@ -153,7 +155,38 @@ function LoginPage() {
     }
   };
 
-  // Login via Link Mágico / Código OTP (Passwordless)
+  // Login de Professor / Administrador
+  const handleAdminLogin = async (e) => {
+    e.preventDefault();
+    if (!adminEmail.trim() || !adminPassword.trim()) {
+      setErrorMsg('Informe o e-mail/usuário e senha do administrador.');
+      return;
+    }
+
+    setIsLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+
+    try {
+      if (adminCtx?.login) {
+        const ok = await adminCtx.login(adminEmail.trim(), adminPassword);
+        if (ok) {
+          setSuccessMsg('Acesso administrativo autorizado! Redirecionando para o painel...');
+          setTimeout(() => {
+            window.location.hash = '#/admin';
+          }, 800);
+          return;
+        }
+      }
+      throw new Error('Credenciais de administrador inválidas.');
+    } catch (err) {
+      setErrorMsg(err.message || 'Falha na autenticação de administrador.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Envio de Código OTP para Aluno
   const handleSendOtp = async (e) => {
     e.preventDefault();
     if (!email.trim()) {
@@ -168,7 +201,7 @@ function LoginPage() {
     try {
       if (studentAuth?.signInWithEmail) {
         await studentAuth.signInWithEmail(email.trim(), name.trim());
-        setSuccessMsg(`Código de acesso enviado para ${email}. Verifique sua caixa de entrada.`);
+        setSuccessMsg(`Código de acesso enviado para ${email}. Verifique seu e-mail.`);
         setActiveTab('otp-verify');
       } else {
         throw new Error('Módulo de autenticação indisponível.');
@@ -180,7 +213,7 @@ function LoginPage() {
     }
   };
 
-  // Validação do Código OTP
+  // Validação de OTP
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     if (!otpToken.trim()) {
@@ -195,7 +228,7 @@ function LoginPage() {
     try {
       if (studentAuth?.verifyOtpCode) {
         await studentAuth.verifyOtpCode(email.trim(), otpToken.trim());
-        setSuccessMsg('Código validado! Conectando...');
+        setSuccessMsg('Código validado com sucesso! Conectando...');
         setTimeout(() => {
           window.location.hash = '#/';
         }, 1000);
@@ -207,7 +240,7 @@ function LoginPage() {
     }
   };
 
-  // Se o aluno já estiver conectado, exibe a tela de Perfil com Métricas
+  // Se o aluno já estiver logado
   if (studentAuth && studentAuth.isAuthenticated) {
     const userName = studentAuth.profile?.name || studentAuth.user?.email?.split('@')[0] || 'Estudante';
     const userEmail = studentAuth.user?.email || '';
@@ -228,7 +261,7 @@ function LoginPage() {
                   {userName}
                 </h1>
                 <span className="mono-tag" style={{ background: 'rgba(5, 150, 105, 0.12)', color: 'var(--track-finance)', border: '1px solid rgba(5, 150, 105, 0.3)', padding: '0.2rem 0.55rem', borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 700 }}>
-                  CONECTADO
+                  ALUNO CONECTADO
                 </span>
               </div>
               <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--muted-foreground)', fontFamily: 'var(--font-mono)' }}>
@@ -237,7 +270,6 @@ function LoginPage() {
             </div>
           </div>
 
-          {/* Grid de Estatísticas */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
             <div style={{ padding: '1.15rem 1rem', background: 'var(--surface-strong)', borderRadius: '12px', border: '1px solid var(--border)', textAlign: 'center' }}>
               <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--muted-foreground)', fontWeight: 700, letterSpacing: '0.04em' }}>Aulas Feitas</div>
@@ -262,7 +294,6 @@ function LoginPage() {
             </div>
           </div>
 
-          {/* Ações de Continuação e Logout */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
             <a
               href="#/matematica"
@@ -289,7 +320,7 @@ function LoginPage() {
                 transition: 'all 0.15s ease'
               }}
             >
-              Sair da Conta (Logout)
+              Sair da Conta de Aluno
             </button>
           </div>
 
@@ -298,24 +329,61 @@ function LoginPage() {
     );
   }
 
+  // Se o professor/admin já estiver conectado
+  if (adminCtx?.isAuthenticated && adminCtx?.adminUser) {
+    return (
+      <div style={{ minHeight: '80vh', padding: '4rem 1rem', background: 'var(--background)' }}>
+        <div style={{ maxWidth: '580px', margin: '0 auto', background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '20px', padding: '2.5rem', textAlign: 'center', boxShadow: '0 20px 40px -15px rgba(0,0,0,0.1)' }}>
+          <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(5, 150, 105, 0.12)', color: '#059669', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+            <BfaIcon name="check" size={28} />
+          </div>
+          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--foreground)' }}>
+            Sessão Docente / Admin Ativa
+          </h2>
+          <p style={{ margin: '0.5rem 0', color: 'var(--muted-foreground)', fontSize: '0.9rem' }}>
+            Conectado como: <strong>{adminCtx.adminUser.name || adminCtx.adminUser.email}</strong> ({adminCtx.adminUser.role})
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1.75rem' }}>
+            <a href="#/admin" className="btn-primary" style={{ padding: '0.85rem', justifyContent: 'center' }}>
+              Acessar Painel de Controle CMS →
+            </a>
+            <button
+              type="button"
+              onClick={() => adminCtx.logout && adminCtx.logout()}
+              style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'transparent', color: '#EF4444', fontWeight: 700, cursor: 'pointer' }}
+            >
+              Sair da Conta Administrativa
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ minHeight: '85vh', padding: '4rem 1.5rem', background: 'var(--background)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ width: '100%', maxWidth: '460px', background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '20px', padding: '2.5rem', boxShadow: '0 20px 50px -15px rgba(0,0,0,0.1)' }}>
+      <div style={{ width: '100%', maxWidth: '480px', background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '20px', padding: '2.5rem', boxShadow: '0 20px 50px -15px rgba(0,0,0,0.1)' }}>
         
         {/* Cabeçalho */}
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '48px', height: '48px', borderRadius: '12px', background: 'linear-gradient(135deg, #059669 0%, #0F172A 100%)', color: '#FFFFFF', fontWeight: 800, fontSize: '1.25rem', marginBottom: '1rem', boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)' }}>
             BFA
           </div>
           <h1 style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.03em', margin: 0 }}>
-            {activeTab === 'register' ? 'Criar Conta de Aluno' : (activeTab === 'otp-verify' ? 'Código de Confirmação' : 'Acessar o Atlas')}
+            {activeTab === 'student-register'
+              ? 'Criar Conta de Aluno'
+              : (activeTab === 'admin-login'
+                  ? 'Acesso de Professor / Admin'
+                  : (activeTab === 'otp-verify' ? 'Confirmar Código de Acesso' : 'Entrar na Plataforma'))}
           </h1>
-          <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', marginTop: '0.5rem', lineHeight: 1.5 }}>
-            {activeTab === 'register'
-              ? 'Cadastre-se para sincronizar seu progresso de 55 aulas e quizzes em qualquer dispositivo.'
-              : (activeTab === 'otp-verify'
-                  ? `Informe o código de 6 dígitos enviado para seu e-mail.`
-                  : 'Entre para manter seu histórico de estudos salvo na nuvem.')}
+          <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', marginTop: '0.4rem', lineHeight: 1.5 }}>
+            {activeTab === 'student-register'
+              ? 'Salve seu progresso de 55 aulas e notas de simulados na nuvem.'
+              : (activeTab === 'admin-login'
+                  ? 'Painel restrito para publicação de aulas e gestão de exercícios.'
+                  : (activeTab === 'otp-verify'
+                      ? 'Informe o código de 6 dígitos enviado por e-mail.'
+                      : 'Acesse para sincronizar seu histórico em qualquer dispositivo.'))}
           </p>
         </div>
 
@@ -332,54 +400,74 @@ function LoginPage() {
           </div>
         )}
 
-        {/* Abas Alternáveis */}
+        {/* 3 Abas Unificadas: Aluno Entrar | Aluno Cadastro | Professor/Admin */}
         {activeTab !== 'otp-verify' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', background: 'var(--surface-strong)', padding: '4px', borderRadius: '10px', marginBottom: '1.5rem', border: '1px solid var(--border)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '4px', background: 'var(--surface-strong)', padding: '4px', borderRadius: '10px', marginBottom: '1.75rem', border: '1px solid var(--border)' }}>
             <button
               type="button"
-              onClick={() => handleTabChange('login')}
+              onClick={() => handleTabChange('student-login')}
               style={{
-                padding: '0.6rem',
+                padding: '0.55rem 0.3rem',
                 borderRadius: '7px',
                 border: 'none',
-                background: activeTab === 'login' ? 'var(--card)' : 'transparent',
-                color: activeTab === 'login' ? 'var(--foreground)' : 'var(--muted-foreground)',
-                fontWeight: activeTab === 'login' ? 750 : 600,
-                fontSize: '0.85rem',
+                background: activeTab === 'student-login' ? 'var(--card)' : 'transparent',
+                color: activeTab === 'student-login' ? 'var(--foreground)' : 'var(--muted-foreground)',
+                fontWeight: activeTab === 'student-login' ? 750 : 600,
+                fontSize: '0.78rem',
                 cursor: 'pointer',
-                boxShadow: activeTab === 'login' ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
+                boxShadow: activeTab === 'student-login' ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
                 transition: 'all 0.15s ease'
               }}
             >
-              Entrar na Conta
+              Aluno: Entrar
             </button>
+
             <button
               type="button"
-              onClick={() => handleTabChange('register')}
+              onClick={() => handleTabChange('student-register')}
               style={{
-                padding: '0.6rem',
+                padding: '0.55rem 0.3rem',
                 borderRadius: '7px',
                 border: 'none',
-                background: activeTab === 'register' ? 'var(--card)' : 'transparent',
-                color: activeTab === 'register' ? 'var(--foreground)' : 'var(--muted-foreground)',
-                fontWeight: activeTab === 'register' ? 750 : 600,
-                fontSize: '0.85rem',
+                background: activeTab === 'student-register' ? 'var(--card)' : 'transparent',
+                color: activeTab === 'student-register' ? 'var(--foreground)' : 'var(--muted-foreground)',
+                fontWeight: activeTab === 'student-register' ? 750 : 600,
+                fontSize: '0.78rem',
                 cursor: 'pointer',
-                boxShadow: activeTab === 'register' ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
+                boxShadow: activeTab === 'student-register' ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
                 transition: 'all 0.15s ease'
               }}
             >
-              Criar Nova Conta
+              Criar Conta
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleTabChange('admin-login')}
+              style={{
+                padding: '0.55rem 0.3rem',
+                borderRadius: '7px',
+                border: 'none',
+                background: activeTab === 'admin-login' ? 'var(--card)' : 'transparent',
+                color: activeTab === 'admin-login' ? 'var(--track-math)' : 'var(--muted-foreground)',
+                fontWeight: activeTab === 'admin-login' ? 750 : 600,
+                fontSize: '0.78rem',
+                cursor: 'pointer',
+                boxShadow: activeTab === 'admin-login' ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              Professor/Admin
             </button>
           </div>
         )}
 
-        {/* Formulário: Login com Senha */}
-        {activeTab === 'login' && (
-          <form onSubmit={handlePasswordLogin}>
+        {/* 1. Formulário: Aluno Entrar */}
+        {activeTab === 'student-login' && (
+          <form onSubmit={handleStudentPasswordLogin}>
             <div style={{ marginBottom: '1rem' }}>
               <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
-                E-mail:
+                E-mail do Aluno:
               </label>
               <input
                 type="email"
@@ -401,7 +489,7 @@ function LoginPage() {
                   onClick={handleSendOtp}
                   style={{ background: 'transparent', border: 'none', color: 'var(--track-finance)', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer', padding: 0 }}
                 >
-                  Acessar sem senha (OTP)
+                  Entrar sem senha (OTP)
                 </button>
               </div>
               <input
@@ -425,9 +513,9 @@ function LoginPage() {
           </form>
         )}
 
-        {/* Formulário: Cadastro */}
-        {activeTab === 'register' && (
-          <form onSubmit={handleRegister}>
+        {/* 2. Formulário: Aluno Cadastro */}
+        {activeTab === 'student-register' && (
+          <form onSubmit={handleStudentRegister}>
             <div style={{ marginBottom: '1rem' }}>
               <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
                 Nome Completo ou Apelido:
@@ -481,7 +569,49 @@ function LoginPage() {
           </form>
         )}
 
-        {/* Formulário: Verificação de OTP */}
+        {/* 3. Formulário: Professor / Admin */}
+        {activeTab === 'admin-login' && (
+          <form onSubmit={handleAdminLogin}>
+            <div style={{ marginBottom: '1rem' }}>
+              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
+                E-mail ou Usuário de Administrador:
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="admin@bfa.org ou usuario"
+                value={adminEmail}
+                onChange={(e) => setAdminEmail(e.target.value)}
+                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.92rem', outline: 'none' }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '1.25rem' }}>
+              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
+                Chave de Acesso / Senha:
+              </label>
+              <input
+                type="password"
+                required
+                placeholder="••••••••"
+                value={adminPassword}
+                onChange={(e) => setAdminPassword(e.target.value)}
+                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.92rem', outline: 'none' }}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="btn-primary"
+              style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', fontWeight: 750, borderRadius: '8px', marginBottom: '1.25rem', backgroundColor: 'var(--track-math)' }}
+            >
+              {isLoading ? 'Verificando permissões...' : 'Acessar Painel do Professor'}
+            </button>
+          </form>
+        )}
+
+        {/* 4. Formulário: Validação de OTP */}
         {activeTab === 'otp-verify' && (
           <form onSubmit={handleVerifyOtp}>
             <div style={{ marginBottom: '1.25rem' }}>
@@ -505,12 +635,12 @@ function LoginPage() {
               className="btn-primary"
               style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', fontWeight: 750, borderRadius: '8px', marginBottom: '0.75rem' }}
             >
-              {isLoading ? 'Verificando...' : 'Confirmar Código'}
+              {isLoading ? 'Verificando...' : 'Confirmar e Conectar'}
             </button>
 
             <button
               type="button"
-              onClick={() => handleTabChange('login')}
+              onClick={() => handleTabChange('student-login')}
               style={{ width: '100%', padding: '0.5rem', background: 'transparent', border: 'none', color: 'var(--muted-foreground)', fontSize: '0.82rem', cursor: 'pointer' }}
             >
               Voltar para login com senha
@@ -518,7 +648,7 @@ function LoginPage() {
           </form>
         )}
 
-        {/* Divisor e Opção Offline / Local */}
+        {/* Divisor e Opção Offline */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: '1.5rem 0', color: 'var(--muted-foreground)', fontSize: '0.78rem' }}>
           <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
           <span>OU</span>

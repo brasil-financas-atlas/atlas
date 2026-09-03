@@ -261,37 +261,32 @@ function Navbar() {
               </span>
             </button>
           ) : (
-            <button
-              type="button"
-              onClick={() => {
-                setAuthStep('email');
-                setAuthError('');
-                setAuthMessage('');
-                setStudentModalOpen(true);
-              }}
+            <a
+              href="#/login"
               className="navbar-student-btn"
-              title="Entrar para sincronizar seu progresso na nuvem"
+              title="Entrar ou criar conta para sincronizar seu progresso"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '6px',
-                padding: '0.42rem 0.85rem',
+                padding: '0.45rem 0.95rem',
                 borderRadius: '9999px',
-                border: '1px solid var(--border)',
-                background: 'var(--surface-strong)',
-                color: 'var(--foreground)',
-                fontSize: '0.8rem',
+                border: '1px solid rgba(5, 150, 105, 0.4)',
+                background: 'linear-gradient(135deg, rgba(5, 150, 105, 0.15) 0%, rgba(15, 23, 42, 0.05) 100%)',
+                color: 'var(--track-finance)',
+                fontSize: '0.82rem',
                 fontWeight: 750,
+                textDecoration: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.15s ease'
               }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
               </svg>
               <span>Entrar</span>
-            </button>
+            </a>
           )}
 
           {/* Botão de Alternância Dark/Light (Desktop) */}
@@ -350,7 +345,7 @@ function Navbar() {
             <BfaIcon name={mobileMenuOpen ? "close" : "menu"} size={18} />
           </button>
 
-          {adminUser ? (
+          {adminUser && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               {isAdmin && (
                 <button
@@ -367,14 +362,20 @@ function Navbar() {
                   {(statusPublicacao === 'idle' || !statusPublicacao) && 'Publicar'}
                 </button>
               )}
-              <a href="#/admin" className="nav-link active">
-                Admin
+              <a
+                href="#/admin"
+                className="nav-link active"
+                style={{
+                  fontSize: '0.75rem',
+                  padding: '0.35rem 0.7rem',
+                  borderRadius: '6px',
+                  background: 'var(--surface-strong)',
+                  border: '1px solid var(--border)'
+                }}
+              >
+                Painel Admin
               </a>
             </div>
-          ) : (
-            <a href="#/admin/login" className="btn-primary navbar-admin-btn" style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem', backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)' }}>
-              Admin
-            </a>
           )}
         </div>
       </div>
