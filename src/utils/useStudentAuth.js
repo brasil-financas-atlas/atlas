@@ -1,6 +1,7 @@
 /* ==========================================================================
    Brasil Finanças Atlas (BFA) — Hook de Autenticação e Sincronização Local-First
    Arquivo: src/utils/useStudentAuth.js
+   Suporte Adaptativo a student_profiles (JSONB) e profiles/lesson_progress.
    ========================================================================== */
 
 const { useState, useEffect, useRef, useCallback } = React;
@@ -14,6 +15,7 @@ function useStudentAuth() {
 
   const debounceTimerRef = useRef(null);
   const pendingProgressRef = useRef(null);
+  const hasStudentProfilesTableRef = useRef(true);
 
   // Inicializa e monitora o estado da sessão Supabase
   useEffect(() => {
@@ -32,7 +34,7 @@ function useStudentAuth() {
 
         if (session && session.user && mounted) {
           setUser(session.user);
-          await loadStudentProfile(session.user.id);
+          await loadStudentProfile(session.user.id, session.user.email);
         }
       } catch (err) {
         console.warn('[BFA Auth] Erro ao recuperar sessão:', err);
@@ -43,7 +45,6 @@ function useStudentAuth() {
 
     initSession();
 
-    // Listener de mudança de autenticação
     let authListener = null;
     if (window.BfaSupabase && window.BfaSupabase.client) {
       try {
@@ -51,7 +52,7 @@ function useStudentAuth() {
           if (!mounted) return;
           if (session && session.user) {
             setUser(session.user);
-            await loadStudentProfile(session.user.id);
+            await loadStudentProfile(session.user.id, session.user.email);
           } else {
             setUser(null);
             setProfile(null);
@@ -75,29 +76,71 @@ function useStudentAuth() {
   }, []);
 
   // Carrega e mescla o perfil do banco com os dados do LocalStorage
-  const loadStudentProfile = async (userId) => {
+  const loadStudentProfile = async (userId, userEmail = '') => {
     if (!window.BfaSupabase || !window.BfaSupabase.client || !userId) return;
-    try {
-      const supabase = window.BfaSupabase.client;
-      const { data, error } = await supabase
-        .from('student_profiles')
-        .select('id, name, role, streak_days, progress')
-        .eq('id', userId)
-        .single();
+    const supabase = window.BfaSupabase.client;
 
-      if (error && error.code !== 'PGRST116') {
-        console.warn('[BFA Auth] Perfil ainda não inicializado ou erro:', error?.message);
-        return;
-      }
+    // Tentativa 1: Tabela Compacta student_profiles (Micro-Storage JSONB)
+    if (hasStudentProfilesTableRef.current) {
+      try {
+        const { data, error } = await supabase
+          .from('student_profiles')
+          .select('id, name, role, streak_days, progress')
+          .eq('id', userId)
+          .single();
 
-      if (data) {
-        setProfile(data);
-        if (data.progress) {
-          mergeLocalWithRemoteProgress(data.progress);
+        if (!error && data) {
+          setProfile(data);
+          if (data.progress) {
+            mergeLocalWithRemoteProgress(data.progress);
+          }
+          return;
         }
+
+        if (error && (error.code === 'PGRST205' || error.message?.includes('schema cache') || error.code === '42P01')) {
+          console.info('[BFA Auth] student_profiles não encontrada, usando tabela profiles como fallback.');
+          hasStudentProfilesTableRef.current = false;
+        }
+      } catch (e) {
+        hasStudentProfilesTableRef.current = false;
+      }
+    }
+
+    // Tentativa 2 (Fallback): Tabela profiles + lesson_progress
+    try {
+      const { data: pData } = await supabase
+        .from('profiles')
+        .select('id, full_name, role, email')
+        .eq('id', userId)
+        .maybeSingle();
+
+      const fallbackName = pData?.full_name || (userEmail ? userEmail.split('@')[0] : 'Estudante');
+      const fallbackRole = pData?.role || 'student';
+
+      setProfile({
+        id: userId,
+        name: fallbackName,
+        role: fallbackRole,
+        streak_days: 0
+      });
+
+      // Busca progresso de aulas em lesson_progress
+      const { data: lpData } = await supabase
+        .from('lesson_progress')
+        .select('lesson_id, completed')
+        .eq('user_id', userId)
+        .eq('completed', true);
+
+      if (lpData && lpData.length > 0) {
+        const remoteCompleted = lpData.map(r => r.lesson_id);
+        mergeLocalWithRemoteProgress({
+          completed_lessons: remoteCompleted,
+          quiz_scores: {},
+          badges: ['pioneiro_atlas']
+        });
       }
     } catch (err) {
-      console.warn('[BFA Auth] Exceção ao carregar perfil:', err);
+      console.warn('[BFA Auth] Exceção ao carregar fallback profiles:', err);
     }
   };
 
@@ -110,20 +153,16 @@ function useStudentAuth() {
       const remoteLessons = remoteProgress?.completed_lessons || [];
       const remoteScores = remoteProgress?.quiz_scores || {};
 
-      // União de aulas concluídas sem duplicatas
       const mergedLessons = Array.from(new Set([...localLessons, ...remoteLessons]));
 
-      // Mesclagem de pontuações preservando a maior nota
       const mergedScores = { ...remoteScores };
       Object.keys(localScores).forEach((key) => {
         mergedScores[key] = Math.max(mergedScores[key] || 0, localScores[key] || 0);
       });
 
-      // Atualiza LocalStorage
       localStorage.setItem('bfa_user_progress', JSON.stringify(mergedLessons));
       localStorage.setItem('bfa_quiz_scores', JSON.stringify(mergedScores));
 
-      // Dispara evento de sincronização para os contextos React
       window.dispatchEvent(new CustomEvent('bfa_progress_updated', {
         detail: { completedLessons: mergedLessons, quizScores: mergedScores }
       }));
@@ -134,7 +173,6 @@ function useStudentAuth() {
 
   // Envia progresso para o Supabase com Debounce de 3 segundos
   const syncProgressDebounced = useCallback((newCompletedLessons, newQuizScores, newBadges = []) => {
-    // 1. Atualização Imediata no LocalStorage
     localStorage.setItem('bfa_user_progress', JSON.stringify(newCompletedLessons));
     localStorage.setItem('bfa_quiz_scores', JSON.stringify(newQuizScores));
 
@@ -159,15 +197,37 @@ function useStudentAuth() {
         const supabase = window.BfaSupabase.client;
         const payload = pendingProgressRef.current;
 
-        const { error } = await supabase
-          .from('student_profiles')
-          .update({
-            progress: payload,
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', user.id);
+        if (hasStudentProfilesTableRef.current) {
+          const { error } = await supabase
+            .from('student_profiles')
+            .upsert({
+              id: user.id,
+              progress: payload,
+              updated_at: new Date().toISOString()
+            });
 
-        if (error) throw error;
+          if (!error) {
+            setSyncStatus('saved');
+            setTimeout(() => setSyncStatus('idle'), 2500);
+            return;
+          }
+          if (error.code === 'PGRST205' || error.code === '42P01') {
+            hasStudentProfilesTableRef.current = false;
+          }
+        }
+
+        // Fallback: grava aula a aula em lesson_progress
+        if (newCompletedLessons && newCompletedLessons.length > 0) {
+          const lastLesson = newCompletedLessons[newCompletedLessons.length - 1];
+          await supabase.from('lesson_progress').upsert({
+            user_id: user.id,
+            lesson_id: lastLesson,
+            completed: true,
+            completed_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          }, { onConflict: 'user_id,lesson_id' });
+        }
+
         setSyncStatus('saved');
         setTimeout(() => setSyncStatus('idle'), 2500);
       } catch (err) {
@@ -176,7 +236,7 @@ function useStudentAuth() {
       } finally {
         setIsSyncing(false);
       }
-    }, 3000); // 3 segundos de debounce
+    }, 3000);
   }, [user]);
 
   // Login via Link Mágico / OTP
@@ -210,7 +270,7 @@ function useStudentAuth() {
     if (error) throw error;
     if (data?.user) {
       setUser(data.user);
-      await loadStudentProfile(data.user.id);
+      await loadStudentProfile(data.user.id, data.user.email);
     }
     return data;
   };
@@ -236,7 +296,7 @@ function useStudentAuth() {
     verifyOtpCode,
     signOut,
     syncProgressDebounced,
-    reloadProfile: () => user && loadStudentProfile(user.id)
+    reloadProfile: () => user && loadStudentProfile(user.id, user.email)
   };
 }
 
