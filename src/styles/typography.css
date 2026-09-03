@@ -108,64 +108,64 @@ code, pre, kbd, samp {
 /* ── Lesson Article Typography & Spacing ──────────────────────────────── */
 .bfa-lesson-article,
 .bfa-markdown-body {
-  font-size: 1.05rem;
-  line-height: 1.9;
+  font-size: 1.12rem;
+  line-height: 2.05;
   color: var(--foreground);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.012em;
 }
 
 .bfa-markdown-body h2 {
-  font-size: 1.65rem;
+  font-size: 1.85rem;
   font-weight: 800;
   letter-spacing: -0.025em;
-  line-height: 1.3;
-  margin-top: 3rem;
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.65rem;
-  border-bottom: 1px solid var(--border);
+  line-height: 1.35;
+  margin-top: 4.5rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 2px solid var(--border);
   color: var(--foreground);
 }
 
 .bfa-markdown-body h3 {
-  font-size: 1.3rem;
+  font-size: 1.45rem;
   font-weight: 750;
   letter-spacing: -0.02em;
   line-height: 1.4;
-  margin-top: 2.35rem;
-  margin-bottom: 1rem;
+  margin-top: 3.5rem;
+  margin-bottom: 1.35rem;
   color: var(--foreground);
 }
 
 .bfa-markdown-body h4 {
-  font-size: 1.12rem;
+  font-size: 1.22rem;
   font-weight: 700;
-  margin-top: 1.85rem;
-  margin-bottom: 0.75rem;
+  margin-top: 2.75rem;
+  margin-bottom: 1.15rem;
   color: var(--foreground);
 }
 
 .bfa-markdown-body p {
   margin-top: 0;
-  margin-bottom: 1.6rem;
-  line-height: 1.9;
+  margin-bottom: 2.25rem;
+  line-height: 2.05;
   color: var(--foreground);
 }
 
 .bfa-markdown-body ul,
 .bfa-markdown-body ol {
-  padding-left: 1.85rem;
-  margin-top: 0.5rem;
-  margin-bottom: 1.65rem;
+  padding-left: 2.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 2.25rem;
 }
 
 .bfa-markdown-body li {
-  margin-bottom: 0.85rem;
-  line-height: 1.85;
+  margin-bottom: 1.15rem;
+  line-height: 1.95;
   color: var(--foreground);
 }
 
 .bfa-markdown-body li > p {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .bfa-markdown-body strong {
@@ -174,27 +174,28 @@ code, pre, kbd, samp {
 }
 
 .bfa-markdown-body blockquote {
-  margin: 2rem 0;
-  padding: 1.15rem 1.65rem;
-  border-left: 4px solid var(--track-finance);
+  margin: 3rem 0;
+  padding: 1.5rem 2rem;
+  border-left: 5px solid var(--track-finance);
   background: var(--surface-strong);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
   color: var(--foreground);
-  font-size: 1.02rem;
+  font-size: 1.08rem;
+  line-height: 2.0;
 }
 
 .bfa-markdown-body hr {
   border: none;
   border-top: 1px solid var(--border);
-  margin: 3rem 0;
+  margin: 3.5rem 0;
 }
 
 .bfa-markdown-body code:not(.katex code) {
-  padding: 0.2rem 0.45rem;
-  margin: 0 0.25rem;
+  padding: 0.25rem 0.55rem;
+  margin: 0 0.3rem;
   border-radius: var(--radius-sm);
   background-color: var(--surface-strong);
   border: 1px solid var(--border);
-  font-size: 0.88em;
+  font-size: 0.9em;
   font-family: var(--font-mono);
 }
