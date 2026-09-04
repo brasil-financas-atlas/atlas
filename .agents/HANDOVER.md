@@ -1,56 +1,52 @@
 # Handoff Briefing
 
 ## Environment Metadata
-- **Timestamp:** 2026-08-30T00:31:00-03:00
-- **Git Branch:** `main`
-- **Last Commit:** `59cdd5b - docs: update handover briefing with mobile native features and svg icon refactor`
-- **Uncommitted Changes:** None
+- **Timestamp:** 2026-09-04T00:37:50-03:00
+- **Git Branch:** `main` (e `gh-pages` sincronizado)
+- **Last Commit:** `8b2a273 - fix(auth): make student auth resilient with automatic dual fallback to profiles and student_profiles`
+- **Uncommitted Changes:** None (árvore de trabalho limpa)
 
 ## Goal & Objective
-Evolução da plataforma Brasil Finanças Atlas (BFA) para uma verdadeira aplicação móvel nativa de alto desempenho (Real Mobile App). Implementação de PWA completo com Service Worker offline, Barra de Navegação Inferior na zona do polegar (Thumb Zone) com auto-hide inteligente, Gestos de Swipe entre abas de aula, Feedback Háptico (Vibração tátil), Bottom Sheets deslizantes com suporte a arrasto, Mini-Player de Áudio persistente, Web Share API nativa e eliminação total de emojis substituídos por componentes SVG vetoriais (`BfaIcon`).
+Implementação e validação completa do sistema de autenticação de alunos (Passwordless OTP / E-mail e Senha) com arquitetura de micro-armazenamento (< 1 KB por aluno em JSONB) no Supabase, unificação da tela de login (/login) para alunos e professores/admin, eliminação de botões mortos/quebrados na Home e Navbar, e implementação de resiliência com fallback adaptativo.
 
 ## Current Status
 - **Completed in this session:**
-  - **PWA Shell & OS Integration:** `manifest.json` (Standalone, portrait-primary, theme_color, app shortcuts) e `sw.js` (Service Worker cache-first para estudo offline). Viewport fit e variáveis CSS Safe-Area (`--sat`, `--sab`, `--sal`, `--sar`) em `globals.css`.
-  - **Thumb-Zone Persistent Bottom Navigation (`BottomNavBar.jsx`):** 5 Pilares no polegar ([ Início ], [ Matemática ], [ Finanças ], [ Ferramentas ], [ Progresso ]) com auto-hide dinâmico na rolagem.
-  - **Draggable Bottom Sheets (`BottomSheet.jsx`):** Modal deslizante de baixo para cima com drag-to-dismiss e backdrop blur.
-  - **Touch Gestures & Haptics Engine (`touchGestures.js`):** Hook `useSwipeGesture` (transição horizontal entre [ Teoria ], [ Exercícios ] e [ Fórum ] em `AulaPage.jsx`) e hook `useHaptics` (pulsos táteis em respostas corretas/incorretas e navegação).
-  - **Persistent Floating Audio Player (`FloatingAudioBar.jsx`):** Mini-player acoplado no rodapé para leitura contínua das aulas.
-  - **Touch-First Forms & Native Web Share API (`nativeShare.js`):** Stepper pills de incremento rápido (+ R$ 50, + R$ 100, + R$ 500, + 1 ano) e `inputmode="decimal"` na Calculadora de Juros. Compartilhamento nativo de certificados e resultados.
-  - **Eliminação Estrita de Emojis & Sistema de Ícones SVG (`Icons.jsx`):** 100% dos emojis removidos do app e substituídos por `BfaIcon` vetorial SVG. Regra de proibição estrita de emojis adicionada a `AGENTS.md`.
-  - **Curadoria de Ferramentas Concluídas na Navegação:** Apenas ferramentas 100% finalizadas (Calculadora de Juros, Simulados Cronometrados, Banco de Exercícios e Cronograma) expostas nos menus; simulador de carteira não-concluído ocultado.
-  - **Correção de Stacking Context no Header (`NavbarFooter.jsx`):** Gaveta mobile renderizada fora do `<header>` com `backdrop-filter` para evitar confinamento de visualização no WebKit/Blink.
-  - **Sincronização & Testes:** Sincronização dual com `plataforma/` e validação com Babel Standalone (`node scratch/test_babel.js`) com 43 arquivos aprovados com sucesso.
-- **In-Progress:**
-  - Branch `main` estável, 100% testada e sincronizada com origin no GitHub.
-- **Blockers / Known Issues:**
-  - Nenhum. Todas as 43 fontes JSX compilam sem erros e a sincronização dual está ativa.
+  - `docs/seguranca_e_login_supabase.md`: Especificação técnica de arquitetura, segurança RLS, cálculo de footprint e conformidade LGPD.
+  - `src/utils/useStudentAuth.js`: Hook React local-first com debounce de 3 segundos e suporte dual (lê e grava em `student_profiles` com fallback transparente para `profiles`/`lesson_progress`).
+  - `src/pages/LoginPage.jsx`: Página de login unificada com 3 abas ("Aluno: Entrar", "Criar Conta", "Professor/Admin") e acesso sem senha por código OTP.
+  - `src/context/ProgressContext.jsx`: Integração com o hook de autenticação para disparo automático de sincronização ao concluir aulas ou quizzes.
+  - `src/components/NavbarFooter.jsx`: Remoção do botão barulhento de Admin quando deslogado, adição do botão "Entrar" com indicador de status de sincronização em tempo real e atalho no drawer mobile.
+  - Correção de rotas e links: Card da Calculadora na Home corrigido para `#/calculadora-juros-compostos` e devidamente roteado em `src/App.jsx`.
+  - Auditoria completa de links: `scratch/audit_all_internal_links.js` confirmou 0 links quebrados (44 rotas validadas).
+  - Testes automatizados: `scratch/test_student_auth_db.js` (10/10 PASS) validando footprint < 1 KB, merge local-first e segurança RLS.
+  - Compilação Babel Standalone: 35 arquivos React testados com 0 erros.
+  - Deploy: Branches `main` e `gh-pages` sincronizadas no GitHub.
+- **In-Progress:** None.
+- **Blockers / Known Issues:** None.
 
 ## Decisions Made (Locked)
-- **Proibição Estrita de Emojis:** NUNCA utilizar emojis em código, interface ou mensagens do assistente. Sempre utilizar ícones SVG vetoriais (`BfaIcon` ou SVG inline).
-- **Apenas Recursos Concluídos na Navegação:** Funcionalidades em desenvolvimento ou não finalizadas (como o Simulador de Carteira) não devem ser expostas nas rotas principais ou barras de navegação até estarem completamente polidas.
-- **Mobile First & Thumb Zone:** A navegação móvel prioriza a barra inferior com safe-area insets.
-- **Backdrop-Filter Containment:** Modais em tela cheia e bottom sheets devem sempre ser renderizados fora de contêineres com `backdrop-filter` ou `transform`.
-- **Deploy Dual:** `plataforma/` é a pasta raiz do app React Standalone no Cloudflare Pages (https://atlas-c2i.pages.dev/). Sempre rodar `python scratch/sync_plataforma.py` após alterações.
+- **Micro-Storage Footprint (< 1 KB por Aluno):** Armazenamento em modelo Single-Table (`student_profiles`) com coluna `progress JSONB`, comportando mais de 500 mil estudantes ativos no plano gratuito de 500 MB do Supabase.
+- **Unificação de Login:** Acesso de alunos e docentes centralizado em `#/login`, removendo o botão de Admin do cabeçalho público para manter o foco total no estudante.
+- **Fallback Adaptativo Resiliente:** O hook `useStudentAuth.js` funciona imediatamente tanto com `student_profiles` (JSONB) quanto com o schema legado `profiles`/`lesson_progress`.
+- **Proibição Estrita de Emojis:** Uso exclusivo de ícones vetoriais SVG (`BfaIcon` ou SVG inline) em toda a plataforma, chat e documentação.
 
 ## Failed Approaches & Anti-Patterns (Do Not Retry)
-- Não renderizar drawers ou modais fixos dentro de elementos com `backdrop-filter: blur()`, pois isso quebra o `position: fixed` no Safari/Chrome móvel.
-- Não usar emojis na interface ou nas mensagens.
-- Não expor botões para ferramentas incompletas na interface pública.
+- **Normalização Excessiva de Progresso:** Criar tabelas relacionais separadas para cada evento/aula gera overhead de 10x em conexões e espaço em disco.
+- **Exposição de Botão Admin como CTA Principal:** Distraía os visitantes e alunos na barra de navegação.
 
 ## Extracted User Preferences & Project Learnings
-- O usuário exige tolerância zero a emojis no projeto.
-- O usuário prefere apenas ferramentas 100% concluídas e funcionais visíveis nos menus.
-- O usuário utiliza GitHub com auto-sync e prefere alterações consolidadas na branch `main`.
+- O usuário preza por uma interface limpa, sem elementos que disputem a atenção desnecessariamente.
+- A categorização de usuários (`role`) deve estar explícita (`'student'`, `'teacher'`, `'admin'`).
 
 ## Attention Routing (Key Pointers)
-- **Active Plan File:** N/A
+- **Active Plan File:** `.llms/plans/supabase-student-auth-sync.plan.md` (Status: `done`)
+- **Plans Status Board:** `.llms/project/plans-status.md`
 - **Primary Code Files:**
-  - `src/components/BottomNavBar.jsx`: Barra de navegação inferior mobile com auto-hide
-  - `src/components/Icons.jsx`: Biblioteca centralizada de ícones SVG
-  - `src/pages/AulaPage.jsx`: Sala de aula com suporte a swipe entre abas e haptics
-  - `src/components/CalculadoraJurosCompostos.jsx`: Calculadora de juros com steppers de toque
-  - `scratch/test_babel.js`: Validador de integridade e sintaxe JSX
+  - `src/pages/LoginPage.jsx`
+  - `src/utils/useStudentAuth.js`
+  - `src/components/NavbarFooter.jsx`
+  - `src/App.jsx`
+  - `src/data/schema.sql`
 
 ## Immediate Next Step
-- Executar `/session-start` e iniciar a expansão de conteúdos ou novas listas de exercícios e simulados olímpicos da BRHSIC conforme solicitação do usuário.
+- No painel do Supabase, executar o script SQL da tabela `student_profiles` no SQL Editor para ativar a persistência nativa compacta JSONB.
