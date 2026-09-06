@@ -114,7 +114,8 @@ function LoginPage() {
         password: password,
         options: {
           data: {
-            name: name.trim()
+            name: name.trim(),
+            full_name: name.trim()
           }
         }
       });
