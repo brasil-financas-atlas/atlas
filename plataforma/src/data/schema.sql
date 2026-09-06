@@ -574,14 +574,13 @@ CREATE TABLE IF NOT EXISTS public.student_profiles (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT TIMEZONE('utc'::text, NOW())
 );
 
-CREATE INDEX IF NOT EXISTS idx_student_profiles_id ON public.student_profiles(id);
 CREATE INDEX IF NOT EXISTS idx_student_profiles_role ON public.student_profiles(role);
 
 DROP TRIGGER IF EXISTS set_student_profiles_updated_at ON public.student_profiles;
 CREATE TRIGGER set_student_profiles_updated_at
     BEFORE UPDATE ON public.student_profiles
     FOR EACH ROW
-    EXECUTE FUNCTION public.handle_updated_at();
+    EXECUTE FUNCTION public.tocar_updated_at();
 
 CREATE OR REPLACE FUNCTION public.handle_new_student_signup()
 RETURNS TRIGGER AS $$
