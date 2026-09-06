@@ -157,6 +157,7 @@ function AdminDashboard() {
   const [newsTitle, setNewsTitle] = useState('');
   const [newsCat, setNewsCat] = useState('Macroeconomia');
   const [newsSummary, setNewsSummary] = useState('');
+  const [newsImage, setNewsImage] = useState('');
 
   const [showAddExModal, setShowAddExModal] = useState(false);
   const [exTitle, setExTitle] = useState('');
@@ -165,6 +166,7 @@ function AdminDashboard() {
   const [exDifficulty, setExDifficulty] = useState('Médio');
   const [exQuestion, setExQuestion] = useState('');
   const [exAnswer, setExAnswer] = useState('');
+  const [exImage, setExImage] = useState('');
 
   if (!isAuthenticated) {
     return (
@@ -225,9 +227,15 @@ function AdminDashboard() {
   const handleCreateNews = (e) => {
     e.preventDefault();
     if (!newsTitle.trim() || !newsSummary.trim()) return;
-    addNews({ title: newsTitle.trim(), category: newsCat, summary: newsSummary.trim() });
+    addNews({
+      title: newsTitle.trim(),
+      category: newsCat,
+      summary: newsSummary.trim(),
+      imagem: newsImage.trim() || undefined
+    });
     setNewsTitle('');
     setNewsSummary('');
+    setNewsImage('');
     setShowAddNewsModal(false);
   };
 
@@ -240,11 +248,13 @@ function AdminDashboard() {
       module: exModule.trim(),
       difficulty: exDifficulty,
       question: exQuestion.trim(),
-      answer: exAnswer.trim()
+      answer: exAnswer.trim(),
+      imagem: exImage.trim() || undefined
     });
     setExTitle('');
     setExQuestion('');
     setExAnswer('');
+    setExImage('');
     setShowAddExModal(false);
   };
 
@@ -515,9 +525,37 @@ function AdminDashboard() {
                     <option value="Educação Financeira">Educação Financeira</option>
                   </select>
                 </div>
-                <div style={{ marginBottom: '1.25rem' }}>
+                <div style={{ marginBottom: '1rem' }}>
                   <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Resumo executivo:</label>
                   <textarea value={newsSummary} onChange={e => setNewsSummary(e.target.value)} rows="3" className="bfa-textarea" style={{ width: '100%' }} required></textarea>
+                </div>
+                <div style={{ marginBottom: '1.25rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Imagem de Capa (URL ou Upload):</label>
+                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <input type="text" value={newsImage} onChange={e => setNewsImage(e.target.value)} placeholder="https://... ou carregue um arquivo" className="bfa-input" style={{ flex: 1 }} />
+                    <label className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                      <BfaIcon name="image" size={14} /> Carregar
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={(e) => {
+                          const file = e.target.files && e.target.files[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (uploadEvt) => setNewsImage(uploadEvt.target.result);
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+                  {newsImage && (
+                    <div style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <img src={newsImage} alt="Preview" style={{ height: '40px', borderRadius: '4px', objectFit: 'cover' }} />
+                      <button type="button" onClick={() => setNewsImage('')} style={{ color: 'var(--status-danger)', border: 'none', background: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>Remover foto</button>
+                    </div>
+                  )}
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
                   <button type="button" className="bfa-btn bfa-btn--ghost" onClick={() => setShowAddNewsModal(false)}>Cancelar</button>
@@ -570,9 +608,38 @@ function AdminDashboard() {
                   <textarea value={exQuestion} onChange={e => setExQuestion(e.target.value)} rows="3" className="bfa-textarea" style={{ width: '100%' }} required></textarea>
                 </div>
 
-                <div style={{ marginBottom: '1.25rem' }}>
+                <div style={{ marginBottom: '1rem' }}>
                   <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Resolução Passo a Passo (Gabarito):</label>
                   <textarea value={exAnswer} onChange={e => setExAnswer(e.target.value)} rows="3" className="bfa-textarea" style={{ width: '100%' }} required></textarea>
+                </div>
+
+                <div style={{ marginBottom: '1.25rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', display: 'block', marginBottom: '0.35rem' }}>Imagem Ilustrativa (Opcional):</label>
+                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <input type="text" value={exImage} onChange={e => setExImage(e.target.value)} placeholder="https://... ou carregue um arquivo" className="bfa-input" style={{ flex: 1 }} />
+                    <label className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                      <BfaIcon name="image" size={14} /> Carregar
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={(e) => {
+                          const file = e.target.files && e.target.files[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (uploadEvt) => setExImage(uploadEvt.target.result);
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+                  {exImage && (
+                    <div style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <img src={exImage} alt="Preview" style={{ height: '40px', borderRadius: '4px', objectFit: 'cover' }} />
+                      <button type="button" onClick={() => setExImage('')} style={{ color: 'var(--status-danger)', border: 'none', background: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>Remover imagem</button>
+                    </div>
+                  )}
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>

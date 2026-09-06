@@ -87,6 +87,41 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
               Modifique o trecho abaixo. Suporta texto simples, Markdown ou fórmulas LaTeX (entre <code>$$...$$</code> ou <code>$...$</code>).
             </p>
 
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <label className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem' }}>
+                <BfaIcon name="image" size={14} /> Carregar Imagem Local
+                <input
+                  type="file"
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  onChange={(e) => {
+                    const file = e.target.files && e.target.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onload = (uploadEvt) => {
+                        const base64 = uploadEvt.target.result;
+                        setEditorText(prev => prev + `\n\n![${file.name}](${base64})\n`);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+              </label>
+              <button
+                type="button"
+                className="bfa-btn bfa-btn--ghost bfa-btn--sm"
+                style={{ fontSize: '0.8rem' }}
+                onClick={() => {
+                  const url = window.prompt('Insira a URL da imagem (http:// ou https://):');
+                  if (url && url.trim()) {
+                    setEditorText(prev => prev + `\n\n![Imagem Visual](${url.trim()})\n`);
+                  }
+                }}
+              >
+                + Inserir URL de Imagem
+              </button>
+            </div>
+
             <textarea
               rows="8"
               value={editorText}
