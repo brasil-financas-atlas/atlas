@@ -80,6 +80,18 @@ function useStudentAuth() {
     if (!window.BfaSupabase || !window.BfaSupabase.client || !userId) return;
     const supabase = window.BfaSupabase.client;
 
+    let displayName = userEmail ? userEmail.split('@')[0] : 'Estudante';
+    let userRole = 'student';
+    let streakDays = 0;
+    let remoteProgress = { completed_lessons: [], quiz_scores: {}, badges: ['pioneiro_atlas'] };
+
+    try {
+      const authUser = (await supabase.auth.getUser())?.data?.user;
+      if (authUser && authUser.user_metadata) {
+        displayName = authUser.user_metadata.full_name || authUser.user_metadata.name || displayName;
+      }
+    } catch (e) {}
+
     // Tentativa 1: Tabela Compacta student_profiles (Micro-Storage JSONB)
     if (hasStudentProfilesTableRef.current) {
       try {
@@ -90,14 +102,13 @@ function useStudentAuth() {
           .single();
 
         if (!error && data) {
-          setProfile(data);
+          displayName = data.name || displayName;
+          userRole = data.role || userRole;
+          streakDays = data.streak_days || streakDays;
           if (data.progress) {
-            mergeLocalWithRemoteProgress(data.progress);
+            remoteProgress = data.progress;
           }
-          return;
-        }
-
-        if (error && (error.code === 'PGRST205' || error.message?.includes('schema cache') || error.code === '42P01')) {
+        } else if (error && (error.code === 'PGRST205' || error.message?.includes('schema cache') || error.code === '42P01')) {
           console.info('[BFA Auth] student_profiles não encontrada, usando tabela profiles como fallback.');
           hasStudentProfilesTableRef.current = false;
         }
@@ -106,41 +117,65 @@ function useStudentAuth() {
       }
     }
 
-    // Tentativa 2 (Fallback): Tabela profiles + lesson_progress
+    // Tentativa 2 (Fallback): Tabela profiles + lesson_progress se não usou student_profiles
+    if (!hasStudentProfilesTableRef.current) {
+      try {
+        const { data: pData } = await supabase
+          .from('profiles')
+          .select('id, full_name, role, email')
+          .eq('id', userId)
+          .maybeSingle();
+
+        if (pData) {
+          displayName = pData.full_name || displayName;
+          userRole = pData.role || userRole;
+        }
+
+        const { data: lpData } = await supabase
+          .from('lesson_progress')
+          .select('lesson_id, completed')
+          .eq('user_id', userId)
+          .eq('completed', true);
+
+        if (lpData && lpData.length > 0) {
+          remoteProgress.completed_lessons = lpData.map(r => r.lesson_id);
+        }
+      } catch (err) {
+        console.warn('[BFA Auth] Exceção ao carregar fallback profiles:', err);
+      }
+    }
+
+    // Mescla local com remoto
+    const mergedPayload = mergeLocalWithRemoteProgress(remoteProgress);
+
+    setProfile({
+      id: userId,
+      name: displayName,
+      role: userRole,
+      streak_days: streakDays,
+      progress: mergedPayload
+    });
+
+    // Garante salvamento na nuvem (Supabase) imediatamente no login
     try {
-      const { data: pData } = await supabase
-        .from('profiles')
-        .select('id, full_name, role, email')
-        .eq('id', userId)
-        .maybeSingle();
-
-      const fallbackName = pData?.full_name || (userEmail ? userEmail.split('@')[0] : 'Estudante');
-      const fallbackRole = pData?.role || 'student';
-
-      setProfile({
-        id: userId,
-        name: fallbackName,
-        role: fallbackRole,
-        streak_days: 0
-      });
-
-      // Busca progresso de aulas em lesson_progress
-      const { data: lpData } = await supabase
-        .from('lesson_progress')
-        .select('lesson_id, completed')
-        .eq('user_id', userId)
-        .eq('completed', true);
-
-      if (lpData && lpData.length > 0) {
-        const remoteCompleted = lpData.map(r => r.lesson_id);
-        mergeLocalWithRemoteProgress({
-          completed_lessons: remoteCompleted,
-          quiz_scores: {},
-          badges: ['pioneiro_atlas']
+      if (hasStudentProfilesTableRef.current) {
+        await supabase.from('student_profiles').upsert({
+          id: userId,
+          name: displayName,
+          role: userRole,
+          progress: mergedPayload,
+          updated_at: new Date().toISOString()
         });
       }
-    } catch (err) {
-      console.warn('[BFA Auth] Exceção ao carregar fallback profiles:', err);
+      await supabase.from('profiles').upsert({
+        id: userId,
+        email: userEmail || `${userId}@user.atlas`,
+        full_name: displayName,
+        role: userRole,
+        updated_at: new Date().toISOString()
+      }, { onConflict: 'id' });
+    } catch (saveErr) {
+      console.warn('[BFA Auth] Erro ao persistir perfil no login:', saveErr?.message);
     }
   };
 
@@ -160,14 +195,23 @@ function useStudentAuth() {
         mergedScores[key] = Math.max(mergedScores[key] || 0, localScores[key] || 0);
       });
 
+      const mergedBadges = Array.from(new Set([...(remoteProgress?.badges || ['pioneiro_atlas'])]));
+
       localStorage.setItem('bfa_user_progress', JSON.stringify(mergedLessons));
       localStorage.setItem('bfa_quiz_scores', JSON.stringify(mergedScores));
 
       window.dispatchEvent(new CustomEvent('bfa_progress_updated', {
         detail: { completedLessons: mergedLessons, quizScores: mergedScores }
       }));
+
+      return {
+        completed_lessons: mergedLessons,
+        quiz_scores: mergedScores,
+        badges: mergedBadges
+      };
     } catch (e) {
       console.warn('[BFA Auth] Erro na mesclagem de progresso:', e);
+      return { completed_lessons: [], quiz_scores: {}, badges: [] };
     }
   };
 
@@ -202,6 +246,8 @@ function useStudentAuth() {
             .from('student_profiles')
             .upsert({
               id: user.id,
+              name: profile?.name || (user.email ? user.email.split('@')[0] : 'Estudante'),
+              role: profile?.role || 'student',
               progress: payload,
               updated_at: new Date().toISOString()
             });
@@ -237,7 +283,7 @@ function useStudentAuth() {
         setIsSyncing(false);
       }
     }, 3000);
-  }, [user]);
+  }, [user, profile]);
 
   // Login via Link Mágico / OTP
   const signInWithEmail = async (email, name = '') => {
