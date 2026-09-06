@@ -11,7 +11,8 @@ let supabaseClient = null;
 function initSupabase(url, key) {
   if (typeof window !== 'undefined' && window.supabase && url && key) {
     try {
-      supabaseClient = window.supabase.createClient(url, key);
+      const cleanUrl = url.replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
+      supabaseClient = window.supabase.createClient(cleanUrl, key);
       console.log('[BFA Supabase] Backend Supabase conectado com sucesso!');
       return true;
     } catch (err) {
