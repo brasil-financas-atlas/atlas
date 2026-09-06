@@ -152,7 +152,9 @@ class GitAutoSync:
         finally:
             self.is_syncing = False
 
-class DebouncedWatchdogHandler(FileSystemEventHandler):
+_BaseHandler = FileSystemEventHandler if HAS_WATCHDOG else object
+
+class DebouncedWatchdogHandler(_BaseHandler):
     def __init__(self, sync_callback, delay=DEBOUNCE_INTERVAL):
         super().__init__()
         self.sync_callback = sync_callback
