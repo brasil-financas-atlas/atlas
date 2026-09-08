@@ -107,11 +107,14 @@ function AdminLogin() {
           </div>
         )}
 
-        <form onSubmit={handleLoginSubmit}>
+        <form onSubmit={handleLoginSubmit} method="post" action="#">
           <div style={{ marginBottom: '1rem' }}>
-            <label style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>E-mail:</label>
+            <label htmlFor="admin-page-email" style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>E-mail:</label>
             <input
+              id="admin-page-email"
+              name="email"
               type="email"
+              autoComplete="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="seu-email@exemplo.com"
@@ -122,9 +125,12 @@ function AdminLogin() {
           </div>
 
           <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>Senha:</label>
+            <label htmlFor="admin-page-password" style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>Senha:</label>
             <input
+              id="admin-page-password"
+              name="password"
               type="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"

@@ -377,6 +377,27 @@ async function updatePendingEditStatus(editId, status, notes = '') {
   }
 }
 
+/**
+ * Inicia o fluxo de autenticação social (OAuth) com Google, Apple, Facebook, GitHub, etc.
+ */
+async function signInWithOAuth(provider = 'google') {
+  if (!supabaseClient) return { success: false, error: 'Supabase não conectado' };
+  try {
+    const redirectUrl = window.location.origin + window.location.pathname;
+    const { data, error } = await supabaseClient.auth.signInWithOAuth({
+      provider: provider,
+      options: {
+        redirectTo: redirectUrl
+      }
+    });
+    if (error) throw error;
+    return { success: true, data };
+  } catch (err) {
+    console.error(`[BFA Supabase OAuth Error (${provider})]:`, err);
+    return { success: false, error: err.message || `Erro ao autenticar com ${provider}` };
+  }
+}
+
 window.BfaSupabase = {
   get client() { return supabaseClient; },
   initSupabase,
@@ -386,6 +407,7 @@ window.BfaSupabase = {
   saveQuizAttempt,
   fetchUserProgress,
   signInUser,
+  signInWithOAuth,
   signOutUser,
   restoreSession,
   fetchSiteContent,

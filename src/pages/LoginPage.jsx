@@ -207,6 +207,29 @@ function LoginPage() {
     }
   };
 
+  // Login Social via OAuth (Google, Apple, Facebook, GitHub)
+  const handleSocialLogin = async (provider) => {
+    setIsLoading(true);
+    setErrorMsg('');
+    try {
+      if (!window.BfaSupabase || !window.BfaSupabase.isConfigured()) {
+        throw new Error('Serviço de autenticação Supabase indisponível no momento.');
+      }
+      const res = await window.BfaSupabase.signInWithOAuth(provider);
+      if (!res.success) {
+        throw new Error(res.error || `Erro ao iniciar autenticação com ${provider}`);
+      }
+    } catch (err) {
+      console.warn(`[BFA OAuth Login] Erro ao autenticar com ${provider}:`, err);
+      let msg = err.message || 'Falha ao autenticar.';
+      if (msg.includes('provider is not enabled') || msg.includes('disabled') || msg.includes('Unsupported provider')) {
+        msg = `O login com ${provider.toUpperCase()} precisa ser habilitado no painel do Supabase (Authentication -> Providers).`;
+      }
+      setErrorMsg(msg);
+      setIsLoading(false);
+    }
+  };
+
   // Envio de Código OTP para Aluno
   const handleSendOtp = async (e) => {
     e.preventDefault();
@@ -485,13 +508,16 @@ function LoginPage() {
 
         {/* 1. Formulário: Aluno Entrar */}
         {activeTab === 'student-login' && (
-          <form onSubmit={handleStudentPasswordLogin}>
+          <form onSubmit={handleStudentPasswordLogin} method="post" action="#">
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
+              <label htmlFor="bfa-student-email" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
                 E-mail do Aluno:
               </label>
               <input
+                id="bfa-student-email"
+                name="email"
                 type="email"
+                autoComplete="username"
                 required
                 placeholder="seu.email@exemplo.com"
                 value={email}
@@ -502,7 +528,7 @@ function LoginPage() {
 
             <div style={{ marginBottom: '1.25rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
-                <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                <label htmlFor="bfa-student-password" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)' }}>
                   Senha:
                 </label>
                 <button
@@ -514,7 +540,10 @@ function LoginPage() {
                 </button>
               </div>
               <input
+                id="bfa-student-password"
+                name="password"
                 type="password"
+                autoComplete="current-password"
                 required
                 placeholder="••••••••"
                 value={password}
@@ -536,13 +565,16 @@ function LoginPage() {
 
         {/* 2. Formulário: Aluno Cadastro */}
         {activeTab === 'student-register' && (
-          <form onSubmit={handleStudentRegister}>
+          <form onSubmit={handleStudentRegister} method="post" action="#">
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
+              <label htmlFor="bfa-register-name" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
                 Nome Completo ou Apelido:
               </label>
               <input
+                id="bfa-register-name"
+                name="name"
                 type="text"
+                autoComplete="name"
                 required
                 placeholder="Ex: Carlos Eduardo"
                 value={name}
@@ -552,11 +584,14 @@ function LoginPage() {
             </div>
 
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
+              <label htmlFor="bfa-register-email" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
                 E-mail:
               </label>
               <input
+                id="bfa-register-email"
+                name="email"
                 type="email"
+                autoComplete="username"
                 required
                 placeholder="seu.email@exemplo.com"
                 value={email}
@@ -566,11 +601,14 @@ function LoginPage() {
             </div>
 
             <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
+              <label htmlFor="bfa-register-password" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
                 Senha (mínimo 6 caracteres):
               </label>
               <input
+                id="bfa-register-password"
+                name="password"
                 type="password"
+                autoComplete="new-password"
                 required
                 placeholder="••••••••"
                 value={password}
@@ -590,15 +628,119 @@ function LoginPage() {
           </form>
         )}
 
+        {/* Opções de Login Social (OAuth) para Alunos */}
+        {(activeTab === 'student-login' || activeTab === 'student-register') && (
+          <div style={{ marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: '0.75rem 0', color: 'var(--muted-foreground)', fontSize: '0.75rem' }}>
+              <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
+              <span>Ou acesse com sua conta</span>
+              <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' }}>
+              <button
+                type="button"
+                onClick={() => handleSocialLogin('google')}
+                disabled={isLoading}
+                className="bfa-btn"
+                title="Acessar com Google"
+                style={{
+                  background: 'var(--surface-strong)',
+                  color: 'var(--foreground)',
+                  border: '1px solid var(--border)',
+                  padding: '0.6rem 0.4rem',
+                  borderRadius: 'var(--radius-sm)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <BfaIcon name="google" size={18} />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleSocialLogin('apple')}
+                disabled={isLoading}
+                className="bfa-btn"
+                title="Acessar com Apple"
+                style={{
+                  background: 'var(--surface-strong)',
+                  color: 'var(--foreground)',
+                  border: '1px solid var(--border)',
+                  padding: '0.6rem 0.4rem',
+                  borderRadius: 'var(--radius-sm)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <BfaIcon name="apple" size={18} />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleSocialLogin('github')}
+                disabled={isLoading}
+                className="bfa-btn"
+                title="Acessar com GitHub"
+                style={{
+                  background: 'var(--surface-strong)',
+                  color: 'var(--foreground)',
+                  border: '1px solid var(--border)',
+                  padding: '0.6rem 0.4rem',
+                  borderRadius: 'var(--radius-sm)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <BfaIcon name="github" size={18} />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleSocialLogin('facebook')}
+                disabled={isLoading}
+                className="bfa-btn"
+                title="Acessar com Facebook"
+                style={{
+                  background: 'var(--surface-strong)',
+                  color: 'var(--foreground)',
+                  border: '1px solid var(--border)',
+                  padding: '0.6rem 0.4rem',
+                  borderRadius: 'var(--radius-sm)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <BfaIcon name="facebook" size={18} />
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* 3. Formulário: Professor / Admin */}
         {activeTab === 'admin-login' && (
-          <form onSubmit={handleAdminLogin}>
+          <form onSubmit={handleAdminLogin} method="post" action="#">
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
+              <label htmlFor="bfa-admin-email" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
                 E-mail ou Usuário de Administrador:
               </label>
               <input
+                id="bfa-admin-email"
+                name="email"
                 type="text"
+                autoComplete="username"
                 required
                 placeholder="admin@bfa.org ou usuario"
                 value={adminEmail}
@@ -608,11 +750,14 @@ function LoginPage() {
             </div>
 
             <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
+              <label htmlFor="bfa-admin-password" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
                 Chave de Acesso / Senha:
               </label>
               <input
+                id="bfa-admin-password"
+                name="password"
                 type="password"
+                autoComplete="current-password"
                 required
                 placeholder="••••••••"
                 value={adminPassword}
