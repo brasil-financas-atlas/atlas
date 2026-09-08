@@ -18,8 +18,8 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
   const [isEditing, setIsEditing] = useState(false);
   const [editorText, setEditorText] = useState(currentText);
   const [viewMode, setViewMode] = useState('split'); // 'split', 'editor', 'preview'
-  const [showOperationsMenu, setShowOperationsMenu] = useState(false);
-  const [activeWizard, setActiveWizard] = useState(null); // null, 'imagem', 'admonition', 'tikz'
+  const [showLatexGuide, setShowLatexGuide] = useState(false);
+  const [activeWizard, setActiveWizard] = useState(null); // null, 'fracao', 'potencia', 'imagem', 'admonition', 'tikz'
   const [wizardInputs, setWizardInputs] = useState({});
 
   const textareaRef = useRef(null);
@@ -37,7 +37,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
     e.stopPropagation();
     setEditorText(currentText);
     setIsEditing(true);
-    setShowOperationsMenu(false);
+    setShowLatexGuide(false);
     setActiveWizard(null);
   };
 
@@ -48,7 +48,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
       }
     }
     setIsEditing(false);
-    setShowOperationsMenu(false);
+    setShowLatexGuide(false);
     setActiveWizard(null);
   };
 
@@ -59,7 +59,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
       saveOverride(id, editorText);
     }
     setIsEditing(false);
-    setShowOperationsMenu(false);
+    setShowLatexGuide(false);
     setActiveWizard(null);
   };
 
@@ -69,13 +69,13 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
         saveOverride(id, null);
       }
       setIsEditing(false);
-      setShowOperationsMenu(false);
+      setShowLatexGuide(false);
       setActiveWizard(null);
     }
   };
 
   // Safe insertion at current cursor position or end of text
-  const insertSnippet = (snippet) => {
+  const insertAtCursor = (snippet) => {
     const textarea = textareaRef.current;
     if (textarea) {
       const start = textarea.selectionStart ?? editorText.length;
@@ -92,21 +92,29 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
   };
 
   const applyWizardInsertion = () => {
-    if (activeWizard === 'imagem') {
+    if (activeWizard === 'fracao') {
+      const num = wizardInputs.num || 'a';
+      const den = wizardInputs.den || 'b';
+      insertAtCursor(` \\frac{${num}}{${den}} `);
+    } else if (activeWizard === 'potencia') {
+      const base = wizardInputs.base || '(1 + i)';
+      const exp = wizardInputs.exp || 't';
+      insertAtCursor(` ${base}^{${exp}} `);
+    } else if (activeWizard === 'imagem') {
       const url = wizardInputs.url || 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800';
       const alt = wizardInputs.alt || 'Gráfico Ilustrativo';
-      insertSnippet(`\n\n![${alt}](${url})\n`);
+      insertAtCursor(`\n\n![${alt}](${url})\n`);
     } else if (activeWizard === 'admonition') {
       const tipo = wizardInputs.tipo || 'tip';
       const titulo = wizardInputs.titulo || 'Conceito Chave';
-      const corpo = wizardInputs.corpo || 'Explicação detalhada do conceito financeiro.';
-      insertSnippet(`\n\n!!! ${tipo} "${titulo}"\n${corpo}\n`);
+      const corpo = wizardInputs.corpo || 'Explicação aprofundada do conceito para os estudantes.';
+      insertAtCursor(`\n\n!!! ${tipo} "${titulo}"\n${corpo}\n`);
     } else if (activeWizard === 'tikz') {
       const template = wizardInputs.template || 'eixos';
       if (template === 'eixos') {
-        insertSnippet(`\n\n\`\`\`tikz\n\\begin{tikzpicture}\n  \\draw[thick, ->] (0,0) -- (5,0) node[right] {Tempo ($t$)};\n  \\draw[thick, ->] (0,0) -- (0,4) node[above] {Montante ($M$)};\n  \\draw[domain=0:4, smooth, variable=\\x, blue, thick] plot ({\\x}, {0.35*exp(0.58*\\x)});\n  \\node[blue, right] at (4, 3.6) {$M = C(1+i)^t$};\n\\end{tikzpicture}\n\`\`\`\n`);
+        insertAtCursor(`\n\n\`\`\`tikz\n\\begin{tikzpicture}\n  \\draw[thick, ->] (0,0) -- (5,0) node[right] {Tempo ($t$)};\n  \\draw[thick, ->] (0,0) -- (0,4) node[above] {Montante ($M$)};\n  \\draw[domain=0:4, smooth, variable=\\x, blue, thick] plot ({\\x}, {0.35*exp(0.58*\\x)});\n  \\node[blue, right] at (4, 3.6) {$M = C(1+i)^t$};\n\\end{tikzpicture}\n\`\`\`\n`);
       } else if (template === 'arvore') {
-        insertSnippet(`\n\n\`\`\`tikz\n\\begin{tikzpicture}[level 1/.style={sibling distance=3.5cm}, level 2/.style={sibling distance=2cm}]\n  \\node {Decisão de Alocação}\n    child { node {Renda Fixa} child { node {Selic} } child { node {IPCA+} } }\n    child { node {Renda Variável} child { node {Ações} } child { node {FIIs} } };\n\\end{tikzpicture}\n\`\`\`\n`);
+        insertAtCursor(`\n\n\`\`\`tikz\n\\begin{tikzpicture}[level 1/.style={sibling distance=3.5cm}, level 2/.style={sibling distance=2cm}]\n  \\node {Decisão de Alocação}\n    child { node {Renda Fixa} child { node {Selic} } child { node {IPCA+} } }\n    child { node {Renda Variável} child { node {Ações} } child { node {FIIs} } };\n\\end{tikzpicture}\n\`\`\`\n`);
       }
     }
     setActiveWizard(null);
@@ -200,7 +208,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
   const canEdit = isAuthenticated && inlineEditActive;
 
-  // Backdrop click guard: only close when mouse starts AND ends on overlay backdrop
+  // Safe backdrop click handling
   const handleOverlayMouseDown = (e) => {
     mouseDownTargetRef.current = e.target;
   };
@@ -259,8 +267,8 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                   <BfaIcon name="pencil" size={18} color="var(--color-azul)" />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', margin: 0 }}>
-                    Editor de Conteúdo & Fórmulas
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--foreground)', margin: 0 }}>
+                    Editor Avançado de Conteúdo & Fórmulas
                   </h3>
                   <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)', fontFamily: 'var(--font-mono)' }}>
                     ID: {id}
@@ -269,6 +277,15 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <button
+                  type="button"
+                  className={`bfa-btn bfa-btn--sm ${showLatexGuide ? 'bfa-btn--ouro' : 'bfa-btn--ghost'}`}
+                  onClick={() => setShowLatexGuide(!showLatexGuide)}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: 700 }}
+                >
+                  <BfaIcon name="book" size={14} /> Guia & Ajuda LaTeX
+                </button>
+
                 {/* View Mode Toggle */}
                 <div style={{ display: 'flex', background: 'var(--secondary)', borderRadius: '6px', padding: '2px' }}>
                   <button
@@ -330,122 +347,152 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
               </div>
             </div>
 
-            {/* Main Action Toolbar: Operações LaTeX, Imagem, Caixa, TikZ */}
-            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
-              <button
-                type="button"
-                className={`bfa-btn bfa-btn--sm ${showOperationsMenu ? 'bfa-btn--ouro' : 'bfa-btn--secondary-glass'}`}
-                onClick={() => {
-                  setShowOperationsMenu(!showOperationsMenu);
-                  setActiveWizard(null);
-                }}
-                style={{ fontSize: '0.8rem', fontWeight: 700, padding: '0.35rem 0.75rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-              >
-                <BfaIcon name="book" size={14} /> Operações & Fórmulas LaTeX
-              </button>
-
-              <button
-                type="button"
-                className={`bfa-btn bfa-btn--sm ${activeWizard === 'imagem' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
-                onClick={() => {
-                  setActiveWizard(activeWizard === 'imagem' ? null : 'imagem');
-                  setShowOperationsMenu(false);
-                }}
-                style={{ fontSize: '0.75rem', padding: '0.35rem 0.65rem' }}
-              >
-                + Inserir Imagem
-              </button>
-
-              <button
-                type="button"
-                className={`bfa-btn bfa-btn--sm ${activeWizard === 'admonition' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
-                onClick={() => {
-                  setActiveWizard(activeWizard === 'admonition' ? null : 'admonition');
-                  setShowOperationsMenu(false);
-                }}
-                style={{ fontSize: '0.75rem', padding: '0.35rem 0.65rem' }}
-              >
-                + Caixa Destaque
-              </button>
-
-              <button
-                type="button"
-                className={`bfa-btn bfa-btn--sm ${activeWizard === 'tikz' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
-                onClick={() => {
-                  setActiveWizard(activeWizard === 'tikz' ? null : 'tikz');
-                  setShowOperationsMenu(false);
-                }}
-                style={{ fontSize: '0.75rem', padding: '0.35rem 0.65rem' }}
-              >
-                + Gráfico TikZ
-              </button>
-            </div>
-
-            {/* LaTeX Operations Quick Menu (1-Click Insertion) */}
-            {showOperationsMenu && (
+            {/* LaTeX Quick Guide Panel */}
+            {showLatexGuide && (
               <div style={{ background: 'var(--secondary)', border: '1px solid var(--border)', borderRadius: '8px', padding: '0.85rem 1rem', marginBottom: '0.85rem', maxHeight: '190px', overflowY: 'auto' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--foreground)' }}>
-                    CLIQUE EM UMA OPERAÇÃO PARA INSERIR NO TEXTO:
-                  </span>
-                  <button type="button" onClick={() => setShowOperationsMenu(false)} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ padding: '0.1rem 0.35rem', fontSize: '0.75rem' }}>✕ Fechar Menu</button>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                  <strong style={{ fontSize: '0.85rem', color: 'var(--foreground)' }}>Guia Rápido de Funções LaTeX (Clique para Inserir):</strong>
+                  <button type="button" onClick={() => setShowLatexGuide(false)} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ padding: '0.1rem 0.35rem', fontSize: '0.75rem' }}>✕ Fechar</button>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(195px, 1fr))', gap: '0.4rem' }}>
-                  <button type="button" onClick={() => insertSnippet(' \\frac{numerador}{denominador} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.4rem' }}>
+                  <button type="button" onClick={() => insertAtCursor(' \\frac{a}{b} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Fração:</strong> <code>\frac&#123;a&#125;&#123;b&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' (1 + i)^{t} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
-                    <strong>Juros / Potência:</strong> <code>(1+i)^&#123;t&#125;</code>
+                  <button type="button" onClick={() => insertAtCursor(' (1 + i)^{t} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                    <strong>Juros Compostos:</strong> <code>(1+i)^&#123;t&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' x^{n} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
-                    <strong>Expoente:</strong> <code>x^&#123;n&#125;</code>
+                  <button type="button" onClick={() => insertAtCursor(' x^{n} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                    <strong>Potência / Expoente:</strong> <code>x^&#123;n&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' x_{i} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
-                    <strong>Subscrito / Índice:</strong> <code>x_&#123;i&#125;</code>
+                  <button type="button" onClick={() => insertAtCursor(' x_{i} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                    <strong>Índice / Subscrito:</strong> <code>x_&#123;i&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' \\sqrt{x} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' \\sqrt{x} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Raiz Quadrada:</strong> <code>\sqrt&#123;x&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' \\sqrt[n]{1 + R} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' \\sqrt[n]{1 + R} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Raiz Enésima:</strong> <code>\sqrt[n]&#123;x&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' \\sum_{t=1}^{n} \\frac{CF_t}{(1+r)^t} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
-                    <strong>Somatório / VPL:</strong> <code>\sum_&#123;t=1&#125;^&#123;n&#125;</code>
+                  <button type="button" onClick={() => insertAtCursor(' \\sum_{t=1}^{n} \\frac{CF_t}{(1+r)^t} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                    <strong>Somatório:</strong> <code>\sum_&#123;t=1&#125;^&#123;n&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' \\prod_{i=1}^{k} (1 + r_i) ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' \\prod_{i=1}^{k} (1 + r_i) ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Produtório:</strong> <code>\prod_&#123;i=1&#125;^&#123;k&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' \\cdot ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' \\cdot ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Multiplicação:</strong> <code>\cdot</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' \\approx ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
-                    <strong>Aproximação:</strong> <code>\approx</code>
+                  <button type="button" onClick={() => insertAtCursor(' \\approx ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                    <strong>Aproximado:</strong> <code>\approx</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' \\sigma ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' \\sigma ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Volatilidade:</strong> <code>\sigma</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' \\mu ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' \\mu ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Retorno Médio:</strong> <code>\mu</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' \\Delta ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' \\Delta ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Variação:</strong> <code>\Delta</code>
                   </button>
-                  <button type="button" onClick={() => insertSnippet(' \\text{R\\$ } 1.000,00 ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' \\text{R\\$ } 1.000,00 ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Moeda / Texto:</strong> <code>\text&#123;R\$ &#125;</code>
-                  </button>
-                  <button type="button" onClick={() => insertSnippet(' \\pm ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
-                    <strong>Mais ou Menos:</strong> <code>\pm</code>
-                  </button>
-                  <button type="button" onClick={() => insertSnippet(' \\infty ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
-                    <strong>Infinito:</strong> <code>\infty</code>
                   </button>
                 </div>
               </div>
             )}
 
-            {/* Media & Structure Wizards Panel */}
+            {/* Configurable Wizards / Assistants Bar */}
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--muted-foreground)', marginRight: '4px' }}>
+                INSERIR COM CONFIGURAÇÃO:
+              </span>
+              <button
+                type="button"
+                className={`bfa-btn bfa-btn--sm ${activeWizard === 'fracao' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+                onClick={() => setActiveWizard(activeWizard === 'fracao' ? null : 'fracao')}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+              >
+                + Fração
+              </button>
+              <button
+                type="button"
+                className={`bfa-btn bfa-btn--sm ${activeWizard === 'potencia' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+                onClick={() => setActiveWizard(activeWizard === 'potencia' ? null : 'potencia')}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+              >
+                + Juros / Potência
+              </button>
+              <button
+                type="button"
+                className={`bfa-btn bfa-btn--sm ${activeWizard === 'imagem' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+                onClick={() => setActiveWizard(activeWizard === 'imagem' ? null : 'imagem')}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+              >
+                + Imagem
+              </button>
+              <button
+                type="button"
+                className={`bfa-btn bfa-btn--sm ${activeWizard === 'admonition' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+                onClick={() => setActiveWizard(activeWizard === 'admonition' ? null : 'admonition')}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+              >
+                + Caixa Destaque
+              </button>
+              <button
+                type="button"
+                className={`bfa-btn bfa-btn--sm ${activeWizard === 'tikz' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
+                onClick={() => setActiveWizard(activeWizard === 'tikz' ? null : 'tikz')}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+              >
+                + Gráfico TikZ
+              </button>
+            </div>
+
+            {/* Wizard Input Form Panel */}
             {activeWizard && (
               <div style={{ background: 'var(--secondary)', border: '1px solid var(--border)', borderRadius: '8px', padding: '0.75rem 1rem', marginBottom: '0.75rem', display: 'flex', gap: '0.65rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                {activeWizard === 'fracao' && (
+                  <>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Fração:</span>
+                    <input
+                      type="text"
+                      placeholder="Numerador (ex: M)"
+                      value={wizardInputs.num || ''}
+                      onChange={(e) => setWizardInputs({ ...wizardInputs, num: e.target.value })}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '130px' }}
+                    />
+                    <span>/</span>
+                    <input
+                      type="text"
+                      placeholder="Denominador (ex: 1 + i)"
+                      value={wizardInputs.den || ''}
+                      onChange={(e) => setWizardInputs({ ...wizardInputs, den: e.target.value })}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '130px' }}
+                    />
+                  </>
+                )}
+
+                {activeWizard === 'potencia' && (
+                  <>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Potência:</span>
+                    <input
+                      type="text"
+                      placeholder="Base (ex: 1 + i)"
+                      value={wizardInputs.base || ''}
+                      onChange={(e) => setWizardInputs({ ...wizardInputs, base: e.target.value })}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '130px' }}
+                    />
+                    <span>^</span>
+                    <input
+                      type="text"
+                      placeholder="Expoente (ex: t)"
+                      value={wizardInputs.exp || ''}
+                      onChange={(e) => setWizardInputs({ ...wizardInputs, exp: e.target.value })}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '90px' }}
+                    />
+                  </>
+                )}
+
                 {activeWizard === 'imagem' && (
                   <>
                     <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Inserir Imagem:</span>
