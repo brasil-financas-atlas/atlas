@@ -1,5 +1,18 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
+function getYouTubeEmbedUrl(url) {
+  if (!url || typeof url !== 'string') return '';
+  const trimmed = url.trim();
+  if (trimmed.includes('youtube.com/embed/')) return trimmed;
+  const shortMatch = trimmed.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+  if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+  const watchMatch = trimmed.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  const pathMatch = trimmed.match(/youtube\.com\/(?:v|shorts)\/([a-zA-Z0-9_-]{11})/);
+  if (pathMatch) return `https://www.youtube.com/embed/${pathMatch[1]}`;
+  return trimmed;
+}
+
 function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const { EXACT_CONTENT } = window;
   const { completedLessons, toggleLessonComplete } = useContext(ProgressContext || createContext({}));
@@ -550,7 +563,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                     {videoUrl && (
                       <div className="bfa-video-responsive" style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', boxShadow: '0 10px 30px -10px rgba(0,0,0,0.3)', background: '#000' }}>
                         <iframe
-                          src={videoUrl.replace('watch?v=', 'embed/')}
+                          src={getYouTubeEmbedUrl(videoUrl)}
                           title={aulaObj.titulo}
                           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -736,6 +749,128 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               <span>Painel</span>
             </a>
           )}
+        </div>
+      )}
+
+      {/* Modal de Configuração de Vídeo */}
+      {showVideoModal && (
+        <div
+          className="bfa-modal-overlay"
+          onClick={() => setShowVideoModal(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            padding: '1rem'
+          }}
+        >
+          <div
+            className="bfa-modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: 'var(--card)',
+              color: 'var(--foreground)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius-lg)',
+              width: '100%',
+              maxWidth: '540px',
+              padding: '1.75rem',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1.25rem'
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <BfaIcon name="video" size={18} color="var(--color-azul)" />
+                <span>Configurar Vídeo da Aula (YouTube)</span>
+              </h3>
+              <button
+                type="button"
+                onClick={() => setShowVideoModal(false)}
+                className="bfa-btn bfa-btn--ghost bfa-btn--sm"
+                style={{ padding: '0.3rem' }}
+                aria-label="Fechar"
+              >
+                <BfaIcon name="close" size={16} />
+              </button>
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--muted-foreground)' }}>
+                URL do Vídeo no YouTube
+              </label>
+              <input
+                type="text"
+                value={inputVideoUrl}
+                onChange={(e) => setInputVideoUrl(e.target.value)}
+                placeholder="Ex: https://www.youtube.com/watch?v=... ou https://youtu.be/..."
+                className="bfa-input"
+                style={{
+                  width: '100%',
+                  padding: '0.65rem 0.85rem',
+                  background: 'var(--surface-strong)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 'var(--radius-sm)',
+                  color: 'var(--foreground)',
+                  fontSize: '0.9rem'
+                }}
+                autoFocus
+              />
+              <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)', marginTop: '0.35rem' }}>
+                Suporta links padrão do YouTube, links curtos youtu.be e links embed.
+              </div>
+            </div>
+
+            {inputVideoUrl && getYouTubeEmbedUrl(inputVideoUrl) && (
+              <div>
+                <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--muted-foreground)', marginBottom: '0.4rem' }}>
+                  Pré-visualização:
+                </span>
+                <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: '#000' }}>
+                  <iframe
+                    src={getYouTubeEmbedUrl(inputVideoUrl)}
+                    title="Pré-visualização do vídeo"
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            )}
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.5rem' }}>
+              <button
+                type="button"
+                onClick={() => setShowVideoModal(false)}
+                className="bfa-btn bfa-btn--ghost"
+                style={{ padding: '0.55rem 1rem', fontSize: '0.85rem' }}
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (updateLesson) {
+                    updateLesson(lessonId, { videoUrl: inputVideoUrl.trim() });
+                  }
+                  setShowVideoModal(false);
+                }}
+                className="bfa-btn bfa-btn--verde"
+                style={{ padding: '0.55rem 1.25rem', fontSize: '0.85rem', fontWeight: 700 }}
+              >
+                Salvar Vídeo
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

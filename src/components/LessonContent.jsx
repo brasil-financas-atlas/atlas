@@ -28,6 +28,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       
       window.mermaid.initialize({
         startOnLoad: false,
+        suppressErrorRendering: true,
         theme: isDark ? 'dark' : 'neutral',
         securityLevel: 'loose',
         fontFamily: 'Plus Jakarta Sans, sans-serif',
@@ -60,8 +61,12 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
               mDiv.innerHTML = svg;
               mDiv.setAttribute('data-processed', 'true');
             }).catch(e => {
-              console.warn('Mermaid render error:', e);
-              mDiv.innerHTML = `<pre style="font-size:0.8rem;text-align:left;">${rawCode}</pre>`;
+              console.warn('Mermaid render error (tratado silenciosamente):', e);
+              // Remover qualquer elemento de erro gerado pelo Mermaid no DOM
+              const errEl = document.getElementById(uniqueId) || document.querySelector(`[id^="d${uniqueId}"]`);
+              if (errEl && errEl.parentNode) errEl.parentNode.removeChild(errEl);
+              mDiv.innerHTML = `<div class="bfa-diagram-box" style="padding:1rem;background:var(--secondary);border:1px solid var(--border);border-radius:8px;font-size:0.85rem;"><span class="bfa-badge bfa-badge--azul" style="margin-bottom:0.5rem;display:inline-block;">Diagrama de Fluxo</span><pre style="margin:0;white-space:pre-wrap;font-family:var(--font-mono);font-size:0.8rem;color:var(--foreground);">${rawCode}</pre></div>`;
+              mDiv.setAttribute('data-processed', 'true');
             });
           }
         }
@@ -219,11 +224,16 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       return `href="#/${cleanUrl}"`;
     });
 
+    // 4.5 Converter URLs do YouTube em iframes responsivos
+    parsedHtml = parsedHtml.replace(/(?:<p>)?(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})(?:[^\s<]*)(?:<\/p>)?/g, (match, ytId) => {
+      return `<div class="bfa-video-responsive" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:1.5rem 0;background:#000;"><iframe src="https://www.youtube.com/embed/${ytId}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+    });
+
     // Sanitização com DOMPurify
     if (window.DOMPurify && window.DOMPurify.sanitize) {
       parsedHtml = window.DOMPurify.sanitize(parsedHtml, {
-        ADD_TAGS: ['details', 'summary', 'svg', 'path', 'line', 'circle', 'polygon', 'polyline', 'g', 'rect', 'text', 'tspan', 'defs', 'marker', 'use', 'script', 'img', 'figure', 'figcaption'],
-        ADD_ATTR: ['open', 'target', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'data-mermaid-code', 'data-processed', 'class', 'style', 'id', 'x', 'y', 'dx', 'dy', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'width', 'height', 'text-anchor', 'transform', 'marker-end', 'marker-start', 'type', 'src', 'alt', 'loading']
+        ADD_TAGS: ['details', 'summary', 'svg', 'path', 'line', 'circle', 'polygon', 'polyline', 'g', 'rect', 'text', 'tspan', 'defs', 'marker', 'use', 'script', 'img', 'figure', 'figcaption', 'iframe', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
+        ADD_ATTR: ['open', 'target', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'data-mermaid-code', 'data-processed', 'class', 'style', 'id', 'x', 'y', 'dx', 'dy', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'width', 'height', 'text-anchor', 'transform', 'marker-end', 'marker-start', 'type', 'src', 'alt', 'loading', 'allow', 'allowfullscreen', 'frameborder']
       });
     }
 
