@@ -95,11 +95,11 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
     if (activeWizard === 'fracao') {
       const num = wizardInputs.num || 'a';
       const den = wizardInputs.den || 'b';
-      insertAtCursor(` \\frac{${num}}{${den}} `);
+      insertAtCursor(` $\\frac{${num}}{${den}}$ `);
     } else if (activeWizard === 'potencia') {
       const base = wizardInputs.base || '(1 + i)';
       const exp = wizardInputs.exp || 't';
-      insertAtCursor(` ${base}^{${exp}} `);
+      insertAtCursor(` $${base}^{${exp}}$ `);
     } else if (activeWizard === 'imagem') {
       const url = wizardInputs.url || 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800';
       const alt = wizardInputs.alt || 'Gráfico Ilustrativo';
@@ -157,15 +157,28 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
     // 3. Fórmulas KaTeX
     const formulas = [];
     const guardar = (tex, emDestaque) => {
-      formulas.push({ tex, emDestaque });
+      formulas.push({ tex: tex.trim(), emDestaque });
       return `@@BFAMATH_${formulas.length - 1}@@`;
     };
 
-    formatted = formatted
-      .replace(/\$\$([\s\S]*?)\$\$/g, (m, tex) => guardar(tex, true))
-      .replace(/\\\[([\s\S]*?)\\\]/g, (m, tex) => guardar(tex, true))
-      .replace(/\\\(([\s\S]*?)\\\)/g, (m, tex) => guardar(tex, false))
-      .replace(/(?<![\\R])\$(?!\s)((?:[^$\n\\]|\\[\s\S])+?)\$/g, (m, tex) => guardar(tex, false));
+    // 3.1 Display Math: $$ ... $$ e \[ ... \]
+    formatted = formatted.replace(/\$\$([\s\S]*?)\$\$/g, (m, tex) => guardar(tex, true));
+    formatted = formatted.replace(/\\\[([\s\S]*?)\\\]/g, (m, tex) => guardar(tex, true));
+
+    // 3.2 Inline Math: \( ... \)
+    formatted = formatted.replace(/\\\(([\s\S]*?)\\\)/g, (m, tex) => guardar(tex, false));
+
+    // 3.3 Inline Math: $ ... $ (ignora moeda brasileira R$ 100 ou R$100)
+    formatted = formatted.replace(/(?<![\\R\w])\$(?!\$)((?:[^$\\]|\\.)+?)(?<!\\)\$/g, (m, tex) => {
+      const trimmed = tex.trim();
+      if (!trimmed) return m;
+      return guardar(trimmed, false);
+    });
+
+    // 3.4 Captura comandos LaTeX soltos escritos sem delimitadores $ (ex: \frac{a}{b}, \sqrt{x})
+    formatted = formatted.replace(/(?<!@@BFAMATH_\d+@@)(?:\\frac\{[^{}]*\}\{[^{}]*\}|\\sqrt(?:\[[^{}]*\])?\{[^{}]*\})/g, (m) => {
+      return guardar(m, false);
+    });
 
     let parsed = (window.marked && window.marked.parse) ? window.marked.parse(formatted) : formatted;
 
@@ -183,8 +196,13 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
       if (!f) return marcador;
       if (window.katex && window.katex.renderToString) {
         try {
-          return window.katex.renderToString(f.tex.trim(), { displayMode: f.emDestaque, throwOnError: false });
+          return window.katex.renderToString(f.tex.trim(), {
+            displayMode: f.emDestaque,
+            throwOnError: false,
+            strict: false
+          });
         } catch (e) {
+          console.warn('Erro ao renderizar KaTeX:', f.tex, e);
           return f.tex;
         }
       }
@@ -355,46 +373,46 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                   <button type="button" onClick={() => setShowLatexGuide(false)} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ padding: '0.1rem 0.35rem', fontSize: '0.75rem' }}>✕ Fechar</button>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.4rem' }}>
-                  <button type="button" onClick={() => insertAtCursor(' \\frac{a}{b} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\frac{a}{b}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Fração:</strong> <code>\frac&#123;a&#125;&#123;b&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' (1 + i)^{t} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $(1 + i)^{t}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Juros Compostos:</strong> <code>(1+i)^&#123;t&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' x^{n} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $x^{n}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Potência / Expoente:</strong> <code>x^&#123;n&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' x_{i} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $x_{i}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Índice / Subscrito:</strong> <code>x_&#123;i&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' \\sqrt{x} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\sqrt{x}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Raiz Quadrada:</strong> <code>\sqrt&#123;x&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' \\sqrt[n]{1 + R} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\sqrt[n]{1 + R}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Raiz Enésima:</strong> <code>\sqrt[n]&#123;x&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' \\sum_{t=1}^{n} \\frac{CF_t}{(1+r)^t} ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $$\\sum_{t=1}^{n} \\frac{CF_t}{(1+r)^t}$$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Somatório:</strong> <code>\sum_&#123;t=1&#125;^&#123;n&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' \\prod_{i=1}^{k} (1 + r_i) ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $$\\prod_{i=1}^{k} (1 + r_i)$$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Produtório:</strong> <code>\prod_&#123;i=1&#125;^&#123;k&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' \\cdot ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\cdot$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Multiplicação:</strong> <code>\cdot</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' \\approx ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\approx$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Aproximado:</strong> <code>\approx</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' \\sigma ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\sigma$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Volatilidade:</strong> <code>\sigma</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' \\mu ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\mu$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Retorno Médio:</strong> <code>\mu</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' \\Delta ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\Delta$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Variação:</strong> <code>\Delta</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' \\text{R\\$ } 1.000,00 ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\text{R\\$ } 1.000,00$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
                     <strong>Moeda / Texto:</strong> <code>\text&#123;R\$ &#125;</code>
                   </button>
                 </div>

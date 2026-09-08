@@ -183,15 +183,28 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     // 4. Salvar fórmulas KaTeX
     const formulas = [];
     const guardar = (tex, emDestaque) => {
-      formulas.push({ tex, emDestaque });
+      formulas.push({ tex: tex.trim(), emDestaque });
       return `@@BFAMATH_${formulas.length - 1}@@`;
     };
 
-    formatted = formatted
-      .replace(/\$\$([\s\S]*?)\$\$/g, (m, tex) => guardar(tex, true))
-      .replace(/\\\[([\s\S]*?)\\\]/g, (m, tex) => guardar(tex, true))
-      .replace(/\\\(([\s\S]*?)\\\)/g, (m, tex) => guardar(tex, false))
-      .replace(/(?<![\\R])\$(?!\s)((?:[^$\n\\]|\\[\s\S])+?)\$/g, (m, tex) => guardar(tex, false));
+    // 4.1 Display Math: $$ ... $$ e \[ ... \]
+    formatted = formatted.replace(/\$\$([\s\S]*?)\$\$/g, (m, tex) => guardar(tex, true));
+    formatted = formatted.replace(/\\\[([\s\S]*?)\\\]/g, (m, tex) => guardar(tex, true));
+
+    // 4.2 Inline Math: \( ... \)
+    formatted = formatted.replace(/\\\(([\s\S]*?)\\\)/g, (m, tex) => guardar(tex, false));
+
+    // 4.3 Inline Math: $ ... $ (ignora moeda brasileira R$ 100 ou R$100)
+    formatted = formatted.replace(/(?<![\\R\w])\$(?!\$)((?:[^$\\]|\\.)+?)(?<!\\)\$/g, (m, tex) => {
+      const trimmed = tex.trim();
+      if (!trimmed) return m;
+      return guardar(trimmed, false);
+    });
+
+    // 4.4 Captura comandos LaTeX soltos escritos sem delimitadores $ (ex: \frac{a}{b}, \sqrt{x})
+    formatted = formatted.replace(/(?<!@@BFAMATH_\d+@@)(?:\\frac\{[^{}]*\}\{[^{}]*\}|\\sqrt(?:\[[^{}]*\])?\{[^{}]*\})/g, (m) => {
+      return guardar(m, false);
+    });
 
     let parsedHtml = (window.marked && window.marked.parse) ? window.marked.parse(formatted) : formatted;
 
