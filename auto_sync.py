@@ -69,21 +69,29 @@ class GitAutoSync:
         return "origin"
 
     def _run_git(self, args, timeout=40):
-        """Executa comandos do Git impedindo travamento por solicitação de senha."""
+        """Executa comandos do Git impedindo travamento por solicitacao de senha ou handles nulos."""
         env = os.environ.copy()
         env["GIT_TERMINAL_PROMPT"] = "0"
         env["GIT_OPTIONAL_LOCKS"] = "0"
+        env["GIT_EDITOR"] = "true"
+        env["GIT_SEQUENCE_EDITOR"] = "true"
+        env["GIT_MERGE_AUTOEDIT"] = "no"
+        env["GIT_PAGER"] = "cat"
 
         cmd = ["git"] + args
+        kwargs = {
+            "cwd": self.repo_dir,
+            "env": env,
+            "stdin": subprocess.DEVNULL,
+            "capture_output": True,
+            "text": True,
+            "timeout": timeout
+        }
+        if os.name == "nt":
+            kwargs["creationflags"] = getattr(subprocess, "CREATE_NO_WINDOW", 0x08000000)
+
         try:
-            result = subprocess.run(
-                cmd,
-                cwd=self.repo_dir,
-                env=env,
-                capture_output=True,
-                text=True,
-                timeout=timeout
-            )
+            result = subprocess.run(cmd, **kwargs)
             if result.returncode == 0:
                 return True, result.stdout.strip()
             else:
@@ -94,7 +102,7 @@ class GitAutoSync:
             return False, str(e)
 
     def has_changes(self):
-        """Verifica se há alterações modificadas ou novos arquivos staged/unstaged."""
+        """Verifica se ha alteracoes modificadas ou novos arquivos staged/unstaged."""
         success, out = self._run_git(["status", "--porcelain"])
         return success and len(out.strip()) > 0
 
@@ -117,7 +125,7 @@ class GitAutoSync:
         target_branch = self.get_active_branch()
 
         try:
-            # 1. Se houver alterações locais, faz staging e commit primeiro
+            # 1. Se houver alteracoes locais, faz staging e commit primeiro
             if self.has_changes():
                 logging.info("[AUTO-SYNC] Adicionando arquivos e gerando commit local...")
                 self._run_git(["add", "-A"])
@@ -130,18 +138,30 @@ class GitAutoSync:
                     logging.error(f"[AUTO-SYNC] ERRO ao criar commit: {out_commit}")
                     return
 
-            # 2. Busca commits remotos (fetch) e aplica rebase limpo
+            # 2. Busca commits remotos (fetch) e reconcilia
             logging.info(f"[AUTO-SYNC] Buscando atualizacoes do GitHub (git fetch branch {target_branch})...")
             success_fetch, out_fetch = self._run_git(["fetch", remote_target, target_branch])
             if success_fetch:
-                logging.info("[AUTO-SYNC] Rebasando historico com FETCH_HEAD...")
-                success_rebase, out_rebase = self._run_git(["rebase", "FETCH_HEAD"])
-                if not success_rebase:
-                    logging.warning(f"[AUTO-SYNC] Aviso no rebase: {out_rebase}. Abortando rebase se necessário.")
-                    if "rebase in progress" in out_rebase or "conflict" in out_rebase.lower():
-                        self._run_git(["rebase", "--abort"])
+                success_head, local_head = self._run_git(["rev-parse", "HEAD"])
+                success_fetch_head, remote_head = self._run_git(["rev-parse", "FETCH_HEAD"])
 
-            # 3. Envia os commits locais para o repositório remoto
+                if success_head and success_fetch_head and local_head != remote_head:
+                    success_mb, merge_base = self._run_git(["merge-base", "HEAD", "FETCH_HEAD"])
+                    if success_mb:
+                        if merge_base == remote_head:
+                            logging.info("[AUTO-SYNC] Branch local a frente do remoto (pronto para push).")
+                        elif merge_base == local_head:
+                            logging.info("[AUTO-SYNC] Aplicando fast-forward com FETCH_HEAD...")
+                            self._run_git(["merge", "FETCH_HEAD", "--ff-only"])
+                        else:
+                            logging.info("[AUTO-SYNC] Rebasando historico com FETCH_HEAD...")
+                            success_rebase, out_rebase = self._run_git(["rebase", "FETCH_HEAD"])
+                            if not success_rebase:
+                                logging.warning(f"[AUTO-SYNC] Aviso no rebase: {out_rebase}. Abortando rebase se necessario.")
+                                if "rebase in progress" in out_rebase or "conflict" in out_rebase.lower():
+                                    self._run_git(["rebase", "--abort"])
+
+            # 3. Envia os commits locais para o repositorio remoto
             logging.info(f"[AUTO-SYNC] Enviando commits para branch {target_branch} (git push)...")
             success_push, out_push = self._run_git(["push", remote_target, target_branch])
             if success_push:
