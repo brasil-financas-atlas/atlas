@@ -801,12 +801,12 @@
   color: var(--card-foreground);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
-  padding: 2rem;
+  padding: 1.5rem 1.75rem;
   width: 100%;
-  max-width: 640px;
-  box-shadow: var(--shadow-elevated);
+  max-width: 1080px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
   position: relative;
-  max-height: 90vh;
+  max-height: 94vh;
   overflow-y: auto;
 }
 
