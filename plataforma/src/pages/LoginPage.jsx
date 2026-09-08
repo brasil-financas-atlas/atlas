@@ -220,29 +220,6 @@ function LoginPage() {
     }
   };
 
-  // Login Social via OAuth (Google, Apple, Facebook, GitHub)
-  const handleSocialLogin = async (provider) => {
-    setIsLoading(true);
-    setErrorMsg('');
-    try {
-      if (!window.BfaSupabase || !window.BfaSupabase.isConfigured()) {
-        throw new Error('Serviço de autenticação Supabase indisponível no momento.');
-      }
-      const res = await window.BfaSupabase.signInWithOAuth(provider);
-      if (!res.success) {
-        throw new Error(res.error || `Erro ao iniciar autenticação com ${provider}`);
-      }
-    } catch (err) {
-      console.warn(`[BFA OAuth Login] Erro ao autenticar com ${provider}:`, err);
-      let msg = err.message || 'Falha ao autenticar.';
-      if (msg.includes('provider is not enabled') || msg.includes('disabled') || msg.includes('Unsupported provider')) {
-        msg = `O login com ${provider.toUpperCase()} precisa ser habilitado no painel do Supabase (Authentication -> Providers).`;
-      }
-      setErrorMsg(msg);
-      setIsLoading(false);
-    }
-  };
-
   // Envio de Código OTP para Aluno
   const handleSendOtp = async (e) => {
     e.preventDefault();
@@ -519,16 +496,32 @@ function LoginPage() {
           </div>
         )}
 
+        {/* Hidden Iframe for Real Native Form Submission Recognition */}
+        <iframe
+          name="bfa_auth_iframe"
+          id="bfa_auth_iframe"
+          style={{ display: 'none', width: 0, height: 0, border: 0 }}
+          tabIndex={-1}
+          aria-hidden="true"
+          src="about:blank"
+          title="bfa-auth-target"
+        />
+
         {/* 1. Formulário: Aluno Entrar */}
         {activeTab === 'student-login' && (
-          <form onSubmit={handleStudentPasswordLogin} method="post" action="#">
+          <form
+            target="bfa_auth_iframe"
+            method="POST"
+            action="about:blank"
+            onSubmit={handleStudentPasswordLogin}
+          >
             <div style={{ marginBottom: '1rem' }}>
-              <label htmlFor="bfa-student-email" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
+              <label htmlFor="bfa-student-username" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
                 E-mail do Aluno:
               </label>
               <input
-                id="bfa-student-email"
-                name="email"
+                id="bfa-student-username"
+                name="username"
                 type="email"
                 autoComplete="username"
                 required
@@ -578,7 +571,12 @@ function LoginPage() {
 
         {/* 2. Formulário: Aluno Cadastro */}
         {activeTab === 'student-register' && (
-          <form onSubmit={handleStudentRegister} method="post" action="#">
+          <form
+            target="bfa_auth_iframe"
+            method="POST"
+            action="about:blank"
+            onSubmit={handleStudentRegister}
+          >
             <div style={{ marginBottom: '1rem' }}>
               <label htmlFor="bfa-register-name" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
                 Nome Completo ou Apelido:
@@ -597,12 +595,12 @@ function LoginPage() {
             </div>
 
             <div style={{ marginBottom: '1rem' }}>
-              <label htmlFor="bfa-register-email" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
+              <label htmlFor="bfa-register-username" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
                 E-mail:
               </label>
               <input
-                id="bfa-register-email"
-                name="email"
+                id="bfa-register-username"
+                name="username"
                 type="email"
                 autoComplete="username"
                 required
@@ -641,117 +639,21 @@ function LoginPage() {
           </form>
         )}
 
-        {/* Opções de Login Social (OAuth) para Alunos */}
-        {(activeTab === 'student-login' || activeTab === 'student-register') && (
-          <div style={{ marginBottom: '1rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: '0.75rem 0', color: 'var(--muted-foreground)', fontSize: '0.75rem' }}>
-              <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
-              <span>Ou acesse com sua conta</span>
-              <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' }}>
-              <button
-                type="button"
-                onClick={() => handleSocialLogin('google')}
-                disabled={isLoading}
-                className="bfa-btn"
-                title="Acessar com Google"
-                style={{
-                  background: 'var(--surface-strong)',
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)',
-                  padding: '0.6rem 0.4rem',
-                  borderRadius: 'var(--radius-sm)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                <BfaIcon name="google" size={18} />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleSocialLogin('apple')}
-                disabled={isLoading}
-                className="bfa-btn"
-                title="Acessar com Apple"
-                style={{
-                  background: 'var(--surface-strong)',
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)',
-                  padding: '0.6rem 0.4rem',
-                  borderRadius: 'var(--radius-sm)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                <BfaIcon name="apple" size={18} />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleSocialLogin('github')}
-                disabled={isLoading}
-                className="bfa-btn"
-                title="Acessar com GitHub"
-                style={{
-                  background: 'var(--surface-strong)',
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)',
-                  padding: '0.6rem 0.4rem',
-                  borderRadius: 'var(--radius-sm)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                <BfaIcon name="github" size={18} />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleSocialLogin('facebook')}
-                disabled={isLoading}
-                className="bfa-btn"
-                title="Acessar com Facebook"
-                style={{
-                  background: 'var(--surface-strong)',
-                  color: 'var(--foreground)',
-                  border: '1px solid var(--border)',
-                  padding: '0.6rem 0.4rem',
-                  borderRadius: 'var(--radius-sm)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                <BfaIcon name="facebook" size={18} />
-              </button>
-            </div>
-          </div>
-        )}
-
         {/* 3. Formulário: Professor / Admin */}
         {activeTab === 'admin-login' && (
-          <form onSubmit={handleAdminLogin} method="post" action="#">
+          <form
+            target="bfa_auth_iframe"
+            method="POST"
+            action="about:blank"
+            onSubmit={handleAdminLogin}
+          >
             <div style={{ marginBottom: '1rem' }}>
-              <label htmlFor="bfa-admin-email" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
+              <label htmlFor="bfa-admin-username" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
                 E-mail ou Usuário de Administrador:
               </label>
               <input
-                id="bfa-admin-email"
-                name="email"
+                id="bfa-admin-username"
+                name="username"
                 type="text"
                 autoComplete="username"
                 required

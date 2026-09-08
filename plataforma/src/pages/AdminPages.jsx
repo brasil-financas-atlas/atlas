@@ -110,12 +110,27 @@ function AdminLogin() {
           </div>
         )}
 
-        <form onSubmit={handleLoginSubmit} method="post" action="#">
+        <iframe
+          name="bfa_admin_auth_iframe"
+          id="bfa_admin_auth_iframe"
+          style={{ display: 'none', width: 0, height: 0, border: 0 }}
+          tabIndex={-1}
+          aria-hidden="true"
+          src="about:blank"
+          title="bfa-admin-auth"
+        />
+
+        <form
+          target="bfa_admin_auth_iframe"
+          method="POST"
+          action="about:blank"
+          onSubmit={handleLoginSubmit}
+        >
           <div style={{ marginBottom: '1rem' }}>
-            <label htmlFor="admin-page-email" style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>E-mail:</label>
+            <label htmlFor="admin-page-username" style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>E-mail:</label>
             <input
-              id="admin-page-email"
-              name="email"
+              id="admin-page-username"
+              name="username"
               type="email"
               autoComplete="username"
               value={username}
