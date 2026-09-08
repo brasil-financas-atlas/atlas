@@ -57,6 +57,10 @@ function LoginPage() {
 
       if (error) throw error;
 
+      if (window.BfaSupabase?.savePasswordCredential) {
+        window.BfaSupabase.savePasswordCredential(email.trim(), password, name || email.trim());
+      }
+
       setSuccessMsg('Login realizado com sucesso! Sincronizando seu progresso...');
       if (studentAuth?.reloadProfile) {
         await studentAuth.reloadProfile();
@@ -151,6 +155,9 @@ function LoginPage() {
       }
 
       if (data?.session) {
+        if (window.BfaSupabase?.savePasswordCredential) {
+          window.BfaSupabase.savePasswordCredential(email.trim(), password, name.trim());
+        }
         setSuccessMsg('Cadastro realizado com sucesso! Conectando...');
         if (studentAuth?.reloadProfile) {
           await studentAuth.reloadProfile();
@@ -159,6 +166,9 @@ function LoginPage() {
           window.location.hash = '#/';
         }, 1000);
       } else {
+        if (window.BfaSupabase?.savePasswordCredential) {
+          window.BfaSupabase.savePasswordCredential(email.trim(), password, name.trim());
+        }
         setSuccessMsg('Conta de aluno criada com sucesso! Caso a confirmação de e-mail esteja ativada no seu Supabase, verifique sua caixa de entrada para confirmar o acesso.');
         setTimeout(() => {
           setActiveTab('student-login');
@@ -192,6 +202,9 @@ function LoginPage() {
       if (adminCtx?.login) {
         const ok = await adminCtx.login(adminEmail.trim(), adminPassword);
         if (ok) {
+          if (window.BfaSupabase?.savePasswordCredential) {
+            window.BfaSupabase.savePasswordCredential(adminEmail.trim(), adminPassword, 'Administrador BFA');
+          }
           setSuccessMsg('Acesso administrativo autorizado! Redirecionando para o painel...');
           setTimeout(() => {
             window.location.hash = '#/admin';

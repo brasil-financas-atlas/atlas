@@ -156,6 +156,9 @@ async function signInUser(email, password) {
     userRole = String(userRole).trim().toLowerCase().replace(/[\s-]+/g, '_');
     console.log(`[BFA Supabase Auth] Login com sucesso: ${cleanEmail} | Papel: ${userRole}`);
 
+    // Dispara o Gerenciador de Senhas do Google / Navegador (Credential Management API)
+    savePasswordCredential(cleanEmail, password, fullName);
+
     return {
       success: true,
       user: {
@@ -168,6 +171,27 @@ async function signInUser(email, password) {
   } catch (err) {
     console.error('[BFA Supabase Auth Error]:', err);
     return { success: false, error: err.message || 'Erro na autenticação' };
+  }
+}
+
+/**
+ * Dispara a API oficial W3C Credential Management para que o Google Chrome / Android
+ * e navegadores modernos exibam a caixa de diálogo nativa de "Salvar Senha no Google".
+ */
+async function savePasswordCredential(username, password, name = '') {
+  if (typeof window === 'undefined') return;
+  try {
+    if (window.PasswordCredential && navigator.credentials && navigator.credentials.store) {
+      const cred = new window.PasswordCredential({
+        id: String(username).trim(),
+        password: String(password),
+        name: String(name || username).trim()
+      });
+      await navigator.credentials.store(cred);
+      console.log('[BFA CredMan] Senha salva no Gerenciador de Senhas do Google/Navegador com sucesso.');
+    }
+  } catch (err) {
+    console.debug('[BFA CredMan] Credential Management Store:', err);
   }
 }
 
@@ -408,6 +432,7 @@ window.BfaSupabase = {
   fetchUserProgress,
   signInUser,
   signInWithOAuth,
+  savePasswordCredential,
   signOutUser,
   restoreSession,
   fetchSiteContent,

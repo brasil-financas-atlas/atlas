@@ -82,6 +82,9 @@ function AdminLogin() {
     try {
       const res = await login(username, password);
       if (res && res.success) {
+        if (window.BfaSupabase?.savePasswordCredential) {
+          window.BfaSupabase.savePasswordCredential(username, password, 'Professor / Admin BFA');
+        }
         navigate('/admin');
       } else {
         setErrorMsg((res && res.error) || 'Credenciais inválidas.');
