@@ -113,10 +113,13 @@ function LoginPage() {
         badges: ['pioneiro_atlas']
       };
 
+      const redirectUrl = typeof window !== 'undefined' ? (window.location.origin + window.location.pathname) : '';
+
       const { data, error } = await supabase.auth.signUp({
         email: email.trim(),
         password: password,
         options: {
+          emailRedirectTo: redirectUrl,
           data: {
             name: name.trim(),
             full_name: name.trim()

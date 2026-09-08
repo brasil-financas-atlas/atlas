@@ -295,7 +295,7 @@ function useStudentAuth() {
       email,
       options: {
         data: { name: name || 'Estudante' },
-        emailRedirectTo: window.location.origin
+        emailRedirectTo: typeof window !== 'undefined' ? (window.location.origin + window.location.pathname) : ''
       }
     });
     if (error) throw error;
