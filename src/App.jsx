@@ -48,7 +48,8 @@ function App() {
       currentPath === '/simulador' ||
       currentPath === '/simulados' ||
       currentPath === '/calculadora-juros-compostos' ||
-      currentPath === '/calculadora'
+      currentPath === '/calculadora' ||
+      currentPath === '/cronograma'
     ) {
       return (
         <div className="bfa-section" style={{ minHeight: '60vh', display: 'flex', alignItems: 'center' }}>
@@ -89,10 +90,6 @@ function App() {
 
     if (currentPath === '/noticias') {
       return <Noticias />;
-    }
-
-    if (currentPath === '/cronograma') {
-      return <Cronograma />;
     }
 
     if (currentPath === '/sobre') {

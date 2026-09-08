@@ -30,12 +30,6 @@ function BottomNavBar() {
       path: '/exercicios'
     },
     {
-      title: 'Cronograma de Estudos',
-      desc: 'Roteiro de estudos semanais do básico ao avançado',
-      iconName: 'calendar',
-      path: '/cronograma'
-    },
-    {
       title: 'Guia Olímpico BRHSIC',
       desc: 'Metodologia de análise, valuation DCF e pitch de ações',
       iconName: 'trophy',
@@ -46,6 +40,12 @@ function BottomNavBar() {
       desc: 'Acompanhe seu avanço em 55 aulas com medalhas',
       iconName: 'award',
       path: '/conquistas'
+    },
+    {
+      title: 'Sobre o Projeto BFA',
+      desc: 'Nossa missão, metodologia e material 100% gratuito',
+      iconName: 'institution',
+      path: '/sobre'
     }
   ];
 

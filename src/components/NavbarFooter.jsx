@@ -71,7 +71,6 @@ function Navbar() {
     { label: "Finanças", path: "/financas" },
     { label: "Preparação BRHSIC", path: "/preparacao-brhsic" },
     { label: "Exercícios", path: "/exercicios" },
-    { label: "Cronograma", path: "/cronograma" },
     { label: "Sobre", path: "/sobre" },
   ];
 
@@ -718,22 +717,14 @@ function Navbar() {
               </a>
             </div>
 
-            {/* Grupo 2: Ferramentas & Prática */}
+            {/* Grupo 2: Prática & Desafios */}
             <div className="bfa-mobile-nav-group">
-              <div className="bfa-mobile-nav-grouptitle">PRÁTICA & FERRAMENTAS</div>
+              <div className="bfa-mobile-nav-grouptitle">PRÁTICA & DESAFIOS</div>
               <a href="#/exercicios" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
                 <BfaIcon name="edit" size={18} color="var(--track-math)" />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Banco de Exercícios</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Fixação de conceitos, fórmulas e problemas resolvidos</div>
-                </div>
-                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
-              </a>
-              <a href="#/cronograma" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
-                <BfaIcon name="calendar" size={18} color="var(--track-finance)" />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Cronograma de Estudos</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Planejamento de ritmo semanal até sua meta</div>
                 </div>
                 <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
               </a>
@@ -810,10 +801,10 @@ function Footer() {
           </div>
 
           <div>
-            <h4 style={{ fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--foreground)' }}>Ferramentas & Prática</h4>
+            <h4 style={{ fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--foreground)' }}>Prática & Institucional</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem' }}>
-              <li><a href="#/cronograma" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Cronograma de Estudos</a></li>
               <li><a href="#/exercicios" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Exercícios & Casos</a></li>
+              <li><a href="#/conquistas" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Conquistas & Badges</a></li>
               <li><a href="#/sobre" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Sobre o Projeto</a></li>
             </ul>
           </div>

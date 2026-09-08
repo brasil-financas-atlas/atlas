@@ -244,40 +244,40 @@ function Home() {
 
             <div className="tool-card bfa-bento-card" style={{ padding: '1.75rem' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 800, color: 'var(--track-finance)', marginBottom: '0.5rem' }}>
-                02 // METAS
-              </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Cronograma de Estudos</h4>
-              <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
-                Defina sua data limite de prova ou competição e calcule quantas aulas fazer por dia.
-              </p>
-              <a href="#/cronograma" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--track-finance)' }}>
-                Calcular Ritmo →
-              </a>
-            </div>
-
-            <div className="tool-card bfa-bento-card" style={{ padding: '1.75rem' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 800, color: 'var(--gold-deep)', marginBottom: '0.5rem' }}>
-                03 // OLIMPÍADA
+                02 // OLIMPÍADA
               </div>
               <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Preparação BRHSIC</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
                 Metodologia completa de Equity Research, valuation por fluxo de caixa e pitch.
               </p>
-              <a href="#/preparacao-brhsic" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--gold-deep)' }}>
+              <a href="#/preparacao-brhsic" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--track-finance)' }}>
                 Acessar Guia →
               </a>
             </div>
 
             <div className="tool-card bfa-bento-card" style={{ padding: '1.75rem' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.5rem' }}>
-                04 // CONQUISTAS
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 800, color: 'var(--gold-deep)', marginBottom: '0.5rem' }}>
+                03 // CONQUISTAS
               </div>
               <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Badges & Conquistas</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
                 Acompanhe o desbloqueio de medalhas conforme avança pelas 55 aulas publicadas.
               </p>
-              <a href="#/conquistas" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--foreground)' }}>
+              <a href="#/conquistas" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--gold-deep)' }}>
                 Ver Conquistas →
+              </a>
+            </div>
+
+            <div className="tool-card bfa-bento-card" style={{ padding: '1.75rem' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.5rem' }}>
+                04 // INSTITUCIONAL
+              </div>
+              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Sobre o Projeto BFA</h4>
+              <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
+                Conheça os princípios de excelência, rigor matemático e gratuidade da plataforma.
+              </p>
+              <a href="#/sobre" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                Conhecer o BFA →
               </a>
             </div>
           </div>
