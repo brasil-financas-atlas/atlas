@@ -70,8 +70,6 @@ function Navbar() {
     { label: "Matemática", path: "/matematica" },
     { label: "Finanças", path: "/financas" },
     { label: "Preparação BRHSIC", path: "/preparacao-brhsic" },
-    { label: "Calculadora", path: "/calculadora-juros-compostos" },
-    { label: "Simulados", path: "/simulados" },
     { label: "Exercícios", path: "/exercicios" },
     { label: "Sobre", path: "/sobre" },
   ];
@@ -719,30 +717,22 @@ function Navbar() {
               </a>
             </div>
 
-            {/* Grupo 2: Ferramentas */}
+            {/* Grupo 2: Prática & Desafios */}
             <div className="bfa-mobile-nav-group">
-              <div className="bfa-mobile-nav-grouptitle">FERRAMENTAS & TREINAMENTO</div>
-              <a href="#/calculadora-juros-compostos" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
-                <BfaIcon name="calculator" size={18} color="var(--track-finance)" />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Calculadora de Juros Compostos</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Projeções com aportes mensais e inflação</div>
-                </div>
-                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
-              </a>
-              <a href="#/simulados" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
-                <BfaIcon name="timer" size={18} color="var(--track-math)" />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Simulados Cronometrados</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Provas reais com gabarito passo a passo</div>
-                </div>
-                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
-              </a>
+              <div className="bfa-mobile-nav-grouptitle">PRÁTICA & DESAFIOS</div>
               <a href="#/exercicios" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
-                <BfaIcon name="edit" size={18} color="var(--track-brhsic)" />
+                <BfaIcon name="edit" size={18} color="var(--track-math)" />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Banco de Exercícios</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Questões de fixação comentadas</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Fixação de conceitos, fórmulas e problemas resolvidos</div>
+                </div>
+                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
+              </a>
+              <a href="#/conquistas" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                <BfaIcon name="trophy" size={18} color="var(--gold-deep)" />
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Conquistas & Progresso</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Acompanhe medalhas e badges de evolução</div>
                 </div>
                 <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
               </a>
@@ -753,12 +743,12 @@ function Navbar() {
               <div className="bfa-mobile-nav-grouptitle">INSTITUCIONAL</div>
               <a href="#/sobre" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
                 <BfaIcon name="institution" size={18} color="var(--color-azul)" />
-                <div style={{ flex: 1, fontWeight: 700, color: 'var(--foreground)' }}>Sobre o Atlas & NIF</div>
+                <div style={{ flex: 1, fontWeight: 700, color: 'var(--foreground)' }}>Sobre o Atlas & Metodologia</div>
                 <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
               </a>
-              <a href="#/cronograma" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
-                <BfaIcon name="calendar" size={18} color="var(--track-finance)" />
-                <div style={{ flex: 1, fontWeight: 700, color: 'var(--foreground)' }}>Cronograma de Estudos</div>
+              <a href="#/noticias" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                <BfaIcon name="newspaper" size={18} color="var(--track-finance)" />
+                <div style={{ flex: 1, fontWeight: 700, color: 'var(--foreground)' }}>Notícias & Macroeconomia</div>
                 <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
               </a>
             </div>
@@ -811,10 +801,10 @@ function Footer() {
           </div>
 
           <div>
-            <h4 style={{ fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--foreground)' }}>Ferramentas</h4>
+            <h4 style={{ fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--foreground)' }}>Prática & Institucional</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem' }}>
-              <li><a href="#/cronograma" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Simulador & Cronograma</a></li>
               <li><a href="#/exercicios" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Exercícios & Casos</a></li>
+              <li><a href="#/conquistas" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Conquistas & Badges</a></li>
               <li><a href="#/sobre" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Sobre o Projeto</a></li>
             </ul>
           </div>

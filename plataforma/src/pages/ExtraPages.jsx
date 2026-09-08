@@ -67,45 +67,45 @@ function BrhsicPage() {
         </div>
       </section>
 
-      {/* ── Laboratórios Interativos da Olimpíada ───────────────────────── */}
+      {/* ── Trilhas de Estudo Fundamentais para a Olimpíada ───────────── */}
       <section className="bfa-container" style={{ padding: '3.5rem 1.5rem 1rem 1.5rem' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
           
-          {/* Card 1: Simulador de Carteira */}
-          <div className="bfa-tech-card card-lift" style={{ border: '1px solid rgba(251, 191, 36, 0.35)', background: 'linear-gradient(180deg, var(--card) 0%, rgba(251, 191, 36, 0.04) 100%)', padding: '2rem' }}>
+          {/* Card 1: Trilha de Matemática */}
+          <div className="bfa-tech-card card-lift" style={{ border: '1px solid rgba(37, 99, 235, 0.35)', background: 'linear-gradient(180deg, var(--card) 0%, rgba(37, 99, 235, 0.04) 100%)', padding: '2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <span className="mono-tag" style={{ color: '#FBBF24', background: 'rgba(251, 191, 36, 0.15)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800 }}>
-                FERRAMENTA INTERATIVA
+              <span className="mono-tag" style={{ color: 'var(--track-math)', background: 'rgba(37, 99, 235, 0.15)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800 }}>
+                TRILHA 01 · BASE QUANTITATIVA
               </span>
-              <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>Cálculo Exato</span>
+              <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>29 Aulas</span>
             </div>
             <h3 style={{ fontSize: '1.45rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em', marginBottom: '0.65rem' }}>
-              Calculadora de Juros Compostos
+              Matemática Financeira & Modelagem
             </h3>
             <p style={{ color: 'var(--muted-foreground)', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '1.75rem' }}>
-              Simule o efeito dos juros compostos com aportes mensais, cálculo de rentabilidade real descontando a inflação e comparativo direto contra juros simples.
+              Domine os fundamentos matemáticos exigidos na competição: regimes de capitalização, taxas equivalentes compostas, taxa real de Fisher e tabelas de amortização.
             </p>
-            <a href="#/calculadora-juros-compostos" className="bfa-btn bfa-btn--primary-solid" style={{ width: '100%', justifyContent: 'center', padding: '0.85rem 1.25rem', fontSize: '0.95rem', background: '#D97706', borderColor: '#D97706' }}>
-              Abrir Calculadora →
+            <a href="#/matematica" className="bfa-btn bfa-btn--azul" style={{ width: '100%', justifyContent: 'center', padding: '0.85rem 1.25rem', fontSize: '0.95rem' }}>
+              Acessar Aulas de Matemática →
             </a>
           </div>
 
-          {/* Card 2: Simulados Oficiais */}
-          <div className="bfa-tech-card card-lift" style={{ border: '1px solid rgba(52, 211, 153, 0.35)', background: 'linear-gradient(180deg, var(--card) 0%, rgba(52, 211, 153, 0.04) 100%)', padding: '2rem' }}>
+          {/* Card 2: Trilha de Finanças */}
+          <div className="bfa-tech-card card-lift" style={{ border: '1px solid rgba(5, 150, 105, 0.35)', background: 'linear-gradient(180deg, var(--card) 0%, rgba(5, 150, 105, 0.04) 100%)', padding: '2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800 }}>
-                TREINAMENTO CRONOMETRADO
+              <span className="mono-tag" style={{ color: 'var(--track-finance)', background: 'rgba(5, 150, 105, 0.15)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800 }}>
+                TRILHA 02 · MERCADO DE CAPITAIS
               </span>
-              <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>3 Níveis de Prova</span>
+              <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>26 Aulas</span>
             </div>
             <h3 style={{ fontSize: '1.45rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em', marginBottom: '0.65rem' }}>
-              Simulados Oficiais BRHSIC
+              Finanças & Análise de Empresas
             </h3>
             <p style={{ color: 'var(--muted-foreground)', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '1.75rem' }}>
-              Treine para a prova oficial com cronômetro regressivo, 4 opções por questão, cálculo instantâneo de pontuação e gabarito detalhado passo a passo.
+              Aprenda a analisar demonstrativos contábeis reais (DRE, Balanço, Fluxo de Caixa), múltiplos setoriais e dinâmicas de mercado para fundamentar sua tese.
             </p>
-            <a href="#/simulados" className="bfa-btn bfa-btn--primary-solid" style={{ width: '100%', justifyContent: 'center', padding: '0.85rem 1.25rem', fontSize: '0.95rem', background: '#059669', borderColor: '#059669' }}>
-              Iniciar Simulado com Timer →
+            <a href="#/financas" className="bfa-btn bfa-btn--verde" style={{ width: '100%', justifyContent: 'center', padding: '0.85rem 1.25rem', fontSize: '0.95rem' }}>
+              Acessar Aulas de Finanças →
             </a>
           </div>
 

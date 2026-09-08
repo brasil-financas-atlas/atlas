@@ -43,46 +43,35 @@ function App() {
       return <BrhsicPage />;
     }
 
-    if (currentPath === '/simulador-carteira' || currentPath === '/simulador') {
+    if (
+      currentPath === '/simulador-carteira' ||
+      currentPath === '/simulador' ||
+      currentPath === '/simulados' ||
+      currentPath === '/calculadora-juros-compostos' ||
+      currentPath === '/calculadora' ||
+      currentPath === '/cronograma'
+    ) {
       return (
-        <div>
-          <section className="hero-gradient" style={{ padding: '4rem 0 3rem 0', position: 'relative' }}>
-            <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.4 }} />
-            <div className="bfa-container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
-              <span className="mono-tag" style={{ color: '#FBBF24', background: 'rgba(251, 191, 36, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(251, 191, 36, 0.35)', fontWeight: 800 }}>
-                OLIMPÍADA DE FINANÇAS · BRHSIC
-              </span>
-              <h1 className="headline-punch" style={{ fontSize: '2.75rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.75rem', letterSpacing: '-0.03em' }}>
-                Simulador de Alocação de Carteira
-              </h1>
-              <p style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.85)', marginTop: '0.5rem', maxWidth: '720px', margin: '0.5rem auto 0 auto' }}>
-                Modele aportes, balanceamento entre 6 classes de ativos do mercado brasileiro, projeção de renda passiva mensal e cálculo de Sharpe da carteira.
-              </p>
+        <div className="bfa-section" style={{ minHeight: '60vh', display: 'flex', alignItems: 'center' }}>
+          <div className="bfa-section__container bfa-text-center" style={{ maxWidth: '640px', margin: '3rem auto', padding: '3rem 2rem', background: 'var(--card)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+            <span className="mono-tag" style={{ color: 'var(--gold-deep)', background: 'rgba(217, 119, 6, 0.1)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', fontWeight: 800 }}>
+              EM DESENVOLVIMENTO
+            </span>
+            <h2 className="headline-punch" style={{ fontSize: '2.1rem', fontWeight: 800, marginTop: '1rem', color: 'var(--foreground)', letterSpacing: '-0.02em' }}>
+              Ferramenta em Fase de Calibração
+            </h2>
+            <p style={{ color: 'var(--muted-foreground)', fontSize: '0.95rem', lineHeight: 1.6, marginTop: '0.75rem', marginBottom: '2rem' }}>
+              Este recurso interativo está passando por calibração de modelos e será disponibilizado nas próximas atualizações da plataforma.
+            </p>
+            <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <a href="#/" className="bfa-btn bfa-btn--primary-solid" style={{ padding: '0.75rem 1.5rem', fontSize: '0.9rem' }}>
+                Página Inicial →
+              </a>
+              <a href="#/exercicios" className="bfa-btn bfa-btn--secondary-glass" style={{ padding: '0.75rem 1.5rem', fontSize: '0.9rem' }}>
+                Ver Banco de Exercícios →
+              </a>
             </div>
-          </section>
-          <SimuladorCarteiraInvestimentos />
-        </div>
-      );
-    }
-
-    if (currentPath === '/simulados') {
-      return (
-        <div>
-          <section className="hero-gradient" style={{ padding: '4rem 0 3rem 0', position: 'relative' }}>
-            <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.4 }} />
-            <div className="bfa-container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
-              <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(52, 211, 153, 0.35)', fontWeight: 800 }}>
-                TREINAMENTO OFICIAL DE PROVAS
-              </span>
-              <h1 className="headline-punch" style={{ fontSize: '2.75rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.75rem', letterSpacing: '-0.03em' }}>
-                Simulados com Cronômetro BRHSIC
-              </h1>
-              <p style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.85)', marginTop: '0.5rem', maxWidth: '720px', margin: '0.5rem auto 0 auto' }}>
-                Resolva baterias de questões cronometradas por fase (Nível 1, Fase Final e Prova Geral) com pontuação instantânea e gabarito passo a passo.
-              </p>
-            </div>
-          </section>
-          <SimuladosEngine />
+          </div>
         </div>
       );
     }
@@ -103,36 +92,8 @@ function App() {
       return <Noticias />;
     }
 
-    if (currentPath === '/cronograma') {
-      return <Cronograma />;
-    }
-
     if (currentPath === '/sobre') {
       return <Sobre />;
-    }
-
-    if (currentPath === '/calculadora-juros-compostos' || currentPath === '/calculadora') {
-      return (
-        <div>
-          <section className="hero-gradient" style={{ padding: '4rem 0 3rem 0', position: 'relative' }}>
-            <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.4 }} />
-            <div className="bfa-container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
-              <span className="mono-tag" style={{ color: '#10B981', background: 'rgba(16, 185, 129, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(16, 185, 129, 0.35)', fontWeight: 800 }}>
-                FERRAMENTA INTERATIVA
-              </span>
-              <h1 className="headline-punch" style={{ fontSize: '2.75rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.75rem', letterSpacing: '-0.03em' }}>
-                Calculadora de Juros Compostos
-              </h1>
-              <p style={{ fontSize: '1.05rem', color: 'rgba(255, 255, 255, 0.85)', marginTop: '0.5rem', maxWidth: '720px', margin: '0.5rem auto 0 auto' }}>
-                Modele o acúmulo de capital ao longo do tempo, compare juros simples vs. compostos e calcule o impacto de aportes mensais com inflação.
-              </p>
-            </div>
-          </section>
-          <div className="bfa-container" style={{ padding: '3rem 1.5rem' }}>
-            <CalculadoraJurosCompostos />
-          </div>
-        </div>
-      );
     }
 
     if (currentPath === '/login' || currentPath === '/auth' || currentPath === '/perfil' || currentPath === '/minha-conta') {

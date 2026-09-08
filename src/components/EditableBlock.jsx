@@ -87,6 +87,49 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
               Modifique o trecho abaixo. Suporta texto simples, Markdown ou fórmulas LaTeX (entre <code>$$...$$</code> ou <code>$...$</code>).
             </p>
 
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                className="bfa-btn bfa-btn--ghost bfa-btn--sm"
+                onClick={() => setEditorText((prev) => prev + '\n\n$$ f(x) = a \\cdot x^2 + b \\cdot x + c $$\n')}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+              >
+                + Fórmula LaTeX
+              </button>
+              <button
+                type="button"
+                className="bfa-btn bfa-btn--ghost bfa-btn--sm"
+                onClick={() => setEditorText((prev) => prev + '\n\n```tikz\n\\begin{tikzpicture}\n  \\draw[thick, ->] (0,0) -- (4,0) node[right] {Tempo};\n  \\draw[thick, ->] (0,0) -- (0,3) node[above] {Montante};\n  \\draw[domain=0:3.5, smooth, variable=\\x, blue, thick] plot ({\\x}, {0.4*exp(0.6*\\x)});\n\\end{tikzpicture}\n```\n')}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+              >
+                + Diagrama TikZ
+              </button>
+              <button
+                type="button"
+                className="bfa-btn bfa-btn--ghost bfa-btn--sm"
+                onClick={() => setEditorText((prev) => prev + '\n\n![Legenda ilustrativa](https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&auto=format&fit=crop)\n')}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+              >
+                + Inserir Imagem
+              </button>
+              <button
+                type="button"
+                className="bfa-btn bfa-btn--ghost bfa-btn--sm"
+                onClick={() => setEditorText((prev) => prev + '\n\n!!! tip "Conceito Chave"\nExplicação aprofundada do tópico para os estudantes.\n')}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+              >
+                + Caixa Dica
+              </button>
+              <button
+                type="button"
+                className="bfa-btn bfa-btn--ghost bfa-btn--sm"
+                onClick={() => setEditorText((prev) => prev + '\n\n!!! warning "Atenção Prática"\nPonto de cautela e armadilhas comuns no mercado financeiro.\n')}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+              >
+                + Caixa Atenção
+              </button>
+            </div>
+
             <textarea
               rows="8"
               value={editorText}

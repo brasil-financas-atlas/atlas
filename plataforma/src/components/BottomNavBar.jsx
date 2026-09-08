@@ -24,28 +24,28 @@ function BottomNavBar() {
 
   const toolsList = [
     {
-      title: 'Calculadora de Juros Compostos',
-      desc: 'Simule investimentos periódicos, prazos e rentabilidade real',
-      iconName: 'calculator',
-      path: '/calculadora-juros-compostos'
-    },
-    {
-      title: 'Simulados & Provas Interativas',
-      desc: 'Teste seu conhecimento com questões cronometradas',
-      iconName: 'timer',
-      path: '/simulados'
-    },
-    {
       title: 'Banco de Exercícios',
-      desc: 'Fixação de conceitos, fórmulas e problemas resolvidos',
+      desc: 'Fixação de conceitos, fórmulas e problemas com gabarito',
       iconName: 'edit',
       path: '/exercicios'
     },
     {
-      title: 'Cronograma de Estudos',
-      desc: 'Roteiro de estudos semanais do básico ao avançado',
-      iconName: 'calendar',
-      path: '/cronograma'
+      title: 'Guia Olímpico BRHSIC',
+      desc: 'Metodologia de análise, valuation DCF e pitch de ações',
+      iconName: 'trophy',
+      path: '/preparacao-brhsic'
+    },
+    {
+      title: 'Conquistas & Badges',
+      desc: 'Acompanhe seu avanço em 55 aulas com medalhas',
+      iconName: 'award',
+      path: '/conquistas'
+    },
+    {
+      title: 'Sobre o Projeto BFA',
+      desc: 'Nossa missão, metodologia e material 100% gratuito',
+      iconName: 'institution',
+      path: '/sobre'
     }
   ];
 

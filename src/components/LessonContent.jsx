@@ -110,6 +110,13 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       return `\n\n@@BFAMERMAID_${mermaidBlocks.length - 1}@@\n\n`;
     });
 
+    // 1.5 Interceptar blocos ```tikz ... ```
+    const tikzBlocks = [];
+    formatted = formatted.replace(/```tikz\s*\n([\s\S]*?)```/g, (m, code) => {
+      tikzBlocks.push(code.trim());
+      return `\n\n@@BFATIKZ_${tikzBlocks.length - 1}@@\n\n`;
+    });
+
     // 2. Render Admonitions (!!!)
     formatted = formatted.replace(
       /!!!\s*(\w+)(?:\s*"([^"]+)")?\n([\s\S]*?)(?=\n!!!|\n\?\?\?|\n#|\n\n\n|$)/g,
@@ -202,8 +209,8 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     // Sanitização com DOMPurify
     if (window.DOMPurify && window.DOMPurify.sanitize) {
       parsedHtml = window.DOMPurify.sanitize(parsedHtml, {
-        ADD_TAGS: ['details', 'summary', 'svg', 'path', 'line', 'circle', 'polygon', 'polyline', 'g', 'rect', 'text', 'tspan', 'defs', 'marker', 'use'],
-        ADD_ATTR: ['open', 'target', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'data-mermaid-code', 'data-processed', 'class', 'style', 'id', 'x', 'y', 'dx', 'dy', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'width', 'height', 'text-anchor', 'transform', 'marker-end', 'marker-start']
+        ADD_TAGS: ['details', 'summary', 'svg', 'path', 'line', 'circle', 'polygon', 'polyline', 'g', 'rect', 'text', 'tspan', 'defs', 'marker', 'use', 'script', 'img', 'figure', 'figcaption'],
+        ADD_ATTR: ['open', 'target', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'data-mermaid-code', 'data-processed', 'class', 'style', 'id', 'x', 'y', 'dx', 'dy', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'width', 'height', 'text-anchor', 'transform', 'marker-end', 'marker-start', 'type', 'src', 'alt', 'loading']
       });
     }
 
@@ -223,9 +230,22 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       return `<div class="mermaid-wrapper"><div class="mermaid-target" data-mermaid-code="${encoded}"></div></div>`;
     });
 
+    // 6.5 Limpar wrappers de parágrafo ao redor de TikZ e recolocar
+    parsedHtml = parsedHtml.replace(/<p>\s*@@BFATIKZ_(\d+)@@\s*<\/p>/g, '@@BFATIKZ_$1@@');
+    parsedHtml = parsedHtml.replace(/@@BFATIKZ_(\d+)@@/g, (marcador, i) => {
+      const code = tikzBlocks[Number(i)];
+      if (!code) return marcador;
+      return `<div class="bfa-tikz-wrapper" style="margin: 1.5rem 0; text-align: center; overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem;"><script type="text/tikz">${code}</script></div>`;
+    });
+
     // 7. Envolver tabelas com wrapper executivo centralizado e destacado
     parsedHtml = parsedHtml.replace(/<table(\s*[^>]*)>([\s\S]*?)<\/table>/gi, (match, attrs, content) => {
       return `<div class="bfa-table-wrapper"><table${attrs}>${content}</table></div>`;
+    });
+
+    // 8. Otimizar e envolver imagens com container responsivo
+    parsedHtml = parsedHtml.replace(/<img\s+([^>]*?)src="([^"]+)"([^>]*?)>/gi, (match, pre, src, post) => {
+      return `<div class="bfa-image-container" style="text-align: center; margin: 1.5rem 0;"><img class="bfa-lesson-img" src="${src}" ${pre} ${post} style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);" loading="lazy" /></div>`;
     });
 
     return parsedHtml;
