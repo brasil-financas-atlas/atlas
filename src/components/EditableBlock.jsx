@@ -19,7 +19,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
   const [editorText, setEditorText] = useState(currentText);
   const [viewMode, setViewMode] = useState('split'); // 'split', 'editor', 'preview'
   const [showLatexGuide, setShowLatexGuide] = useState(false);
-  const [activeWizard, setActiveWizard] = useState(null); // null, 'gabarito', 'tabela', 'admonition', 'fracao', 'potencia', 'katex', 'mermaid', 'video', 'imagem', 'tikz'
+  const [activeWizard, setActiveWizard] = useState(null); // null, 'gabarito', 'tabela', 'admonition', 'katex', 'fracao', 'potencia', 'mermaid', 'imagem'
   const [wizardInputs, setWizardInputs] = useState({});
 
   const textareaRef = useRef(null);
@@ -98,13 +98,13 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
       
       let corpo = '';
       if (modelo === 'passo') {
-        corpo = `    **Passo 1:** Calcule o valor inicial aplicando a fórmula correspondente: $200 \\times 0{,}05 = 10$.\n    **Passo 2:** Some ao montante principal: $500 + 10 = \\mathbf{510}$.\n    **Conclusão:** O resultado final obtido é **R$ 510,00**.`;
+        corpo = `    **Passo 1:** Calcule o valor inicial aplicando a fórmula correspondente: $200 \\times 0{,}05 = 10$.\n    **Passo 2:** Some ao montante principal: $500 + 10 = \\mathbf{510}$.\n    **Conclusão / Sobra:** Carlos fecha o mês com saldo de **R$ 510,00**.`;
       } else if (modelo === 'questoes') {
-        corpo = `    **1.** Primeiro a multiplicação: $200 \\times 0{,}05 = 10$. Depois a soma: $500 + 10 = \\mathbf{510}$.\n\n    **2.** Parênteses primeiro: $800 - 300 = 500$. Depois: $500 \\div 4 = \\mathbf{125}$.\n\n    **3.** $-450 + 200 + 150 = \\mathbf{-100}$ (dívida remanescente).`;
+        corpo = `    **1.** Primeiro a multiplicação: $200 \\times 0{,}05 = 10$. Depois a soma: $500 + 10 = \\mathbf{510}$.\n\n    **2.** Parênteses primeiro: $800 - 300 = 500$. Depois: $500 \\div 4 = \\mathbf{125}$.\n\n    **3.** $-450 + 200 + 150 = \\mathbf{-100}$ (dívida remanescente).\n\n    **4.** Mês: $15 \\times 22 = \\mathbf{330}$ reais. Ano: $330 \\times 12 = \\mathbf{3.960}$ reais.`;
       } else if (modelo === 'insight') {
-        corpo = `    **Resposta:** Opção B.\n\n    **Explicação detalhada:** O corte de gastos supérfluos pela metade permitiu atingir a meta em 5 meses em vez de 9 meses, reduzindo o prazo quase pela metade através do efeito da divisão.`;
+        corpo = `    **Resposta:** Opção B.\n\n    **Explicação detalhada:** Cortando o gasto pela metade, atinge a meta em 5 meses em vez de 9 meses. A divisão revela o impacto das taxas no tempo.`;
       } else if (modelo === 'custom') {
-        const rawCustom = wizardInputs.gabaritoCustomText || 'Insira a explicação detalhada do gabarito aqui.';
+        const rawCustom = wizardInputs.gabaritoCustomText || 'Passo 1: ...\nPasso 2: ...\nExplicação detalhada: ...';
         corpo = rawCustom.split('\n').map(line => '    ' + line).join('\n');
       }
 
@@ -136,14 +136,6 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
       const rawCorpo = wizardInputs.corpo || 'Explicação aprofundada do conceito para os estudantes.';
       const corpoIndented = rawCorpo.split('\n').map(line => '    ' + line).join('\n');
       insertAtCursor(`\n\n!!! ${tipo} "${titulo}"\n${corpoIndented}\n\n`);
-    } else if (activeWizard === 'fracao') {
-      const num = wizardInputs.num || 'a';
-      const den = wizardInputs.den || 'b';
-      insertAtCursor(` $\\frac{${num}}{${den}}$ `);
-    } else if (activeWizard === 'potencia') {
-      const base = wizardInputs.base || '(1 + i)';
-      const exp = wizardInputs.exp || 't';
-      insertAtCursor(` $${base}^{${exp}}$ `);
     } else if (activeWizard === 'katex') {
       const formulaTipo = wizardInputs.formulaTipo || 'vpl';
       if (formulaTipo === 'vpl') {
@@ -163,6 +155,14 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
       } else if (formulaTipo === 'moeda') {
         insertAtCursor(` $\\text{R\\$ } 1.000,00$ `);
       }
+    } else if (activeWizard === 'fracao') {
+      const num = wizardInputs.num || 'a';
+      const den = wizardInputs.den || 'b';
+      insertAtCursor(` $\\frac{${num}}{${den}}$ `);
+    } else if (activeWizard === 'potencia') {
+      const base = wizardInputs.base || '(1 + i)';
+      const exp = wizardInputs.exp || 't';
+      insertAtCursor(` $${base}^{${exp}}$ `);
     } else if (activeWizard === 'mermaid') {
       const tipoMermaid = wizardInputs.mermaidTipo || 'fluxo_decisao';
       if (tipoMermaid === 'fluxo_decisao') {
@@ -172,23 +172,10 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
       } else if (tipoMermaid === 'arvore_ativos') {
         insertAtCursor(`\n\n\`\`\`mermaid\nflowchart TD\n  Carteira[Carteira BFA] --> RF[Renda Fixa 70%]\n  Carteira --> RV[Renda Variável 30%]\n  RF --> Selic[Tesouro Selic]\n  RF --> IPCA[Tesouro IPCA+]\n  RV --> Acoes[Ações Dividendos]\n  RV --> FII[Fundos Imobiliários]\n\`\`\`\n\n`);
       }
-    } else if (activeWizard === 'video') {
-      const rawUrl = wizardInputs.videoUrl || '';
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      const match = rawUrl.match(regExp);
-      const ytId = match && match[2].length === 11 ? match[2] : 'dQw4w9WgXcQ';
-      insertAtCursor(`\n\nhttps://www.youtube.com/watch?v=${ytId}\n\n`);
     } else if (activeWizard === 'imagem') {
       const url = wizardInputs.url || 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800';
       const alt = wizardInputs.alt || 'Gráfico Ilustrativo';
       insertAtCursor(`\n\n![${alt}](${url})\n`);
-    } else if (activeWizard === 'tikz') {
-      const template = wizardInputs.template || 'eixos';
-      if (template === 'eixos') {
-        insertAtCursor(`\n\n\`\`\`tikz\n\\begin{tikzpicture}\n  \\draw[thick, ->] (0,0) -- (5,0) node[right] {Tempo ($t$)};\n  \\draw[thick, ->] (0,0) -- (0,4) node[above] {Montante ($M$)};\n  \\draw[domain=0:4, smooth, variable=\\x, blue, thick] plot ({\\x}, {0.35*exp(0.58*\\x)});\n  \\node[blue, right] at (4, 3.6) {$M = C(1+i)^t$};\n\\end{tikzpicture}\n\`\`\`\n\n`);
-      } else if (template === 'arvore') {
-        insertAtCursor(`\n\n\`\`\`tikz\n\\begin{tikzpicture}[level 1/.style={sibling distance=3.5cm}, level 2/.style={sibling distance=2cm}]\n  \\node {Decisão de Alocação}\n    child { node {Renda Fixa} child { node {Selic} } child { node {IPCA+} } }\n    child { node {Renda Variável} child { node {Ações} } child { node {FIIs} } };\n\\end{tikzpicture}\n\`\`\`\n\n`);
-      }
     }
     setActiveWizard(null);
     setWizardInputs({});
@@ -205,13 +192,6 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
     formatted = formatted.replace(/```mermaid\s*\n([\s\S]*?)```/g, (m, code) => {
       mermaidBlocks.push(code.trim());
       return `\n\n@@BFAMERMAID_${mermaidBlocks.length - 1}@@\n\n`;
-    });
-
-    // 1.5 Interceptar TikZ
-    const tikzBlocks = [];
-    formatted = formatted.replace(/```tikz\s*\n([\s\S]*?)```/g, (m, code) => {
-      tikzBlocks.push(code.trim());
-      return `\n\n@@BFATIKZ_${tikzBlocks.length - 1}@@\n\n`;
     });
 
     // 2. Salvar fórmulas KaTeX antes de parsear markdown
@@ -307,11 +287,6 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
     let parsed = (window.marked && window.marked.parse) ? window.marked.parse(formatted) : formatted;
 
-    // 5. Converter URLs do YouTube em iframes responsivos
-    parsed = parsed.replace(/(?:<p>)?(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})(?:[^\s<]*)(?:<\/p>)?/g, (match, ytId) => {
-      return `<div class="bfa-video-responsive" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:1.5rem 0;background:#000;"><iframe src="https://www.youtube.com/embed/${ytId}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
-    });
-
     // Sanitização com DOMPurify
     if (window.DOMPurify && window.DOMPurify.sanitize) {
       parsed = window.DOMPurify.sanitize(parsed, {
@@ -337,13 +312,6 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
         }
       }
       return f.tex;
-    });
-
-    // Recolocar TikZ
-    parsed = parsed.replace(/@@BFATIKZ_(\d+)@@/g, (marcador, i) => {
-      const code = tikzBlocks[Number(i)];
-      if (!code) return marcador;
-      return `<div style="padding:1rem;background:var(--secondary);border:1px solid var(--border);border-radius:6px;margin:1rem 0;font-family:monospace;font-size:0.85rem;"><span class="bfa-badge bfa-badge--ouro" style="margin-bottom:0.5rem;display:inline-block;">Diagrama TikZ Compilável</span><pre style="margin:0;white-space:pre-wrap;">${code}</pre></div>`;
     });
 
     // Recolocar Mermaid
@@ -570,7 +538,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                 type="button"
                 className={`bfa-btn bfa-btn--sm ${activeWizard === 'gabarito' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
                 onClick={() => setActiveWizard(activeWizard === 'gabarito' ? null : 'gabarito')}
-                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', fontWeight: 700 }}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.55rem', fontWeight: 800 }}
               >
                 + Gabarito Oculto
               </button>
@@ -578,7 +546,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                 type="button"
                 className={`bfa-btn bfa-btn--sm ${activeWizard === 'tabela' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
                 onClick={() => setActiveWizard(activeWizard === 'tabela' ? null : 'tabela')}
-                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', fontWeight: 700 }}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.55rem', fontWeight: 800 }}
               >
                 + Tabela
               </button>
@@ -586,7 +554,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                 type="button"
                 className={`bfa-btn bfa-btn--sm ${activeWizard === 'admonition' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
                 onClick={() => setActiveWizard(activeWizard === 'admonition' ? null : 'admonition')}
-                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', fontWeight: 700 }}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.55rem', fontWeight: 700 }}
               >
                 + Caixa Destaque
               </button>
@@ -624,27 +592,11 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
               </button>
               <button
                 type="button"
-                className={`bfa-btn bfa-btn--sm ${activeWizard === 'video' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
-                onClick={() => setActiveWizard(activeWizard === 'video' ? null : 'video')}
-                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
-              >
-                + Vídeo YouTube
-              </button>
-              <button
-                type="button"
                 className={`bfa-btn bfa-btn--sm ${activeWizard === 'imagem' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
                 onClick={() => setActiveWizard(activeWizard === 'imagem' ? null : 'imagem')}
                 style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
               >
                 + Imagem
-              </button>
-              <button
-                type="button"
-                className={`bfa-btn bfa-btn--sm ${activeWizard === 'tikz' ? 'bfa-btn--verde' : 'bfa-btn--ghost'}`}
-                onClick={() => setActiveWizard(activeWizard === 'tikz' ? null : 'tikz')}
-                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
-              >
-                + Gráfico TikZ
               </button>
             </div>
 
@@ -653,30 +605,30 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
               <div style={{ background: 'var(--secondary)', border: '1px solid var(--border)', borderRadius: '8px', padding: '0.75rem 1rem', marginBottom: '0.75rem', display: 'flex', gap: '0.65rem', alignItems: 'center', flexWrap: 'wrap' }}>
                 {activeWizard === 'gabarito' && (
                   <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Gabarito Oculto:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Inserir Gabarito Oculto:</span>
                     <input
                       type="text"
-                      placeholder="Título (ex: Gabarito com resolução)"
+                      placeholder="Título do Gabarito (ex: Gabarito com resolução)"
                       value={wizardInputs.gabaritoTitulo || 'Gabarito com resolução'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, gabaritoTitulo: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '200px' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '220px' }}
                     />
                     <select
                       value={wizardInputs.gabaritoModelo || 'passo'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, gabaritoModelo: e.target.value })}
                       style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem' }}
                     >
-                      <option value="passo">Passo a Passo Detalhado (Passo 1, Passo 2, Conclusão)</option>
-                      <option value="questoes">Lista de Questões Numeradas (1, 2, 3)</option>
-                      <option value="insight">Resposta com Explicação e Insight</option>
-                      <option value="custom">Escrever Texto Personalizado</option>
+                      <option value="passo">Passo a Passo Detalhado (Passo 1, Passo 2, Conclusão/Sobra)</option>
+                      <option value="questoes">Lista de Questões Numeradas (1, 2, 3, 4)</option>
+                      <option value="insight">Resposta com Explicação Conceitual e Insight</option>
+                      <option value="custom">Texto Livre Personalizado</option>
                     </select>
                     {wizardInputs.gabaritoModelo === 'custom' && (
                       <textarea
-                        placeholder="Digite o texto da explicação aqui..."
+                        placeholder="Digite o texto da explicação ou gabarito (todas as linhas serão indentadas automaticamente)..."
                         value={wizardInputs.gabaritoCustomText || ''}
                         onChange={(e) => setWizardInputs({ ...wizardInputs, gabaritoCustomText: e.target.value })}
-                        style={{ width: '100%', minHeight: '60px', padding: '0.4rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}
+                        style={{ width: '100%', minHeight: '65px', padding: '0.4rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}
                       />
                     )}
                   </>
@@ -684,7 +636,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
                 {activeWizard === 'tabela' && (
                   <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Modelo de Tabela:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Modelo de Tabela:</span>
                     <select
                       value={wizardInputs.tabelaTipo || 'comparativa'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, tabelaTipo: e.target.value })}
@@ -711,7 +663,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
                 {activeWizard === 'admonition' && (
                   <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Caixa Pedagógica:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Caixa Pedagógica:</span>
                     <select
                       value={wizardInputs.tipo || 'tip'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, tipo: e.target.value })}
@@ -746,7 +698,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
                 {activeWizard === 'katex' && (
                   <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Fórmula Financeira:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Fórmula Financeira:</span>
                     <select
                       value={wizardInputs.formulaTipo || 'vpl'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, formulaTipo: e.target.value })}
@@ -766,7 +718,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
                 {activeWizard === 'fracao' && (
                   <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Fração:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Fração:</span>
                     <input
                       type="text"
                       placeholder="Numerador (ex: Lucro Bruto)"
@@ -787,7 +739,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
                 {activeWizard === 'potencia' && (
                   <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Potência:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Potência:</span>
                     <input
                       type="text"
                       placeholder="Base (ex: 1 + i)"
@@ -808,7 +760,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
                 {activeWizard === 'mermaid' && (
                   <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Diagrama de Fluxo:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Diagrama de Fluxo:</span>
                     <select
                       value={wizardInputs.mermaidTipo || 'fluxo_decisao'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, mermaidTipo: e.target.value })}
@@ -821,22 +773,9 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                   </>
                 )}
 
-                {activeWizard === 'video' && (
-                  <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Vídeo YouTube:</span>
-                    <input
-                      type="text"
-                      placeholder="URL do YouTube (https://www.youtube.com/watch?v=...)"
-                      value={wizardInputs.videoUrl || ''}
-                      onChange={(e) => setWizardInputs({ ...wizardInputs, videoUrl: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', flex: 1, minWidth: '220px' }}
-                    />
-                  </>
-                )}
-
                 {activeWizard === 'imagem' && (
                   <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Inserir Imagem:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Inserir Imagem:</span>
                     <input
                       type="text"
                       placeholder="URL da Imagem (https://...)"
@@ -851,20 +790,6 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       onChange={(e) => setWizardInputs({ ...wizardInputs, alt: e.target.value })}
                       style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '160px' }}
                     />
-                  </>
-                )}
-
-                {activeWizard === 'tikz' && (
-                  <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>Modelo Gráfico TikZ:</span>
-                    <select
-                      value={wizardInputs.template || 'eixos'}
-                      onChange={(e) => setWizardInputs({ ...wizardInputs, template: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem' }}
-                    >
-                      <option value="eixos">Eixos Cartesianos & Curva Exponencial de Juros</option>
-                      <option value="arvore">Árvore de Decisão de Investimentos</option>
-                    </select>
                   </>
                 )}
 
@@ -894,7 +819,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                 <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
                     <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--muted-foreground)' }}>
-                      CÓDIGO FONTE (MARKDOWN + LATEX + TIKZ):
+                      CÓDIGO FONTE (MARKDOWN + LATEX):
                     </span>
                     <span style={{ fontSize: '0.7rem', color: 'var(--muted-foreground)' }}>
                       {editorText.length} caracteres
