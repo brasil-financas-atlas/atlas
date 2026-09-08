@@ -231,14 +231,14 @@ function Home() {
           <div className="bfa-grid-tools-4">
             <div className="tool-card bfa-bento-card" style={{ padding: '1.75rem' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 800, color: 'var(--track-math)', marginBottom: '0.5rem' }}>
-                01 // SIMULAÇÃO
+                01 // FIXAÇÃO
               </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Calculadora de Juros</h4>
+              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Banco de Exercícios</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
-                Compare o resultado de aplicações em juros simples e compostos ao longo do tempo.
+                Listas de fixação, cálculos passo a passo e resolução de casos reais comentados.
               </p>
-              <a href="#/calculadora-juros-compostos" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--track-math)' }}>
-                Abrir Calculadora →
+              <a href="#/exercicios" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--track-math)' }}>
+                Ver Exercícios →
               </a>
             </div>
 
@@ -257,27 +257,27 @@ function Home() {
 
             <div className="tool-card bfa-bento-card" style={{ padding: '1.75rem' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 800, color: 'var(--gold-deep)', marginBottom: '0.5rem' }}>
-                03 // CERTIFICADO
+                03 // OLIMPÍADA
               </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Certificado Digital</h4>
+              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Preparação BRHSIC</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
-                Emissão de certificado de conclusão de disciplinas com código de validação para portfólio.
+                Metodologia completa de Equity Research, valuation por fluxo de caixa e pitch.
               </p>
-              <a href="#/exercicios" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--gold-deep)' }}>
-                Ver Requisitos →
+              <a href="#/preparacao-brhsic" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--gold-deep)' }}>
+                Acessar Guia →
               </a>
             </div>
 
             <div className="tool-card bfa-bento-card" style={{ padding: '1.75rem' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.5rem' }}>
-                04 // PROFESSOR
+                04 // CONQUISTAS
               </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Área do Professor</h4>
+              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Badges & Conquistas</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
-                Painel para gerenciar aulas, adicionar vídeos do YouTube e cadastrar novos exercícios.
+                Acompanhe o desbloqueio de medalhas conforme avança pelas 55 aulas publicadas.
               </p>
-              <a href="#/admin/login" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--foreground)' }}>
-                Acessar Painel →
+              <a href="#/conquistas" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                Ver Conquistas →
               </a>
             </div>
           </div>
