@@ -1,5 +1,24 @@
+# Logs & Temp
 *.log
 auto_sync.log
 __pycache__/
-.env
 scratch/
+.tempmediaStorage/
+
+# Environment & Secrets
+.env
+.env*
+
+# Editor & MCP configs
+.vscode/
+.idea/
+.mcp.json
+.mcp*
+
+# Agent & LLM internal artifacts
+.agents/
+.llms/
+.gemini/
+.claude/
+.cursor/
+

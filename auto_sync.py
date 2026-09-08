@@ -40,8 +40,10 @@ if not GITHUB_PAT and os.path.exists(ENV_FILE):
         pass
 
 IGNORED_PATTERNS = [
-    "\\.git\\", "node_modules", "\\.venv\\", "\\.vscode\\",
-    "auto_sync.log", "\\.tmp", "~$", "\\.swp", "\\.env"
+    "\\.git\\", "node_modules", "\\.venv\\", "\\.vscode\\", "\\.idea\\",
+    "auto_sync.log", "\\.tmp", "~$", "\\.swp", "\\.env",
+    "\\.agents\\", "\\.llms\\", "\\.mcp", "\\.gemini\\", "\\.claude\\",
+    "\\.cursor\\", "\\.tempmediaStorage"
 ]
 
 # Configuração do sistema de logs
