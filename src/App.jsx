@@ -125,6 +125,16 @@ function App() {
       return <LoginPage />;
     }
 
+    if (
+      currentPath === '/confirmacao' ||
+      currentPath === '/confirmacao-email' ||
+      currentPath === '/auth-confirm' ||
+      currentPath === '/auth/confirm' ||
+      currentPath === '/auth/callback'
+    ) {
+      return <ConfirmacaoPage />;
+    }
+
     if (currentPath === '/admin/login') {
       return <AdminLogin />;
     }
