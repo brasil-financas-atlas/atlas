@@ -200,7 +200,7 @@ function AdminDashboard() {
   }
 
   const isChief = adminUser?.role === 'admin_chief';
-  const isSuperAdmin = adminUser?.email === 'davidholandaferro@gmail.com' || adminUser?.email === 'lucasguimaraes.app@gmail.com';
+  const isSuperAdmin = adminUser?.email === 'davidholandaferro@gmail.com' || adminUser?.email === 'lucasguimaraes.app@gmail.com' || adminUser?.email === 'hertonfilho2000@gmail.com';
   const pendingEdits = cmsData?.pendingEdits || [];
 
   const [publishHistory, setPublishHistory] = useState([]);
