@@ -512,13 +512,13 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                   {/* Video Player & Admin Controls */}
                   <div style={{ marginBottom: '2.5rem' }}>
                     {isAuthenticated && inlineEditActive && (
-                      <div className="bfa-admin-video-box" style={{ marginBottom: '1rem', padding: '0.85rem 1.25rem', background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+                      <div className="bfa-admin-video-box" style={{ marginBottom: '1rem', padding: '0.85rem 1.25rem', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <BfaIcon name="video" size={18} color="var(--color-azul)" />
-                          <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                          <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                             Gerenciador de Vídeo da Aula (Admin)
                           </span>
-                          <span className="mono-tag" style={{ color: videoUrl ? 'var(--market)' : 'var(--muted-foreground)', background: 'var(--card)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
+                          <span className="mono-tag" style={{ color: videoUrl ? 'var(--market)' : 'var(--text-secondary)', background: 'var(--bg-surface)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
                             {videoUrl ? 'Vídeo Ativo' : 'Sem vídeo'}
                           </span>
                         </div>
@@ -549,7 +549,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                     )}
 
                     {videoUrl && (
-                      <div className="bfa-video-responsive" style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', boxShadow: '0 10px 30px -10px rgba(0,0,0,0.3)', background: '#000' }}>
+                      <div className="bfa-video-responsive" style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', boxShadow: '0 10px 30px -10px rgba(0,0,0,0.3)', background: '#000' }}>
                         <iframe
                           src={getYouTubeEmbedUrl(videoUrl)}
                           title={aulaObj.titulo}
@@ -686,10 +686,10 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
-            background: 'var(--card)',
+            background: 'var(--bg-surface)',
             padding: '0.45rem 0.75rem',
             borderRadius: '9999px',
-            border: '1px solid var(--border)',
+            border: '1px solid var(--border-color)',
             boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
           }}
         >
@@ -753,9 +753,9 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
             className="bfa-modal-content"
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: 'var(--card)',
-              color: 'var(--foreground)',
-              border: '1px solid var(--border)',
+              background: 'var(--bg-surface)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border-color)',
               borderRadius: 'var(--radius-lg)',
               width: '100%',
               maxWidth: '540px',
@@ -783,7 +783,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--muted-foreground)' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-secondary)' }}>
                 URL do Vídeo no YouTube
               </label>
               <input
@@ -795,25 +795,25 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 style={{
                   width: '100%',
                   padding: '0.65rem 0.85rem',
-                  background: 'var(--surface-strong)',
-                  border: '1px solid var(--border)',
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-color)',
                   borderRadius: 'var(--radius-sm)',
-                  color: 'var(--foreground)',
+                  color: 'var(--text-primary)',
                   fontSize: '0.9rem'
                 }}
                 autoFocus
               />
-              <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)', marginTop: '0.35rem' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.35rem' }}>
                 Suporta links padrão do YouTube, links curtos youtu.be e links embed.
               </div>
             </div>
 
             {inputVideoUrl && getYouTubeEmbedUrl(inputVideoUrl) && (
               <div>
-                <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--muted-foreground)', marginBottom: '0.4rem' }}>
+                <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>
                   Pré-visualização:
                 </span>
-                <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: '#000' }}>
+                <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: '#000' }}>
                   <iframe
                     src={getYouTubeEmbedUrl(inputVideoUrl)}
                     title="Pré-visualização do vídeo"
