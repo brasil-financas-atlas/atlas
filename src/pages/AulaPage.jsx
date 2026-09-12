@@ -280,22 +280,31 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
       )}
 
       {/* Sidebar - Curriculum Tree */}
-      <aside className={`aula-sidebar ${!sidebarOpen ? 'closed' : ''}`} style={{ borderRight: '1px solid var(--border)', background: 'var(--card)' }}>
-        <div style={{ padding: '0.85rem 1rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <aside style={{
+        position: sidebarOpen && typeof window !== 'undefined' && window.innerWidth < 768 ? 'fixed' : 'relative',
+        zIndex: 50,
+        display: sidebarOpen ? 'block' : 'none',
+        width: '320px',
+        flexShrink: 0,
+        height: '100vh',
+        overflowY: 'auto',
+        borderRight: '1px solid var(--border-color)',
+        backgroundColor: 'var(--bg-surface)'
+      }}>
+        <div style={{ padding: '1rem', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, backgroundColor: 'var(--bg-surface)', zIndex: 10 }}>
           <div>
-            <span className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.7rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{ color: trackColor, fontWeight: 700, fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
               <BfaIcon name={isMatematica ? "math" : "finance"} size={13} />
               <span>{isMatematica ? 'TRILHA MATEMÁTICA' : 'TRILHA FINANÇAS'}</span>
             </span>
-            <div style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--foreground)' }}>
+            <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text-primary)' }}>
               Índice da Trilha
             </div>
           </div>
           <button
             type="button"
             onClick={() => setSidebarOpen(false)}
-            className="bfa-btn bfa-btn--ghost bfa-btn--sm"
-            style={{ fontSize: '0.8rem', padding: '0.2rem 0.5rem' }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}
             aria-label="Fechar índice"
           >
             <BfaIcon name="close" size={14} />
