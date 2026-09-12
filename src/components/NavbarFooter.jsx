@@ -280,7 +280,7 @@ function Navbar() {
               width: '100%',
               maxWidth: '440px',
               boxShadow: '0 20px 50px -10px rgba(0,0,0,0.3)',
-              color: 'var(--foreground)'
+              color: 'var(--text-primary)'
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -300,7 +300,7 @@ function Navbar() {
               <button
                 type="button"
                 onClick={() => setStudentModalOpen(false)}
-                style={{ background: 'transparent', border: 'none', color: 'var(--muted-foreground)', cursor: 'pointer', padding: '4px' }}
+                style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '4px' }}
               >
                 <BfaIcon name="close" size={18} />
               </button>
@@ -321,7 +321,7 @@ function Navbar() {
             {/* Passo 1: Solicitar E-mail */}
             {authStep === 'email' && (
               <div>
-                <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', lineHeight: 1.6, marginBottom: '1.25rem' }}>
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1.25rem' }}>
                   Informe seu e-mail para receber um código de acesso seguro sem necessidade de senha. Seu progresso será sincronizado na nuvem.
                 </p>
                 <form onSubmit={async (e) => {
@@ -353,7 +353,7 @@ function Navbar() {
                       placeholder="Ex: Ana Silva"
                       value={authName}
                       onChange={(e) => setAuthName(e.target.value)}
-                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.9rem' }}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--text-primary)', fontSize: '0.9rem' }}
                     />
                   </div>
                   <div style={{ marginBottom: '1.25rem' }}>
@@ -364,7 +364,7 @@ function Navbar() {
                       placeholder="seu.email@exemplo.com"
                       value={authEmail}
                       onChange={(e) => setAuthEmail(e.target.value)}
-                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.9rem' }}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--text-primary)', fontSize: '0.9rem' }}
                     />
                   </div>
                   <button
@@ -382,7 +382,7 @@ function Navbar() {
             {/* Passo 2: Confirmar Código OTP */}
             {authStep === 'otp' && (
               <div>
-                <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', lineHeight: 1.6, marginBottom: '1.25rem' }}>
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1.25rem' }}>
                   Digite o código de 6 dígitos enviado para <strong>{authEmail}</strong>:
                 </p>
                 <form onSubmit={async (e) => {
@@ -413,7 +413,7 @@ function Navbar() {
                       placeholder="Código de 6 dígitos"
                       value={authOtp}
                       onChange={(e) => setAuthOtp(e.target.value)}
-                      style={{ width: '100%', padding: '0.85rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '1.1rem', textAlign: 'center', letterSpacing: '0.2em', fontFamily: 'var(--font-mono)' }}
+                      style={{ width: '100%', padding: '0.85rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--text-primary)', fontSize: '1.1rem', textAlign: 'center', letterSpacing: '0.2em', fontFamily: 'var(--font-mono)' }}
                     />
                   </div>
                   <button
@@ -427,7 +427,7 @@ function Navbar() {
                   <button
                     type="button"
                     onClick={() => { setAuthStep('email'); setAuthError(''); setAuthMessage(''); }}
-                    style={{ width: '100%', padding: '0.5rem', background: 'transparent', border: 'none', color: 'var(--muted-foreground)', fontSize: '0.8rem', cursor: 'pointer' }}
+                    style={{ width: '100%', padding: '0.5rem', background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontSize: '0.8rem', cursor: 'pointer' }}
                   >
                     Voltar e alterar e-mail
                   </button>
@@ -446,7 +446,7 @@ function Navbar() {
                     <div style={{ fontWeight: 800, fontSize: '1rem' }}>
                       {studentAuth?.profile?.name || 'Estudante BFA'}
                     </div>
-                    <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', fontFamily: 'var(--font-mono)' }}>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
                       {studentAuth?.user?.email}
                     </div>
                   </div>
@@ -455,13 +455,13 @@ function Navbar() {
                 {/* Estatísticas Rápidas de Progresso */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.5rem' }}>
                   <div style={{ padding: '0.85rem', borderRadius: '10px', background: 'var(--surface-strong)', border: '1px solid var(--border)', textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--muted-foreground)', fontWeight: 700, letterSpacing: '0.04em' }}>Aulas Concluídas</div>
-                    <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '4px' }}>
-                      {completedLessons?.length || 0} <span style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>/ 55</span>
+                    <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 700, letterSpacing: '0.04em' }}>Aulas Concluídas</div>
+                    <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', marginTop: '4px' }}>
+                      {completedLessons?.length || 0} <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>/ 55</span>
                     </div>
                   </div>
                   <div style={{ padding: '0.85rem', borderRadius: '10px', background: 'var(--surface-strong)', border: '1px solid var(--border)', textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--muted-foreground)', fontWeight: 700, letterSpacing: '0.04em' }}>Quizzes Respondidos</div>
+                    <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 700, letterSpacing: '0.04em' }}>Quizzes Respondidos</div>
                     <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--track-finance)', marginTop: '4px' }}>
                       {Object.keys(quizScores || {}).length}
                     </div>
@@ -470,7 +470,7 @@ function Navbar() {
 
                 {/* Status de Sincronização */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 1rem', borderRadius: '8px', background: 'var(--background)', border: '1px solid var(--border)', marginBottom: '1.5rem', fontSize: '0.82rem' }}>
-                  <span style={{ color: 'var(--muted-foreground)' }}>Sincronização na Nuvem:</span>
+                  <span style={{ color: 'var(--text-secondary)' }}>Sincronização na Nuvem:</span>
                   <span style={{ fontWeight: 750, color: studentAuth?.isSyncing ? '#38BDF8' : '#10B981', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                     <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: studentAuth?.isSyncing ? '#38BDF8' : '#10B981' }} />
                     {studentAuth?.isSyncing ? 'Sincronizando...' : 'Progresso Salvo'}
@@ -521,7 +521,7 @@ function Navbar() {
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: 'var(--foreground)',
+                color: 'var(--text-primary)',
                 fontSize: '1.25rem',
                 cursor: 'pointer',
                 padding: '0.3rem 0.6rem',
@@ -539,7 +539,7 @@ function Navbar() {
               <a
                 href="#/login"
                 onClick={() => setMobileMenuOpen(false)}
-                style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', color: 'var(--foreground)' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', color: 'var(--text-primary)' }}
               >
                 <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--track-finance), #0F172A)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.95rem' }}>
                   {studentAuth?.isAuthenticated ? (
@@ -555,11 +555,11 @@ function Navbar() {
                   <div style={{ fontWeight: 800, fontSize: '0.9rem' }}>
                     {studentAuth?.isAuthenticated ? (studentAuth.profile?.name || 'Meu Perfil de Aluno') : 'Entrar na Conta de Aluno'}
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                     {studentAuth?.isAuthenticated ? (studentAuth.isSyncing ? 'Sincronizando...' : 'Progresso Salvo na Nuvem') : 'Salvar progresso em 55 aulas'}
                   </div>
                 </div>
-                <span style={{ color: 'var(--muted-foreground)', fontWeight: 700 }}>→</span>
+                <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>→</span>
               </a>
             </div>
 
@@ -569,26 +569,26 @@ function Navbar() {
               <a href="#/matematica" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
                 <span className="mono-tag" style={{ color: 'var(--track-math)', fontWeight: 800 }}>01</span>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Matemática Aplicada</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Álgebra, Finanças, Probabilidade e Estatística</div>
+                  <div style={{ fontWeight: 700, color: 'var(--text-primary)' }}>Matemática Aplicada</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Álgebra, Finanças, Probabilidade e Estatística</div>
                 </div>
-                <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                <span style={{ color: 'var(--text-secondary)' }}>→</span>
               </a>
               <a href="#/financas" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
                 <span className="mono-tag" style={{ color: 'var(--track-finance)', fontWeight: 800 }}>02</span>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Finanças & Mercado</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Sistema Financeiro, Ações, FIIs e Contabilidade</div>
+                  <div style={{ fontWeight: 700, color: 'var(--text-primary)' }}>Finanças & Mercado</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Sistema Financeiro, Ações, FIIs e Contabilidade</div>
                 </div>
-                <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                <span style={{ color: 'var(--text-secondary)' }}>→</span>
               </a>
               <a href="#/preparacao-brhsic" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
                 <span className="mono-tag" style={{ color: 'var(--track-brhsic)', fontWeight: 800 }}>03</span>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Olimpíada BRHSIC</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Guia de Equity Research, DCF e Pitch</div>
+                  <div style={{ fontWeight: 700, color: 'var(--text-primary)' }}>Olimpíada BRHSIC</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Guia de Equity Research, DCF e Pitch</div>
                 </div>
-                <span style={{ color: 'var(--muted-foreground)' }}>→</span>
+                <span style={{ color: 'var(--text-secondary)' }}>→</span>
               </a>
             </div>
 
@@ -598,18 +598,18 @@ function Navbar() {
               <a href="#/exercicios" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
                 <BfaIcon name="edit" size={18} color="var(--track-math)" />
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Banco de Exercícios</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Fixação de conceitos, fórmulas e problemas resolvidos</div>
+                  <div style={{ fontWeight: 700, color: 'var(--text-primary)' }}>Banco de Exercícios</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Fixação de conceitos, fórmulas e problemas resolvidos</div>
                 </div>
-                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
+                <BfaIcon name="arrowRight" size={14} color="var(--text-secondary)" />
               </a>
               <a href="#/conquistas" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
                 <BfaIcon name="trophy" size={18} color="var(--gold-deep)" />
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, color: 'var(--foreground)' }}>Conquistas & Progresso</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Acompanhe medalhas e badges de evolução</div>
+                  <div style={{ fontWeight: 700, color: 'var(--text-primary)' }}>Conquistas & Progresso</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Acompanhe medalhas e badges de evolução</div>
                 </div>
-                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
+                <BfaIcon name="arrowRight" size={14} color="var(--text-secondary)" />
               </a>
             </div>
 
@@ -618,13 +618,13 @@ function Navbar() {
               <div className="bfa-mobile-nav-grouptitle">INSTITUCIONAL</div>
               <a href="#/sobre" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
                 <BfaIcon name="institution" size={18} color="var(--color-azul)" />
-                <div style={{ flex: 1, fontWeight: 700, color: 'var(--foreground)' }}>Sobre o Atlas & Metodologia</div>
-                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
+                <div style={{ flex: 1, fontWeight: 700, color: 'var(--text-primary)' }}>Sobre o Atlas & Metodologia</div>
+                <BfaIcon name="arrowRight" size={14} color="var(--text-secondary)" />
               </a>
               <a href="#/noticias" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
                 <BfaIcon name="newspaper" size={18} color="var(--track-finance)" />
-                <div style={{ flex: 1, fontWeight: 700, color: 'var(--foreground)' }}>Notícias & Macroeconomia</div>
-                <BfaIcon name="arrowRight" size={14} color="var(--muted-foreground)" />
+                <div style={{ flex: 1, fontWeight: 700, color: 'var(--text-primary)' }}>Notícias & Macroeconomia</div>
+                <BfaIcon name="arrowRight" size={14} color="var(--text-secondary)" />
               </a>
             </div>
 
@@ -639,7 +639,7 @@ function Navbar() {
                 <BfaIcon name={isDark ? "sun" : "moon"} size={15} />
                 <span>{isDark ? 'Modo Claro' : 'Modo Escuro'}</span>
               </button>
-              <a href="#/admin/login" onClick={() => setMobileMenuOpen(false)} className="mono-tag" style={{ color: 'var(--muted-foreground)', textDecoration: 'none', fontSize: '0.75rem' }}>
+              <a href="#/admin/login" onClick={() => setMobileMenuOpen(false)} className="mono-tag" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.75rem' }}>
                 Área do Professor
               </a>
             </div>
