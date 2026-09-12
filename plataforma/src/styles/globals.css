@@ -17,39 +17,39 @@
   --radius-xl: 1rem;
   --radius-full: 9999px;
 
-  /* Color System (OKLCH Precision Palette) */
-  --background: #F8FAFC;
-  --foreground: #0F172A;
+  /* BRHSIC Core Colors Mapping */
+  --background: #F4F7FA;
+  --foreground: #172237;
   --card: #FFFFFF;
-  --card-foreground: #0F172A;
+  --card-foreground: #172237;
   --popover: #FFFFFF;
-  --popover-foreground: #0F172A;
-  --primary: #0F172A;
-  --primary-foreground: #F8FAFC;
-  --secondary: #F1F5F9;
-  --secondary-foreground: #0F172A;
-  --muted: #F8FAFC;
-  --muted-foreground: #475569;   /* Slate 600 - Contrast 5.8:1 WCAG AA */
-  --accent: #F1F5F9;
-  --accent-foreground: #0F172A;
-  --border: #CBD5E1;
-  --input: #E2E8F0;
-  --ring: #2563EB;
+  --popover-foreground: #172237;
+  --primary: #2F9BFF;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EAF4FB;
+  --secondary-foreground: #172237;
+  --muted: #EAF4FB;
+  --muted-foreground: #53647B;
+  --accent: #EAF4FB;
+  --accent-foreground: #172237;
+  --border: #C9D9E7;
+  --input: #C9D9E7;
+  --ring: #2F9BFF;
 
-  /* Domain Specific Colors */
-  --market: #059669;            /* Verde Esmeralda Mercado */
-  --market-foreground: #ECFDF5;
-  --gold: #D97706;              /* Dourado Amber Editorial */
-  --gold-deep: #B45309;
-  --gold-foreground: #FFFBEB;
+  /* Domain Specific Colors - BRHSIC Academy Accents */
+  --market: #C4ED64;
+  --market-foreground: #172237;
+  --gold: #F95B44;
+  --gold-deep: #D4422E;
+  --gold-foreground: #FFFFFF;
 
-  /* Track Brand Colors */
-  --track-finance: #1B6B3A;      /* Verde Floresta Finanças */
-  --track-math: #1B3A5C;         /* Azul Marinho Matemática */
-  --track-brhsic: #C8963E;       /* Dourado Ocre BRHSIC */
+  /* Track Brand Colors (Adjusted for BRHSIC) */
+  --track-finance: #2F9BFF;
+  --track-math: #172237;
+  --track-brhsic: #F95B44;
 
   --surface: #FFFFFF;
-  --surface-strong: #F1F5F9;
+  --surface-strong: #EAF4FB;
 
   /* Status Colors (WCAG Compliant) */
   --status-success: #059669;
