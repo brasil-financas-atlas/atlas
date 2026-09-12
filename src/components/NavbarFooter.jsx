@@ -146,25 +146,17 @@ function Navbar() {
           )}
         </div>
 
-        <nav className="navbar-nav">
+        <nav className="nav-links">
           {navLinks.map((link) => {
             const isActive = currentPath === link.path || (link.path !== '/' && currentPath.startsWith(link.path));
             return (
               <a
                 key={link.path}
                 href={`#${link.path}`}
-                className={`nav-link ${isActive ? 'active' : ''}`}
+                className="nav-link"
                 style={{
-                  fontWeight: isActive ? 700 : 600,
-                  backgroundColor: isActive ? 'var(--track-finance)' : 'transparent',
-                  color: isActive ? '#FFFFFF' : 'var(--muted-foreground)',
-                  padding: '0.5rem 0.95rem',
-                  borderRadius: '9999px',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  minHeight: '40px',
-                  fontSize: '0.85rem',
-                  transition: 'all 0.15s ease'
+                  fontWeight: isActive ? 600 : 500,
+                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
                 }}
               >
                 {link.label}
@@ -172,42 +164,6 @@ function Navbar() {
             );
           })}
         </nav>
-
-        {/* Quick mobile track pills */}
-        <div className="bfa-mobile-quick-tracks" style={{ display: 'none', alignItems: 'center', gap: '0.35rem' }}>
-          <a
-            href="#/matematica"
-            className="mono-tag"
-            style={{
-              color: currentPath.startsWith('/matematica') ? '#FFFFFF' : 'var(--foreground)',
-              background: currentPath.startsWith('/matematica') ? 'var(--track-math)' : 'var(--surface-strong)',
-              border: '1px solid var(--border)',
-              padding: '0.35rem 0.6rem',
-              borderRadius: '9999px',
-              textDecoration: 'none',
-              fontSize: '0.72rem',
-              fontWeight: 700
-            }}
-          >
-            Matemática
-          </a>
-          <a
-            href="#/financas"
-            className="mono-tag"
-            style={{
-              color: currentPath.startsWith('/financas') ? '#FFFFFF' : 'var(--foreground)',
-              background: currentPath.startsWith('/financas') ? 'var(--track-finance)' : 'var(--surface-strong)',
-              border: '1px solid var(--border)',
-              padding: '0.35rem 0.6rem',
-              borderRadius: '9999px',
-              textDecoration: 'none',
-              fontSize: '0.72rem',
-              fontWeight: 700
-            }}
-          >
-            Finanças
-          </a>
-        </div>
 
         <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
           {/* Link para o site oficial */}
