@@ -122,7 +122,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   };
 
   const renderCurriculumContent = () => (
-    <div style={{ padding: '0.75rem 0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+    <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {subjectData.modulos.map((m, mIdx) => {
         const isCurrentMod = m.slug === moduloSlug;
         const isExpanded = expandedMods[m.slug] !== false;
@@ -138,10 +138,9 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
             key={m.slug}
             style={{
               borderRadius: 'var(--radius-md)',
-              border: isCurrentMod ? `1px solid ${trackColor}` : '1px solid var(--border)',
-              background: isCurrentMod ? 'var(--surface-strong)' : 'var(--card)',
-              overflow: 'hidden',
-              transition: 'all 0.2s ease'
+              border: isCurrentMod ? `1px solid var(--primary)` : '1px solid var(--border-color)',
+              background: 'var(--bg-app)',
+              overflow: 'hidden'
             }}
           >
             {/* Module Accordion Header */}
@@ -151,43 +150,45 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                 setExpandedMods(prev => ({ ...prev, [m.slug]: !prev[m.slug] }));
               }}
               style={{
-                padding: '0.65rem 0.85rem',
+                padding: '1rem',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                userSelect: 'none'
+                userSelect: 'none',
+                backgroundColor: isCurrentMod ? 'var(--bg-surface-blue)' : 'transparent',
+                borderBottom: isExpanded ? '1px solid var(--border-color)' : 'none'
               }}
             >
               <div style={{ minWidth: 0, flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <span className="mono-tag" style={{ color: trackColor, fontSize: '0.68rem', fontWeight: 800 }}>
+                  <span style={{ color: isCurrentMod ? trackColor : 'var(--text-secondary)', fontSize: '0.75rem', fontWeight: 600 }}>
                     MÓDULO {mIdx + 1}
                   </span>
                   {isAllDone && (
-                    <span style={{ color: '#059669', display: 'inline-flex' }}>
-                      <BfaIcon name="check" size={12} color="#059669" />
+                    <span style={{ color: 'var(--accent-green)', display: 'inline-flex' }}>
+                      <BfaIcon name="check" size={12} color="var(--accent-green)" />
                     </span>
                   )}
                 </div>
-                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '4px' }}>
                   {m.titulo}
                 </div>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0, marginLeft: '0.5rem' }}>
-                <span className="mono-tag" style={{ color: isAllDone ? '#059669' : 'var(--muted-foreground)', fontSize: '0.68rem', fontWeight: 700 }}>
+                <span style={{ color: isAllDone ? 'var(--accent-green)' : 'var(--text-muted)', fontSize: '0.75rem', fontWeight: 600 }}>
                   {modCompletedCount}/{modTotalCount}
                 </span>
-                <span style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease', display: 'inline-flex' }}>
-                  <BfaIcon name="arrowRight" size={10} color="var(--muted-foreground)" />
+                <span style={{ color: 'var(--text-muted)', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease', display: 'inline-flex' }}>
+                  <BfaIcon name="arrowRight" size={10} color="var(--text-muted)" />
                 </span>
               </div>
             </div>
 
             {/* Expanded Module Content */}
             {isExpanded && (
-              <div style={{ padding: '0.35rem 0.4rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <a
                   href={`#/${subjectKey}/${m.slug}`}
                   onClick={() => {
@@ -200,23 +201,21 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    fontSize: '0.78rem',
-                    fontWeight: 600,
+                    fontSize: '0.875rem',
+                    fontWeight: 500,
                     backgroundColor: 'transparent',
                     borderLeft: '3px solid transparent',
-                    color: 'var(--muted-foreground)',
-                    padding: '0.4rem 0.6rem',
-                    borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+                    color: 'var(--text-secondary)',
+                    padding: '0.75rem 1rem',
                     textDecoration: 'none'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <BfaIcon name="book" size={12} color="var(--muted-foreground)" />
                     <span>Introdução & Ementa</span>
                   </div>
                 </a>
 
-                {m.aulas.map((a) => {
+                {m.aulas.map((a, aIdx) => {
                   const itemLessonId = `${subjectKey}-${m.slug}-${a.slug}`;
                   const itemDone = completedLessons && completedLessons.includes(itemLessonId);
                   const isActive = isCurrentMod && a.slug === aulaSlug;
@@ -236,26 +235,26 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        fontSize: '0.82rem',
-                        fontWeight: isActive ? 800 : 500,
-                        backgroundColor: isActive ? 'var(--card)' : 'transparent',
+                        fontSize: '0.875rem',
+                        fontWeight: isActive ? 600 : 500,
+                        backgroundColor: isActive ? 'var(--bg-surface)' : 'transparent',
                         borderLeft: isActive ? `3px solid ${trackColor}` : '3px solid transparent',
-                        boxShadow: isActive ? '0 1px 4px rgba(0, 0, 0, 0.08)' : 'none',
-                        color: isActive ? 'var(--foreground)' : 'var(--muted-foreground)',
-                        padding: '0.5rem 0.65rem',
-                        borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+                        color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                        padding: '0.75rem 1rem',
                         textDecoration: 'none',
-                        transition: 'all 0.15s ease'
+                        borderTop: '1px solid var(--border-color)'
                       }}
                     >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
-                        <BfaIcon name={itemDone ? "check" : "circle"} size={12} color={itemDone ? "#059669" : "var(--muted-foreground)"} />
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', minWidth: 0 }}>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                          {String(aIdx + 1).padStart(2, '0')}
+                        </span>
                         <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {a.titulo}
                         </span>
                       </div>
-                      {isActive && (
-                        <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: trackColor, flexShrink: 0, marginLeft: '0.4rem' }} />
+                      {itemDone && (
+                        <span style={{ color: 'var(--accent-green)', fontSize: '1rem' }}>✓</span>
                       )}
                     </a>
                   );
