@@ -225,6 +225,31 @@ function Navbar() {
         </div>
 
         <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          {/* Link para o site oficial */}
+          <a
+            href="https://brhsic.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '0.45rem 0.85rem',
+              borderRadius: '9999px',
+              border: '1px solid var(--border)',
+              background: 'transparent',
+              color: 'var(--muted-foreground)',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              textDecoration: 'none',
+              transition: 'all 0.15s ease'
+            }}
+            onMouseOver={(e) => { e.currentTarget.style.color = 'var(--foreground)'; e.currentTarget.style.background = 'var(--surface-strong)'; }}
+            onMouseOut={(e) => { e.currentTarget.style.color = 'var(--muted-foreground)'; e.currentTarget.style.background = 'transparent'; }}
+          >
+            <BfaIcon name="external-link" size={14} /> Portal BRHSIC
+          </a>
+
           {/* Botão de Autenticação / Perfil do Aluno */}
           {studentAuth && studentAuth.isAuthenticated ? (
             <button
