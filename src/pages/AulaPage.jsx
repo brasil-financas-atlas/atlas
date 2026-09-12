@@ -413,12 +413,12 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               <div
                 style={{
                   display: 'flex',
-                  background: 'var(--surface-strong)',
+                  background: 'var(--bg-surface)',
                   padding: '4px',
                   borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--border)',
-                  marginBottom: '2rem',
-                  maxWidth: '540px',
+                  border: '1px solid var(--border-color)',
+                  marginBottom: '2.5rem',
+                  maxWidth: '600px',
                   width: '100%'
                 }}
               >
@@ -430,23 +430,23 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                   }}
                   style={{
                     flex: 1,
-                    padding: '0.55rem 0.75rem',
-                    fontSize: '0.82rem',
-                    fontWeight: activeTab === 'teoria' ? 800 : 600,
-                    borderRadius: 'var(--radius-sm)',
+                    padding: '0.625rem 1rem',
+                    fontSize: '0.875rem',
+                    fontWeight: activeTab === 'teoria' ? 700 : 500,
+                    borderRadius: 'calc(var(--radius-md) - 2px)',
                     border: 'none',
                     cursor: 'pointer',
-                    background: activeTab === 'teoria' ? 'var(--card)' : 'transparent',
-                    color: activeTab === 'teoria' ? 'var(--foreground)' : 'var(--muted-foreground)',
-                    boxShadow: activeTab === 'teoria' ? '0 1px 3px rgba(0, 0, 0, 0.12)' : 'none',
+                    background: activeTab === 'teoria' ? 'var(--bg-app)' : 'transparent',
+                    color: activeTab === 'teoria' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                    boxShadow: activeTab === 'teoria' ? '0 1px 3px rgba(0, 0, 0, 0.1)' : 'none',
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '6px',
-                    transition: 'all 0.15s ease'
+                    gap: '8px',
+                    transition: 'all 0.2s ease'
                   }}
                 >
-                  <BfaIcon name="book" size={13} />
+                  <BfaIcon name="book" size={14} />
                   <span>Teoria</span>
                 </button>
                 <button
@@ -458,23 +458,23 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                   }}
                   style={{
                     flex: 1,
-                    padding: '0.55rem 0.75rem',
-                    fontSize: '0.82rem',
-                    fontWeight: activeTab === 'quiz' ? 800 : 600,
-                    borderRadius: 'var(--radius-sm)',
+                    padding: '0.625rem 1rem',
+                    fontSize: '0.875rem',
+                    fontWeight: activeTab === 'quiz' ? 700 : 500,
+                    borderRadius: 'calc(var(--radius-md) - 2px)',
                     border: 'none',
                     cursor: 'pointer',
-                    background: activeTab === 'quiz' ? 'var(--card)' : 'transparent',
-                    color: activeTab === 'quiz' ? 'var(--foreground)' : 'var(--muted-foreground)',
-                    boxShadow: activeTab === 'quiz' ? '0 1px 3px rgba(0, 0, 0, 0.12)' : 'none',
+                    background: activeTab === 'quiz' ? 'var(--bg-app)' : 'transparent',
+                    color: activeTab === 'quiz' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                    boxShadow: activeTab === 'quiz' ? '0 1px 3px rgba(0, 0, 0, 0.1)' : 'none',
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '6px',
-                    transition: 'all 0.15s ease'
+                    gap: '8px',
+                    transition: 'all 0.2s ease'
                   }}
                 >
-                  <BfaIcon name="target" size={13} />
+                  <BfaIcon name="target" size={14} />
                   <span>Exercícios ({lessonQuestions.length})</span>
                 </button>
                 <button
@@ -485,23 +485,23 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                   }}
                   style={{
                     flex: 1,
-                    padding: '0.55rem 0.75rem',
-                    fontSize: '0.82rem',
-                    fontWeight: activeTab === 'forum' ? 800 : 600,
-                    borderRadius: 'var(--radius-sm)',
+                    padding: '0.625rem 1rem',
+                    fontSize: '0.875rem',
+                    fontWeight: activeTab === 'forum' ? 700 : 500,
+                    borderRadius: 'calc(var(--radius-md) - 2px)',
                     border: 'none',
                     cursor: 'pointer',
-                    background: activeTab === 'forum' ? 'var(--card)' : 'transparent',
-                    color: activeTab === 'forum' ? 'var(--foreground)' : 'var(--muted-foreground)',
-                    boxShadow: activeTab === 'forum' ? '0 1px 3px rgba(0, 0, 0, 0.12)' : 'none',
+                    background: activeTab === 'forum' ? 'var(--bg-app)' : 'transparent',
+                    color: activeTab === 'forum' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                    boxShadow: activeTab === 'forum' ? '0 1px 3px rgba(0, 0, 0, 0.1)' : 'none',
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '6px',
-                    transition: 'all 0.15s ease'
+                    gap: '8px',
+                    transition: 'all 0.2s ease'
                   }}
                 >
-                  <BfaIcon name="chat" size={13} />
+                  <BfaIcon name="chat" size={14} />
                   <span>Fórum</span>
                 </button>
               </div>
