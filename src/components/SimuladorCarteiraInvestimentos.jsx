@@ -310,7 +310,7 @@ function SimuladorCarteiraInvestimentos() {
   return (
     <div className="bfa-card" style={{ padding: '2.5rem', marginBottom: '3.5rem' }}>
       {/* Cabeçalho do Simulador */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid var(--border)', paddingBottom: '1.5rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
         <div>
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
             <span className="bfa-badge bfa-badge--ouro" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
@@ -318,10 +318,10 @@ function SimuladorCarteiraInvestimentos() {
             </span>
             <span className="bfa-badge bfa-badge--verde">Simulador de Carteira</span>
           </div>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.02em', margin: 0 }}>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em', margin: 0 }}>
             Simulador de Carteira de Investimentos
           </h2>
-          <p style={{ color: 'var(--muted-foreground)', fontSize: '0.92rem', marginTop: '0.35rem', maxWidth: '680px' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', marginTop: '0.35rem', maxWidth: '680px' }}>
             Aprenda a arte da alocação de ativos, diversificação e fronteira de risco da <strong>Olimpíada Brasileira de Investimentos</strong>.
           </p>
         </div>
@@ -345,14 +345,14 @@ function SimuladorCarteiraInvestimentos() {
       {/* Grid Principal: Parâmetros e Alocação */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', marginBottom: '2.5rem' }}>
         {/* Coluna 1: Parâmetros de Aporte */}
-        <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }}>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <BfaIcon name="dollarSign" size={18} color="var(--color-verde-dark)" /> 1. Parâmetros de Aporte
           </h3>
 
           <div style={{ marginBottom: '1.25rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-              <label style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--foreground)' }}>Capital Inicial:</label>
+              <label style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>Capital Inicial:</label>
               <strong style={{ color: 'var(--color-verde-dark)', fontFamily: 'var(--font-mono)' }}>{formatBRL(initialCapital)}</strong>
             </div>
             <input
@@ -368,7 +368,7 @@ function SimuladorCarteiraInvestimentos() {
 
           <div style={{ marginBottom: '1.25rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-              <label style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--foreground)' }}>Aporte Mensal Recorrente:</label>
+              <label style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>Aporte Mensal Recorrente:</label>
               <strong style={{ color: 'var(--color-verde-dark)', fontFamily: 'var(--font-mono)' }}>{formatBRL(monthlyContribution)}/mês</strong>
             </div>
             <input
@@ -384,7 +384,7 @@ function SimuladorCarteiraInvestimentos() {
 
           <div style={{ marginBottom: '1.25rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-              <label style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--foreground)' }}>Horizonte de Tempo:</label>
+              <label style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>Horizonte de Tempo:</label>
               <strong style={{ color: 'var(--color-azul-accent)', fontFamily: 'var(--font-mono)' }}>{years} {years === 1 ? 'ano' : 'anos'}</strong>
             </div>
             <input
@@ -399,16 +399,16 @@ function SimuladorCarteiraInvestimentos() {
           </div>
 
           {/* Resumo do Perfil */}
-          <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+          <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
-              <span style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>Classificação de Risco:</span>
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Classificação de Risco:</span>
               <span className={`bfa-badge ${riskAssessment.badge}`} style={{ fontSize: '0.75rem' }}>
                 {riskAssessment.label}
               </span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>Índice de Sharpe:</span>
-              <strong style={{ fontSize: '0.9rem', color: portfolioMetrics.sharpeRatio >= 0.2 ? 'var(--color-verde-dark)' : 'var(--muted-foreground)', fontFamily: 'var(--font-mono)' }}>
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Índice de Sharpe:</span>
+              <strong style={{ fontSize: '0.9rem', color: portfolioMetrics.sharpeRatio >= 0.2 ? 'var(--color-verde-dark)' : 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
                 {portfolioMetrics.sharpeRatio.toFixed(2)} {portfolioMetrics.sharpeRatio >= 0.2 ? '✓ (Excelente)' : ''}
               </strong>
             </div>
@@ -416,9 +416,9 @@ function SimuladorCarteiraInvestimentos() {
         </div>
 
         {/* Coluna 2: Sliders de Alocação de Ativos */}
-        <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }}>
+        <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--foreground)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
               <BfaIcon name="pieChart" size={18} color="var(--color-ouro)" /> 2. Alocação da Carteira
             </h3>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -439,7 +439,7 @@ function SimuladorCarteiraInvestimentos() {
           </div>
 
           {/* Barra Visual de Distribuição */}
-          <div style={{ display: 'flex', height: '10px', borderRadius: '5px', overflow: 'hidden', marginBottom: '1.25rem', background: 'var(--border)' }}>
+          <div style={{ display: 'flex', height: '10px', borderRadius: '5px', overflow: 'hidden', marginBottom: '1.25rem', background: 'var(--border-color)' }}>
             {ASSET_CLASSES.map(a => (
               <div
                 key={a.id}
@@ -458,11 +458,11 @@ function SimuladorCarteiraInvestimentos() {
             {ASSET_CLASSES.map(asset => (
               <div key={asset.id} style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.82rem', color: 'var(--foreground)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: asset.color }} />
                     {asset.name}
                   </span>
-                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', fontFamily: 'var(--font-mono)' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>
                     {allocations[asset.id] || 0}% ({formatBRL(initialCapital * ((allocations[asset.id] || 0) / 100))})
                   </span>
                 </div>
@@ -483,16 +483,16 @@ function SimuladorCarteiraInvestimentos() {
 
       {/* Cards de Métricas Principais */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-        <div style={{ padding: '1.25rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Patrimônio Projetado</span>
+        <div style={{ padding: '1.25rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Patrimônio Projetado</span>
           <h4 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--color-verde-dark)', fontFamily: 'var(--font-mono)', margin: '0.35rem 0' }}>
             {formatBRL(portfolioMetrics.finalPortfolio)}
           </h4>
-          <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Total Aportado: {formatBRL(portfolioMetrics.finalInvested)}</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Total Aportado: {formatBRL(portfolioMetrics.finalInvested)}</span>
         </div>
 
-        <div style={{ padding: '1.25rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Lucro Acumulado (Juros)</span>
+        <div style={{ padding: '1.25rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Lucro Acumulado (Juros)</span>
           <h4 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--color-ouro)', fontFamily: 'var(--font-mono)', margin: '0.35rem 0' }}>
             +{formatBRL(portfolioMetrics.totalGains)}
           </h4>
@@ -501,25 +501,25 @@ function SimuladorCarteiraInvestimentos() {
           </span>
         </div>
 
-        <div style={{ padding: '1.25rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Renda Passiva Mensal (Ano {years})</span>
+        <div style={{ padding: '1.25rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Renda Passiva Mensal (Ano {years})</span>
           <h4 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--color-azul-accent)', fontFamily: 'var(--font-mono)', margin: '0.35rem 0' }}>
-            {formatBRL(portfolioMetrics.finalMonthlyIncome)}<span style={{ fontSize: '0.9rem', color: 'var(--muted-foreground)' }}>/mês</span>
+            {formatBRL(portfolioMetrics.finalMonthlyIncome)}<span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>/mês</span>
           </h4>
-          <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Proventos & Dividendos isentos de IR</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Proventos & Dividendos isentos de IR</span>
         </div>
 
-        <div style={{ padding: '1.25rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Retorno Acima da Inflação</span>
-          <h4 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--foreground)', fontFamily: 'var(--font-mono)', margin: '0.35rem 0' }}>
-            +{portfolioMetrics.realReturn.toFixed(2)}%<span style={{ fontSize: '0.9rem', color: 'var(--muted-foreground)' }}> a.a. real</span>
+        <div style={{ padding: '1.25rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Retorno Acima da Inflação</span>
+          <h4 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)', margin: '0.35rem 0' }}>
+            +{portfolioMetrics.realReturn.toFixed(2)}%<span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}> a.a. real</span>
           </h4>
-          <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Retorno Nominal: {portfolioMetrics.weightedNominalReturn.toFixed(2)}% a.a.</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Retorno Nominal: {portfolioMetrics.weightedNominalReturn.toFixed(2)}% a.a.</span>
         </div>
       </div>
 
       {/* Tabs de Visualização */}
-      <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid var(--border)', marginBottom: '1.5rem' }}>
+      <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid var(--border-color)', marginBottom: '1.5rem' }}>
         <button
           type="button"
           onClick={() => setActiveTab('projection')}
@@ -527,7 +527,7 @@ function SimuladorCarteiraInvestimentos() {
             padding: '0.75rem 1.25rem',
             border: 'none',
             background: 'transparent',
-            color: activeTab === 'projection' ? 'var(--color-verde-dark)' : 'var(--muted-foreground)',
+            color: activeTab === 'projection' ? 'var(--color-verde-dark)' : 'var(--text-secondary)',
             fontWeight: activeTab === 'projection' ? 700 : 500,
             borderBottom: activeTab === 'projection' ? '2px solid var(--color-verde-dark)' : '2px solid transparent',
             cursor: 'pointer',
@@ -547,7 +547,7 @@ function SimuladorCarteiraInvestimentos() {
             padding: '0.75rem 1.25rem',
             border: 'none',
             background: 'transparent',
-            color: activeTab === 'breakdown' ? 'var(--color-verde-dark)' : 'var(--muted-foreground)',
+            color: activeTab === 'breakdown' ? 'var(--color-verde-dark)' : 'var(--text-secondary)',
             fontWeight: activeTab === 'breakdown' ? 700 : 500,
             borderBottom: activeTab === 'breakdown' ? '2px solid var(--color-verde-dark)' : '2px solid transparent',
             cursor: 'pointer',
@@ -567,7 +567,7 @@ function SimuladorCarteiraInvestimentos() {
             padding: '0.75rem 1.25rem',
             border: 'none',
             background: 'transparent',
-            color: activeTab === 'challenges' ? 'var(--color-ouro)' : 'var(--muted-foreground)',
+            color: activeTab === 'challenges' ? 'var(--color-ouro)' : 'var(--text-secondary)',
             fontWeight: activeTab === 'challenges' ? 700 : 500,
             borderBottom: activeTab === 'challenges' ? '2px solid var(--color-ouro)' : '2px solid transparent',
             cursor: 'pointer',
@@ -584,9 +584,9 @@ function SimuladorCarteiraInvestimentos() {
 
       {/* Conteúdo da Tab 1: Gráfico */}
       {activeTab === 'projection' && (
-        <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }}>
+        <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-            <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--foreground)' }}>Evolução Patrimonial ao Longo do Tempo</h4>
+            <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)' }}>Evolução Patrimonial ao Longo do Tempo</h4>
             <div style={{ display: 'flex', gap: '1rem', fontSize: '0.8rem', flexWrap: 'wrap' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--color-verde-dark)', fontWeight: 600 }}>
                 <span style={{ width: '12px', height: '3px', backgroundColor: 'var(--color-verde-dark)' }} /> Carteira BRHSIC
@@ -597,8 +597,8 @@ function SimuladorCarteiraInvestimentos() {
               <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#EF4444' }}>
                 <span style={{ width: '12px', height: '2px', backgroundColor: '#EF4444' }} /> Inflação (IPCA)
               </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--muted-foreground)' }}>
-                <span style={{ width: '12px', height: '2px', backgroundColor: 'var(--muted-foreground)' }} /> Total Aportado
+              <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--text-secondary)' }}>
+                <span style={{ width: '12px', height: '2px', backgroundColor: 'var(--text-secondary)' }} /> Total Aportado
               </span>
             </div>
           </div>
@@ -611,8 +611,8 @@ function SimuladorCarteiraInvestimentos() {
                 const val = maxChartValue * pct;
                 return (
                   <g key={idx}>
-                    <line x1={padding.left} y1={y} x2={svgWidth - padding.right} y2={y} stroke="var(--border)" strokeDasharray="3 3" opacity="0.6" />
-                    <text x={padding.left - 8} y={y + 4} fill="var(--muted-foreground)" fontSize="10" textAnchor="end" fontFamily="monospace">
+                    <line x1={padding.left} y1={y} x2={svgWidth - padding.right} y2={y} stroke="var(--border-color)" strokeDasharray="3 3" opacity="0.6" />
+                    <text x={padding.left - 8} y={y + 4} fill="var(--text-secondary)" fontSize="10" textAnchor="end" fontFamily="monospace">
                       {formatBRL(val).replace('R$', '').trim()}
                     </text>
                   </g>
@@ -624,8 +624,8 @@ function SimuladorCarteiraInvestimentos() {
                 const x = getX(d.year);
                 return (
                   <g key={idx}>
-                    <line x1={x} y1={padding.top} x2={x} y2={svgHeight - padding.bottom} stroke="var(--border)" opacity="0.3" />
-                    <text x={x} y={svgHeight - padding.bottom + 18} fill="var(--muted-foreground)" fontSize="11" textAnchor="middle" fontWeight="500">
+                    <line x1={x} y1={padding.top} x2={x} y2={svgHeight - padding.bottom} stroke="var(--border-color)" opacity="0.3" />
+                    <text x={x} y={svgHeight - padding.bottom + 18} fill="var(--text-secondary)" fontSize="11" textAnchor="middle" fontWeight="500">
                       Ano {d.year}
                     </text>
                   </g>
@@ -633,7 +633,7 @@ function SimuladorCarteiraInvestimentos() {
               })}
 
               {/* Curvas de Desempenho */}
-              <path d={makePath('invested')} fill="none" stroke="var(--muted-foreground)" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.7" />
+              <path d={makePath('invested')} fill="none" stroke="var(--text-secondary)" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.7" />
               <path d={makePath('ipca')} fill="none" stroke="#EF4444" strokeWidth="1.5" opacity="0.8" />
               <path d={makePath('cdi')} fill="none" stroke="var(--color-azul-accent)" strokeWidth="2" strokeDasharray="3 3" />
               <path d={makePath('portfolio')} fill="none" stroke="var(--color-verde-dark)" strokeWidth="3.5" />
@@ -654,12 +654,12 @@ function SimuladorCarteiraInvestimentos() {
 
       {/* Conteúdo da Tab 2: Detalhamento por Ativo */}
       {activeTab === 'breakdown' && (
-        <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }}>
-          <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '1rem' }}>Composição Atual e Rentabilidade Esperada</h4>
+        <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
+          <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1rem' }}>Composição Atual e Rentabilidade Esperada</h4>
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid var(--border)', textAlign: 'left', color: 'var(--muted-foreground)' }}>
+                <tr style={{ borderBottom: '1px solid var(--border-color)', textAlign: 'left', color: 'var(--text-secondary)' }}>
                   <th style={{ padding: '0.75rem' }}>Classe de Ativo</th>
                   <th style={{ padding: '0.75rem' }}>Peso (%)</th>
                   <th style={{ padding: '0.75rem' }}>Capital Inicial</th>
@@ -673,18 +673,18 @@ function SimuladorCarteiraInvestimentos() {
                   const weight = (allocations[asset.id] || 0);
                   const valInitial = initialCapital * (weight / 100);
                   return (
-                    <tr key={asset.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                      <td style={{ padding: '0.75rem', fontWeight: 600, color: 'var(--foreground)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <tr key={asset.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                      <td style={{ padding: '0.75rem', fontWeight: 600, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: asset.color }} />
                         {asset.name}
                       </td>
                       <td style={{ padding: '0.75rem', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>{weight}%</td>
                       <td style={{ padding: '0.75rem', fontFamily: 'var(--font-mono)' }}>{formatBRL(valInitial)}</td>
                       <td style={{ padding: '0.75rem', color: 'var(--color-verde-dark)', fontWeight: 600 }}>{asset.expectedReturn.toFixed(2)}% a.a.</td>
-                      <td style={{ padding: '0.75rem', color: asset.dividendYield > 0 ? 'var(--color-azul-accent)' : 'var(--muted-foreground)' }}>
+                      <td style={{ padding: '0.75rem', color: asset.dividendYield > 0 ? 'var(--color-azul-accent)' : 'var(--text-secondary)' }}>
                         {asset.dividendYield > 0 ? `${asset.dividendYield.toFixed(1)}% a.a.` : '—'}
                       </td>
-                      <td style={{ padding: '0.75rem', color: asset.volatility > 12 ? '#EF4444' : 'var(--muted-foreground)' }}>
+                      <td style={{ padding: '0.75rem', color: asset.volatility > 12 ? '#EF4444' : 'var(--text-secondary)' }}>
                         {asset.volatility.toFixed(1)}% a.a.
                       </td>
                     </tr>
@@ -698,13 +698,13 @@ function SimuladorCarteiraInvestimentos() {
 
       {/* Conteúdo da Tab 3: Missões e Desafios BRHSIC */}
       {activeTab === 'challenges' && (
-        <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }}>
+        <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.5rem' }}>
             <div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--foreground)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <BfaIcon name="trophy" size={20} color="var(--color-ouro)" /> Desafios Olímpicos da Carteira BRHSIC
               </h4>
-              <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.2rem' }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
                 Ajuste os sliders para cumprir os requisitos de alocação de um analista de investimentos de elite.
               </p>
             </div>
@@ -714,62 +714,62 @@ function SimuladorCarteiraInvestimentos() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: challenges.c1 ? '1px solid var(--color-verde-dark)' : '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: challenges.c1 ? '1px solid var(--color-verde-dark)' : '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <strong style={{ color: challenges.c1 ? 'var(--color-verde-dark)' : 'var(--foreground)', fontSize: '0.95rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <strong style={{ color: challenges.c1 ? 'var(--color-verde-dark)' : 'var(--text-primary)', fontSize: '0.95rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   <BfaIcon name={challenges.c1 ? "check" : "circle"} size={14} />
                   <span>Missão 1: Batedor de Inflação</span>
                 </strong>
-                <p style={{ fontSize: '0.82rem', color: 'var(--muted-foreground)', margin: '0.2rem 0 0 0' }}>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>
                   Obtenha retorno real acima de 5.0% ao ano mantendo volatilidade moderada (&le; 10%). (Atual: {portfolioMetrics.realReturn.toFixed(1)}% real / {portfolioMetrics.portfolioVolatility.toFixed(1)}% vol)
                 </p>
               </div>
-              <span style={{ fontWeight: 700, color: challenges.c1 ? 'var(--color-verde-dark)' : 'var(--muted-foreground)', fontSize: '0.85rem' }}>
+              <span style={{ fontWeight: 700, color: challenges.c1 ? 'var(--color-verde-dark)' : 'var(--text-secondary)', fontSize: '0.85rem' }}>
                 {challenges.c1 ? 'Desbloqueado' : 'Pendente'}
               </span>
             </div>
 
-            <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: challenges.c2 ? '1px solid var(--color-verde-dark)' : '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: challenges.c2 ? '1px solid var(--color-verde-dark)' : '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <strong style={{ color: challenges.c2 ? 'var(--color-verde-dark)' : 'var(--foreground)', fontSize: '0.95rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <strong style={{ color: challenges.c2 ? 'var(--color-verde-dark)' : 'var(--text-primary)', fontSize: '0.95rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   <BfaIcon name={challenges.c2 ? "check" : "circle"} size={14} />
                   <span>Missão 2: Máquina de Renda Passiva</span>
                 </strong>
-                <p style={{ fontSize: '0.82rem', color: 'var(--muted-foreground)', margin: '0.2rem 0 0 0' }}>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>
                   Construa uma carteira com Dividend Yield médio ponderado de pelo menos 4.0% ao ano. (Atual: {portfolioMetrics.weightedDividendYield.toFixed(1)}% yield)
                 </p>
               </div>
-              <span style={{ fontWeight: 700, color: challenges.c2 ? 'var(--color-verde-dark)' : 'var(--muted-foreground)', fontSize: '0.85rem' }}>
+              <span style={{ fontWeight: 700, color: challenges.c2 ? 'var(--color-verde-dark)' : 'var(--text-secondary)', fontSize: '0.85rem' }}>
                 {challenges.c2 ? 'Desbloqueado' : 'Pendente'}
               </span>
             </div>
 
-            <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: challenges.c3 ? '1px solid var(--color-verde-dark)' : '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: challenges.c3 ? '1px solid var(--color-verde-dark)' : '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <strong style={{ color: challenges.c3 ? 'var(--color-verde-dark)' : 'var(--foreground)', fontSize: '0.95rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <strong style={{ color: challenges.c3 ? 'var(--color-verde-dark)' : 'var(--text-primary)', fontSize: '0.95rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   <BfaIcon name={challenges.c3 ? "check" : "circle"} size={14} />
                   <span>Missão 3: Alocador Global</span>
                 </strong>
-                <p style={{ fontSize: '0.82rem', color: 'var(--muted-foreground)', margin: '0.2rem 0 0 0' }}>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>
                   Aloque pelo menos 10% em Ativos Globais/Dólar e 15% em Ações Brasileiras. (Atual: {allocations.global || 0}% Global / {allocations.acoes || 0}% Ações)
                 </p>
               </div>
-              <span style={{ fontWeight: 700, color: challenges.c3 ? 'var(--color-verde-dark)' : 'var(--muted-foreground)', fontSize: '0.85rem' }}>
+              <span style={{ fontWeight: 700, color: challenges.c3 ? 'var(--color-verde-dark)' : 'var(--text-secondary)', fontSize: '0.85rem' }}>
                 {challenges.c3 ? 'Desbloqueado' : 'Pendente'}
               </span>
             </div>
 
-            <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: challenges.c4 ? '1px solid var(--color-verde-dark)' : '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: challenges.c4 ? '1px solid var(--color-verde-dark)' : '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <strong style={{ color: challenges.c4 ? 'var(--color-verde-dark)' : 'var(--foreground)', fontSize: '0.95rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <strong style={{ color: challenges.c4 ? 'var(--color-verde-dark)' : 'var(--text-primary)', fontSize: '0.95rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   <BfaIcon name={challenges.c4 ? "check" : "circle"} size={14} />
                   <span>Missão 4: Eficiência de Sharpe Olímpica</span>
                 </strong>
-                <p style={{ fontSize: '0.82rem', color: 'var(--muted-foreground)', margin: '0.2rem 0 0 0' }}>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>
                   Atinja um Índice de Sharpe &ge; 0.25 (otimização entre retorno excedente e risco). (Atual: {portfolioMetrics.sharpeRatio.toFixed(2)})
                 </p>
               </div>
-              <span style={{ fontWeight: 700, color: challenges.c4 ? 'var(--color-verde-dark)' : 'var(--muted-foreground)', fontSize: '0.85rem' }}>
+              <span style={{ fontWeight: 700, color: challenges.c4 ? 'var(--color-verde-dark)' : 'var(--text-secondary)', fontSize: '0.85rem' }}>
                 {challenges.c4 ? 'Desbloqueado' : 'Pendente'}
               </span>
             </div>
