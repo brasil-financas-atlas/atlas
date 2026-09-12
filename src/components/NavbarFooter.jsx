@@ -1,4 +1,5 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+const BfaIcon = window.BfaIcon || (() => null);
 
 function Navbar() {
   const { studentAuth, completedLessons, quizScores } = useContext(window.ProgressContext || createContext({}));
@@ -80,14 +81,16 @@ function Navbar() {
     <>
       <header className="site-header" style={{ boxShadow: '0 4px 20px -5px rgba(15, 23, 42, 0.05)' }}>
       <div className="site-header__container">
-        <a href="#/" className="site-logo" style={{ textDecoration: 'none' }}>
-          <div className="site-logo__badge" style={{ background: 'linear-gradient(135deg, #059669 0%, #0F172A 100%)', boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)', color: '#FFFFFF' }}>BFA</div>
+        <a href="#/" className="site-logo" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div className="site-logo__badge" style={{ background: 'var(--primary)', color: '#FFFFFF', padding: '0.5rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.9rem' }}>
+            <BfaIcon name="bar-chart-2" size={16} color="#FFFFFF" />
+          </div>
           <div>
-            <span style={{ display: 'block', fontSize: '0.95rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.02em' }}>
-              Brasil Finanças Atlas
+            <span style={{ display: 'block', fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.02em', fontFamily: 'var(--font-display)' }}>
+              <strong>BRHSIC</strong> <span style={{ fontWeight: 400, opacity: 0.9 }}>Academy</span>
             </span>
-            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600, fontSize: '0.72rem', display: 'inline-flex', alignItems: 'center', gap: '4px', letterSpacing: '0.04em' }}>
-              Educação Financeira & Matemática Aplicada
+            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600, fontSize: '0.72rem', display: 'inline-flex', alignItems: 'center', gap: '4px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+              Plataforma de Ensino
             </span>
           </div>
         </a>
