@@ -220,16 +220,16 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
 
   const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
   if (!subjectData) {
-    return <div className="bfa-container" style={{ padding: '4rem 1.5rem' }}>Disciplina não encontrada.</div>;
+    return <div className="site-container" style={{ padding: '4rem 1.5rem' }}>Disciplina não encontrada.</div>;
   }
 
   const moduloObj = subjectData.modulos.find(m => m.slug === moduloSlug);
   if (!moduloObj) {
-    return <div className="bfa-container" style={{ padding: '4rem 1.5rem' }}>Módulo não encontrado.</div>;
+    return <div className="site-container" style={{ padding: '4rem 1.5rem' }}>Módulo não encontrado.</div>;
   }
 
   const isMatematica = subjectKey === 'matematica';
-  const trackColor = isMatematica ? 'var(--track-math)' : 'var(--track-finance)';
+  const trackColor = isMatematica ? 'var(--primary)' : 'var(--primary)';
 
   const modCompletedCount = moduloObj.aulas.filter(a => completedLessons && completedLessons.includes(`${subjectKey}-${moduloObj.slug}-${a.slug}`)).length;
   const modTotalCount = moduloObj.aulas.length;
@@ -238,42 +238,44 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
   const firstAula = moduloObj.aulas[0];
 
   return (
-    <div className="aula-layout">
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
       {/* Mobile Sidebar Backdrop */}
       {sidebarOpen && (
         <div
-          className="aula-sidebar-backdrop"
           onClick={() => setSidebarOpen(false)}
           aria-hidden="true"
+          style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 40 }}
         />
       )}
 
       {/* Sidebar - Curriculum Tree */}
-      <aside className={`aula-sidebar ${!sidebarOpen ? 'closed' : ''}`} style={{ borderRight: '1px solid var(--border)', background: 'var(--card)' }}>
-        <div style={{ padding: '0.85rem 1rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <a href={`#/${subjectKey}`} className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.75rem', textDecoration: 'none' }}>
+      <aside style={{
+        position: sidebarOpen && typeof window !== 'undefined' && window.innerWidth < 768 ? 'fixed' : 'relative',
+        zIndex: 50,
+        display: sidebarOpen ? 'block' : 'none',
+        width: '320px',
+        flexShrink: 0,
+        height: '100vh',
+        overflowY: 'auto',
+        borderRight: '1px solid var(--border-color)',
+        backgroundColor: 'var(--bg-surface)'
+      }}>
+        <div style={{ padding: '1rem', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, backgroundColor: 'var(--bg-surface)', zIndex: 10 }}>
+          <a href={`#/${subjectKey}`} style={{ color: trackColor, fontWeight: 700, fontSize: '0.875rem', textDecoration: 'none' }}>
             ← Voltar para {isMatematica ? 'Matemática' : 'Finanças'}
           </a>
-          <button
-            type="button"
-            onClick={() => setSidebarOpen(false)}
-            className="aula-sidebar-close-btn"
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: 'var(--muted-foreground)',
-              fontSize: '1.1rem',
-              cursor: 'pointer',
-              padding: '0.2rem 0.4rem',
-              lineHeight: 1
-            }}
-            aria-label="Fechar menu"
-          >
-            <BfaIcon name="close" size={14} />
-          </button>
+          {typeof window !== 'undefined' && window.innerWidth < 768 && (
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(false)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.25rem' }}
+            >
+              ✕
+            </button>
+          )}
         </div>
 
-        <div className="aula-sidebar-content" style={{ padding: '0.75rem 0.65rem' }}>
+        <div style={{ padding: '1rem' }}>
           {subjectData.modulos.map((m, idx) => {
             const isCurrentMod = m.slug === moduloSlug;
             const isExpanded = !!expandedMods[m.slug];
@@ -285,49 +287,42 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
               <div
                 key={m.slug}
                 style={{
-                  marginBottom: '0.65rem',
-                  border: isCurrentMod ? `1px solid ${trackColor}40` : '1px solid var(--border)',
+                  marginBottom: '1rem',
+                  border: isCurrentMod ? `1px solid var(--primary)` : '1px solid var(--border-color)',
                   borderRadius: 'var(--radius-md)',
-                  background: isCurrentMod ? 'var(--surface-strong)' : 'var(--card)',
-                  overflow: 'hidden',
-                  transition: 'border-color 0.2s ease'
+                  backgroundColor: 'var(--bg-app)',
+                  overflow: 'hidden'
                 }}
               >
                 {/* Module Header Bar Accordion */}
                 <div
                   onClick={() => setExpandedMods(prev => ({ ...prev, [m.slug]: !prev[m.slug] }))}
                   style={{
-                    padding: '0.65rem 0.75rem',
+                    padding: '1rem',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     cursor: 'pointer',
-                    userSelect: 'none',
-                    borderBottom: isExpanded ? '1px solid var(--border)' : 'none',
-                    background: isCurrentMod ? 'rgba(255, 255, 255, 0.03)' : 'transparent'
+                    borderBottom: isExpanded ? '1px solid var(--border-color)' : 'none',
+                    backgroundColor: isCurrentMod ? 'var(--bg-surface-blue)' : 'transparent'
                   }}
                 >
-                  <div style={{ minWidth: 0 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <span className="mono-tag" style={{ color: isCurrentMod ? trackColor : 'var(--muted-foreground)', fontSize: '0.65rem', fontWeight: 800 }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <span style={{ color: isCurrentMod ? trackColor : 'var(--text-secondary)', fontSize: '0.75rem', fontWeight: 600 }}>
                         MÓDULO {idx + 1}
                       </span>
-                      {isCurrentMod && (
-                        <span className="mono-tag" style={{ color: trackColor, background: 'rgba(56, 189, 248, 0.1)', fontSize: '0.62rem', fontWeight: 700, padding: '0.1rem 0.35rem' }}>
-                          Ativo
-                        </span>
-                      )}
                     </div>
-                    <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '4px' }}>
                       {m.titulo}
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0, marginLeft: '0.5rem' }}>
-                    <span className="mono-tag" style={{ color: isAllDone ? '#059669' : 'var(--muted-foreground)', fontSize: '0.68rem', fontWeight: 700 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <span style={{ color: isAllDone ? 'var(--accent-green)' : 'var(--text-muted)', fontSize: '0.75rem', fontWeight: 600 }}>
                       {mCompletedCount}/{mTotalCount}
                     </span>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--muted-foreground)', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease', display: 'inline-block' }}>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }}>
                       ▶
                     </span>
                   </div>
@@ -335,35 +330,24 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
 
                 {/* Expanded Module Content */}
                 {isExpanded && (
-                  <div style={{ padding: '0.35rem 0.4rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
                     {/* Link da Introdução do Módulo */}
                     <a
                       href={`#/${subjectKey}/${m.slug}`}
-                      onClick={() => {
-                        if (typeof window !== 'undefined' && window.innerWidth < 768) {
-                          setSidebarOpen(false);
-                        }
-                      }}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        fontSize: '0.78rem',
-                        fontWeight: isCurrentMod ? 800 : 600,
-                        backgroundColor: isCurrentMod ? 'var(--card)' : 'transparent',
+                        fontSize: '0.875rem',
+                        fontWeight: isCurrentMod ? 600 : 500,
+                        backgroundColor: isCurrentMod ? 'var(--bg-surface)' : 'transparent',
                         borderLeft: isCurrentMod ? `3px solid ${trackColor}` : '3px solid transparent',
-                        boxShadow: isCurrentMod ? '0 1px 4px rgba(0, 0, 0, 0.08)' : 'none',
-                        color: isCurrentMod ? 'var(--foreground)' : 'var(--muted-foreground)',
-                        padding: '0.4rem 0.6rem',
-                        borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+                        color: isCurrentMod ? 'var(--text-primary)' : 'var(--text-secondary)',
+                        padding: '0.75rem 1rem',
                         textDecoration: 'none'
                       }}
                     >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <BfaIcon name="book" size={12} color={isCurrentMod ? trackColor : 'var(--muted-foreground)'} />
-                        <span>Introdução & Ementa</span>
-                      </div>
-                      {isCurrentMod && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: trackColor }} />}
+                      Introdução & Ementa
                     </a>
 
                     {/* Aulas do Módulo */}
@@ -375,35 +359,26 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                         <a
                           key={a.slug}
                           href={`#/${subjectKey}/${m.slug}/${a.slug}`}
-                          onClick={() => {
-                            if (typeof window !== 'undefined' && window.innerWidth < 768) {
-                              setSidebarOpen(false);
-                            }
-                          }}
                           style={{
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            fontSize: '0.82rem',
+                            fontSize: '0.875rem',
                             fontWeight: 500,
-                            backgroundColor: 'transparent',
                             borderLeft: '3px solid transparent',
-                            color: 'var(--muted-foreground)',
-                            padding: '0.45rem 0.6rem',
-                            borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+                            color: 'var(--text-secondary)',
+                            padding: '0.75rem 1rem',
                             textDecoration: 'none',
-                            transition: 'all 0.15s ease'
+                            borderTop: '1px solid var(--border-color)'
                           }}
                         >
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
-                            <span className="tabular-numbers" style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                               {String(aIdx + 1).padStart(2, '0')}
                             </span>
-                            <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.titulo}</span>
+                            <span>{a.titulo}</span>
                           </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0, marginLeft: '0.4rem' }}>
-                            {itemDone && <span className="mono-tag" style={{ color: '#059669', fontSize: '0.65rem', fontWeight: 800 }}><BfaIcon name="check" size={10} color="#059669" /></span>}
-                          </div>
+                          {itemDone && <span style={{ color: 'var(--accent-green)', fontSize: '1rem' }}>✓</span>}
                         </a>
                       );
                     })}
@@ -416,71 +391,61 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
       </aside>
 
       {/* Main Content Area */}
-      <main className="aula-main" style={{ minWidth: 0, padding: '2.5rem 3rem' }}>
+      <main style={{ flex: 1, minWidth: 0, padding: '3rem 4rem', backgroundColor: 'var(--bg-app)', height: '100vh', overflowY: 'auto' }}>
         
         {/* Top Header Navigation */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid var(--border)', paddingBottom: '1.25rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <button
               type="button"
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="bfa-btn"
-              style={{
-                cursor: 'pointer',
-                border: '1px solid var(--border)',
-                background: 'var(--surface-strong)',
-                color: 'var(--foreground)',
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                padding: '0.45rem 0.85rem',
-                borderRadius: 'var(--radius-sm)'
-              }}
+              className="btn-secondary"
             >
               {sidebarOpen ? 'Ocultar Trilha' : 'Ver Trilha'}
             </button>
-            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.78rem' }}>
-              <a href={`#/${subjectKey}`} style={{ color: 'inherit', textDecoration: 'none' }}>{isMatematica ? 'Matemática' : 'Finanças'}</a> / <strong style={{ color: 'var(--foreground)' }}>{moduloObj.titulo}</strong> / Introdução
+            <span style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+              <a href={`#/${subjectKey}`} style={{ color: 'inherit', textDecoration: 'none' }}>{isMatematica ? 'Matemática' : 'Finanças'}</a> / <strong style={{ color: 'var(--text-primary)' }}>{moduloObj.titulo}</strong> / Introdução
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <span className="mono-tag" style={{ color: modProgress === 100 ? '#059669' : 'var(--muted-foreground)', fontWeight: 700 }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ color: modProgress === 100 ? 'var(--accent-green)' : 'var(--text-muted)', fontWeight: 600, fontSize: '0.875rem' }}>
               Progresso do Módulo: {modCompletedCount}/{modTotalCount} ({modProgress}%)
             </span>
           </div>
         </div>
 
         {/* Briefing Card do Módulo */}
-        <div className="bfa-tech-card" style={{ marginBottom: '2.5rem', padding: '2rem', borderTop: `4px solid ${trackColor}` }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.5rem' }}>
-            <span className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.75rem' }}>
+        <div style={{ marginBottom: '3rem', padding: '2.5rem', backgroundColor: 'var(--bg-surface)', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-color)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+            <span style={{ color: trackColor, fontWeight: 700, fontSize: '0.75rem', padding: '0.25rem 0.75rem', backgroundColor: 'var(--bg-surface-blue)', borderRadius: '999px' }}>
               INTRODUÇÃO DO MÓDULO
             </span>
-            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600 }}>
+            <span style={{ color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.875rem' }}>
               {moduloObj.aulas.length} Aulas com Exercícios
             </span>
           </div>
-          <h1 className="headline-punch" style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em', margin: '0.25rem 0 0.75rem 0' }}>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', margin: '0 0 1rem 0' }}>
             {moduloObj.titulo}
           </h1>
-          <p style={{ fontSize: '1rem', color: 'var(--muted-foreground)', margin: 0, lineHeight: 1.6 }}>
+          <p style={{ fontSize: '1.125rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.6, maxWidth: '800px' }}>
             Visão geral da ementa, objetivos de aprendizagem, pré-requisitos e roteiro de estudos recomendado.
           </p>
         </div>
 
         {/* Artigo Markdown de Introdução (Exatamente como o MkDocs index.md) */}
-        <article className="bfa-lesson-article" style={{ fontSize: '1.05rem', lineHeight: 1.85 }}>
+        <article style={{ fontSize: '1.125rem', lineHeight: 1.8, color: 'var(--text-primary)', maxWidth: '800px' }}>
           <LessonContent markdownContent={moduloObj.index || moduloObj.indexContent || ""} lessonId={`intro-${moduloSlug}`} />
         </article>
 
         {/* Grade de Aulas do Módulo */}
-        <div style={{ marginTop: '3.5rem', paddingTop: '2.5rem', borderTop: '1px solid var(--border)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+        <div style={{ marginTop: '4rem', paddingTop: '3rem', borderTop: '1px solid var(--border-color)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <h2 className="headline-punch" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.02em', margin: 0 }}>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', margin: 0 }}>
                 Aulas Disponíveis neste Módulo
               </h2>
-              <p style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', margin: '0.25rem 0 0 0' }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', margin: '0.5rem 0 0 0' }}>
                 Estude na ordem recomendada para melhor assimilação dos conceitos.
               </p>
             </div>
@@ -488,15 +453,14 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
             {firstAula && (
               <a
                 href={`#/${subjectKey}/${moduloSlug}/${firstAula.slug}`}
-                className="bfa-btn bfa-btn--verde"
-                style={{ padding: '0.75rem 1.5rem', fontSize: '0.95rem', fontWeight: 800, borderRadius: 'var(--radius-md)', textDecoration: 'none' }}
+                className="btn-primary"
               >
                 Começar Módulo: Aula 1 →
               </a>
             )}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
             {moduloObj.aulas.map((aula, aIdx) => {
               const lessonId = `${subjectKey}-${moduloSlug}-${aula.slug}`;
               const isDone = completedLessons && completedLessons.includes(lessonId);
@@ -509,29 +473,28 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '1.15rem 1.35rem',
+                    padding: '1.25rem 1.5rem',
                     borderRadius: 'var(--radius-md)',
-                    border: isDone ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border)',
-                    background: isDone ? 'rgba(16, 185, 129, 0.05)' : 'var(--surface-strong)',
+                    border: isDone ? '1px solid var(--accent-green)' : '1px solid var(--border-color)',
+                    background: isDone ? 'rgba(0, 196, 140, 0.05)' : 'var(--bg-surface)',
                     transition: 'all 0.2s ease',
                     textDecoration: 'none'
                   }}
-                  className="card-lift"
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-                    <span className="tabular-numbers" style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--muted-foreground)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                       {String(aIdx + 1).padStart(2, '0')}
                     </span>
-                    <span style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                    <span style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                       {aula.titulo}
                     </span>
                   </div>
                   {isDone ? (
-                    <span className="mono-tag" style={{ color: '#059669', background: '#ECFDF5', padding: '0.25rem 0.55rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.75rem' }}>
+                    <span style={{ color: 'var(--accent-green)', background: '#E6F9F3', padding: '0.25rem 0.75rem', borderRadius: '999px', fontWeight: 600, fontSize: '0.75rem' }}>
                       Concluída
                     </span>
                   ) : (
-                    <span style={{ color: 'var(--muted-foreground)', fontSize: '0.95rem' }}>→</span>
+                    <span style={{ color: 'var(--text-muted)', fontSize: '1rem' }}>→</span>
                   )}
                 </a>
               );
@@ -540,11 +503,10 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
         </div>
 
         {/* Rodapé de Navegação */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4rem', paddingTop: '1.75rem', borderTop: '1px solid var(--border)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5rem', paddingTop: '2rem', borderTop: '1px solid var(--border-color)' }}>
           <a
             href={`#/${subjectKey}`}
-            className="bfa-btn bfa-btn--secondary-glass"
-            style={{ textDecoration: 'none', padding: '0.65rem 1.25rem', fontSize: '0.88rem' }}
+            className="btn-secondary"
           >
             ← Voltar para a Trilha Completa
           </a>
@@ -552,8 +514,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
           {firstAula && (
             <a
               href={`#/${subjectKey}/${moduloSlug}/${firstAula.slug}`}
-              className="bfa-btn bfa-btn--verde"
-              style={{ textDecoration: 'none', padding: '0.65rem 1.35rem', fontSize: '0.88rem', fontWeight: 700 }}
+              className="btn-primary"
             >
               Ir para Aula 1: {firstAula.titulo} →
             </a>
