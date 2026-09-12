@@ -112,39 +112,39 @@ function VisualizadorJurosCompostos() {
   }, [dadosCalculados]);
 
   return (
-    <div className="bfa-tech-card" style={{ padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid var(--track-finance)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+    <div className="module-card" style={{ backgroundColor: 'var(--bg-app)',  padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid var(--track-finance)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
         <div>
           <span className="mono-tag" style={{ color: 'var(--track-finance)', fontWeight: 800, fontSize: '0.75rem' }}>
             SIMULAÇÃO INTERATIVA DE CAPITALIZAÇÃO
           </span>
-          <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.2rem 0 0 0' }}>
+          <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0.2rem 0 0 0' }}>
             O Poder dos Juros Compostos no Tempo
           </h3>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '1rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1.15rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '1rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1.15rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Capital Inicial: <strong>R$ {capital.toLocaleString('pt-BR')}</strong>
           </label>
           <input type="range" min="0" max="50000" step="500" value={capital} onChange={e => setCapital(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Aporte Mensal: <strong>R$ {aporte.toLocaleString('pt-BR')}</strong>
           </label>
           <input type="range" min="0" max="5000" step="50" value={aporte} onChange={e => setAporte(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Taxa Anual: <strong>{taxaAnual}% a.a.</strong>
           </label>
           <input type="range" min="2" max="25" step="0.5" value={taxaAnual} onChange={e => setTaxaAnual(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Prazo: <strong>{anos} anos</strong>
           </label>
           <input type="range" min="1" max="40" step="1" value={anos} onChange={e => setAnos(Number(e.target.value))} style={{ width: '100%' }} />
@@ -152,9 +152,9 @@ function VisualizadorJurosCompostos() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1.5rem' }}>
-        <div style={{ padding: '0.85rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)', fontWeight: 600 }}>Total Investido</div>
-          <div className="tabular-numbers" style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '0.2rem' }}>
+        <div style={{ padding: '0.85rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Total Investido</div>
+          <div className="tabular-numbers" style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginTop: '0.2rem' }}>
             R$ {dadosCalculados.totalAportado.toLocaleString('pt-BR')}
           </div>
         </div>
@@ -164,9 +164,9 @@ function VisualizadorJurosCompostos() {
             R$ {dadosCalculados.jurosGanhos.toLocaleString('pt-BR')}
           </div>
         </div>
-        <div style={{ padding: '0.85rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)', fontWeight: 600 }}>Montante Final</div>
-          <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '0.2rem' }}>
+        <div style={{ padding: '0.85rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Montante Final</div>
+          <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', marginTop: '0.2rem' }}>
             R$ {dadosCalculados.montanteFinal.toLocaleString('pt-BR')}
           </div>
         </div>
@@ -259,25 +259,25 @@ function VisualizadorDistribuicaoNormal() {
   }, [dadosGauss]);
 
   return (
-    <div className="bfa-tech-card" style={{ padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid var(--track-math)' }}>
-      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+    <div className="module-card" style={{ backgroundColor: 'var(--bg-app)',  padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid var(--track-math)' }}>
+      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
         <span className="mono-tag" style={{ color: 'var(--track-math)', fontWeight: 800, fontSize: '0.75rem' }}>
           MODELO ESTATÍSTICO DE RISCO (GAUSS)
         </span>
-        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.2rem 0 0 0' }}>
+        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0.2rem 0 0 0' }}>
           Dispersão, Desvio Padrão e Regra Empírica
         </h3>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1.15rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1.15rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Retorno Médio Esperado (μ): <strong>{media}% ao ano</strong>
           </label>
           <input type="range" min="-10" max="30" step="1" value={media} onChange={e => setMedia(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Volatilidade / Desvio Padrão (σ): <strong>{desvioPadrao}% ao ano</strong>
           </label>
           <input type="range" min="3" max="40" step="1" value={desvioPadrao} onChange={e => setDesvioPadrao(Number(e.target.value))} style={{ width: '100%' }} />
@@ -287,18 +287,18 @@ function VisualizadorDistribuicaoNormal() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem' }}>
         <div style={{ padding: '0.85rem', background: 'rgba(37, 99, 235, 0.08)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(37, 99, 235, 0.25)' }}>
           <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--track-math)' }}>Faixa de 68.3% (±1σ)</div>
-          <div className="tabular-numbers" style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '0.2rem' }}>
+          <div className="tabular-numbers" style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)', marginTop: '0.2rem' }}>
             {dadosGauss.faixa1sMin}% a {dadosGauss.faixa1sMax}%
           </div>
-          <div style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)', marginTop: '0.15rem' }}>Em ~2 de cada 3 anos o retorno cai nesta faixa</div>
+          <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '0.15rem' }}>Em ~2 de cada 3 anos o retorno cai nesta faixa</div>
         </div>
 
         <div style={{ padding: '0.85rem', background: 'rgba(234, 179, 8, 0.08)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(234, 179, 8, 0.25)' }}>
           <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#CA8A04' }}>Faixa de 95.4% (±2σ)</div>
-          <div className="tabular-numbers" style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '0.2rem' }}>
+          <div className="tabular-numbers" style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)', marginTop: '0.2rem' }}>
             {dadosGauss.faixa2sMin}% a {dadosGauss.faixa2sMax}%
           </div>
-          <div style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)', marginTop: '0.15rem' }}>Faixa de segurança estatística extrema</div>
+          <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '0.15rem' }}>Faixa de segurança estatística extrema</div>
         </div>
       </div>
 
@@ -344,20 +344,20 @@ function VisualizadorDREWaterfall() {
   }, [receitaBruta, impostosPct, cpvPct, despesasPct, daPct, jurosPct]);
 
   return (
-    <div className="bfa-tech-card" style={{ padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid var(--track-finance)' }}>
-      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+    <div className="module-card" style={{ backgroundColor: 'var(--bg-app)',  padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid var(--track-finance)' }}>
+      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
         <span className="mono-tag" style={{ color: 'var(--track-finance)', fontWeight: 800, fontSize: '0.75rem' }}>
           ANÁLISE CONTÁBIL & DEMONSTRAÇÃO DE RESULTADOS
         </span>
-        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.2rem 0 0 0' }}>
+        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0.2rem 0 0 0' }}>
           Cascata de Formação do Lucro (DRE Interativa)
         </h3>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1.5rem' }}>
-        <div style={{ padding: '0.85rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Margem Bruta</div>
-          <div className="tabular-numbers" style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '0.2rem' }}>
+        <div style={{ padding: '0.85rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Margem Bruta</div>
+          <div className="tabular-numbers" style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginTop: '0.2rem' }}>
             {dre.margemBruta}%
           </div>
         </div>
@@ -375,30 +375,30 @@ function VisualizadorDREWaterfall() {
         </div>
       </div>
 
-      <div style={{ background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', overflowX: 'auto' }}>
+      <div style={{ background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
           <tbody>
-            <tr style={{ borderBottom: '1px solid var(--border)' }}>
+            <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
               <td style={{ padding: '0.65rem 1rem', fontWeight: 700 }}>Receita Operacional Bruta</td>
               <td className="tabular-numbers" style={{ padding: '0.65rem 1rem', textAlign: 'right', fontWeight: 800 }}>R$ {dre.receitaBruta.toFixed(1)}M</td>
             </tr>
-            <tr style={{ borderBottom: '1px solid var(--border)', color: 'var(--muted-foreground)' }}>
+            <tr style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
               <td style={{ padding: '0.5rem 1rem' }}>(-) Impostos sobre Vendas ({impostosPct}%)</td>
               <td className="tabular-numbers" style={{ padding: '0.5rem 1rem', textAlign: 'right' }}>- R$ {dre.impostos.toFixed(1)}M</td>
             </tr>
-            <tr style={{ borderBottom: '1px solid var(--border)', background: 'rgba(15, 23, 42, 0.03)', fontWeight: 700 }}>
+            <tr style={{ borderBottom: '1px solid var(--border-color)', background: 'rgba(15, 23, 42, 0.03)', fontWeight: 700 }}>
               <td style={{ padding: '0.65rem 1rem' }}>(=) Receita Operacional Líquida</td>
               <td className="tabular-numbers" style={{ padding: '0.65rem 1rem', textAlign: 'right' }}>R$ {dre.recLiquida.toFixed(1)}M</td>
             </tr>
-            <tr style={{ borderBottom: '1px solid var(--border)', color: 'var(--muted-foreground)' }}>
+            <tr style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
               <td style={{ padding: '0.5rem 1rem' }}>(-) CPV (Custo das Vendas) ({cpvPct}%)</td>
               <td className="tabular-numbers" style={{ padding: '0.5rem 1rem', textAlign: 'right' }}>- R$ {dre.cpv.toFixed(1)}M</td>
             </tr>
-            <tr style={{ borderBottom: '1px solid var(--border)', fontWeight: 700 }}>
+            <tr style={{ borderBottom: '1px solid var(--border-color)', fontWeight: 700 }}>
               <td style={{ padding: '0.65rem 1rem' }}>(=) Lucro Bruto</td>
               <td className="tabular-numbers" style={{ padding: '0.65rem 1rem', textAlign: 'right' }}>R$ {dre.lucroBruto.toFixed(1)}M</td>
             </tr>
-            <tr style={{ borderBottom: '1px solid var(--border)', background: 'rgba(37, 99, 235, 0.06)', fontWeight: 800, color: 'var(--track-math)' }}>
+            <tr style={{ borderBottom: '1px solid var(--border-color)', background: 'rgba(37, 99, 235, 0.06)', fontWeight: 800, color: 'var(--track-math)' }}>
               <td style={{ padding: '0.65rem 1rem' }}>(=) EBITDA (Geração de Caixa)</td>
               <td className="tabular-numbers" style={{ padding: '0.65rem 1rem', textAlign: 'right' }}>R$ {dre.ebitda.toFixed(1)}M</td>
             </tr>
@@ -432,48 +432,48 @@ function VisualizadorBalancoPatrimonial() {
   const endividamento = ((totalPassivo / totalAtivo) * 100).toFixed(1);
 
   return (
-    <div className="bfa-tech-card" style={{ padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid var(--track-finance)' }}>
-      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+    <div className="module-card" style={{ backgroundColor: 'var(--bg-app)',  padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid var(--track-finance)' }}>
+      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
         <span className="mono-tag" style={{ color: 'var(--track-finance)', fontWeight: 800, fontSize: '0.75rem' }}>
           ESTRUTURA PATRIMONIAL & EQUAÇÃO FUNDAMENTAL
         </span>
-        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.2rem 0 0 0' }}>
+        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0.2rem 0 0 0' }}>
           Balanço Patrimonial Interativo (Ativo = Passivo + PL)
         </h3>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
         <div>
-          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.2rem' }}>Caixa: R$ {caixa}M</label>
+          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.2rem' }}>Caixa: R$ {caixa}M</label>
           <input type="range" min="5" max="100" step="5" value={caixa} onChange={e => setCaixa(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.2rem' }}>Estoques: R$ {estoque}M</label>
+          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.2rem' }}>Estoques: R$ {estoque}M</label>
           <input type="range" min="10" max="100" step="5" value={estoque} onChange={e => setEstoque(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.2rem' }}>Imobilizado: R$ {imobilizado}M</label>
+          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.2rem' }}>Imobilizado: R$ {imobilizado}M</label>
           <input type="range" min="20" max="250" step="10" value={imobilizado} onChange={e => setImobilizado(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.2rem' }}>Dívida CP: R$ {passivoCirculante}M</label>
+          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.2rem' }}>Dívida CP: R$ {passivoCirculante}M</label>
           <input type="range" min="10" max="120" step="5" value={passivoCirculante} onChange={e => setPassivoCirculante(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.2rem' }}>Dívida LP: R$ {passivoNaoCirculante}M</label>
+          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.2rem' }}>Dívida LP: R$ {passivoNaoCirculante}M</label>
           <input type="range" min="10" max="150" step="5" value={passivoNaoCirculante} onChange={e => setPassivoNaoCirculante(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem' }}>
-        <div style={{ padding: '0.75rem 1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)' }}>Liquidez Corrente (AC / PC)</div>
+        <div style={{ padding: '0.75rem 1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>Liquidez Corrente (AC / PC)</div>
           <div className="tabular-numbers" style={{ fontSize: '1.3rem', fontWeight: 800, color: Number(liquidezCorrente) >= 1 ? '#059669' : '#EF4444', marginTop: '0.2rem' }}>
             {liquidezCorrente}x
           </div>
         </div>
-        <div style={{ padding: '0.75rem 1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)' }}>Endividamento Geral</div>
+        <div style={{ padding: '0.75rem 1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>Endividamento Geral</div>
           <div className="tabular-numbers" style={{ fontSize: '1.3rem', fontWeight: 800, color: Number(endividamento) < 60 ? '#059669' : '#F59E0B', marginTop: '0.2rem' }}>
             {endividamento}%
           </div>
@@ -487,30 +487,30 @@ function VisualizadorBalancoPatrimonial() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
-        <div style={{ background: 'var(--surface-strong)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+        <div style={{ background: 'var(--surface-strong)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', borderBottom: '2px solid #059669', paddingBottom: '0.4rem' }}>
             <strong style={{ fontSize: '1.05rem', color: '#059669' }}>ATIVO TOTAL</strong>
-            <strong className="tabular-numbers" style={{ fontSize: '1.15rem', color: 'var(--foreground)' }}>R$ {totalAtivo}M</strong>
+            <strong className="tabular-numbers" style={{ fontSize: '1.15rem', color: 'var(--text-primary)' }}>R$ {totalAtivo}M</strong>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <div style={{ padding: '0.65rem 0.85rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ padding: '0.65rem 0.85rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between' }}>
               <span>Ativo Circulante</span>
               <strong className="tabular-numbers">R$ {ativoCirculante}M</strong>
             </div>
-            <div style={{ padding: '0.65rem 0.85rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ padding: '0.65rem 0.85rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between' }}>
               <span>Ativo Não Circulante</span>
               <strong className="tabular-numbers">R$ {ativoNaoCirculante}M</strong>
             </div>
           </div>
         </div>
 
-        <div style={{ background: 'var(--surface-strong)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+        <div style={{ background: 'var(--surface-strong)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', borderBottom: '2px solid #2563EB', paddingBottom: '0.4rem' }}>
             <strong style={{ fontSize: '1.05rem', color: '#2563EB' }}>PASSIVO + PL</strong>
-            <strong className="tabular-numbers" style={{ fontSize: '1.15rem', color: 'var(--foreground)' }}>R$ {totalPassivo + patrimonioLiquido}M</strong>
+            <strong className="tabular-numbers" style={{ fontSize: '1.15rem', color: 'var(--text-primary)' }}>R$ {totalPassivo + patrimonioLiquido}M</strong>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <div style={{ padding: '0.55rem 0.85rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ padding: '0.55rem 0.85rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between' }}>
               <span>Passivo Total (Dívidas)</span>
               <strong className="tabular-numbers">R$ {totalPassivo}M</strong>
             </div>
@@ -560,35 +560,35 @@ function VisualizadorDCFValuation() {
   }, [fcfInicial, crescimento5Anos, wacc, crescimentoPerpetuo, dividaLiquida, numAcoes]);
 
   return (
-    <div className="bfa-tech-card" style={{ padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid #059669' }}>
-      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+    <div className="module-card" style={{ backgroundColor: 'var(--bg-app)',  padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid #059669' }}>
+      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
         <span className="mono-tag" style={{ color: '#059669', fontWeight: 800, fontSize: '0.75rem' }}>
           EQUITY RESEARCH & VALUATION PROFISSIONAL
         </span>
-        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.2rem 0 0 0' }}>
+        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0.2rem 0 0 0' }}>
           Modelo DCF (Fluxo de Caixa Descontado) Interativo
         </h3>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
         <div>
-          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.2rem' }}>FCF Ano 0: R$ {fcfInicial}M</label>
+          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.2rem' }}>FCF Ano 0: R$ {fcfInicial}M</label>
           <input type="range" min="100" max="2000" step="50" value={fcfInicial} onChange={e => setFcfInicial(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.2rem' }}>Cresc. 5 Anos: {crescimento5Anos}% a.a.</label>
+          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.2rem' }}>Cresc. 5 Anos: {crescimento5Anos}% a.a.</label>
           <input type="range" min="2" max="30" step="1" value={crescimento5Anos} onChange={e => setCrescimento5Anos(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.2rem' }}>WACC: {wacc}%</label>
+          <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.2rem' }}>WACC: {wacc}%</label>
           <input type="range" min="8" max="18" step="0.5" value={wacc} onChange={e => setWacc(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem' }}>
-        <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Enterprise Value</div>
-          <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '0.2rem' }}>
+        <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Enterprise Value</div>
+          <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', marginTop: '0.2rem' }}>
             R$ {dcf.enterpriseValue.toLocaleString('pt-BR')}M
           </div>
         </div>
@@ -668,25 +668,25 @@ function VisualizadorRegressaoLinear() {
   }, [dadosRegressao]);
 
   return (
-    <div className="bfa-tech-card" style={{ padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid var(--track-math)' }}>
-      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+    <div className="module-card" style={{ backgroundColor: 'var(--bg-app)',  padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid var(--track-math)' }}>
+      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
         <span className="mono-tag" style={{ color: 'var(--track-math)', fontWeight: 800, fontSize: '0.75rem' }}>
           MODELAGEM ECONOMÉTRICA (OLS)
         </span>
-        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.2rem 0 0 0' }}>
+        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0.2rem 0 0 0' }}>
           Regressão Linear Interativa (y = α + βx)
         </h3>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1.15rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1.15rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Sensibilidade (β): <strong>{inclinacao.toFixed(2)}</strong>
           </label>
           <input type="range" min="0.2" max="2.5" step="0.05" value={inclinacao} onChange={e => setInclinacao(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Constante (α): <strong>{intercepto.toFixed(1)}</strong>
           </label>
           <input type="range" min="-2.0" max="8.0" step="0.5" value={intercepto} onChange={e => setIntercepto(Number(e.target.value))} style={{ width: '100%' }} />
@@ -711,25 +711,25 @@ function VisualizadorFracoesDecimais() {
   const porcentagem = ((numerador / denominador) * 100).toFixed(1);
 
   return (
-    <div className="bfa-tech-card" style={{ padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid #38BDF8' }}>
-      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+    <div className="module-card" style={{ backgroundColor: 'var(--bg-app)',  padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid #38BDF8' }}>
+      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
         <span className="mono-tag" style={{ color: '#38BDF8', fontWeight: 800, fontSize: '0.75rem' }}>
           EQUIVALÊNCIA MATEMÁTICA VISUAL
         </span>
-        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.2rem 0 0 0' }}>
+        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0.2rem 0 0 0' }}>
           Conversor Interativo: Fração ↔ Decimal ↔ Porcentagem
         </h3>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1.15rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1.15rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Numerador (partes que você tem): <strong>{numerador}</strong>
           </label>
           <input type="range" min="1" max={denominador} step="1" value={numerador} onChange={e => setNumerador(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Denominador (total de fatias): <strong>{denominador}</strong>
           </label>
           <input type="range" min="2" max="12" step="1" value={denominador} onChange={e => {
@@ -741,15 +741,15 @@ function VisualizadorFracoesDecimais() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1.5rem' }}>
-        <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Fração</div>
+        <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Fração</div>
           <div className="tabular-numbers" style={{ fontSize: '1.5rem', fontWeight: 800, color: '#38BDF8', marginTop: '0.2rem' }}>
             {numerador}/{denominador}
           </div>
         </div>
-        <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Decimal</div>
-          <div className="tabular-numbers" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '0.2rem' }}>
+        <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Decimal</div>
+          <div className="tabular-numbers" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', marginTop: '0.2rem' }}>
             {decimal}
           </div>
         </div>
@@ -761,12 +761,12 @@ function VisualizadorFracoesDecimais() {
         </div>
       </div>
 
-      <div style={{ background: 'var(--surface-strong)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+      <div style={{ background: 'var(--surface-strong)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 700 }}>
           <span>Preenchimento da Barra do Todo:</span>
           <span>{porcentagem}%</span>
         </div>
-        <div style={{ height: '24px', background: 'var(--card)', borderRadius: '999px', overflow: 'hidden', border: '1px solid var(--border)' }}>
+        <div style={{ height: '24px', background: 'var(--card)', borderRadius: '999px', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
           <div style={{ width: `${porcentagem}%`, height: '100%', background: 'linear-gradient(90deg, #38BDF8, #10B981)', transition: 'width 0.2s ease' }} />
         </div>
       </div>
@@ -785,25 +785,25 @@ function VisualizadorEquacaoFisher() {
   const juroRealAprox = (taxaNominal - inflacao).toFixed(2);
 
   return (
-    <div className="bfa-tech-card" style={{ padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid #F59E0B' }}>
-      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+    <div className="module-card" style={{ backgroundColor: 'var(--bg-app)',  padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid #F59E0B' }}>
+      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
         <span className="mono-tag" style={{ color: '#F59E0B', fontWeight: 800, fontSize: '0.75rem' }}>
           PODER DE COMPRA & EQUAÇÃO DE FISHER
         </span>
-        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.2rem 0 0 0' }}>
+        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0.2rem 0 0 0' }}>
           Rentabilidade Nominal vs. Juro Real Exato
         </h3>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1.15rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1.15rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Taxa Nominal da Aplicação: <strong>{taxaNominal}% a.a.</strong>
           </label>
           <input type="range" min="0" max="25" step="0.5" value={taxaNominal} onChange={e => setTaxaNominal(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Inflação (IPCA): <strong>{inflacao}% a.a.</strong>
           </label>
           <input type="range" min="0" max="20" step="0.5" value={inflacao} onChange={e => setInflacao(Number(e.target.value))} style={{ width: '100%' }} />
@@ -811,9 +811,9 @@ function VisualizadorEquacaoFisher() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.75rem' }}>
-        <div style={{ padding: '1.15rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Aproximação Ingênua (Nominal − IPCA)</div>
-          <div className="tabular-numbers" style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '0.2rem' }}>
+        <div style={{ padding: '1.15rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Aproximação Ingênua (Nominal − IPCA)</div>
+          <div className="tabular-numbers" style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-primary)', marginTop: '0.2rem' }}>
             {juroRealAprox}%
           </div>
         </div>
@@ -845,25 +845,25 @@ function VisualizadorTabelaRegressivaIR() {
   const lucroLiquido = (lucroBruto - impostoDevido).toFixed(2);
 
   return (
-    <div className="bfa-tech-card" style={{ padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid #10B981' }}>
-      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+    <div className="module-card" style={{ backgroundColor: 'var(--bg-app)',  padding: '1.75rem 2rem', margin: '2rem 0', borderTop: '4px solid #10B981' }}>
+      <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
         <span className="mono-tag" style={{ color: '#10B981', fontWeight: 800, fontSize: '0.75rem' }}>
           TRIBUTAÇÃO & RENTABILIDADE LÍQUIDA
         </span>
-        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.2rem 0 0 0' }}>
+        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0.2rem 0 0 0' }}>
           Tabela Regressiva de IR em Renda Fixa (CDB / Tesouro Direto)
         </h3>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1.15rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem', background: 'var(--surface-strong)', padding: '1.15rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Prazo da Aplicação: <strong>{dias} dias</strong> (~{(dias / 30).toFixed(0)} meses)
           </label>
           <input type="range" min="1" max="1000" step="15" value={dias} onChange={e => setDias(Number(e.target.value))} style={{ width: '100%' }} />
         </div>
         <div>
-          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--muted-foreground)', display: 'block', marginBottom: '0.35rem' }}>
+          <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
             Lucro Bruto Obtido: <strong>R$ {lucroBruto.toLocaleString('pt-BR')}</strong>
           </label>
           <input type="range" min="100" max="10000" step="100" value={lucroBruto} onChange={e => setLucroBruto(Number(e.target.value))} style={{ width: '100%' }} />
@@ -871,15 +871,15 @@ function VisualizadorTabelaRegressivaIR() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
-        <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Alíquota de IR</div>
+        <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Alíquota de IR</div>
           <div className="tabular-numbers" style={{ fontSize: '1.45rem', fontWeight: 800, color: '#EF4444', marginTop: '0.2rem' }}>
             {aliquota}%
           </div>
         </div>
-        <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>Imposto Retido</div>
-          <div className="tabular-numbers" style={{ fontSize: '1.45rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '0.2rem' }}>
+        <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Imposto Retido</div>
+          <div className="tabular-numbers" style={{ fontSize: '1.45rem', fontWeight: 800, color: 'var(--text-primary)', marginTop: '0.2rem' }}>
             - R$ {impostoDevido}
           </div>
         </div>
