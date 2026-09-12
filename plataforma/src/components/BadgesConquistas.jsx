@@ -149,17 +149,17 @@ function BadgesConquistas() {
         <h1 className="headline-punch" style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0.5rem 0' }}>
           Conquistas & Medalhas BRHSIC
         </h1>
-        <p style={{ color: 'var(--muted-foreground)', maxWidth: '650px', fontSize: '0.95rem', lineHeight: 1.6 }}>
+        <p style={{ color: 'var(--text-secondary)', maxWidth: '650px', fontSize: '0.95rem', lineHeight: 1.6 }}>
           Resolva simulados, alcance alta precisão e desbloqueie as credenciais oficiais que atestam seu domínio em finanças e matemática aplicada.
         </p>
 
         {/* Barra de Progresso Geral */}
-        <div style={{ marginTop: '1.5rem', background: 'var(--surface-strong)', padding: '1rem 1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', maxWidth: '500px' }}>
+        <div style={{ marginTop: '1.5rem', background: 'var(--bg-surface)', padding: '1rem 1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', maxWidth: '500px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 700, marginBottom: '0.5rem' }}>
             <span>Medalhas Conquistadas</span>
             <span style={{ color: 'var(--color-ouro)' }}>{unlockedCount} de {BADGES_LIST.length}</span>
           </div>
-          <div style={{ height: '8px', background: 'var(--border)', borderRadius: '9999px', overflow: 'hidden' }}>
+          <div style={{ height: '8px', background: 'var(--border-color)', borderRadius: '9999px', overflow: 'hidden' }}>
             <div style={{ width: `${(unlockedCount / BADGES_LIST.length) * 100}%`, height: '100%', background: 'var(--color-ouro)', transition: 'width 0.3s ease' }} />
           </div>
           <span style={{ fontSize: '0.75rem', color: 'var(--color-verde-dark)', fontWeight: 600 }}>
@@ -181,8 +181,8 @@ function BadgesConquistas() {
               style={{
                 padding: '1.5rem',
                 borderRadius: 'var(--radius-lg)',
-                border: isUnlocked ? `2px solid ${badge.color}` : '1px solid var(--border)',
-                background: isUnlocked ? 'var(--surface-strong)' : 'var(--card)',
+                border: isUnlocked ? `2px solid ${badge.color}` : '1px solid var(--border-color)',
+                background: isUnlocked ? 'var(--bg-surface)' : 'var(--bg-surface)',
                 opacity: isUnlocked ? 1 : 0.6,
                 cursor: 'pointer',
                 display: 'flex',
@@ -192,12 +192,12 @@ function BadgesConquistas() {
             >
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <span style={{ display: 'inline-flex', padding: '0.5rem', borderRadius: 'var(--radius-md)', background: isUnlocked ? `${badge.color}22` : 'var(--surface-strong)' }}>
+                  <span style={{ display: 'inline-flex', padding: '0.5rem', borderRadius: 'var(--radius-md)', background: isUnlocked ? `${badge.color}22` : 'var(--bg-surface)' }}>
                     <BfaIcon name={badge.iconName} size={28} color={badge.color} />
                   </span>
                   <span className="mono-tag" style={{
-                    color: isUnlocked ? badge.color : 'var(--muted-foreground)',
-                    background: isUnlocked ? 'rgba(255, 255, 255, 0.08)' : 'var(--border)',
+                    color: isUnlocked ? badge.color : 'var(--text-secondary)',
+                    background: isUnlocked ? 'rgba(255, 255, 255, 0.08)' : 'var(--border-color)',
                     padding: '0.2rem 0.5rem',
                     borderRadius: '4px',
                     fontWeight: 700,
@@ -210,15 +210,15 @@ function BadgesConquistas() {
                   </span>
                 </div>
 
-                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
                   {badge.title}
                 </h3>
-                <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', lineHeight: 1.5, marginBottom: '0.75rem' }}>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '0.75rem' }}>
                   {badge.desc}
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid var(--border)', paddingTop: '0.75rem', fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
+              <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '0.75rem', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                 <strong>Critério:</strong> {badge.criteria}
               </div>
             </div>
@@ -239,7 +239,7 @@ function BadgesConquistas() {
           padding: '1.5rem'
         }}>
           <div style={{
-            background: 'var(--card)',
+            background: 'var(--bg-surface)',
             maxWidth: '480px',
             width: '100%',
             padding: '2.5rem 2rem',
@@ -252,21 +252,21 @@ function BadgesConquistas() {
               <BfaIcon name={selectedBadge.iconName} size={48} color={selectedBadge.color} />
             </div>
             <div>
-              <span className="mono-tag" style={{ color: selectedBadge.color, background: 'var(--surface-strong)', padding: '0.25rem 0.65rem', borderRadius: '4px', fontWeight: 800 }}>
+              <span className="mono-tag" style={{ color: selectedBadge.color, background: 'var(--bg-surface)', padding: '0.25rem 0.65rem', borderRadius: '4px', fontWeight: 800 }}>
                 BRHSIC OFFICIAL BADGE
               </span>
             </div>
-            <h3 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.75rem 0 0.4rem 0' }}>
+            <h3 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0.75rem 0 0.4rem 0' }}>
               {selectedBadge.title}
             </h3>
-            <p style={{ fontSize: '0.9rem', color: 'var(--muted-foreground)', marginBottom: '1.5rem' }}>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
               {selectedBadge.desc}
             </p>
 
-            <div style={{ background: 'var(--surface-strong)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', marginBottom: '1.5rem', textAlign: 'left', fontSize: '0.82rem' }}>
-              <div style={{ color: 'var(--muted-foreground)', marginBottom: '0.2rem' }}>Concedido a:</div>
-              <strong style={{ color: 'var(--foreground)', fontSize: '0.95rem' }}>{studentName}</strong>
-              <div style={{ marginTop: '0.5rem', color: 'var(--muted-foreground)' }}>
+            <div style={{ background: 'var(--bg-surface)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', marginBottom: '1.5rem', textAlign: 'left', fontSize: '0.82rem' }}>
+              <div style={{ color: 'var(--text-secondary)', marginBottom: '0.2rem' }}>Concedido a:</div>
+              <strong style={{ color: 'var(--text-primary)', fontSize: '0.95rem' }}>{studentName}</strong>
+              <div style={{ marginTop: '0.5rem', color: 'var(--text-secondary)' }}>
                 Status: <strong style={{ color: unlockedBadges[selectedBadge.id] ? 'var(--color-verde-dark)' : '#EF4444' }}>{unlockedBadges[selectedBadge.id] ? 'AUTENTICADO' : 'NÃO CONCLUÍDO'}</strong>
               </div>
             </div>

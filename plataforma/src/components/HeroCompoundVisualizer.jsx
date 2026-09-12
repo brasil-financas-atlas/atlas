@@ -83,7 +83,7 @@ function HeroCompoundVisualizer() {
   const activePoint = hoveredPoint !== null ? pointsNominal[hoveredPoint] : pointsNominal[pointsNominal.length - 1];
 
   return (
-    <div className="bfa-tech-card" style={{ marginTop: 0, background: 'rgba(15, 23, 42, 0.92)', border: '1px solid rgba(255, 255, 255, 0.12)', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)' }}>
+    <div style={{ marginTop: 0, background: 'rgba(15, 23, 42, 0.92)', border: '1px solid rgba(255, 255, 255, 0.12)', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)' }}>
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '1.25rem' }}>
         <div>
