@@ -12,7 +12,7 @@ function ThemeSelector() {
 
   return (
     <div className="tool-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
-      <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
         Configuração Visual da Plataforma
       </h3>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
@@ -28,7 +28,7 @@ function ThemeSelector() {
               padding: '1rem',
               textAlign: 'left',
               backgroundColor: themePreference === t.id ? 'var(--track-math)' : undefined,
-              color: themePreference === t.id ? '#FFFFFF' : 'var(--foreground)'
+              color: themePreference === t.id ? '#FFFFFF' : 'var(--text-primary)'
             }}
           >
             <strong style={{ fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -58,13 +58,13 @@ function AdminLogin() {
           <div style={{ margin: '0 auto 1rem auto', display: 'inline-flex', padding: '1rem', borderRadius: '50%', background: 'rgba(52, 211, 153, 0.15)' }}>
             <BfaIcon name="check" size={32} color="#059669" />
           </div>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--foreground)' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>
             Sessão Ativa: <strong>{adminUser.name || adminUser.email}</strong>
           </h2>
-          <p style={{ margin: '0.75rem 0 0.5rem 0', color: 'var(--muted-foreground)' }}>
+          <p style={{ margin: '0.75rem 0 0.5rem 0', color: 'var(--text-secondary)' }}>
             Papel no sistema: <strong>{adminUser.role}</strong>
           </p>
-          <p style={{ margin: '0 0 1.5rem 0', color: 'var(--muted-foreground)', fontSize: '0.85rem' }}>
+          <p style={{ margin: '0 0 1.5rem 0', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
             Você está autenticado no Painel Admin do BFA.
           </p>
           <a href="#/admin" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
@@ -100,8 +100,8 @@ function AdminLogin() {
     <div className="bfa-container" style={{ padding: '4rem 1.5rem', maxWidth: '480px', margin: '0 auto' }}>
       <div className="tool-card" style={{ padding: '2.5rem' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--foreground)' }}>Área do Professor</h2>
-          <p style={{ fontSize: '0.875rem', color: 'var(--muted-foreground)' }}>Acesso de edição e moderação do Brasil Finanças Atlas</p>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>Área do Professor</h2>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Acesso de edição e moderação do Brasil Finanças Atlas</p>
         </div>
 
         {errorMsg && (
@@ -127,7 +127,7 @@ function AdminLogin() {
           onSubmit={handleLoginSubmit}
         >
           <div style={{ marginBottom: '1rem' }}>
-            <label htmlFor="admin-page-username" style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>E-mail:</label>
+            <label htmlFor="admin-page-username" style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--text-primary)' }}>E-mail:</label>
             <input
               id="admin-page-username"
               name="username"
@@ -136,14 +136,14 @@ function AdminLogin() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="seu-email@exemplo.com"
-              style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.9rem' }}
+              style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--text-primary)', fontSize: '0.9rem' }}
               required
               autoFocus
             />
           </div>
 
           <div style={{ marginBottom: '1.5rem' }}>
-            <label htmlFor="admin-page-password" style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--foreground)' }}>Senha:</label>
+            <label htmlFor="admin-page-password" style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--text-primary)' }}>Senha:</label>
             <input
               id="admin-page-password"
               name="password"
@@ -152,7 +152,7 @@ function AdminLogin() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.9rem' }}
+              style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--text-primary)', fontSize: '0.9rem' }}
               required
             />
           </div>
@@ -331,7 +331,7 @@ function AdminDashboard() {
 
         {/* Quick Action Bar for Admins to Add Content */}
         <div className="tool-card" style={{ padding: '1.5rem', background: 'var(--surface-strong)', border: '1px solid var(--border)' }}>
-          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
             Ações Rápidas de Cadastro
           </h3>
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
@@ -352,10 +352,10 @@ function AdminDashboard() {
           <div className="tool-card" style={{ padding: '2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
               <div>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--foreground)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
                   Edições Pendentes de Aprovação ({pendingEdits.length})
                 </h3>
-                <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.25rem' }}>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
                   Como Admin Chief, você deve revisar e aprovar as alterações enviadas pelos colaboradores antes de irem ao ar.
                 </p>
               </div>
@@ -365,7 +365,7 @@ function AdminDashboard() {
             </div>
 
             {pendingEdits.length === 0 ? (
-              <p style={{ color: 'var(--muted-foreground)', margin: 0, fontSize: '0.9rem' }}>
+              <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '0.9rem' }}>
                 Nenhuma alteração pendente de aprovação. Todas as edições foram revisadas.
               </p>
             ) : (
@@ -376,7 +376,7 @@ function AdminDashboard() {
                       <span className="mono-tag" style={{ color: 'var(--market)' }}>
                         Bloco: {edit.block_id}
                       </span>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                         Por: {edit.submitted_by_name || 'Colaborador'} · {new Date(edit.created_at).toLocaleDateString('pt-BR')}
                       </span>
                     </div>
@@ -410,19 +410,19 @@ function AdminDashboard() {
           <div className="tool-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
               <div>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--foreground)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <BfaIcon name="check" size={20} color="var(--primary)" /> Histórico de Publicações
                 </h3>
-                <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.25rem' }}>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
                   Monitoramento exclusivo. Apenas Herton e David têm acesso a este log.
                 </p>
               </div>
             </div>
 
             {loadingHistory ? (
-              <p style={{ color: 'var(--muted-foreground)' }}>Carregando histórico...</p>
+              <p style={{ color: 'var(--text-secondary)' }}>Carregando histórico...</p>
             ) : publishHistory.length === 0 ? (
-              <p style={{ color: 'var(--muted-foreground)', margin: 0, fontSize: '0.9rem' }}>
+              <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '0.9rem' }}>
                 Nenhuma publicação registrada desde a ativação do log.
               </p>
             ) : (
@@ -430,10 +430,10 @@ function AdminDashboard() {
                 {publishHistory.map((log) => (
                   <div key={log.id} style={{ padding: '1rem', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', background: 'var(--card)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
                     <div>
-                      <strong style={{ display: 'block', color: 'var(--foreground)' }}>
+                      <strong style={{ display: 'block', color: 'var(--text-primary)' }}>
                         {log.profiles?.full_name || log.profiles?.email || 'Admin Desconhecido'}
                       </strong>
-                      <span style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
                         {log.profiles?.email}
                       </span>
                     </div>
@@ -451,10 +451,10 @@ function AdminDashboard() {
 
         {/* Gerenciamento de Vídeos das Aulas */}
         <div className="tool-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <BfaIcon name="video" size={20} color="var(--primary)" /> Gerenciamento de Vídeo Aulas (YouTube)
           </h3>
-          <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginBottom: '1.5rem' }}>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
             Insira o link do YouTube para cada aula. O vídeo ficará disponível na aba dedicada dentro da sala de aula.
           </p>
 
@@ -478,9 +478,9 @@ function AdminDashboard() {
                     <span className="mono-tag" style={{ color: aula.subject === 'matematica' ? 'var(--track-math)' : 'var(--track-finance)', fontSize: '0.7rem' }}>
                       {aula.subjectLabel.toUpperCase()}
                     </span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>· {aula.module}</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>· {aula.module}</span>
                   </div>
-                  <strong style={{ fontSize: '0.9rem', color: 'var(--foreground)' }}>{aula.title}</strong>
+                  <strong style={{ fontSize: '0.9rem', color: 'var(--text-primary)' }}>{aula.title}</strong>
                 </div>
 
                 {editingVideoLessonId === aula.id ? (
@@ -497,7 +497,7 @@ function AdminDashboard() {
                         borderRadius: '4px',
                         border: '1px solid var(--border)',
                         background: 'var(--card)',
-                        color: 'var(--foreground)',
+                        color: 'var(--text-primary)',
                         marginBottom: '0.5rem'
                       }}
                       autoFocus
@@ -509,7 +509,7 @@ function AdminDashboard() {
                   </form>
                 ) : (
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
-                    <span className="mono-tag" style={{ color: aula.videoUrl ? 'var(--market)' : 'var(--muted-foreground)', fontSize: '0.7rem' }}>
+                    <span className="mono-tag" style={{ color: aula.videoUrl ? 'var(--market)' : 'var(--text-secondary)', fontSize: '0.7rem' }}>
                       {aula.videoUrl ? 'Vídeo configurado' : 'Sem vídeo'}
                     </span>
                     <div style={{ display: 'flex', gap: '0.4rem' }}>
@@ -553,7 +553,7 @@ function AdminDashboard() {
         {showAddModuleModal && (
           <div className="bfa-inline-editor-modal" onClick={() => setShowAddModuleModal(false)}>
             <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '480px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1rem' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>
                 Criar Novo Módulo
               </h3>
               <form onSubmit={handleCreateModule}>
@@ -581,7 +581,7 @@ function AdminDashboard() {
         {showAddNewsModal && (
           <div className="bfa-inline-editor-modal" onClick={() => setShowAddNewsModal(false)}>
             <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1rem' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>
                 Publicar Notícia Macro
               </h3>
               <form onSubmit={handleCreateNews}>
@@ -615,7 +615,7 @@ function AdminDashboard() {
         {showAddExModal && (
           <div className="bfa-inline-editor-modal" onClick={() => setShowAddExModal(false)}>
             <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '580px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1rem' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>
                 Cadastrar Exercício (PBL)
               </h3>
               <form onSubmit={handleCreateExercise}>
