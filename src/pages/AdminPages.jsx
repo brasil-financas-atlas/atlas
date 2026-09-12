@@ -289,8 +289,8 @@ function AdminDashboard() {
 
   return (
     <div>
-      <section className="hero-gradient" style={{ padding: '3.5rem 0 2.5rem 0', position: 'relative' }}>
-        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.6 }} />
+      <section style={{ padding: '3.5rem 0 2.5rem 0', backgroundColor: 'var(--primary)' }}>
+        
         <div className="bfa-container" style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <span className="mono-tag" style={{ color: isChief ? 'var(--gold)' : 'var(--market)', background: 'rgba(255, 255, 255, 0.15)', padding: '0.25rem 0.65rem', borderRadius: 'var(--radius-full)' }}>
