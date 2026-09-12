@@ -314,56 +314,36 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
       </aside>
 
       {/* Main Classroom Canvas */}
-      <main className="aula-main">
+      <main style={{ flex: 1, minWidth: 0, padding: '3rem 4rem', backgroundColor: 'var(--bg-app)', height: '100vh', overflowY: 'auto' }}>
         {/* Sleek Unified Lesson Header Bar */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem', borderBottom: '1px solid var(--border)', paddingBottom: '1rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', minWidth: 0 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: 0 }}>
             <button
               type="button"
               onClick={() => {
                 hapticTap();
                 setSidebarOpen(!sidebarOpen);
               }}
-              className="bfa-btn"
+              className="btn-secondary"
               style={{
-                cursor: 'pointer',
-                border: '1px solid var(--border)',
-                background: sidebarOpen ? 'var(--surface-strong)' : 'transparent',
-                color: 'var(--foreground)',
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                padding: '0.45rem 0.85rem',
-                borderRadius: 'var(--radius-sm)',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '6px'
+                gap: '8px'
               }}
             >
-              <BfaIcon name="menu" size={14} />
+              <BfaIcon name="menu" size={16} />
               <span>{sidebarOpen ? 'Ocultar Trilha' : 'Trilha'}</span>
             </button>
-            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.75rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <span style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {moduloObj.titulo}
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <button
               type="button"
               onClick={handleShare}
-              className="bfa-btn"
-              style={{
-                background: 'var(--surface-strong)',
-                color: 'var(--foreground)',
-                border: '1px solid var(--border)',
-                padding: '0.45rem 0.75rem',
-                borderRadius: 'var(--radius-sm)',
-                fontWeight: 700,
-                fontSize: '0.82rem',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '4px'
-              }}
+              className="btn-secondary"
               title="Compartilhar Aula"
             >
               <BfaIcon name="share" size={14} />
@@ -372,18 +352,18 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
             <button
               onClick={handleToggleDone}
-              className="bfa-btn"
               style={{
-                backgroundColor: isDone ? '#059669' : 'var(--surface-strong)',
-                color: isDone ? '#FFFFFF' : 'var(--foreground)',
-                border: isDone ? '1px solid #059669' : '1px solid var(--border)',
-                padding: '0.45rem 0.95rem',
-                borderRadius: 'var(--radius-sm)',
-                fontWeight: 700,
-                fontSize: '0.82rem',
+                backgroundColor: isDone ? 'var(--accent-green)' : 'var(--bg-surface)',
+                color: isDone ? '#FFFFFF' : 'var(--text-primary)',
+                border: isDone ? '1px solid var(--accent-green)' : '1px solid var(--border-color)',
+                padding: '0.5rem 1rem',
+                borderRadius: 'var(--radius-md)',
+                fontWeight: 600,
+                fontSize: '0.875rem',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '5px'
+                gap: '8px',
+                cursor: 'pointer'
               }}
             >
               <BfaIcon name={isDone ? "check" : "circle"} size={14} />
@@ -393,18 +373,18 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         </div>
 
         {shareToast && (
-          <div className="bfa-toast-banner" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <BfaIcon name="check" size={14} color="#059669" />
-            <span>Link da aula copiado para a área de transferência!</span>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '1rem', backgroundColor: '#E6F9F3', color: 'var(--accent-green)', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem' }}>
+            <BfaIcon name="check" size={16} color="var(--accent-green)" />
+            <span style={{ fontWeight: 500 }}>Link da aula copiado para a área de transferência!</span>
           </div>
         )}
 
         {/* Lesson Title & Audio Header */}
-        <div style={{ marginBottom: '1.5rem' }}>
-          <span className="mono-tag" style={{ color: trackColor, fontWeight: 800, fontSize: '0.72rem', display: 'inline-block', marginBottom: '0.4rem' }}>
+        <div style={{ marginBottom: '2.5rem' }}>
+          <span style={{ color: trackColor, fontWeight: 700, fontSize: '0.75rem', padding: '0.25rem 0.75rem', backgroundColor: 'var(--bg-surface-blue)', borderRadius: '999px', display: 'inline-block', marginBottom: '1rem' }}>
             {isMatematica ? 'MATEMÁTICA APLICADA' : 'FINANÇAS & MERCADO'} · {moduloObj.titulo.toUpperCase()}
           </span>
-          <h1 className="headline-punch" style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.35rem)', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.03em', margin: '0 0 0.75rem 0', lineHeight: 1.25 }}>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '3rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', margin: '0 0 1rem 0', lineHeight: 1.1 }}>
             {aulaObj.titulo}
           </h1>
           <AudioReader markdownContent={markdownContent} lessonTitle={aulaObj.titulo} />
