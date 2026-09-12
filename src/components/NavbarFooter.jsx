@@ -79,27 +79,17 @@ function Navbar() {
 
   return (
     <>
-      <header className="site-header" style={{ boxShadow: '0 4px 20px -5px rgba(15, 23, 42, 0.05)' }}>
+      <header className="site-header">
       <div className="site-header__container">
-        <a href="#/" className="site-logo" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div className="site-logo__badge" style={{ background: 'var(--primary)', color: '#FFFFFF', padding: '0.5rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.9rem' }}>
-            <BfaIcon name="bar-chart-2" size={16} color="#FFFFFF" />
-          </div>
-          <div>
-            <span style={{ display: 'block', fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.02em', fontFamily: 'var(--font-display)' }}>
-              <strong>BRHSIC</strong> <span style={{ fontWeight: 400, opacity: 0.9 }}>Academy</span>
-            </span>
-            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600, fontSize: '0.72rem', display: 'inline-flex', alignItems: 'center', gap: '4px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-              Plataforma de Ensino
-            </span>
-          </div>
+        <a href="#/" className="site-logo" style={{ textDecoration: 'none' }}>
+          BRHSIC <span>Academy</span>
         </a>
 
         {/* Global Search Bar with Autocomplete */}
-        <div className="navbar-search">
+        <div className="navbar-search" style={{ position: 'relative', minWidth: '250px' }}>
           <input
             type="text"
-            placeholder="Buscar aula ou conceito..."
+            placeholder="Buscar aula..."
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -109,14 +99,13 @@ function Navbar() {
             onBlur={() => setTimeout(() => setSearchOpen(false), 200)}
             style={{
               width: '100%',
-              padding: '0.5rem 0.95rem',
+              padding: '0.5rem 1rem',
               fontSize: '0.875rem',
               borderRadius: '9999px',
-              border: '1px solid var(--border)',
-              backgroundColor: 'var(--card)',
-              color: 'var(--foreground)',
-              outline: 'none',
-              minHeight: '40px'
+              border: '1px solid var(--border-color)',
+              backgroundColor: 'var(--bg-app)',
+              color: 'var(--text-primary)',
+              outline: 'none'
             }}
           />
           {searchOpen && searchResults.length > 0 && (
@@ -125,14 +114,13 @@ function Navbar() {
               top: 'calc(100% + 6px)',
               left: 0,
               right: 0,
-              backgroundColor: 'var(--card)',
-              border: '1px solid var(--border)',
+              backgroundColor: 'var(--bg-app)',
+              border: '1px solid var(--border-color)',
               borderRadius: 'var(--radius-lg)',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.05)',
               zIndex: 9999,
               maxHeight: '65vh',
-              overflowY: 'auto',
-              padding: '0.4rem 0'
+              overflowY: 'auto'
             }}>
               {searchResults.map((item) => (
                 <a
@@ -141,18 +129,15 @@ function Navbar() {
                   onClick={() => setSearchOpen(false)}
                   style={{
                     display: 'block',
-                    padding: '0.65rem 1rem',
+                    padding: '0.75rem 1rem',
                     textDecoration: 'none',
-                    borderBottom: '1px solid var(--border)',
+                    borderBottom: '1px solid var(--border-color)',
                     fontSize: '0.875rem',
-                    color: 'var(--foreground)',
-                    transition: 'background 0.15s ease',
-                    minHeight: '44px'
+                    color: 'var(--text-primary)'
                   }}
-                  className="search-item-link"
                 >
-                  <span style={{ fontWeight: 700, display: 'block' }}>{item.aulaTitle}</span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
+                  <strong style={{ display: 'block' }}>{item.aulaTitle}</strong>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                     {item.subjectTitle} · {item.moduloTitle}
                   </span>
                 </a>
