@@ -30,58 +30,57 @@ function DisciplinaOverview({ subjectKey }) {
 
   return (
     <div>
-      {/* ── 1. Hero Split-Screen 50/50 ──────────────────────────────────── */}
-      <section className="hero-gradient" style={{ padding: '5rem 0 4rem 0', position: 'relative', overflow: 'hidden' }}>
-        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.35 }} />
-        <div className="bfa-container" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="bfa-split-hero">
+      {/* ── 1. Hero Split-Screen (BRHSIC Clean Design) ───────────────── */}
+      <section style={{ padding: '4.5rem 0 3.5rem 0', background: 'var(--background)', borderBottom: '1px solid var(--border)', position: 'relative' }}>
+        <div className="bfa-container">
+          <div className="bfa-split-hero" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
             
             {/* Coluna Esquerda: Ementa da Trilha */}
             <div className="bfa-split-col--text">
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span className="mono-tag" style={{ color: 'rgba(255, 255, 255, 0.95)', background: 'rgba(255, 255, 255, 0.12)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255, 255, 255, 0.25)', fontWeight: 700 }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                <span className="mono-tag" style={{ color: 'var(--primary)', background: 'var(--secondary)', padding: '0.35rem 0.85rem', borderRadius: '9999px', border: '1px solid var(--border)', fontWeight: 800 }}>
                   {isMatematica ? 'TRILHA 01 · MATEMÁTICA' : 'TRILHA 02 · FINANÇAS'}
                 </span>
-                <span className="mono-tag" style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.15)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(52, 211, 153, 0.35)', fontWeight: 700 }}>
+                <span className="mono-tag" style={{ color: 'var(--foreground)', background: '#FFFFFF', padding: '0.35rem 0.85rem', borderRadius: '9999px', border: '1px solid var(--border)', fontWeight: 700 }}>
                   {subjectData.modulos.length} Módulos · {totalLessons} Aulas
                 </span>
               </div>
 
-              <EditableBlock id={`overview-${subjectKey}-hero-title`} as="h1" className="headline-punch" style={{ fontSize: '3.2rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.5rem', letterSpacing: '-0.035em' }}>
-                {isMatematica ? 'Matemática Aplicada a Finanças' : 'Finanças & Investimentos'}
+              <EditableBlock id={`overview-${subjectKey}-hero-title`} as="h1" className="headline-punch" style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.035em', lineHeight: 1.15, margin: '0.5rem 0 1rem 0' }}>
+                {isMatematica ? 'Matemática Aplicada a Finanças' : 'Finanças & Mercado de Capitais'}
               </EditableBlock>
 
-              <p style={{ fontSize: '1.1rem', lineHeight: 1.65, color: 'rgba(241, 245, 249, 0.9)', marginTop: '0.5rem' }}>
+              <p style={{ fontSize: '1.08rem', lineHeight: 1.65, color: 'var(--muted-foreground)', margin: 0, maxWidth: '580px' }}>
                 {isMatematica
-                  ? 'Domine a álgebra de juros compostos contínuos, taxas equivalentes, amortização SAC/Price e modelagem quantitativa para o mercado financeiro.'
-                  : 'Compreenda a arquitetura do Sistema Financeiro Nacional, renda fixa soberana, fundos imobiliários, leitura contábil e valuation de empresas.'}
+                  ? 'Domine a álgebra de juros compostos, taxas equivalentes, amortização SAC/Price e modelagem quantitativa para o mercado financeiro.'
+                  : 'Compreenda a arquitetura do Sistema Financeiro Nacional, renda fixa, ações da B3, fundos imobiliários e leitura de demonstrativos contábeis.'}
               </p>
             </div>
 
             {/* Coluna Direita: Ilha de Telemetria de Progresso */}
             <div className="bfa-split-col--visual">
-              <div className="bfa-tech-card" style={{ background: 'rgba(15, 23, 42, 0.88)', border: '1px solid rgba(255, 255, 255, 0.12)', boxShadow: '0 20px 40px -15px rgba(0,0,0,0.5)' }}>
+              <div style={{ background: '#FFFFFF', border: '1px solid var(--border)', borderRadius: '1.25rem', padding: '2rem', boxShadow: '0 16px 32px -12px rgba(23, 34, 55, 0.08)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                  <span className="mono-tag" style={{ color: '#94A3B8', fontWeight: 800, fontSize: '0.72rem' }}>
-                    TELEMETRIA DO ALUNO
+                  <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 800, fontSize: '0.75rem' }}>
+                    SEU PROGRESSO NA TRILHA
                   </span>
-                  <span className="tabular-numbers" style={{ color: '#10B981', fontWeight: 800, fontSize: '1.1rem' }}>
+                  <span className="tabular-numbers" style={{ color: 'var(--primary)', fontWeight: 800, fontSize: '1.15rem', fontFamily: 'var(--font-display)' }}>
                     {progressPct}% Concluído
                   </span>
                 </div>
 
-                <div style={{ height: '8px', width: '100%', background: 'rgba(255, 255, 255, 0.12)', borderRadius: '999px', overflow: 'hidden', marginBottom: '1.5rem' }}>
-                  <div style={{ height: '100%', width: `${progressPct}%`, background: 'linear-gradient(90deg, #10B981 0%, #34D399 100%)', borderRadius: '999px', transition: 'width 0.4s ease' }} />
+                <div style={{ height: '8px', width: '100%', background: 'var(--secondary)', borderRadius: '999px', overflow: 'hidden', marginBottom: '1.5rem' }}>
+                  <div style={{ height: '100%', width: `${progressPct}%`, background: 'var(--primary)', borderRadius: '999px', transition: 'width 0.4s ease' }} />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
                   <div>
-                    <span style={{ fontSize: '0.72rem', color: '#94A3B8', display: 'block', fontWeight: 600 }}>AULAS CONCLUÍDAS</span>
-                    <div className="tabular-numbers" style={{ fontSize: '1.35rem', fontWeight: 800, color: '#FFFFFF' }}>{doneCount} / {totalLessons}</div>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)', display: 'block', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>AULAS CONCLUÍDAS</span>
+                    <div className="tabular-numbers" style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '2px' }}>{doneCount} / {totalLessons}</div>
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.72rem', color: '#94A3B8', display: 'block', fontWeight: 600 }}>CERTIFICADO</span>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: progressPct === 100 ? '#10B981' : '#FBBF24', marginTop: '4px' }}>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--muted-foreground)', display: 'block', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>CERTIFICADO</span>
+                    <div style={{ fontSize: '0.9rem', fontWeight: 700, color: progressPct === 100 ? 'var(--market)' : 'var(--gold)', marginTop: '4px' }}>
                       {progressPct === 100 ? 'Disponível' : 'Em Andamento'}
                     </div>
                   </div>

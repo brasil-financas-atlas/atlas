@@ -2843,3 +2843,320 @@
   .bfa-ops { grid-template-columns: 1fr; }
 }
 
+/* ==========================================================================
+   BRHSIC Academy Design System & Layout Components
+   ========================================================================== */
+
+/* ── Hero Academy (Asymmetrical Two-Column) ── */
+.hero-academy {
+  padding: 5rem 0 3.5rem 0;
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.hero-academy-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.hero-academy-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  width: fit-content;
+}
+
+.hero-academy-title {
+  font-family: var(--font-display);
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.hero-academy-subtitle {
+  font-family: var(--font-sans);
+  font-size: 1.18rem;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+  margin: 0;
+  max-width: 580px;
+}
+
+.hero-academy-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.button-pill-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  background: var(--foreground);
+  color: #FFFFFF !important;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(23, 34, 55, 0.15);
+}
+
+.button-pill-primary:hover {
+  background: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(47, 155, 255, 0.25);
+}
+
+.button-pill-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.65rem;
+  background: #FFFFFF;
+  color: var(--foreground) !important;
+  border: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.button-pill-secondary:hover {
+  border-color: var(--foreground);
+  background: var(--secondary);
+  transform: translateY(-2px);
+}
+
+/* ── Hero Showcase Card ── */
+.hero-showcase-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow: 0 20px 40px -15px rgba(23, 34, 55, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Metrics Band (Network Overview) ── */
+.metrics-band-academy {
+  display: grid;
+  grid-template-columns: 1.2fr 2fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 2.25rem;
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  margin-top: 3.5rem;
+}
+
+.metrics-band-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.metrics-band-heading span {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.metrics-band-heading strong {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+}
+
+.metrics-band-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  border-left: 1px solid var(--border);
+  padding-left: 2rem;
+}
+
+.metric-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-stat-number {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--foreground);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.metric-stat-label {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  margin-top: 0.35rem;
+}
+
+/* ── Step Cards (Numbered 01, 02, 03) ── */
+.academy-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.academy-step-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+}
+
+.academy-step-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 16px 32px -10px rgba(47, 155, 255, 0.15);
+}
+
+.academy-step-num {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+.academy-step-card:hover .academy-step-num {
+  color: var(--primary);
+}
+
+.academy-step-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.65rem;
+  line-height: 1.25;
+}
+
+.academy-step-desc {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+.academy-step-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 1.5rem;
+}
+
+/* ── Section Headings ── */
+.academy-section-header {
+  margin-bottom: 2rem;
+}
+
+.academy-section-header .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.academy-section-header h2 {
+  font-family: var(--font-display);
+  font-size: 2.35rem;
+  font-weight: 800;
+  color: var(--foreground);
+  letter-spacing: -0.03em;
+  margin: 0 0 0.65rem 0;
+}
+
+.academy-section-header p {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  color: var(--muted-foreground);
+  max-width: 680px;
+  margin: 0;
+}
+
+/* ── Responsive adjustments ── */
+@media (max-width: 960px) {
+  .hero-academy-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .hero-academy-title {
+    font-size: 2.6rem;
+  }
+  .metrics-band-academy {
+    grid-template-columns: 1fr;
+  }
+  .metrics-band-stats {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding-left: 0;
+    padding-top: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .academy-steps-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+

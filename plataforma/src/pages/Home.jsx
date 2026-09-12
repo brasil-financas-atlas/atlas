@@ -1,286 +1,357 @@
 const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
 
 /* ==========================================================================
-   Home Page Component (Direto, Amplo, Rico e Detalhado)
+   Home Page — BRHSIC Academy Official Learning Platform
+   Estética 100% alinhada com brhsic-academy.vercel.app e brhsic-main.vercel.app
    ========================================================================== */
 function Home() {
-  const stats = [
-    { value: "55", label: "Aulas Publicadas", note: "Conteúdo completo e aberto" },
-    { value: "7", label: "Módulos de Estudo", note: "Sequência do básico ao avançado" },
-    { value: "100%", label: "Gratuito e Público", note: "Livre para alunos e escolas" },
-    { value: "BRHSIC", label: "Olimpíada de Finanças", note: "Guia oficial de preparação" },
-  ];
+  const BfaIcon = window.BfaIcon || (() => null);
 
   return (
-    <div>
-      {/* ── 1. Hero Centralizado e Direto ───────────────────────────────── */}
-      <section className="hero-gradient" style={{ position: 'relative', overflow: 'hidden', padding: '6rem 0 5rem 0', textAlign: 'center' }}>
-        <div className="grid-ledger" style={{ position: 'absolute', inset: 0, opacity: 0.2 }} />
-        
-        <div className="bfa-container" style={{ position: 'relative', zIndex: 1, maxWidth: '920px', margin: '0 auto' }}>
-          
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
-            <span className="mono-tag" style={{ color: '#E2E8F0', background: 'rgba(255, 255, 255, 0.08)', padding: '0.35rem 0.85rem', borderRadius: 'var(--radius-full)', border: '1px solid rgba(255, 255, 255, 0.15)', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '0.04em' }}>
-              PLATAFORMA PÚBLICA · CONTEÚDO 100% GRATUITO
-            </span>
-          </div>
-
-          <EditableBlock id="home-hero-title" as="h1" className="headline-punch" style={{ fontSize: '3.5rem', fontWeight: 800, lineHeight: 1.12, color: '#FFFFFF', letterSpacing: '-0.035em', margin: '0 auto 1.25rem auto' }}>
-            Matemática financeira e mercado de capitais para o ensino médio.
-          </EditableBlock>
-
-          <EditableBlock id="home-hero-sub" as="p" style={{ fontSize: '1.18rem', lineHeight: 1.65, color: 'rgba(241, 245, 249, 0.85)', maxWidth: '760px', margin: '0 auto 2.25rem auto', fontWeight: 400 }}>
-            Aulas estruturadas do básico ao avançado, listas de exercícios com gabarito passo a passo e o guia oficial de preparação para a olimpíada nacional de investimentos (BRHSIC).
-          </EditableBlock>
-
-          <div style={{ display: 'flex', gap: '0.85rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3.5rem' }}>
-            <a href="#/matematica" className="bfa-btn bfa-btn--primary-solid" style={{ padding: '0.85rem 1.85rem', fontSize: '0.95rem', minHeight: '46px' }}>
-              Trilha de Matemática →
-            </a>
-            <a href="#/financas" className="bfa-btn bfa-btn--secondary-glass" style={{ padding: '0.85rem 1.85rem', fontSize: '0.95rem', minHeight: '46px' }}>
-              Trilha de Finanças →
-            </a>
-            <a href="#/preparacao-brhsic" className="bfa-btn bfa-btn--secondary-glass" style={{ padding: '0.85rem 1.85rem', fontSize: '0.95rem', minHeight: '46px' }}>
-              Guia da Olimpíada BRHSIC →
-            </a>
-          </div>
-
-          {/* Barra de Métricas */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1px', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
-            {stats.map((s) => (
-              <div key={s.label} style={{ background: 'rgba(9, 13, 22, 0.85)', padding: '1.25rem 1rem', textAlign: 'center' }}>
-                <div className="tabular-numbers" style={{ fontSize: '1.65rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>{s.value}</div>
-                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#E2E8F0', marginTop: '0.2rem' }}>{s.label}</div>
-                <div style={{ fontSize: '0.72rem', color: '#94A3B8', marginTop: '0.15rem' }}>{s.note}</div>
+    <div className="brhsic-home-wrapper">
+      {/* ── 1. Hero Academy (Asymmetrical Two-Column) ───────────────────── */}
+      <section className="hero-academy" id="inicio">
+        <div className="bfa-container">
+          <div className="hero-academy-grid">
+            
+            {/* Coluna Esquerda: Copy & Ações */}
+            <div className="hero-academy-copy">
+              <div className="hero-eyebrow">
+                <BfaIcon name="award" size={14} color="var(--primary)" />
+                <span>Plataforma Oficial de Ensino · BRHSIC Academy</span>
               </div>
-            ))}
+
+              <h1 className="hero-academy-title">
+                Educação financeira e matemática para quem quer ir além.
+              </h1>
+
+              <p className="hero-academy-subtitle">
+                A base estruturada do básico ao avançado para dominar matemática financeira, mercado de capitais e se destacar na maior olimpíada de investimentos do país. 100% gratuito e aberto.
+              </p>
+
+              <div className="hero-academy-actions">
+                <a href="#trilhas" className="button-pill-primary">
+                  <span>Começar a Estudar</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+                <a href="https://brhsic.com" target="_blank" rel="noreferrer" className="button-pill-secondary">
+                  <span>Competição BRHSIC</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Coluna Direita: Showcase Card Visual */}
+            <div className="hero-academy-visual">
+              <div className="hero-showcase-card">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.85rem', borderBottom: '1px solid var(--border)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--primary)' }} />
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', fontWeight: 700, color: 'var(--foreground)' }}>
+                      TRILHAS DE FORMAÇÃO 2026
+                    </span>
+                  </div>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--muted-foreground)', background: 'var(--secondary)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
+                    ACESSO LIVRE
+                  </span>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                  {/* Item 1 */}
+                  <div style={{ padding: '0.85rem 1rem', background: 'var(--secondary)', borderRadius: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <strong style={{ display: 'block', fontSize: '0.92rem', color: 'var(--foreground)' }}>
+                        01. Matemática Financeira & Modelagem
+                      </strong>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>
+                        4 Módulos · 29 Aulas Didáticas
+                      </span>
+                    </div>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 800, color: 'var(--primary)' }}>
+                      100%
+                    </span>
+                  </div>
+
+                  {/* Item 2 */}
+                  <div style={{ padding: '0.85rem 1rem', background: 'var(--secondary)', borderRadius: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <strong style={{ display: 'block', fontSize: '0.92rem', color: 'var(--foreground)' }}>
+                        02. Mercado de Capitais & Análise
+                      </strong>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>
+                        3 Módulos · 26 Aulas Práticas
+                      </span>
+                    </div>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 800, color: 'var(--primary)' }}>
+                      100%
+                    </span>
+                  </div>
+
+                  {/* Item 3 */}
+                  <div style={{ padding: '0.85rem 1rem', background: 'var(--secondary)', borderRadius: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <strong style={{ display: 'block', fontSize: '0.92rem', color: 'var(--foreground)' }}>
+                        03. Guia da Olimpíada BRHSIC
+                      </strong>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>
+                        Equity Research · Valuation DCF · Pitch
+                      </span>
+                    </div>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 800, color: 'var(--gold)' }}>
+                      OFICIAL
+                    </span>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: '1.25rem', paddingTop: '1rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
+                  <span>Alinhado à Olimpíada Nacional</span>
+                  <a href="#/sobre" style={{ color: 'var(--primary)', fontWeight: 700, textDecoration: 'none' }}>
+                    Ver Metodologia →
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Faixa de Métricas (Network Overview Band) */}
+          <div className="metrics-band-academy">
+            <div className="metrics-band-heading">
+              <span>Rede Academy</span>
+              <strong>Da base matemática à análise real de mercado.</strong>
+            </div>
+
+            <div className="metrics-band-stats">
+              <div className="metric-stat-item">
+                <span className="metric-stat-number">55</span>
+                <span className="metric-stat-label">Aulas didáticas abertas</span>
+              </div>
+              <div className="metric-stat-item">
+                <span className="metric-stat-number">7</span>
+                <span className="metric-stat-label">Módulos completos</span>
+              </div>
+              <div className="metric-stat-item">
+                <span className="metric-stat-number">100%</span>
+                <span className="metric-stat-label">Gratuito e sem custos</span>
+              </div>
+              <div className="metric-stat-item">
+                <span className="metric-stat-number">+400</span>
+                <span className="metric-stat-label">Alunos alcançados</span>
+              </div>
+            </div>
           </div>
 
         </div>
       </section>
 
-      {/* ── Ticker de Índices Financeiros no Hero ─────────────────────── */}
+      {/* ── Ticker de Índices Financeiros ─────────────────────────────── */}
       {window.MarketTickerRibbon && React.createElement(window.MarketTickerRibbon)}
 
-      {/* ── 2. Trilhas de Estudo com Caixas Amplas e Detalhadas ─────────── */}
-      <section className="bfa-container" style={{ padding: '4.5rem 1.5rem' }}>
-        
-        {/* Trilha 1: Matemática */}
-        <div className="bfa-split-row" style={{ alignItems: 'flex-start' }}>
-          <div className="bfa-split-col--text">
-            <span className="mono-tag" style={{ color: 'var(--track-math)', background: 'rgba(37, 99, 235, 0.08)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800, width: 'fit-content' }}>
-              TRILHA 01 · MATEMÁTICA FINANCEIRA
-            </span>
-            <h2 className="headline-punch" style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.03em' }}>
-              Matemática Financeira e Modelagem
-            </h2>
-            <p style={{ fontSize: '1.05rem', color: 'var(--muted-foreground)', lineHeight: 1.7 }}>
-              Uma formação sólida em matemática aplicada às finanças pessoais e corporativas. O aluno aprende a construir o raciocínio desde a álgebra fundamental até o cálculo de financiamentos e análise de rentabilidade real com inflação.
-            </p>
-            <ul style={{ listStyle: 'none', padding: 0, margin: '1rem 0 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.92rem', color: 'var(--foreground)' }}>
-              <li><strong>— 29 aulas didáticas:</strong> organizadas em ordem lógica de complexidade.</li>
-              <li><strong>— Provas e deduções:</strong> explicação do porquê de cada fórmula matemática.</li>
-              <li><strong>— Exercícios práticos:</strong> questões com gabarito analítico detalhado.</li>
-              <li><strong>— Aplicação real:</strong> simulações de empréstimos, investimentos e inflação.</li>
-            </ul>
-            <a href="#/matematica" className="bfa-btn bfa-btn--azul" style={{ padding: '0.85rem 1.6rem', borderRadius: 'var(--radius-md)', fontWeight: 700, width: 'fit-content' }}>
-              Acessar Aulas de Matemática →
-            </a>
-          </div>
-
-          <div className="bfa-split-col--visual">
-            <div className="bfa-tech-card" style={{ padding: '2rem 2.25rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.85rem', borderBottom: '1px solid var(--border)' }}>
-                <span className="mono-tag" style={{ color: 'var(--track-math)', fontWeight: 800, fontSize: '0.78rem' }}>EMENTA DETALHADA</span>
-                <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', fontWeight: 700 }}>4 Módulos · 29 Aulas</span>
-              </div>
-              <div style={{ display: 'grid', gap: '0.85rem', fontSize: '0.88rem' }}>
-                <div style={{ padding: '0.85rem 1rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.2rem' }}>Módulo 1: Fundamentos de Álgebra e Porcentagem (7 aulas)</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>Variação percentual, aumentos e descontos sucessivos, potências e equações.</div>
-                </div>
-                <div style={{ padding: '0.85rem 1rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.2rem' }}>Módulo 2: Juros Simples, Compostos e Descontos (8 aulas)</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>Regimes de capitalização, valor presente (VP), valor futuro (VF) e desconto comercial vs. racional.</div>
-                </div>
-                <div style={{ padding: '0.85rem 1rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.2rem' }}>Módulo 3: Inflação, Taxa Real e Equivalência (7 aulas)</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>Equação de Fisher, IPCA, taxas proporcionais vs. taxas equivalentes compostas.</div>
-                </div>
-                <div style={{ padding: '0.85rem 1rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.2rem' }}>Módulo 4: Amortização (SAC, Price) e Séries Uniformes (7 aulas)</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>Tabelas SAC e Price na prática, cálculo de parcelas, juros e saldo devedor.</div>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* ── 2. Trilhas de Formação Numeradas (01, 02, 03) ──────────────── */}
+      <section className="bfa-container" id="trilhas" style={{ padding: '5rem 1.5rem' }}>
+        <div className="academy-section-header">
+          <div className="eyebrow">Como funciona · Trilhas de Formação</div>
+          <h2>Conhecimento estruturado para quem quer liderar.</h2>
+          <p>
+            O conteúdo foi desenvolvido para levar o estudante do ensino fundamental ao nível de analistas de mercado, combinando rigor matemático e visão prática de negócios.
+          </p>
         </div>
 
-        {/* Trilha 2: Finanças */}
-        <div className="bfa-split-row" style={{ alignItems: 'flex-start' }}>
-          <div className="bfa-split-col--text">
-            <span className="mono-tag" style={{ color: 'var(--track-finance)', background: 'rgba(5, 150, 105, 0.08)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800, width: 'fit-content' }}>
-              TRILHA 02 · FINANÇAS & MERCADO DE CAPITAIS
-            </span>
-            <h2 className="headline-punch" style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.03em' }}>
-              Mercado de Capitais e Análise de Empresas
-            </h2>
-            <p style={{ fontSize: '1.05rem', color: 'var(--muted-foreground)', lineHeight: 1.7 }}>
-              Um curso prático sobre como funciona o dinheiro e as empresas no Brasil. Aborda desde a estrutura regulatória do Sistema Financeiro Nacional até os critérios para analisar ações, fundos imobiliários e títulos de renda fixa.
-            </p>
-            <ul style={{ listStyle: 'none', padding: 0, margin: '1rem 0 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.92rem', color: 'var(--foreground)' }}>
-              <li><strong>— 26 aulas práticas:</strong> focadas no mercado financeiro brasileiro real.</li>
-              <li><strong>— Renda Fixa e Títulos Públicos:</strong> Selic, IPCA+ e títulos bancários privados.</li>
-              <li><strong>— Renda Variável e Imobiliária:</strong> ações na B3 e fundos imobiliários isentos de I.R.</li>
-              <li><strong>— Leitura contábil:</strong> entenda DRE, Balanço e os principais indicadores financeiros.</li>
-            </ul>
-            <a href="#/financas" className="bfa-btn bfa-btn--verde" style={{ padding: '0.85rem 1.6rem', borderRadius: 'var(--radius-md)', fontWeight: 700, width: 'fit-content' }}>
-              Acessar Aulas de Finanças →
-            </a>
-          </div>
-
-          <div className="bfa-split-col--visual">
-            <div className="bfa-tech-card" style={{ padding: '2rem 2.25rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.85rem', borderBottom: '1px solid var(--border)' }}>
-                <span className="mono-tag" style={{ color: 'var(--track-finance)', fontWeight: 800, fontSize: '0.78rem' }}>EMENTA DETALHADA</span>
-                <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', fontWeight: 700 }}>3 Módulos · 26 Aulas</span>
-              </div>
-              <div style={{ display: 'grid', gap: '0.85rem', fontSize: '0.88rem' }}>
-                <div style={{ padding: '0.85rem 1rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.2rem' }}>Módulo 1: Sistema Financeiro e Renda Fixa (9 aulas)</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>Banco Central, CVM, Tesouro Selic, IPCA+, CDBs, LCIs/LCAs e tabela de I.R. regressivo.</div>
-                </div>
-                <div style={{ padding: '0.85rem 1rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.2rem' }}>Módulo 2: Mercado de Ações e Fundos Imobiliários (8 aulas)</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>Bolsa de Valores (B3), funcionamento das ações, dividendos, FIIs de tijolo e papel e diversificação.</div>
-                </div>
-                <div style={{ padding: '0.85rem 1rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.2rem' }}>Módulo 3: Contabilidade e Indicadores de Empresas (9 aulas)</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>Leitura de DRE, Balanço Patrimonial, Fluxo de Caixa e múltiplos (P/L, EV/EBITDA, ROIC, Margens).</div>
-                </div>
-              </div>
+        <div className="academy-steps-grid">
+          {/* Card 01: Matemática */}
+          <a href="#/matematica" className="academy-step-card">
+            <div>
+              <div className="academy-step-num">01</div>
+              <h3 className="academy-step-title">Matemática Financeira & Modelagem</h3>
+              <p className="academy-step-desc">
+                Fundamentos algébricos, regimes de juros simples e compostos, séries uniformes, amortização (SAC e Price), inflação e equivalência de taxas de juros.
+              </p>
             </div>
-          </div>
-        </div>
-
-        {/* Trilha 3: BRHSIC com Explicação Completa da Competição */}
-        <div className="bfa-split-row" style={{ borderBottom: 'none', alignItems: 'flex-start' }}>
-          <div className="bfa-split-col--text">
-            <span className="mono-tag" style={{ color: 'var(--track-brhsic)', background: 'rgba(217, 119, 6, 0.08)', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 800, width: 'fit-content' }}>
-              OLIMPÍADA NACIONAL · BRHSIC
-            </span>
-            <h2 className="headline-punch" style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.03em' }}>
-              Guia Completo de Preparação para a BRHSIC
-            </h2>
-            <p style={{ fontSize: '1.05rem', color: 'var(--muted-foreground)', lineHeight: 1.7 }}>
-              A <strong>BRHSIC (Brazil High School Investment Competition)</strong> é a principal competição de investimentos do país para estudantes do ensino médio. As equipes atuam como analistas de mercado, estudando uma empresa real da Bolsa (B3), calculando seu valor justo e defendendo sua recomendação diante de profissionais do mercado financeiro.
-            </p>
-            <ul style={{ listStyle: 'none', padding: 0, margin: '1rem 0 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.92rem', color: 'var(--foreground)' }}>
-              <li><strong>— O que é a competição:</strong> disputa em equipes de 3 a 5 alunos de escolas públicas e privadas de todo o Brasil.</li>
-              <li><strong>— O que os alunos produzem:</strong> um relatório formal de análise de ações (Equity Research) com recomendação de compra ou venda.</li>
-              <li><strong>— Apresentação para banca:</strong> as melhores equipes defendem sua tese ao vivo em um pitch executivo para analistas e gestores de fundos.</li>
-              <li><strong>— Nosso material de apoio:</strong> o BFA fornece o passo a passo completo, do entendimento do negócio até o cálculo de valuation por DCF.</li>
-            </ul>
-            <a href="#/preparacao-brhsic" className="bfa-btn bfa-btn--ouro" style={{ padding: '0.85rem 1.6rem', borderRadius: 'var(--radius-md)', fontWeight: 700, width: 'fit-content' }}>
-              Acessar Guia Completo da BRHSIC →
-            </a>
-          </div>
-
-          <div className="bfa-split-col--visual">
-            <div className="bfa-tech-card" style={{ padding: '2rem 2.25rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.85rem', borderBottom: '1px solid var(--border)' }}>
-                <span className="mono-tag" style={{ color: 'var(--track-brhsic)', fontWeight: 800, fontSize: '0.78rem' }}>ETAPAS DA PREPARAÇÃO</span>
-                <span style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)', fontWeight: 700 }}>Roteiro Oficial BFA</span>
-              </div>
-              <div style={{ display: 'grid', gap: '0.85rem', fontSize: '0.88rem' }}>
-                <div style={{ padding: '0.85rem 1rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.2rem' }}>1. Escolha da Empresa e Análise do Negócio</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>Como entender o modelo de receita, os concorrentes e as vantagens competitivas (Moat) da companhia na B3.</div>
-                </div>
-                <div style={{ padding: '0.85rem 1rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.2rem' }}>2. Modelagem Financeira e Valuation (DCF)</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>Projeção simples de receitas, custos, custo de capital (WACC) e determinação do preço-alvo justo da ação.</div>
-                </div>
-                <div style={{ padding: '0.85rem 1rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.2rem' }}>3. Estruturação do Relatório Escrito (Equity Research)</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>Padrão profissional de sumário executivo, riscos da tese, governança corporativa e recomendação final.</div>
-                </div>
-                <div style={{ padding: '0.85rem 1rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.2rem' }}>4. Defesa Verbal e Apresentação para a Banca (Pitch)</div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--muted-foreground)' }}>Roteiro de apresentação em 5 a 10 minutos, postura e preparação para responder às perguntas dos jurados.</div>
-                </div>
-              </div>
+            <div className="academy-step-arrow">
+              <span>Explorar 29 aulas</span>
+              <span aria-hidden="true">→</span>
             </div>
-          </div>
-        </div>
+          </a>
 
+          {/* Card 02: Finanças */}
+          <a href="#/financas" className="academy-step-card">
+            <div>
+              <div className="academy-step-num">02</div>
+              <h3 className="academy-step-title">Mercado de Capitais & Empresas</h3>
+              <p className="academy-step-desc">
+                Renda fixa (Tesouro Direto, CDBs), renda variável (Ações da B3, Fundos Imobiliários) e leitura de relatórios contábeis como Balanço Patrimonial e DRE.
+              </p>
+            </div>
+            <div className="academy-step-arrow">
+              <span>Explorar 26 aulas</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+
+          {/* Card 03: Olimpíada BRHSIC */}
+          <a href="#/preparacao-brhsic" className="academy-step-card">
+            <div>
+              <div className="academy-step-num">03</div>
+              <h3 className="academy-step-title">Preparação para a Olimpíada BRHSIC</h3>
+              <p className="academy-step-desc">
+                Metodologia completa de Equity Research: seleção de companhia, projeção de resultados, valuation por fluxo de caixa descontado (DCF) e pitch perante jurados.
+              </p>
+            </div>
+            <div className="academy-step-arrow">
+              <span>Acessar Guia Oficial</span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        </div>
       </section>
 
-      {/* ── 3. Grade Técnica de Ferramentas do Laboratório ───────────────── */}
-      <section style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', background: 'var(--card)', padding: '4.5rem 0' }}>
+      {/* ── 3. Grade de Recursos e Ferramentas Práticas ───────────────── */}
+      <section style={{ background: 'var(--card)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '5rem 0' }} id="ferramentas">
         <div className="bfa-container">
-          <div style={{ marginBottom: '2.25rem' }}>
-            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 700, display: 'block', marginBottom: '0.25rem', letterSpacing: '0.06em' }}>
-              FERRAMENTAS
-            </span>
-            <h2 className="headline-punch" style={{ fontSize: '2.1rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.03em' }}>
-              Recursos Práticos da Plataforma
+          <div className="academy-section-header">
+            <div className="eyebrow">Recursos Oficiais</div>
+            <h2>Ferramentas para praticar e testar sua tese.</h2>
+            <p>
+              Além das aulas expositivas, você tem acesso a calculadoras financeiras, bancos de exercícios comentados e simuladores com padrão de olimpíada.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem', marginTop: '2rem' }}>
+            {/* Ferramenta 1 */}
+            <div style={{ background: 'var(--background)', border: '1px solid var(--border)', borderRadius: '1rem', padding: '1.75rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '0.5rem' }}>
+                  // CÁLCULOS & FIXAÇÃO
+                </div>
+                <h4 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--foreground)', margin: '0 0 0.5rem 0' }}>
+                  Banco de Exercícios
+                </h4>
+                <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', lineHeight: 1.6, margin: 0 }}>
+                  Listas com gabaritos detalhados passo a passo de juros, inflação e análise contábil.
+                </p>
+              </div>
+              <a href="#/exercicios" style={{ color: 'var(--primary)', fontWeight: 700, fontSize: '0.88rem', marginTop: '1.5rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                Praticar Exercícios →
+              </a>
+            </div>
+
+            {/* Ferramenta 2 */}
+            <div style={{ background: 'var(--background)', border: '1px solid var(--border)', borderRadius: '1rem', padding: '1.75rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '0.5rem' }}>
+                  // SIMULAÇÃO VISUAL
+                </div>
+                <h4 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--foreground)', margin: '0 0 0.5rem 0' }}>
+                  Calculadora de Juros
+                </h4>
+                <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', lineHeight: 1.6, margin: 0 }}>
+                  Simule aportes mensais, taxas reais e evolução patrimonial ano a ano em gráficos dinâmicos.
+                </p>
+              </div>
+              <a href="#/financas" style={{ color: 'var(--primary)', fontWeight: 700, fontSize: '0.88rem', marginTop: '1.5rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                Abrir Simulador →
+              </a>
+            </div>
+
+            {/* Ferramenta 3 */}
+            <div style={{ background: 'var(--background)', border: '1px solid var(--border)', borderRadius: '1rem', padding: '1.75rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '0.5rem' }}>
+                  // TESTES DE OLIMPÍADA
+                </div>
+                <h4 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--foreground)', margin: '0 0 0.5rem 0' }}>
+                  Simulados Oficiais
+                </h4>
+                <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', lineHeight: 1.6, margin: 0 }}>
+                  Provas cronometradas no mesmo formato de avaliação das fases classificatórias da BRHSIC.
+                </p>
+              </div>
+              <a href="#/simulados" style={{ color: 'var(--primary)', fontWeight: 700, fontSize: '0.88rem', marginTop: '1.5rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                Fazer Simulado →
+              </a>
+            </div>
+
+            {/* Ferramenta 4 */}
+            <div style={{ background: 'var(--background)', border: '1px solid var(--border)', borderRadius: '1rem', padding: '1.75rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '0.5rem' }}>
+                  // RECONHECIMENTO
+                </div>
+                <h4 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--foreground)', margin: '0 0 0.5rem 0' }}>
+                  Certificado & Badges
+                </h4>
+                <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', lineHeight: 1.6, margin: 0 }}>
+                  Conquiste medalhas e emita certificados digitais de conclusão conforme conclui os módulos.
+                </p>
+              </div>
+              <a href="#/conquistas" style={{ color: 'var(--primary)', fontWeight: 700, fontSize: '0.88rem', marginTop: '1.5rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                Minhas Conquistas →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. Seção Missão: Jovens ensinando jovens ──────────────────── */}
+      <section className="bfa-container" style={{ padding: '5rem 1.5rem' }} id="quem-somos">
+        <div style={{ background: 'var(--secondary)', border: '1px solid var(--border)', borderRadius: '1.5rem', padding: '3.5rem', display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
+          <div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', fontWeight: 800, color: 'var(--primary)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
+              Rede Nacional · BRHSIC Academy
+            </div>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.03em', lineHeight: 1.15, margin: '0 0 1.25rem 0' }}>
+              A educação financeira muda de escala quando os jovens lideram.
             </h2>
-          </div>
-
-          <div className="bfa-grid-tools-4">
-            <div className="tool-card bfa-bento-card" style={{ padding: '1.75rem' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 800, color: 'var(--track-math)', marginBottom: '0.5rem' }}>
-                01 // FIXAÇÃO
-              </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Banco de Exercícios</h4>
-              <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
-                Listas de fixação, cálculos passo a passo e resolução de casos reais comentados.
-              </p>
-              <a href="#/exercicios" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--track-math)' }}>
-                Ver Exercícios →
+            <p style={{ fontSize: '1.05rem', color: 'var(--muted-foreground)', lineHeight: 1.7, margin: '0 0 1.75rem 0' }}>
+              A BRHSIC Academy apoia a abertura de <strong>Núcleos de Inteligência Financeira (NIFs)</strong> em escolas de todo o país. Oferecemos a base de conteúdo, suporte e formação para que alunos ensinem outros alunos com autonomia.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <a href="https://brhsic-academy.vercel.app" target="_blank" rel="noreferrer" className="button-pill-primary">
+                <span>Conhecer a Rede de Núcleos</span>
+                <span aria-hidden="true">↗</span>
               </a>
-            </div>
-
-            <div className="tool-card bfa-bento-card" style={{ padding: '1.75rem' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 800, color: 'var(--track-finance)', marginBottom: '0.5rem' }}>
-                02 // OLIMPÍADA
-              </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Preparação BRHSIC</h4>
-              <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
-                Metodologia completa de Equity Research, valuation por fluxo de caixa e pitch.
-              </p>
-              <a href="#/preparacao-brhsic" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--track-finance)' }}>
-                Acessar Guia →
-              </a>
-            </div>
-
-            <div className="tool-card bfa-bento-card" style={{ padding: '1.75rem' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 800, color: 'var(--gold-deep)', marginBottom: '0.5rem' }}>
-                03 // CONQUISTAS
-              </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Badges & Conquistas</h4>
-              <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
-                Acompanhe o desbloqueio de medalhas conforme avança pelas 55 aulas publicadas.
-              </p>
-              <a href="#/conquistas" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--gold-deep)' }}>
-                Ver Conquistas →
-              </a>
-            </div>
-
-            <div className="tool-card bfa-bento-card" style={{ padding: '1.75rem' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.5rem' }}>
-                04 // INSTITUCIONAL
-              </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--foreground)' }}>Sobre o Projeto BFA</h4>
-              <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.35rem', lineHeight: 1.55 }}>
-                Conheça os princípios de excelência, rigor matemático e gratuidade da plataforma.
-              </p>
-              <a href="#/sobre" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '1.25rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--foreground)' }}>
-                Conhecer o BFA →
+              <a href="https://wa.me/5551995654746?text=Oi%21%20Quero%20entender%20como%20abrir%20um%20NIF%20com%20a%20BRHSIC%20Academy." target="_blank" rel="noreferrer" className="button-pill-secondary">
+                <span>Abrir um NIF na sua Escola</span>
+                <span aria-hidden="true">→</span>
               </a>
             </div>
           </div>
+
+          <div style={{ background: '#FFFFFF', border: '1px solid var(--border)', borderRadius: '1rem', padding: '2rem' }}>
+            <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1rem' }}>
+              Impacto em números
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div style={{ borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted-foreground)', textTransform: 'uppercase' }}>Núcleos Escolares</span>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 800, color: 'var(--foreground)' }}>9 Núcleos Ativos</div>
+              </div>
+              <div style={{ borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted-foreground)', textTransform: 'uppercase' }}>Presença Federativa</span>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 800, color: 'var(--foreground)' }}>5 Estados Conectados</div>
+              </div>
+              <div>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted-foreground)', textTransform: 'uppercase' }}>Modelo Pedagógico</span>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 800, color: 'var(--primary)' }}>100% Gratuito</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. Chamada Final (Final CTA) ───────────────────────────────── */}
+      <section style={{ textAlign: 'center', padding: '4rem 1.5rem 6rem 1.5rem' }}>
+        <div className="bfa-container" style={{ maxWidth: '720px' }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.03em', marginBottom: '1rem' }}>
+            Sua próxima tese pode começar aqui.
+          </h2>
+          <p style={{ fontSize: '1.1rem', color: 'var(--muted-foreground)', lineHeight: 1.65, marginBottom: '2rem' }}>
+            Acesse as aulas agora mesmo, sem taxas, sem mensalidades e no seu próprio ritmo.
+          </p>
+          <a href="#trilhas" className="button-pill-primary" style={{ padding: '1rem 2.25rem', fontSize: '1.05rem' }}>
+            <span>Acessar Todas as Aulas</span>
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
       </section>
     </div>
