@@ -183,7 +183,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
   // Real-time Preview Renderer strictly identical to LessonContent
   const previewHtml = useMemo(() => {
-    if (!editorText) return '<p style="color:var(--muted-foreground);font-style:italic;">Nenhum conteúdo inserido.</p>';
+    if (!editorText) return '<p style="color:var(--text-secondary);font-style:italic;">Nenhum conteúdo inserido.</p>';
     
     let formatted = editorText;
 
@@ -318,7 +318,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
     parsed = parsed.replace(/@@BFAMERMAID_(\d+)@@/g, (marcador, i) => {
       const code = mermaidBlocks[Number(i)];
       if (!code) return marcador;
-      return `<div style="padding:1rem;background:var(--secondary);border:1px solid var(--border);border-radius:6px;margin:1rem 0;font-family:monospace;font-size:0.85rem;"><span class="bfa-badge bfa-badge--azul" style="margin-bottom:0.5rem;display:inline-block;">Diagrama de Fluxo (Mermaid)</span><pre style="margin:0;white-space:pre-wrap;">${code}</pre></div>`;
+      return `<div style="padding:1rem;background:var(--secondary);border:1px solid var(--border-color);border-radius:6px;margin:1rem 0;font-family:monospace;font-size:0.85rem;"><span class="bfa-badge bfa-badge--azul" style="margin-bottom:0.5rem;display:inline-block;">Diagrama de Fluxo (Mermaid)</span><pre style="margin:0;white-space:pre-wrap;">${code}</pre></div>`;
     });
 
     // Envolver tabelas
@@ -389,16 +389,16 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div style={{ background: 'rgba(2, 132, 199, 0.1)', padding: '0.4rem', borderRadius: '6px' }}>
                   <BfaIcon name="pencil" size={18} color="var(--color-azul)" />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', margin: 0 }}>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>
                     Editor Avançado BFA & Inserção de Recursos
                   </h3>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)', fontFamily: 'var(--font-mono)' }}>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
                     ID do Bloco: {id}
                   </span>
                 </div>
@@ -421,8 +421,8 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                     onClick={() => setViewMode('editor')}
                     className="bfa-btn bfa-btn--sm"
                     style={{
-                      background: viewMode === 'editor' ? 'var(--card)' : 'transparent',
-                      color: viewMode === 'editor' ? 'var(--primary)' : 'var(--muted-foreground)',
+                      background: viewMode === 'editor' ? 'var(--bg-surface)' : 'transparent',
+                      color: viewMode === 'editor' ? 'var(--primary)' : 'var(--text-secondary)',
                       border: 'none',
                       fontSize: '0.75rem',
                       fontWeight: 700,
@@ -436,8 +436,8 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                     onClick={() => setViewMode('split')}
                     className="bfa-btn bfa-btn--sm"
                     style={{
-                      background: viewMode === 'split' ? 'var(--card)' : 'transparent',
-                      color: viewMode === 'split' ? 'var(--primary)' : 'var(--muted-foreground)',
+                      background: viewMode === 'split' ? 'var(--bg-surface)' : 'transparent',
+                      color: viewMode === 'split' ? 'var(--primary)' : 'var(--text-secondary)',
                       border: 'none',
                       fontSize: '0.75rem',
                       fontWeight: 700,
@@ -451,8 +451,8 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                     onClick={() => setViewMode('preview')}
                     className="bfa-btn bfa-btn--sm"
                     style={{
-                      background: viewMode === 'preview' ? 'var(--card)' : 'transparent',
-                      color: viewMode === 'preview' ? 'var(--primary)' : 'var(--muted-foreground)',
+                      background: viewMode === 'preview' ? 'var(--bg-surface)' : 'transparent',
+                      color: viewMode === 'preview' ? 'var(--primary)' : 'var(--text-secondary)',
                       border: 'none',
                       fontSize: '0.75rem',
                       fontWeight: 700,
@@ -477,52 +477,52 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
             {/* LaTeX Quick Guide Panel */}
             {showLatexGuide && (
-              <div style={{ background: 'var(--secondary)', border: '1px solid var(--border)', borderRadius: '8px', padding: '0.85rem 1rem', marginBottom: '0.85rem', maxHeight: '190px', overflowY: 'auto' }}>
+              <div style={{ background: 'var(--secondary)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '0.85rem 1rem', marginBottom: '0.85rem', maxHeight: '190px', overflowY: 'auto' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                  <strong style={{ fontSize: '0.85rem', color: 'var(--foreground)' }}>Guia Rápido de Fórmulas KaTeX (Clique para Inserir no Cursor):</strong>
+                  <strong style={{ fontSize: '0.85rem', color: 'var(--text-primary)' }}>Guia Rápido de Fórmulas KaTeX (Clique para Inserir no Cursor):</strong>
                   <button type="button" onClick={() => setShowLatexGuide(false)} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ padding: '0.1rem 0.35rem', fontSize: '0.75rem' }}>✕ Fechar</button>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.4rem' }}>
-                  <button type="button" onClick={() => insertAtCursor(' $\\frac{a}{b}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\frac{a}{b}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Fração:</strong> <code>\frac&#123;a&#125;&#123;b&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $(1 + i)^{t}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $(1 + i)^{t}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Juros Compostos:</strong> <code>(1+i)^&#123;t&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $x^{n}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $x^{n}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Potência:</strong> <code>x^&#123;n&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $x_{i}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $x_{i}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Subscrito:</strong> <code>x_&#123;i&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $\\sqrt{x}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\sqrt{x}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Raiz Quadrada:</strong> <code>\sqrt&#123;x&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $\\sqrt[n]{1 + R}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\sqrt[n]{1 + R}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Raiz Enésima:</strong> <code>\sqrt[n]&#123;x&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $$\\text{VPL} = \\sum_{t=1}^{n} \\frac{\\text{FC}_t}{(1+r)^t} - I_0$$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $$\\text{VPL} = \\sum_{t=1}^{n} \\frac{\\text{FC}_t}{(1+r)^t} - I_0$$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>VPL:</strong> <code>\sum \frac&#123;FC&#125;&#123;(1+r)^t&#125;</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $$\\prod_{i=1}^{k} (1 + r_i)$$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $$\\prod_{i=1}^{k} (1 + r_i)$$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Produtório:</strong> <code>\prod (1+r_i)</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $\\cdot$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\cdot$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Multiplicação Ponto:</strong> <code>\cdot</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $\\times$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\times$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Multiplicação Cruz:</strong> <code>\times</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $\\sigma$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\sigma$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Volatilidade:</strong> <code>\sigma</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $\\mu$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\mu$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Retorno Médio:</strong> <code>\mu</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $\\Delta$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\Delta$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Variação Delta:</strong> <code>\Delta</code>
                   </button>
-                  <button type="button" onClick={() => insertAtCursor(' $\\text{R\\$ } 1.000,00$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--card)' }}>
+                  <button type="button" onClick={() => insertAtCursor(' $\\text{R\\$ } 1.000,00$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Moeda Formatada:</strong> <code>\text&#123;R\$ &#125;</code>
                   </button>
                 </div>
@@ -531,7 +531,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
             {/* Configurable Wizards / Assistants Bar */}
             <div style={{ display: 'flex', gap: '0.45rem', marginBottom: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--muted-foreground)', marginRight: '2px' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-secondary)', marginRight: '2px' }}>
                 FERRAMENTAS DE INSERÇÃO:
               </span>
               <button
@@ -602,7 +602,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
             {/* Wizard Input Form Panel */}
             {activeWizard && (
-              <div style={{ background: 'var(--secondary)', border: '1px solid var(--border)', borderRadius: '8px', padding: '0.75rem 1rem', marginBottom: '0.75rem', display: 'flex', gap: '0.65rem', alignItems: 'center', flexWrap: 'wrap' }}>
+              <div style={{ background: 'var(--secondary)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '0.75rem 1rem', marginBottom: '0.75rem', display: 'flex', gap: '0.65rem', alignItems: 'center', flexWrap: 'wrap' }}>
                 {activeWizard === 'gabarito' && (
                   <>
                     <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Inserir Gabarito Oculto:</span>
@@ -611,12 +611,12 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       placeholder="Título do Gabarito (ex: Gabarito com resolução)"
                       value={wizardInputs.gabaritoTitulo || 'Gabarito com resolução'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, gabaritoTitulo: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '220px' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', width: '220px' }}
                     />
                     <select
                       value={wizardInputs.gabaritoModelo || 'passo'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, gabaritoModelo: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     >
                       <option value="passo">Passo a Passo Detalhado (Passo 1, Passo 2, Conclusão/Sobra)</option>
                       <option value="questoes">Lista de Questões Numeradas (1, 2, 3, 4)</option>
@@ -628,7 +628,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                         placeholder="Digite o texto da explicação ou gabarito (todas as linhas serão indentadas automaticamente)..."
                         value={wizardInputs.gabaritoCustomText || ''}
                         onChange={(e) => setWizardInputs({ ...wizardInputs, gabaritoCustomText: e.target.value })}
-                        style={{ width: '100%', minHeight: '65px', padding: '0.4rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}
+                        style={{ width: '100%', minHeight: '65px', padding: '0.4rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}
                       />
                     )}
                   </>
@@ -640,7 +640,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                     <select
                       value={wizardInputs.tabelaTipo || 'comparativa'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, tabelaTipo: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     >
                       <option value="comparativa">Tabela Comparativa / Indicadores (Conceito, Fórmula, Significado)</option>
                       <option value="balanco">Tabela Financeira / DRE (Linha, Valor R$, Margem %)</option>
@@ -655,7 +655,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                         placeholder="Cabeçalhos separados por vírgula (ex: Mês, Aporte, Saldo)"
                         value={wizardInputs.colunasCustom || ''}
                         onChange={(e) => setWizardInputs({ ...wizardInputs, colunasCustom: e.target.value })}
-                        style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', flex: 1, minWidth: '220px' }}
+                        style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', flex: 1, minWidth: '220px' }}
                       />
                     )}
                   </>
@@ -667,7 +667,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                     <select
                       value={wizardInputs.tipo || 'tip'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, tipo: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     >
                       <option value="tip">Dica Prática (Verde)</option>
                       <option value="note">Nota / Atenção (Azul)</option>
@@ -684,14 +684,14 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       placeholder="Título da Caixa"
                       value={wizardInputs.titulo || ''}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, titulo: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '160px' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', width: '160px' }}
                     />
                     <input
                       type="text"
                       placeholder="Texto do Conteúdo"
                       value={wizardInputs.corpo || ''}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, corpo: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', flex: 1, minWidth: '200px' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', flex: 1, minWidth: '200px' }}
                     />
                   </>
                 )}
@@ -702,7 +702,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                     <select
                       value={wizardInputs.formulaTipo || 'vpl'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, formulaTipo: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     >
                       <option value="vpl">VPL — Valor Presente Líquido (Somatório de Fluxos)</option>
                       <option value="juros_compostos">Juros Compostos — M = C(1+i)^t</option>
@@ -724,7 +724,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       placeholder="Numerador (ex: Lucro Bruto)"
                       value={wizardInputs.num || ''}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, num: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '140px' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', width: '140px' }}
                     />
                     <span>/</span>
                     <input
@@ -732,7 +732,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       placeholder="Denominador (ex: Receita)"
                       value={wizardInputs.den || ''}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, den: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '140px' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', width: '140px' }}
                     />
                   </>
                 )}
@@ -745,7 +745,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       placeholder="Base (ex: 1 + i)"
                       value={wizardInputs.base || ''}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, base: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '130px' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', width: '130px' }}
                     />
                     <span>^</span>
                     <input
@@ -753,7 +753,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       placeholder="Expoente (ex: t)"
                       value={wizardInputs.exp || ''}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, exp: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '90px' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', width: '90px' }}
                     />
                   </>
                 )}
@@ -764,7 +764,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                     <select
                       value={wizardInputs.mermaidTipo || 'fluxo_decisao'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, mermaidTipo: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     >
                       <option value="fluxo_decisao">Tomada de Decisão Financeira (Dívidas vs Reserva vs Aporte)</option>
                       <option value="ciclo_caixa">Ciclo Operacional & Financeiro de Caixa</option>
@@ -781,14 +781,14 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       placeholder="URL da Imagem (https://...)"
                       value={wizardInputs.url || ''}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, url: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', flex: 1, minWidth: '180px' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', flex: 1, minWidth: '180px' }}
                     />
                     <input
                       type="text"
                       placeholder="Legenda / Alt text"
                       value={wizardInputs.alt || ''}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, alt: e.target.value })}
-                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border)', fontSize: '0.8rem', width: '160px' }}
+                      style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', width: '160px' }}
                     />
                   </>
                 )}
@@ -818,10 +818,10 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
               {(viewMode === 'editor' || viewMode === 'split') && (
                 <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--muted-foreground)' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
                       CÓDIGO FONTE (MARKDOWN + LATEX):
                     </span>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--muted-foreground)' }}>
+                    <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
                       {editorText.length} caracteres
                     </span>
                   </div>
@@ -838,10 +838,10 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       lineHeight: '1.5',
                       padding: '0.85rem',
                       borderRadius: '8px',
-                      border: '1px solid var(--border)',
+                      border: '1px solid var(--border-color)',
                       resize: 'none',
-                      background: 'var(--card)',
-                      color: 'var(--foreground)'
+                      background: 'var(--bg-surface)',
+                      color: 'var(--text-primary)'
                     }}
                     autoFocus
                   ></textarea>
@@ -855,7 +855,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                     <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-azul)' }}>
                       PRÉ-VISUALIZAÇÃO EM TEMPO REAL:
                     </span>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--muted-foreground)' }}>
+                    <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
                       Renderização Final
                     </span>
                   </div>
@@ -866,8 +866,8 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       minHeight: '260px',
                       overflowY: 'auto',
                       padding: '1rem',
-                      background: 'var(--card)',
-                      border: '1px solid var(--border)',
+                      background: 'var(--bg-surface)',
+                      border: '1px solid var(--border-color)',
                       borderRadius: '8px',
                       fontSize: '0.9rem'
                     }}
@@ -878,7 +878,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
             </div>
 
             {/* Bottom Footer Action Bar */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border)', paddingTop: '0.75rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-color)', paddingTop: '0.75rem' }}>
               <button
                 type="button"
                 className="bfa-btn bfa-btn--ghost bfa-btn--sm"

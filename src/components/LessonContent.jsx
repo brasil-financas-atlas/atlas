@@ -198,7 +198,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
               // Remover qualquer elemento de erro gerado pelo Mermaid no DOM
               const errEl = document.getElementById(uniqueId) || document.querySelector(`[id^="d${uniqueId}"]`);
               if (errEl && errEl.parentNode) errEl.parentNode.removeChild(errEl);
-              mDiv.innerHTML = `<div class="bfa-diagram-box" style="padding:1rem;background:var(--secondary);border:1px solid var(--border);border-radius:8px;font-size:0.85rem;"><span class="bfa-badge bfa-badge--azul" style="margin-bottom:0.5rem;display:inline-block;">Diagrama de Fluxo</span><pre style="margin:0;white-space:pre-wrap;font-family:var(--font-mono);font-size:0.8rem;color:var(--foreground);">${rawCode}</pre></div>`;
+              mDiv.innerHTML = `<div class="bfa-diagram-box" style="padding:1rem;background:var(--secondary);border:1px solid var(--border-color);border-radius:8px;font-size:0.85rem;"><span class="bfa-badge bfa-badge--azul" style="margin-bottom:0.5rem;display:inline-block;">Diagrama de Fluxo</span><pre style="margin:0;white-space:pre-wrap;font-family:var(--font-mono);font-size:0.8rem;color:var(--text-primary);">${rawCode}</pre></div>`;
               mDiv.setAttribute('data-processed', 'true');
             });
           }
@@ -394,7 +394,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     parsedHtml = parsedHtml.replace(/@@BFATIKZ_(\d+)@@/g, (marcador, i) => {
       const code = tikzBlocks[Number(i)];
       if (!code) return marcador;
-      return `<div class="bfa-tikz-wrapper" style="margin: 1.5rem 0; text-align: center; overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem;"><script type="text/tikz">${code}</script></div>`;
+      return `<div class="bfa-tikz-wrapper" style="margin: 1.5rem 0; text-align: center; overflow-x: auto; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;"><script type="text/tikz">${code}</script></div>`;
     });
 
     // Envolver tabelas com wrapper executivo centralizado e responsivo

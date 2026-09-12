@@ -157,8 +157,8 @@ function AudioReader({ markdownContent, lessonTitle }) {
 
   if (!supported) {
     return (
-      <div style={{ padding: '0.75rem 1rem', background: 'var(--surface-strong)', borderRadius: '8px', border: '1px solid var(--border)', fontSize: '0.85rem', color: 'var(--muted-foreground)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <BfaIcon name="alert" size={14} color="var(--muted-foreground)" />
+      <div style={{ padding: '0.75rem 1rem', background: 'var(--bg-surface)', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <BfaIcon name="alert" size={14} color="var(--text-secondary)" />
         <span>Recurso de síntese de voz indisponível neste navegador.</span>
       </div>
     );
