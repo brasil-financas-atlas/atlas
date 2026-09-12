@@ -1,6 +1,5 @@
 /* ==========================================================================
-   Brasil Finanças Atlas (BFA) — Premium Design System (From Scratch)
-   Inspirado 100% em lovable-project-2bcdc0ac (Estética Bloomberg / Academic Portal)
+   BRHSIC Academy — Plataforma de Ensino (Official Design System)
    ========================================================================== */
 
 @import url('./typography.css');
@@ -10,184 +9,36 @@
 @import url('./themes.css');
 
 :root {
-  --radius: 0.5rem;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-full: 9999px;
+  /* BRHSIC Core Colors */
+  --bg-app: #FFFFFF;
+  --bg-surface: #F9FAFB;
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --text-muted: #9CA3AF;
+  
+  --border-color: #E5E7EB;
+  --border-color-hover: #D1D5DB;
 
-  /* BRHSIC Core Colors Mapping */
-  --background: #F4F7FA;
-  --foreground: #172237;
-  --card: #FFFFFF;
-  --card-foreground: #172237;
-  --popover: #FFFFFF;
-  --popover-foreground: #172237;
-  --primary: #2F9BFF;
+  --primary: #0066FF; /* BRHSIC Blue */
+  --primary-hover: #0052CC;
   --primary-foreground: #FFFFFF;
-  --secondary: #EAF4FB;
-  --secondary-foreground: #172237;
-  --muted: #EAF4FB;
-  --muted-foreground: #53647B;
-  --accent: #EAF4FB;
-  --accent-foreground: #172237;
-  --border: #C9D9E7;
-  --input: #C9D9E7;
-  --ring: #2F9BFF;
 
-  /* Domain Specific Colors - BRHSIC Academy Accents */
-  --market: #C4ED64;
-  --market-foreground: #172237;
-  --gold: #F95B44;
-  --gold-deep: #D4422E;
-  --gold-foreground: #FFFFFF;
-
-  /* Track Brand Colors (Adjusted for BRHSIC) */
-  --track-finance: #2F9BFF;
-  --track-math: #172237;
-  --track-brhsic: #F95B44;
-
-  --surface: #FFFFFF;
-  --surface-strong: #EAF4FB;
-
-  /* Status Colors (WCAG Compliant) */
-  --status-success: #059669;
-  --status-success-bg: #ECFDF5;
-  --status-warning: #D97706;
-  --status-warning-bg: #FFFBEB;
-  --status-danger: #DC2626;
-  --status-danger-bg: #FEF2F2;
-
-  /* Backward Compatibility Aliases */
-  --color-verde: var(--track-finance);
-  --color-verde-light: #E8F5ED;
-  --color-verde-dark: #124827;
-  --color-ouro: var(--track-brhsic);
-  --color-ouro-light: #FDF6EC;
-  --color-ouro-dark: #976F2B;
-  --color-azul: var(--track-math);
-  --color-azul-light: #EBF2FA;
-  --color-azul-dark: #10243C;
-
-  --color-slate-50: #F8FAFC;
-  --color-slate-100: #F1F5F9;
-  --color-slate-200: #E2E8F0;
-  --color-slate-300: #CBD5E1;
-  --color-slate-400: #94A3B8;
-  --color-slate-500: #64748B;
-  --color-slate-600: #475569;
-  --color-slate-700: #334155;
-  --color-slate-800: #1E293B;
-  --color-slate-900: #0F172A;
-
-  --bg-app: var(--background);
-  --bg-surface: var(--card);
-  --text-primary: var(--foreground);
-  --text-secondary: var(--muted-foreground);
-  --text-muted: #64748B;
-
-  --border-color: var(--border);
-  --border-color-hover: #94A3B8;
-
-  /* High-End Shadows */
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
-  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 12px 24px rgba(15, 23, 42, 0.12);
-  --shadow-elevated: 0 1px 2px rgba(15, 23, 42, 0.05), 0 12px 32px -12px rgba(15, 23, 42, 0.16);
-  --shadow-terminal: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -28px rgba(15, 23, 42, 0.55);
-
-  /* Typography (BRHSIC Identity) */
+  /* Typography */
   --font-sans: 'Figtree', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-display: 'Bricolage Grotesque', var(--font-sans);
   --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
 
-  /* Safe Area Insets for Modern Mobile OS (iOS Notch / Dynamic Island / Android Gesture Bar) */
-  --sat: env(safe-area-inset-top, 0px);
-  --sab: env(safe-area-inset-bottom, 0px);
-  --sal: env(safe-area-inset-left, 0px);
-  --sar: env(safe-area-inset-right, 0px);
-}
-
-/* Touch & Mobile UX Optimizations */
-html, body {
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  overscroll-behavior-y: contain;
-}
-
-@media (max-width: 768px) {
-  html {
-    font-size: 15px;
-  }
-  .bfa-container {
-    padding: 0 1.25rem;
-  }
-  .bfa-bento-card {
-    padding: 1.25rem;
-  }
-  /* Espaço inferior para a barra de navegação móvel e safe area */
-  .bfa-app-body {
-    padding-bottom: calc(72px + var(--sab));
-  }
-}
-
-@media (max-width: 480px) {
-  html {
-    font-size: 14px;
-  }
-  .bfa-container {
-    padding: 0 1rem;
-  }
-}
-
-/* Dark Obsidian Theme */
-[data-theme="dark-obsidian"],
-.dark {
-  --background: #0D1117;
-  --foreground: #F0F6FC;
-  --card: #161B22;
-  --card-foreground: #F0F6FC;
-  --popover: #161B22;
-  --popover-foreground: #F0F6FC;
-  --primary: #F0F6FC;
-  --primary-foreground: #0D1117;
-  --secondary: #21262D;
-  --secondary-foreground: #F0F6FC;
-  --muted: #21262D;
-  --muted-foreground: #8B949E;
-  --accent: #30363D;
-  --border: #30363D;
-
-  --market: #10B981;
-  --gold: #F59E0B;
-  --gold-deep: #D97706;
-
-  --track-finance: #34D399;
-  --track-math: #60A5FA;
-  --track-brhsic: #FBBF24;
-
-  --surface: #161B22;
-  --surface-strong: #21262D;
-
-  --color-slate-50: #161B22;
-  --color-slate-100: #21262D;
-  --color-slate-200: #30363D;
-  --color-slate-500: #8B949E;
-  --color-slate-900: #FFFFFF;
-
-  --bg-app: #0D1117;
-  --bg-surface: #161B22;
-  --text-primary: #F0F6FC;
-  --text-secondary: #8B949E;
-  --border-color: #30363D;
+  --radius: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
 }
 
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: var(--font-sans);
 }
 
 html {
@@ -210,145 +61,38 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--ring);
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 
-.bfa-app-root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.bfa-app-body {
-  flex: 1;
-}
-
-/* UI/UX Pro Max Visual Utilities */
-.hero-gradient {
-  background: 
-    radial-gradient(circle at 85% 15%, rgba(14, 165, 233, 0.22) 0%, transparent 45%),
-    radial-gradient(circle at 15% 85%, rgba(16, 185, 129, 0.18) 0%, transparent 45%),
-    linear-gradient(135deg, #090D16 0%, #0F172A 50%, #1E293B 100%);
-  color: #FFFFFF !important;
-  position: relative;
-}
-
-.hero-gradient h1,
-.hero-gradient h2,
-.hero-gradient h3,
-.hero-gradient h4,
-.hero-gradient h5,
-.hero-gradient h6,
-.hero-gradient p,
-.hero-gradient span,
-.hero-gradient .bfa-editable-content,
-.hero-gradient .bfa-editable-content * {
-  color: #FFFFFF !important;
-}
-
-.grid-ledger {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
-.mono-tag {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.katex-display,
-.math-display {
-  max-width: 100%;
-  overflow-x: auto;
-  padding: 1.25rem 1.75rem;
-  margin: 1.85rem 0 !important;
-  line-height: 1.95;
-}
-
-.card-lift {
-  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 280ms cubic-bezier(0.16, 1, 0.3, 1), border-color 280ms ease;
-}
-
-.card-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(16, 185, 129, 0.2);
-  border-color: var(--color-slate-300);
-}
-
-.formula-block {
-  font-family: var(--font-mono);
-  border-left: 4px solid var(--primary);
-  background-color: var(--surface-strong);
-  padding: 1rem 1.25rem;
-  border-radius: 0 var(--radius) var(--radius) 0;
-  overflow-x: auto;
-}
-
-.formula-inline {
-  font-family: var(--font-mono);
-  background-color: var(--surface-strong);
-  border-bottom: 2px solid rgba(15, 23, 42, 0.35);
-  padding: 0.05em 0.3em;
-  border-radius: 3px;
-}
-
-.bfa-container {
-  max-width: 1350px;
+/* Container */
+.site-container {
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-/* UI/UX Pro Max Bento Cards & Glass Layers */
-.bfa-bento-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  padding: 1.75rem;
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
-  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
+/* Touch & Mobile UX Optimizations */
+html, body {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior-y: contain;
 }
 
-.bfa-bento-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -12px rgba(15, 23, 42, 0.12);
-  border-color: rgba(59, 130, 246, 0.3);
-}
-
-.bfa-stat-spotlight {
-  background: rgba(15, 23, 42, 0.72);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-lg);
-  padding: 1.35rem 1.65rem;
-  transition: all 250ms ease;
-}
-
-.bfa-stat-spotlight:hover {
-  background: rgba(15, 23, 42, 0.85);
-  border-color: rgba(16, 185, 129, 0.4);
-  transform: translateY(-2px);
-}
-
-/* Fluid touch target sizes */
 @media (max-width: 768px) {
-  .bfa-stat-spotlight {
-    padding: 1rem 1.25rem;
+  html {
+    font-size: 15px;
+  }
+  .site-container {
+    padding: 0 1.25rem;
   }
 }
 
-/* Responsive Tables */
-.bfa-table-wrapper,
-.bfa-table {
-  display: block;
+/* KaTeX and Math Resets */
+.katex-display,
+.math-display {
   max-width: 100%;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  padding: 1rem;
+  margin: 1.5rem 0;
 }

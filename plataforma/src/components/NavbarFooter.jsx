@@ -79,27 +79,17 @@ function Navbar() {
 
   return (
     <>
-      <header className="site-header" style={{ boxShadow: '0 4px 20px -5px rgba(15, 23, 42, 0.05)' }}>
+      <header className="site-header">
       <div className="site-header__container">
-        <a href="#/" className="site-logo" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div className="site-logo__badge" style={{ background: 'var(--primary)', color: '#FFFFFF', padding: '0.5rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.9rem' }}>
-            <BfaIcon name="bar-chart-2" size={16} color="#FFFFFF" />
-          </div>
-          <div>
-            <span style={{ display: 'block', fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.02em', fontFamily: 'var(--font-display)' }}>
-              <strong>BRHSIC</strong> <span style={{ fontWeight: 400, opacity: 0.9 }}>Academy</span>
-            </span>
-            <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontWeight: 600, fontSize: '0.72rem', display: 'inline-flex', alignItems: 'center', gap: '4px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-              Plataforma de Ensino
-            </span>
-          </div>
+        <a href="#/" className="site-logo" style={{ textDecoration: 'none' }}>
+          BRHSIC <span>Academy</span>
         </a>
 
         {/* Global Search Bar with Autocomplete */}
-        <div className="navbar-search">
+        <div className="navbar-search" style={{ position: 'relative', minWidth: '250px' }}>
           <input
             type="text"
-            placeholder="Buscar aula ou conceito..."
+            placeholder="Buscar aula..."
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -109,14 +99,13 @@ function Navbar() {
             onBlur={() => setTimeout(() => setSearchOpen(false), 200)}
             style={{
               width: '100%',
-              padding: '0.5rem 0.95rem',
+              padding: '0.5rem 1rem',
               fontSize: '0.875rem',
               borderRadius: '9999px',
-              border: '1px solid var(--border)',
-              backgroundColor: 'var(--card)',
-              color: 'var(--foreground)',
-              outline: 'none',
-              minHeight: '40px'
+              border: '1px solid var(--border-color)',
+              backgroundColor: 'var(--bg-app)',
+              color: 'var(--text-primary)',
+              outline: 'none'
             }}
           />
           {searchOpen && searchResults.length > 0 && (
@@ -125,14 +114,13 @@ function Navbar() {
               top: 'calc(100% + 6px)',
               left: 0,
               right: 0,
-              backgroundColor: 'var(--card)',
-              border: '1px solid var(--border)',
+              backgroundColor: 'var(--bg-app)',
+              border: '1px solid var(--border-color)',
               borderRadius: 'var(--radius-lg)',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.05)',
               zIndex: 9999,
               maxHeight: '65vh',
-              overflowY: 'auto',
-              padding: '0.4rem 0'
+              overflowY: 'auto'
             }}>
               {searchResults.map((item) => (
                 <a
@@ -141,18 +129,15 @@ function Navbar() {
                   onClick={() => setSearchOpen(false)}
                   style={{
                     display: 'block',
-                    padding: '0.65rem 1rem',
+                    padding: '0.75rem 1rem',
                     textDecoration: 'none',
-                    borderBottom: '1px solid var(--border)',
+                    borderBottom: '1px solid var(--border-color)',
                     fontSize: '0.875rem',
-                    color: 'var(--foreground)',
-                    transition: 'background 0.15s ease',
-                    minHeight: '44px'
+                    color: 'var(--text-primary)'
                   }}
-                  className="search-item-link"
                 >
-                  <span style={{ fontWeight: 700, display: 'block' }}>{item.aulaTitle}</span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
+                  <strong style={{ display: 'block' }}>{item.aulaTitle}</strong>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                     {item.subjectTitle} · {item.moduloTitle}
                   </span>
                 </a>
@@ -161,25 +146,17 @@ function Navbar() {
           )}
         </div>
 
-        <nav className="navbar-nav">
+        <nav className="nav-links">
           {navLinks.map((link) => {
             const isActive = currentPath === link.path || (link.path !== '/' && currentPath.startsWith(link.path));
             return (
               <a
                 key={link.path}
                 href={`#${link.path}`}
-                className={`nav-link ${isActive ? 'active' : ''}`}
+                className="nav-link"
                 style={{
-                  fontWeight: isActive ? 700 : 600,
-                  backgroundColor: isActive ? 'var(--track-finance)' : 'transparent',
-                  color: isActive ? '#FFFFFF' : 'var(--muted-foreground)',
-                  padding: '0.5rem 0.95rem',
-                  borderRadius: '9999px',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  minHeight: '40px',
-                  fontSize: '0.85rem',
-                  transition: 'all 0.15s ease'
+                  fontWeight: isActive ? 600 : 500,
+                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
                 }}
               >
                 {link.label}
@@ -188,66 +165,15 @@ function Navbar() {
           })}
         </nav>
 
-        {/* Quick mobile track pills */}
-        <div className="bfa-mobile-quick-tracks" style={{ display: 'none', alignItems: 'center', gap: '0.35rem' }}>
-          <a
-            href="#/matematica"
-            className="mono-tag"
-            style={{
-              color: currentPath.startsWith('/matematica') ? '#FFFFFF' : 'var(--foreground)',
-              background: currentPath.startsWith('/matematica') ? 'var(--track-math)' : 'var(--surface-strong)',
-              border: '1px solid var(--border)',
-              padding: '0.35rem 0.6rem',
-              borderRadius: '9999px',
-              textDecoration: 'none',
-              fontSize: '0.72rem',
-              fontWeight: 700
-            }}
-          >
-            Matemática
-          </a>
-          <a
-            href="#/financas"
-            className="mono-tag"
-            style={{
-              color: currentPath.startsWith('/financas') ? '#FFFFFF' : 'var(--foreground)',
-              background: currentPath.startsWith('/financas') ? 'var(--track-finance)' : 'var(--surface-strong)',
-              border: '1px solid var(--border)',
-              padding: '0.35rem 0.6rem',
-              borderRadius: '9999px',
-              textDecoration: 'none',
-              fontSize: '0.72rem',
-              fontWeight: 700
-            }}
-          >
-            Finanças
-          </a>
-        </div>
-
-        <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+        <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           {/* Link para o site oficial */}
           <a
             href="https://brhsic.com/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '0.45rem 0.85rem',
-              borderRadius: '9999px',
-              border: '1px solid var(--border)',
-              background: 'transparent',
-              color: 'var(--muted-foreground)',
-              fontSize: '0.8rem',
-              fontWeight: 600,
-              textDecoration: 'none',
-              transition: 'all 0.15s ease'
-            }}
-            onMouseOver={(e) => { e.currentTarget.style.color = 'var(--foreground)'; e.currentTarget.style.background = 'var(--surface-strong)'; }}
-            onMouseOut={(e) => { e.currentTarget.style.color = 'var(--muted-foreground)'; e.currentTarget.style.background = 'transparent'; }}
+            className="btn-secondary"
           >
-            <BfaIcon name="external-link" size={14} /> Portal BRHSIC
+            Portal BRHSIC ↗
           </a>
 
           {/* Botão de Autenticação / Perfil do Aluno */}
@@ -258,115 +184,36 @@ function Navbar() {
                 setAuthStep('profile');
                 setStudentModalOpen(true);
               }}
-              className="navbar-student-btn"
-              title="Meu Perfil e Progresso Sincronizado"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '7px',
-                padding: '0.42rem 0.85rem',
-                borderRadius: '9999px',
-                border: '1px solid var(--border)',
-                background: 'var(--surface-strong)',
-                color: 'var(--foreground)',
-                fontSize: '0.8rem',
-                fontWeight: 750,
-                cursor: 'pointer',
-                transition: 'all 0.15s ease'
-              }}
+              className="btn-secondary"
+              title="Meu Perfil"
+              style={{ padding: '0.4rem 0.8rem' }}
             >
-              <span style={{
+              <div style={{
                 width: '8px',
                 height: '8px',
                 borderRadius: '50%',
-                backgroundColor: studentAuth.isSyncing ? '#38BDF8' : '#10B981',
-                boxShadow: studentAuth.isSyncing ? '0 0 8px #38BDF8' : '0 0 6px #10B981'
+                backgroundColor: studentAuth.isSyncing ? 'var(--primary)' : '#10B981'
               }} />
-              <span style={{ maxWidth: '110px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <span>
                 {studentAuth.profile?.name || studentAuth.user?.email?.split('@')[0] || 'Aluno'}
               </span>
             </button>
           ) : (
             <a
               href="#/login"
-              className="navbar-student-btn"
-              title="Entrar ou criar conta para sincronizar seu progresso"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '0.45rem 0.95rem',
-                borderRadius: '9999px',
-                border: '1px solid rgba(5, 150, 105, 0.4)',
-                background: 'linear-gradient(135deg, rgba(5, 150, 105, 0.15) 0%, rgba(15, 23, 42, 0.05) 100%)',
-                color: 'var(--track-finance)',
-                fontSize: '0.82rem',
-                fontWeight: 750,
-                textDecoration: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.15s ease'
-              }}
+              className="btn-primary"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-              <span>Entrar</span>
+              Entrar / Cadastrar
             </a>
           )}
-
-          {/* Botão de Alternância Dark/Light (Desktop) */}
-          <button
-            type="button"
-            onClick={toggleDarkLight}
-            className="navbar-theme-btn"
-            title={isDark ? "Mudar para modo claro" : "Mudar para modo escuro"}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '0.45rem 0.85rem',
-              borderRadius: '9999px',
-              border: '1px solid var(--border)',
-              background: 'var(--surface-strong)',
-              color: 'var(--foreground)',
-              fontSize: '0.8rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              transition: 'all 0.15s ease'
-            }}
-          >
-            {isDark ? (
-              <>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="5"></circle>
-                  <line x1="12" y1="1" x2="12" y2="3"></line>
-                  <line x1="12" y1="21" x2="12" y2="23"></line>
-                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                  <line x1="1" y1="12" x2="3" y2="12"></line>
-                  <line x1="21" y1="12" x2="23" y2="12"></line>
-                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-                <span>Claro</span>
-              </>
-            ) : (
-              <>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-                <span>Escuro</span>
-              </>
-            )}
-          </button>
 
           {/* Botão Hamburger Mobile */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="bfa-mobile-nav-toggle"
-            aria-label="Abrir menu de funções"
+            className="btn-secondary bfa-mobile-nav-toggle"
+            aria-label="Abrir menu"
+            style={{ padding: '0.5rem' }}
           >
             <BfaIcon name={mobileMenuOpen ? "close" : "menu"} size={18} />
           </button>
@@ -806,69 +653,43 @@ function Navbar() {
 
 function Footer() {
   return (
-    <footer className="site-footer" style={{ borderTop: '1px solid var(--border)', background: 'var(--card)', padding: '4.5rem 0 3rem 0' }}>
-      <div className="bfa-container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '3rem', marginBottom: '3.5rem' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem' }}>
-              <div style={{ background: 'var(--primary)', color: '#FFFFFF', padding: '0.45rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.85rem' }}>
-                <BfaIcon name="bar-chart-2" size={15} color="#FFFFFF" />
-              </div>
-              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.02em', fontFamily: 'var(--font-display)' }}>
-                <strong>BRHSIC</strong> <span style={{ fontWeight: 400, opacity: 0.9 }}>Academy</span>
-              </span>
-            </div>
-            <p style={{ fontSize: '0.92rem', color: 'var(--muted-foreground)', lineHeight: 1.65, maxWidth: '340px', margin: '0 0 1.5rem 0' }}>
-              Educação financeira gratuita, feita por jovens e multiplicada por todo o Brasil. A plataforma de estudo oficial da BRHSIC.
-            </p>
-            <div style={{ fontStyle: 'italic', fontSize: '0.85rem', color: 'var(--foreground)', fontWeight: 600 }}>
-              "Processo importa mais do que resultado."
-            </div>
+    <footer className="site-footer">
+      <div className="footer__container">
+        <div>
+          <div className="footer__manifesto">
+            Processo importa mais do que resultado.
           </div>
-
-          <div>
-            <h4 style={{ fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1.25rem', color: 'var(--foreground)', fontFamily: 'var(--font-mono)' }}>
-              Trilhas de Estudo
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
-              <li><a href="#/matematica" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Matemática Financeira</a></li>
-              <li><a href="#/financas" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Mercado de Capitais</a></li>
-              <li><a href="#/preparacao-brhsic" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Guia Oficial BRHSIC</a></li>
-              <li><a href="#/exercicios" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Caderno de Exercícios</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 style={{ fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1.25rem', color: 'var(--foreground)', fontFamily: 'var(--font-mono)' }}>
-              Ferramentas & Recursos
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
-              <li><a href="#/simulados" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Simulador de Prova</a></li>
-              <li><a href="#/financas" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Calculadora de Juros</a></li>
-              <li><a href="#/conquistas" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Minhas Conquistas</a></li>
-              <li><a href="#/sobre" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Sobre o Projeto</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 style={{ fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1.25rem', color: 'var(--foreground)', fontFamily: 'var(--font-mono)' }}>
-              Ecossistema BRHSIC
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
-              <li><a href="https://brhsic.com" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>Competição BRHSIC <BfaIcon name="external-link" size={12} /></a></li>
-              <li><a href="https://brhsic-academy.vercel.app" target="_blank" rel="noreferrer" style={{ color: 'var(--muted-foreground)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>Rede Academy (NIFs) <BfaIcon name="external-link" size={12} /></a></li>
-              <li><a href="https://wa.me/5551995654746" target="_blank" rel="noreferrer" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Falar com a Academy</a></li>
-            </ul>
-          </div>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '300px' }}>
+            Educação financeira gratuita, feita por jovens e multiplicada por todo o Brasil. A plataforma de estudo oficial da BRHSIC.
+          </p>
         </div>
 
-        <div style={{ paddingTop: '2rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', fontSize: '0.82rem', color: 'var(--muted-foreground)' }}>
+        <div className="footer__nav">
+          <h4>Trilhas Educacionais</h4>
+          <ul>
+            <li><a href="#/matematica">Matemática Financeira</a></li>
+            <li><a href="#/financas">Mercado de Capitais</a></li>
+            <li><a href="#/preparacao-brhsic">Guia Oficial BRHSIC</a></li>
+          </ul>
+        </div>
+
+        <div className="footer__nav">
+          <h4>Ecossistema</h4>
+          <ul>
+            <li><a href="https://brhsic.com" target="_blank" rel="noreferrer">Competição BRHSIC ↗</a></li>
+            <li><a href="https://brhsic-academy.vercel.app" target="_blank" rel="noreferrer">Rede Academy (NIFs) ↗</a></li>
+            <li><a href="https://wa.me/5551995654746" target="_blank" rel="noreferrer">Falar com a Academy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="footer__container" style={{ marginTop: 0 }}>
+        <div className="footer__bottom" style={{ width: '100%' }}>
           <div>
-            © 2026 BRHSIC Academy · Plataforma Pública de Educação Financeira. Conteúdo 100% gratuito.
+            © 2026 BRHSIC Academy · Conteúdo educacional aberto e gratuito.
           </div>
           <div style={{ display: 'flex', gap: '1.5rem' }}>
-            <a href="#/sobre" style={{ color: 'inherit', textDecoration: 'none' }}>Termos & Diretrizes</a>
-            <a href="#/" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ color: 'var(--primary)', fontWeight: 700, textDecoration: 'none' }}>Voltar ao topo ↑</a>
+            <a href="#/" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ color: 'var(--text-primary)', fontWeight: 600, textDecoration: 'none' }}>Voltar ao topo ↑</a>
           </div>
         </div>
       </div>
@@ -878,3 +699,4 @@ function Footer() {
 
 window.Navbar = Navbar;
 window.Footer = Footer;
+
