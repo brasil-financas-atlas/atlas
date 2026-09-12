@@ -575,22 +575,21 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
                   {/* Practice CTA Card leading to Quiz */}
                   {lessonQuestions.length > 0 && (
-                    <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', textAlign: 'center', boxShadow: '0 4px 20px -5px rgba(0,0,0,0.1)' }}>
-                      <h3 style={{ margin: '0 0 0.5rem 0', fontWeight: 800, color: 'var(--foreground)', fontSize: '1.2rem' }}>
+                    <div style={{ marginTop: '3rem', padding: '2.5rem', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
+                      <h3 style={{ margin: '0 0 1rem 0', fontWeight: 700, color: 'var(--text-primary)', fontSize: '1.5rem', fontFamily: 'var(--font-display)' }}>
                         Pronto para testar sua retenção?
                       </h3>
-                      <p style={{ margin: '0 0 1.5rem 0', color: 'var(--muted-foreground)', fontSize: '0.9rem', maxWidth: '500px', marginLeft: 'auto', marginRight: 'auto' }}>
+                      <p style={{ margin: '0 0 2rem 0', color: 'var(--text-secondary)', fontSize: '1.125rem', maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto' }}>
                         Resolva os {lessonQuestions.length} exercícios práticos de fixação com cálculo passo a passo para consolidar o aprendizado.
                       </p>
                       <button
                         type="button"
-                        className="bfa-btn bfa-btn--verde"
+                        className="btn-primary"
                         onClick={() => {
                           hapticTap();
                           setActiveTab('quiz');
                           window.scrollTo({ top: 0, behavior: 'smooth' });
                         }}
-                        style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '0.75rem 1.5rem', fontWeight: 700 }}
                       >
                         <BfaIcon name="target" size={16} />
                         <span>Praticar Exercícios de Fixação ({lessonQuestions.length} Questões)</span>
