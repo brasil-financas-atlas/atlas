@@ -190,11 +190,11 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
 
   if (!quizQuestions || quizQuestions.length === 0) {
     return (
-      <div className="bfa-tech-card" style={{ padding: '2rem', textAlign: 'center' }}>
-        <h4 style={{ marginBottom: '0.5rem', color: 'var(--foreground)' }}>
+      <div style={{ backgroundColor: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }} style={{ padding: '2rem', textAlign: 'center' }}>
+        <h4 style={{ marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
           Quiz de Fixação
         </h4>
-        <p style={{ color: 'var(--muted-foreground)', marginBottom: '1rem' }}>Esta aula ainda não possui questões cadastradas.</p>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>Esta aula ainda não possui questões cadastradas.</p>
         {isAuthenticated && inlineEditActive && (
           <button
             type="button"
@@ -289,18 +289,18 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
     const pct = Math.round((finalScore / quizQuestions.length) * 100);
 
     return (
-      <div className="bfa-tech-card" style={{ padding: '2.5rem 2rem', textAlign: 'center', maxWidth: '640px', margin: '0 auto' }}>
+      <div style={{ backgroundColor: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }} style={{ padding: '2.5rem 2rem', textAlign: 'center', maxWidth: '640px', margin: '0 auto' }}>
         <span className="mono-tag" style={{ color: pct >= 70 ? 'var(--track-finance)' : 'var(--track-brhsic)', fontWeight: 800 }}>
           {pct >= 70 ? 'DESEMPENHO APROVADO' : 'REVISÃO RECOMENDADA'}
         </span>
-        <h3 className="headline-punch" style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0.5rem 0', color: 'var(--foreground)' }}>
+        <h3 className="headline-punch" style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0.5rem 0', color: 'var(--text-primary)' }}>
           Resultado da Avaliação
         </h3>
-        <p style={{ color: 'var(--muted-foreground)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
           Você acertou <strong>{finalScore}</strong> de <strong>{quizQuestions.length}</strong> questões ({pct}% de aproveitamento).
         </p>
 
-        <div style={{ height: '8px', width: '100%', background: 'var(--surface-strong)', borderRadius: '999px', overflow: 'hidden', marginBottom: '2rem' }}>
+        <div style={{ height: '8px', width: '100%', background: 'var(--bg-surface)', borderRadius: '999px', overflow: 'hidden', marginBottom: '2rem' }}>
           <div style={{ height: '100%', width: `${pct}%`, background: pct >= 70 ? 'var(--track-finance)' : 'var(--track-brhsic)', borderRadius: '999px' }} />
         </div>
 
@@ -348,14 +348,14 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
   }
 
   return (
-    <div className="bfa-tech-card" style={{ padding: '2rem' }}>
+    <div style={{ backgroundColor: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }} style={{ padding: '2rem' }}>
       {/* Header do Quiz */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.75rem', borderBottom: '1px solid var(--border)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.75rem', borderBottom: '1px solid var(--border-color)' }}>
         <div>
           <span className="mono-tag" style={{ color: 'var(--track-math)', fontWeight: 800, fontSize: '0.72rem' }}>
             VERIFICAÇÃO DE APRENDIZAGEM
           </span>
-          <div style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '2px' }}>
+          <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
             Questão {currentIdx + 1} de {quizQuestions.length}
           </div>
         </div>
@@ -393,12 +393,12 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
       </div>
 
       {/* Barra de Progresso */}
-      <div style={{ height: '4px', width: '100%', background: 'var(--surface-strong)', borderRadius: '999px', overflow: 'hidden', marginBottom: '1.75rem' }}>
+      <div style={{ height: '4px', width: '100%', background: 'var(--bg-surface)', borderRadius: '999px', overflow: 'hidden', marginBottom: '1.75rem' }}>
         <div style={{ height: '100%', width: `${((currentIdx + (submitted ? 1 : 0)) / quizQuestions.length) * 100}%`, background: 'var(--track-math)', transition: 'width 0.3s ease' }} />
       </div>
 
       {/* Pergunta */}
-      <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1.25rem', lineHeight: 1.5 }}>
+      <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1.25rem', lineHeight: 1.5 }}>
         {currentQ.pergunta}
       </h3>
 
@@ -408,19 +408,19 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
           const isSelected = selectedOption === idx;
           const isCorrect = idx === currentQ.correta;
 
-          let bg = 'var(--surface-strong)';
-          let border = '1px solid var(--border)';
-          let color = 'var(--foreground)';
+          let bg = 'var(--bg-surface)';
+          let border = '1px solid var(--border-color)';
+          let color = 'var(--text-primary)';
 
           if (submitted) {
             if (isCorrect) {
               bg = 'rgba(16, 185, 129, 0.12)';
               border = '1px solid #10B981';
-              color = 'var(--foreground)';
+              color = 'var(--text-primary)';
             } else if (isSelected && !isCorrect) {
               bg = 'rgba(239, 68, 68, 0.12)';
               border = '1px solid #EF4444';
-              color = 'var(--foreground)';
+              color = 'var(--text-primary)';
             }
           } else if (isSelected) {
             bg = 'rgba(37, 99, 235, 0.08)';
@@ -441,7 +441,7 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
                 borderRadius: 'var(--radius-md)',
                 background: bg,
                 border: border,
-                color: 'var(--foreground)',
+                color: 'var(--text-primary)',
                 textAlign: 'left',
                 width: '100%',
                 cursor: submitted ? 'default' : 'pointer',
@@ -459,20 +459,20 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
                   minWidth: '26px',
                   borderRadius: '50%',
                   background: isSelected ? 'var(--track-math)' : 'var(--card)',
-                  color: isSelected ? '#FFFFFF' : 'var(--foreground)',
+                  color: isSelected ? '#FFFFFF' : 'var(--text-primary)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '0.78rem',
                   fontWeight: 800,
-                  border: isSelected ? '1px solid var(--track-math)' : '1px solid var(--border)',
+                  border: isSelected ? '1px solid var(--track-math)' : '1px solid var(--border-color)',
                   marginTop: '1px',
                   flexShrink: 0
                 }}
               >
                 {String.fromCharCode(65 + idx)}
               </span>
-              <span style={{ flex: 1, color: 'var(--foreground)', lineHeight: 1.55, fontSize: '0.92rem', wordBreak: 'break-word' }}>
+              <span style={{ flex: 1, color: 'var(--text-primary)', lineHeight: 1.55, fontSize: '0.92rem', wordBreak: 'break-word' }}>
                 {alt}
               </span>
             </button>
@@ -496,7 +496,7 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
           <div style={{ fontWeight: 800, color: selectedOption === currentQ.correta ? '#059669' : '#DC2626', marginBottom: '0.25rem' }}>
             {selectedOption === currentQ.correta ? 'Correto!' : 'Incorreto.'}
           </div>
-          <div style={{ color: 'var(--foreground)' }}>
+          <div style={{ color: 'var(--text-primary)' }}>
             {currentQ.explicacao}
           </div>
         </div>
@@ -530,18 +530,18 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
       {showModal && (
         <div className="bfa-inline-editor-modal" onClick={() => setShowModal(false)}>
           <div className="bfa-inline-editor-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '560px' }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--foreground)' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-primary)' }}>
               {editingQuestionIdx !== null ? 'Editar Questão do Quiz' : 'Nova Questão do Quiz'}
             </h3>
             <form onSubmit={handleSaveQuestion}>
-              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--foreground)' }}>
+              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
                 Enunciado da Pergunta:
               </label>
               <textarea
                 value={qText}
                 onChange={(e) => setQText(e.target.value)}
                 rows={3}
-                style={{ width: '100%', padding: '0.65rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)', marginBottom: '1rem', outline: 'none' }}
+                style={{ width: '100%', padding: '0.65rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-surface)', color: 'var(--text-primary)', marginBottom: '1rem', outline: 'none' }}
                 required
               />
 
@@ -551,7 +551,7 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
                   placeholder="Alternativa A"
                   value={optA}
                   onChange={(e) => setOptA(e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)' }}
+                  style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', background: 'var(--bg-surface)', color: 'var(--text-primary)' }}
                   required
                 />
                 <input
@@ -559,7 +559,7 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
                   placeholder="Alternativa B"
                   value={optB}
                   onChange={(e) => setOptB(e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)' }}
+                  style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', background: 'var(--bg-surface)', color: 'var(--text-primary)' }}
                   required
                 />
                 <input
@@ -567,25 +567,25 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
                   placeholder="Alternativa C"
                   value={optC}
                   onChange={(e) => setOptC(e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)' }}
+                  style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', background: 'var(--bg-surface)', color: 'var(--text-primary)' }}
                 />
                 <input
                   type="text"
                   placeholder="Alternativa D"
                   value={optD}
                   onChange={(e) => setOptD(e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)' }}
+                  style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', background: 'var(--bg-surface)', color: 'var(--text-primary)' }}
                 />
               </div>
 
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--foreground)' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
                   Alternativa Correta:
                 </label>
                 <select
                   value={correctIdx}
                   onChange={(e) => setCorrectIdx(e.target.value)}
-                  style={{ width: '100%', padding: '0.5rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)' }}
+                  style={{ width: '100%', padding: '0.5rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', background: 'var(--bg-surface)', color: 'var(--text-primary)' }}
                 >
                   <option value={0}>Alternativa A</option>
                   <option value={1}>Alternativa B</option>
@@ -594,14 +594,14 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
                 </select>
               </div>
 
-              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--foreground)' }}>
+              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
                 Explicação / Gabarito Comentado:
               </label>
               <textarea
                 value={qExpl}
                 onChange={(e) => setQExpl(e.target.value)}
                 rows={2}
-                style={{ width: '100%', padding: '0.65rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--surface-strong)', color: 'var(--foreground)', marginBottom: '1.25rem', outline: 'none' }}
+                style={{ width: '100%', padding: '0.65rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-surface)', color: 'var(--text-primary)', marginBottom: '1.25rem', outline: 'none' }}
               />
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
