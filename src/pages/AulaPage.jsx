@@ -651,20 +651,12 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         })()}
 
         {/* Bottom Lesson Navigation */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4rem', paddingTop: '1.75rem', borderTop: '1px solid var(--border)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5rem', paddingTop: '2rem', borderTop: '1px solid var(--border-color)' }}>
           {prevAula ? (
             <a
               href={`#/${subjectKey}/${prevAula.moduloSlug}/${prevAula.slug}`}
               onClick={() => hapticTap()}
-              style={{
-                border: '1px solid var(--border)',
-                background: 'var(--surface-strong)',
-                color: 'var(--foreground)',
-                padding: '0.65rem 1.25rem',
-                borderRadius: 'var(--radius-md)',
-                fontWeight: 700,
-                fontSize: '0.85rem'
-              }}
+              className="btn-secondary"
             >
               ← Aula Anterior
             </a>
@@ -674,8 +666,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
             <a
               href={`#/${subjectKey}/${nextAula.moduloSlug}/${nextAula.slug}`}
               onClick={() => hapticTap()}
-              className="bfa-btn bfa-btn--verde"
-              style={{ padding: '0.65rem 1.35rem', borderRadius: 'var(--radius-md)', fontWeight: 700, fontSize: '0.85rem' }}
+              className="btn-primary"
             >
               Próxima Aula →
             </a>
