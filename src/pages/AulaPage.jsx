@@ -601,20 +601,20 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
               {/* TAB 2: QUIZ */}
               {activeTab === 'quiz' && (
-                <div id="quiz-section" style={{ marginTop: '1rem' }}>
-                  <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div id="quiz-section" style={{ marginTop: '1.5rem' }}>
+                  <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <button
                       type="button"
-                      className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+                      className="btn-secondary"
                       onClick={() => {
                         hapticTap();
                         setActiveTab('teoria');
                       }}
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                      style={{ padding: '0.5rem 1rem' }}
                     >
                       <span>← Voltar para a Teoria</span>
                     </button>
-                    <span className="mono-tag" style={{ color: 'var(--market)', fontSize: '0.75rem' }}>
+                    <span style={{ color: 'var(--accent-green)', fontSize: '0.875rem', fontWeight: 600 }}>
                       {lessonQuestions.length} Questões Disponíveis
                     </span>
                   </div>
@@ -629,16 +629,16 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
               {/* TAB 3: FORUM */}
               {activeTab === 'forum' && (
-                <div id="forum-section" style={{ marginTop: '1rem' }}>
-                  <div style={{ marginBottom: '1.5rem' }}>
+                <div id="forum-section" style={{ marginTop: '1.5rem' }}>
+                  <div style={{ marginBottom: '2rem' }}>
                     <button
                       type="button"
-                      className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+                      className="btn-secondary"
                       onClick={() => {
                         hapticTap();
                         setActiveTab('teoria');
                       }}
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                      style={{ padding: '0.5rem 1rem' }}
                     >
                       <span>← Voltar para a Teoria</span>
                     </button>
