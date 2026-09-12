@@ -653,69 +653,43 @@ function Navbar() {
 
 function Footer() {
   return (
-    <footer className="site-footer" style={{ borderTop: '1px solid var(--border)', background: 'var(--card)', padding: '4.5rem 0 3rem 0' }}>
-      <div className="bfa-container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '3rem', marginBottom: '3.5rem' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem' }}>
-              <div style={{ background: 'var(--primary)', color: '#FFFFFF', padding: '0.45rem', borderRadius: '4px', fontWeight: 800, fontSize: '0.85rem' }}>
-                <BfaIcon name="bar-chart-2" size={15} color="#FFFFFF" />
-              </div>
-              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.02em', fontFamily: 'var(--font-display)' }}>
-                <strong>BRHSIC</strong> <span style={{ fontWeight: 400, opacity: 0.9 }}>Academy</span>
-              </span>
-            </div>
-            <p style={{ fontSize: '0.92rem', color: 'var(--muted-foreground)', lineHeight: 1.65, maxWidth: '340px', margin: '0 0 1.5rem 0' }}>
-              Educação financeira gratuita, feita por jovens e multiplicada por todo o Brasil. A plataforma de estudo oficial da BRHSIC.
-            </p>
-            <div style={{ fontStyle: 'italic', fontSize: '0.85rem', color: 'var(--foreground)', fontWeight: 600 }}>
-              "Processo importa mais do que resultado."
-            </div>
+    <footer className="site-footer">
+      <div className="footer__container">
+        <div>
+          <div className="footer__manifesto">
+            Processo importa mais do que resultado.
           </div>
-
-          <div>
-            <h4 style={{ fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1.25rem', color: 'var(--foreground)', fontFamily: 'var(--font-mono)' }}>
-              Trilhas de Estudo
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
-              <li><a href="#/matematica" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Matemática Financeira</a></li>
-              <li><a href="#/financas" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Mercado de Capitais</a></li>
-              <li><a href="#/preparacao-brhsic" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Guia Oficial BRHSIC</a></li>
-              <li><a href="#/exercicios" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Caderno de Exercícios</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 style={{ fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1.25rem', color: 'var(--foreground)', fontFamily: 'var(--font-mono)' }}>
-              Ferramentas & Recursos
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
-              <li><a href="#/simulados" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Simulador de Prova</a></li>
-              <li><a href="#/financas" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Calculadora de Juros</a></li>
-              <li><a href="#/conquistas" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Minhas Conquistas</a></li>
-              <li><a href="#/sobre" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Sobre o Projeto</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 style={{ fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1.25rem', color: 'var(--foreground)', fontFamily: 'var(--font-mono)' }}>
-              Ecossistema BRHSIC
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
-              <li><a href="https://brhsic.com" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>Competição BRHSIC <BfaIcon name="external-link" size={12} /></a></li>
-              <li><a href="https://brhsic-academy.vercel.app" target="_blank" rel="noreferrer" style={{ color: 'var(--muted-foreground)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>Rede Academy (NIFs) <BfaIcon name="external-link" size={12} /></a></li>
-              <li><a href="https://wa.me/5551995654746" target="_blank" rel="noreferrer" style={{ color: 'var(--muted-foreground)', textDecoration: 'none' }}>Falar com a Academy</a></li>
-            </ul>
-          </div>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '300px' }}>
+            Educação financeira gratuita, feita por jovens e multiplicada por todo o Brasil. A plataforma de estudo oficial da BRHSIC.
+          </p>
         </div>
 
-        <div style={{ paddingTop: '2rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', fontSize: '0.82rem', color: 'var(--muted-foreground)' }}>
+        <div className="footer__nav">
+          <h4>Trilhas Educacionais</h4>
+          <ul>
+            <li><a href="#/matematica">Matemática Financeira</a></li>
+            <li><a href="#/financas">Mercado de Capitais</a></li>
+            <li><a href="#/preparacao-brhsic">Guia Oficial BRHSIC</a></li>
+          </ul>
+        </div>
+
+        <div className="footer__nav">
+          <h4>Ecossistema</h4>
+          <ul>
+            <li><a href="https://brhsic.com" target="_blank" rel="noreferrer">Competição BRHSIC ↗</a></li>
+            <li><a href="https://brhsic-academy.vercel.app" target="_blank" rel="noreferrer">Rede Academy (NIFs) ↗</a></li>
+            <li><a href="https://wa.me/5551995654746" target="_blank" rel="noreferrer">Falar com a Academy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="footer__container" style={{ marginTop: 0 }}>
+        <div className="footer__bottom" style={{ width: '100%' }}>
           <div>
-            © 2026 BRHSIC Academy · Plataforma Pública de Educação Financeira. Conteúdo 100% gratuito.
+            © 2026 BRHSIC Academy · Conteúdo educacional aberto e gratuito.
           </div>
           <div style={{ display: 'flex', gap: '1.5rem' }}>
-            <a href="#/sobre" style={{ color: 'inherit', textDecoration: 'none' }}>Termos & Diretrizes</a>
-            <a href="#/" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ color: 'var(--primary)', fontWeight: 700, textDecoration: 'none' }}>Voltar ao topo ↑</a>
+            <a href="#/" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ color: 'var(--text-primary)', fontWeight: 600, textDecoration: 'none' }}>Voltar ao topo ↑</a>
           </div>
         </div>
       </div>
@@ -725,3 +699,4 @@ function Footer() {
 
 window.Navbar = Navbar;
 window.Footer = Footer;
+
