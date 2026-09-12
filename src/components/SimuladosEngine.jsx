@@ -181,10 +181,10 @@ function SimuladosEngine() {
             </span>
             <span className="bfa-badge bfa-badge--verde">Cronometrado</span>
           </div>
-          <h2 style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.025em' }}>
+          <h2 style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.025em' }}>
             Centro de Simulados da Olimpíada
           </h2>
-          <p style={{ color: 'var(--muted-foreground)', fontSize: '1rem', marginTop: '0.5rem', lineHeight: 1.6 }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginTop: '0.5rem', lineHeight: 1.6 }}>
             Treine em condições reais de prova da <strong>1ª Fase da BRHSIC</strong>. Resolva questões cronometradas, marque dúvidas para revisão e analise seu relatório por competência com gabarito comentado.
           </p>
         </div>
@@ -209,20 +209,20 @@ function SimuladosEngine() {
                   <span className="mono-tag" style={{ color: 'var(--color-ouro)', background: 'rgba(245, 158, 11, 0.1)', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 700 }}>
                     {simulado.nivel}
                   </span>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <BfaIcon name="clock" size={14} /> {simulado.duracaoMinutos} min
                   </span>
                 </div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.4rem' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
                   {simulado.titulo}
                 </h3>
-                <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', lineHeight: 1.55 }}>
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
                   {simulado.subtitulo}
                 </p>
               </div>
 
-              <div style={{ marginTop: '1.5rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--foreground)' }}>
+              <div style={{ marginTop: '1.5rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                   {simulado.totalQuestoes} Questões
                 </span>
                 <button
@@ -240,11 +240,11 @@ function SimuladosEngine() {
         </div>
 
         {/* Instruções Oficiais */}
-        <div style={{ background: 'var(--card)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }}>
-          <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ background: 'var(--card)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
+          <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <BfaIcon name="lightbulb" size={18} color="var(--color-ouro)" /> Regras & Instruções da Prova:
           </h4>
-          <ul style={{ paddingLeft: '1.25rem', fontSize: '0.88rem', color: 'var(--muted-foreground)', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+          <ul style={{ paddingLeft: '1.25rem', fontSize: '0.88rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
             <li>O cronômetro regressivo começa assim que você clica em <strong>Iniciar Simulado</strong>.</li>
             <li>Você pode navegar livremente entre as questões pela barra lateral e marcar itens para revisão.</li>
             <li>Ao final do tempo limite, o sistema encerra automaticamente e gera seu relatório diagnóstico.</li>
@@ -266,10 +266,10 @@ function SimuladosEngine() {
     return (
       <div className="bfa-simulado-running" style={{ padding: '1rem 0 3rem 0' }}>
         {/* Top Header com Timer e Ações */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', background: 'var(--surface-strong)', padding: '1rem 1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', marginBottom: '1.5rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', background: 'var(--surface-strong)', padding: '1rem 1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', marginBottom: '1.5rem' }}>
           <div>
             <span className="mono-tag" style={{ color: 'var(--color-ouro)', fontWeight: 800 }}>PROVA OFICIAL EM ANDAMENTO</span>
-            <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.25rem 0 0 0' }}>{activeSimulado.titulo}</h3>
+            <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0.25rem 0 0 0' }}>{activeSimulado.titulo}</h3>
           </div>
 
           {/* Cronômetro */}
@@ -278,10 +278,10 @@ function SimuladosEngine() {
             alignItems: 'center',
             gap: '8px',
             background: timeLeft <= 300 ? 'rgba(239, 68, 68, 0.15)' : 'var(--card)',
-            color: timeLeft <= 300 ? '#EF4444' : 'var(--foreground)',
+            color: timeLeft <= 300 ? '#EF4444' : 'var(--text-primary)',
             padding: '0.5rem 1.25rem',
             borderRadius: '9999px',
-            border: `1px solid ${timeLeft <= 300 ? '#EF4444' : 'var(--border)'}`,
+            border: `1px solid ${timeLeft <= 300 ? '#EF4444' : 'var(--border-color)'}`,
             fontFamily: 'var(--font-mono)',
             fontWeight: 800,
             fontSize: '1.2rem',
@@ -307,10 +307,10 @@ function SimuladosEngine() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: '1.5rem', alignItems: 'start' }}>
           {/* Coluna da Questão Atual */}
           <div className="bfa-card" style={{ padding: '2rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span className="bfa-badge bfa-badge--azul">Questão {currentIdx + 1} de {totalQ}</span>
-                <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.78rem' }}>
+                <span className="mono-tag" style={{ color: 'var(--text-secondary)', fontSize: '0.78rem' }}>
                   {q.competenciaNome}
                 </span>
               </div>
@@ -321,8 +321,8 @@ function SimuladosEngine() {
                 onClick={() => toggleFlag(q.id)}
                 style={{
                   background: isFlagged ? 'rgba(245, 158, 11, 0.2)' : 'transparent',
-                  border: isFlagged ? '1px solid var(--color-ouro)' : '1px solid var(--border)',
-                  color: isFlagged ? 'var(--color-ouro)' : 'var(--muted-foreground)',
+                  border: isFlagged ? '1px solid var(--color-ouro)' : '1px solid var(--border-color)',
+                  color: isFlagged ? 'var(--color-ouro)' : 'var(--text-secondary)',
                   padding: '0.35rem 0.75rem',
                   borderRadius: 'var(--radius-md)',
                   fontSize: '0.8rem',
@@ -339,7 +339,7 @@ function SimuladosEngine() {
             </div>
 
             {/* Enunciado */}
-            <p style={{ fontSize: '1.05rem', color: 'var(--foreground)', lineHeight: 1.7, fontWeight: 500, marginBottom: '2rem' }}>
+            <p style={{ fontSize: '1.05rem', color: 'var(--text-primary)', lineHeight: 1.7, fontWeight: 500, marginBottom: '2rem' }}>
               {q.enunciado}
             </p>
 
@@ -358,7 +358,7 @@ function SimuladosEngine() {
                       gap: '12px',
                       padding: '1rem 1.25rem',
                       borderRadius: 'var(--radius-md)',
-                      border: isSelected ? '2px solid var(--color-verde-dark)' : '1px solid var(--border)',
+                      border: isSelected ? '2px solid var(--color-verde-dark)' : '1px solid var(--border-color)',
                       background: isSelected ? 'rgba(16, 185, 129, 0.08)' : 'var(--card)',
                       cursor: 'pointer',
                       transition: 'all 0.15s ease'
@@ -369,7 +369,7 @@ function SimuladosEngine() {
                       height: '26px',
                       borderRadius: '50%',
                       background: isSelected ? 'var(--color-verde-dark)' : 'var(--surface-strong)',
-                      color: isSelected ? '#FFFFFF' : 'var(--foreground)',
+                      color: isSelected ? '#FFFFFF' : 'var(--text-primary)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -379,7 +379,7 @@ function SimuladosEngine() {
                     }}>
                       {letter}
                     </span>
-                    <span style={{ fontSize: '0.92rem', color: 'var(--foreground)', lineHeight: 1.5 }}>
+                    <span style={{ fontSize: '0.92rem', color: 'var(--text-primary)', lineHeight: 1.5 }}>
                       {alt}
                     </span>
                   </div>
@@ -388,7 +388,7 @@ function SimuladosEngine() {
             </div>
 
             {/* Navegação Entre Questões */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border)', paddingTop: '1.25rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-color)', paddingTop: '1.25rem' }}>
               <button
                 type="button"
                 disabled={currentIdx === 0}
@@ -412,8 +412,8 @@ function SimuladosEngine() {
           </div>
 
           {/* Coluna Lateral: Mapa de Navegação */}
-          <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)' }}>
-            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '1rem' }}>
+          <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
+            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1rem' }}>
               Grade de Questões
             </h4>
 
@@ -424,8 +424,8 @@ function SimuladosEngine() {
                 const isActive = currentIdx === idx;
 
                 let bg = 'var(--card)';
-                let borderColor = 'var(--border)';
-                let textColor = 'var(--foreground)';
+                let borderColor = 'var(--border-color)';
+                let textColor = 'var(--text-primary)';
 
                 if (answered) {
                   bg = 'rgba(16, 185, 129, 0.15)';
@@ -469,7 +469,7 @@ function SimuladosEngine() {
             </div>
 
             {/* Legenda */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', fontSize: '0.75rem', color: 'var(--muted-foreground)', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', fontSize: '0.75rem', color: 'var(--text-secondary)', borderTop: '1px solid var(--border-color)', paddingTop: '1rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span style={{ width: '12px', height: '12px', borderRadius: '3px', background: 'rgba(16, 185, 129, 0.2)', border: '1px solid var(--color-verde-dark)' }} /> Respondida
               </div>
@@ -477,7 +477,7 @@ function SimuladosEngine() {
                 <span style={{ width: '12px', height: '12px', borderRadius: '3px', background: 'rgba(245, 158, 11, 0.2)', border: '1px solid var(--color-ouro)' }} /> Marcada p/ Revisão
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ width: '12px', height: '12px', borderRadius: '3px', background: 'var(--card)', border: '1px solid var(--border)' }} /> Em Branco
+                <span style={{ width: '12px', height: '12px', borderRadius: '3px', background: 'var(--card)', border: '1px solid var(--border-color)' }} /> Em Branco
               </div>
             </div>
           </div>
@@ -501,13 +501,13 @@ function SimuladosEngine() {
               width: '100%',
               padding: '2rem',
               borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border)',
+              border: '1px solid var(--border-color)',
               boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
             }}>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '0.75rem' }}>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.75rem' }}>
                 Deseja finalizar o simulado?
               </h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--muted-foreground)', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1.5rem' }}>
                 Você respondeu <strong>{answeredCount}</strong> de <strong>{totalQ}</strong> questões.
                 {totalQ - answeredCount > 0 && (
                   <span style={{ color: '#EF4444', display: 'flex', alignItems: 'center', gap: '6px', marginTop: '0.4rem', fontWeight: 600 }}>
@@ -545,22 +545,22 @@ function SimuladosEngine() {
   return (
     <div className="bfa-card" style={{ padding: '2.5rem', marginBottom: '3.5rem' }}>
       {/* Cabeçalho do Resultado */}
-      <div style={{ textAlign: 'center', marginBottom: '2.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '2rem' }}>
+      <div style={{ textAlign: 'center', marginBottom: '2.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '2rem' }}>
         <span className="bfa-badge bfa-badge--ouro" style={{ marginBottom: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
           <BfaIcon name="trophy" size={16} color="var(--color-ouro)" />
           <span>Resultado Oficial — Simulado BRHSIC</span>
         </span>
-        <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--foreground)', margin: '0.35rem 0' }}>
+        <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0.35rem 0' }}>
           {examStats.correctCount} / {examStats.total} Acertos ({examStats.percentage}%)
         </h2>
-        <p style={{ color: 'var(--muted-foreground)', fontSize: '0.95rem' }}>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
           Tempo gasto: <strong>{formatTime(timeSpentSeconds)}</strong> · Nível: <strong>{activeSimulado.nivel}</strong>
         </p>
       </div>
 
       {/* Grid de Desempenho por Competência */}
-      <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', marginBottom: '2.5rem' }}>
-        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div style={{ background: 'var(--surface-strong)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', marginBottom: '2.5rem' }}>
+        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <BfaIcon name="math" size={18} color="var(--color-ouro)" /> Diagnóstico por Competência da BRHSIC
         </h3>
 
@@ -570,12 +570,12 @@ function SimuladosEngine() {
             return (
               <div key={key}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem' }}>
-                  <span style={{ fontWeight: 600, color: 'var(--foreground)' }}>{data.name}</span>
+                  <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{data.name}</span>
                   <span style={{ fontWeight: 700, fontFamily: 'var(--font-mono)', color: pct >= 70 ? 'var(--color-verde-dark)' : '#EF4444' }}>
                     {data.correct}/{data.total} ({pct}%)
                   </span>
                 </div>
-                <div style={{ height: '8px', background: 'var(--border)', borderRadius: '9999px', overflow: 'hidden' }}>
+                <div style={{ height: '8px', background: 'var(--border-color)', borderRadius: '9999px', overflow: 'hidden' }}>
                   <div style={{ width: `${pct}%`, height: '100%', background: pct >= 70 ? 'var(--color-verde-dark)' : (pct >= 40 ? 'var(--color-ouro)' : '#EF4444'), transition: 'width 0.3s ease' }} />
                 </div>
               </div>
@@ -588,10 +588,10 @@ function SimuladosEngine() {
       <div style={{ background: 'linear-gradient(135deg, var(--card) 0%, var(--surface-strong) 100%)', padding: '1.75rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-ouro)', marginBottom: '2.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
           <div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--foreground)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
               <BfaIcon name="award" size={20} color="var(--color-ouro)" /> Registrar Resultado no Ranking Nacional BRHSIC
             </h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.2rem' }}>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
               Veja sua posição entre estudantes de todo o Brasil e represente sua escola!
             </p>
           </div>
@@ -609,32 +609,32 @@ function SimuladosEngine() {
         ) : (
           <form onSubmit={handleSubmitRanking} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', alignItems: 'flex-end' }}>
             <div>
-              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--foreground)', display: 'block', marginBottom: '0.3rem' }}>Seu Nome:</label>
+              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '0.3rem' }}>Seu Nome:</label>
               <input
                 type="text"
                 required
                 placeholder="Ex: Ana Clara Silva"
                 value={rankingName}
                 onChange={(e) => setRankingName(e.target.value)}
-                style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--card)', color: 'var(--foreground)' }}
+                style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--card)', color: 'var(--text-primary)' }}
               />
             </div>
             <div>
-              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--foreground)', display: 'block', marginBottom: '0.3rem' }}>Escola / Colégio:</label>
+              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '0.3rem' }}>Escola / Colégio:</label>
               <input
                 type="text"
                 placeholder="Ex: Colégio Militar / EEEP"
                 value={rankingSchool}
                 onChange={(e) => setRankingSchool(e.target.value)}
-                style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--card)', color: 'var(--foreground)' }}
+                style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--card)', color: 'var(--text-primary)' }}
               />
             </div>
             <div>
-              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--foreground)', display: 'block', marginBottom: '0.3rem' }}>Estado (UF):</label>
+              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-primary)', display: 'block', marginBottom: '0.3rem' }}>Estado (UF):</label>
               <select
                 value={rankingUF}
                 onChange={(e) => setRankingUF(e.target.value)}
-                style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--card)', color: 'var(--foreground)' }}
+                style={{ width: '100%', padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--card)', color: 'var(--text-primary)' }}
               >
                 {['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'].map(uf => (
                   <option key={uf} value={uf}>{uf}</option>
@@ -654,7 +654,7 @@ function SimuladosEngine() {
       </div>
 
       {/* Gabarito Comentado Questão a Questão */}
-      <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
         <BfaIcon name="fileText" size={20} color="var(--color-verde-dark)" /> Gabarito Comentado & Resolução Passo a Passo
       </h3>
 
@@ -679,12 +679,12 @@ function SimuladosEngine() {
                   <BfaIcon name={isCorrect ? "check" : (isBlank ? "circle" : "close")} size={14} />
                   <span>Questão {idx + 1} · {isCorrect ? 'Acertou' : (isBlank ? 'Em Branco' : 'Errou')}</span>
                 </strong>
-                <span className="mono-tag" style={{ color: 'var(--muted-foreground)', fontSize: '0.75rem' }}>
+                <span className="mono-tag" style={{ color: 'var(--text-secondary)', fontSize: '0.75rem' }}>
                   {item.competenciaNome}
                 </span>
               </div>
 
-              <p style={{ fontSize: '0.95rem', color: 'var(--foreground)', marginBottom: '1rem', fontWeight: 500 }}>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-primary)', marginBottom: '1rem', fontWeight: 500 }}>
                 {item.enunciado}
               </p>
 
@@ -695,8 +695,8 @@ function SimuladosEngine() {
                   const isThisUserAns = optIdx === userAns;
 
                   let optBg = 'var(--card)';
-                  let optBorder = 'var(--border)';
-                  let optColor = 'var(--foreground)';
+                  let optBorder = 'var(--border-color)';
+                  let optColor = 'var(--text-primary)';
 
                   if (isThisCorrect) {
                     optBg = 'rgba(16, 185, 129, 0.12)';
@@ -734,8 +734,8 @@ function SimuladosEngine() {
               </div>
 
               {/* Resolução Comentada */}
-              <div style={{ padding: '0.85rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', fontSize: '0.85rem', color: 'var(--muted-foreground)', borderLeft: '3px solid var(--color-ouro)' }}>
-                <strong style={{ color: 'var(--foreground)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '0.2rem' }}>
+              <div style={{ padding: '0.85rem', background: 'var(--surface-strong)', borderRadius: 'var(--radius-md)', fontSize: '0.85rem', color: 'var(--text-secondary)', borderLeft: '3px solid var(--color-ouro)' }}>
+                <strong style={{ color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '0.2rem' }}>
                   <BfaIcon name="lightbulb" size={15} color="var(--color-ouro)" />
                   <span>Resolução Comentada:</span>
                 </strong>
