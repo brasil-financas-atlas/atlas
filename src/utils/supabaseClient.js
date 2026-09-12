@@ -297,6 +297,22 @@ async function fetchSiteContent() {
   }
 }
 
+async function fetchPublishHistory() {
+  if (!supabaseClient) return [];
+  try {
+    const { data, error } = await supabaseClient
+      .from('publish_history')
+      .select('id, published_at, profiles(full_name, email)')
+      .order('published_at', { ascending: false })
+      .limit(50);
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.warn('[BFA Supabase] Não foi possível ler o histórico:', err);
+    return [];
+  }
+}
+
 async function saveSiteContent(conteudo) {
   if (!supabaseClient) return { success: false, error: 'Supabase não conectado' };
   try {
@@ -436,6 +452,7 @@ window.BfaSupabase = {
   signOutUser,
   restoreSession,
   fetchSiteContent,
+  fetchPublishHistory,
   saveSiteContent,
   submitPendingEdit,
   fetchPendingEdits,

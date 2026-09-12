@@ -200,7 +200,22 @@ function AdminDashboard() {
   }
 
   const isChief = adminUser?.role === 'admin_chief';
+  const isSuperAdmin = adminUser?.email === 'davidholandaferro@gmail.com' || adminUser?.email === 'lucasguimaraes.app@gmail.com';
   const pendingEdits = cmsData?.pendingEdits || [];
+
+  const [publishHistory, setPublishHistory] = useState([]);
+  const [loadingHistory, setLoadingHistory] = useState(false);
+
+  React.useEffect(() => {
+    if (isSuperAdmin && window.BfaSupabase?.fetchPublishHistory) {
+      setLoadingHistory(true);
+      window.BfaSupabase.fetchPublishHistory()
+        .then(data => {
+          setPublishHistory(data || []);
+        })
+        .finally(() => setLoadingHistory(false));
+    }
+  }, [isSuperAdmin]);
 
   // Agrupa todas as aulas para o gerenciador de vídeos
   const allLessons = [];
@@ -382,6 +397,50 @@ function AdminDashboard() {
                       >
                         Rejeitar
                       </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Histórico de Publicações (Visível Apenas para Super Admins Específicos) */}
+        {isSuperAdmin && (
+          <div className="tool-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+              <div>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--foreground)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <BfaIcon name="check" size={20} color="var(--primary)" /> Histórico de Publicações
+                </h3>
+                <p style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', marginTop: '0.25rem' }}>
+                  Monitoramento exclusivo. Apenas Herton e David têm acesso a este log.
+                </p>
+              </div>
+            </div>
+
+            {loadingHistory ? (
+              <p style={{ color: 'var(--muted-foreground)' }}>Carregando histórico...</p>
+            ) : publishHistory.length === 0 ? (
+              <p style={{ color: 'var(--muted-foreground)', margin: 0, fontSize: '0.9rem' }}>
+                Nenhuma publicação registrada desde a ativação do log.
+              </p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {publishHistory.map((log) => (
+                  <div key={log.id} style={{ padding: '1rem', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', background: 'var(--card)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+                    <div>
+                      <strong style={{ display: 'block', color: 'var(--foreground)' }}>
+                        {log.profiles?.full_name || log.profiles?.email || 'Admin Desconhecido'}
+                      </strong>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
+                        {log.profiles?.email}
+                      </span>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <span className="mono-tag" style={{ color: 'var(--market)', fontSize: '0.75rem' }}>
+                        {new Date(log.published_at).toLocaleString('pt-BR')}
+                      </span>
                     </div>
                   </div>
                 ))}
