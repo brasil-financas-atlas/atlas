@@ -97,9 +97,10 @@
   --shadow-elevated: 0 1px 2px rgba(15, 23, 42, 0.05), 0 12px 32px -12px rgba(15, 23, 42, 0.16);
   --shadow-terminal: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -28px rgba(15, 23, 42, 0.55);
 
-  /* Typography */
-  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* Typography (BRHSIC Identity) */
+  --font-sans: 'Figtree', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: 'Bricolage Grotesque', var(--font-sans);
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
 
   /* Safe Area Insets for Modern Mobile OS (iOS Notch / Dynamic Island / Android Gesture Bar) */
   --sat: env(safe-area-inset-top, 0px);
