@@ -285,76 +285,75 @@ function LoginPage() {
     const quizzesCount = Object.keys(quizScores || {}).length;
 
     return (
-      <div style={{ minHeight: '80vh', padding: '4rem 1rem', background: 'var(--background)' }}>
-        <div style={{ maxWidth: '640px', margin: '0 auto', background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '20px', padding: '2.5rem', boxShadow: '0 20px 40px -15px rgba(0,0,0,0.1)' }}>
+      <div style={{ minHeight: '80vh', padding: '4rem 1rem', backgroundColor: 'var(--bg-surface)' }}>
+        <div style={{ maxWidth: '640px', margin: '0 auto', backgroundColor: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '3rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)' }}>
           
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '2rem', paddingBottom: '1.5rem', borderBottom: '1px solid var(--border)' }}>
-            <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--track-finance), #0F172A)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', fontWeight: 800, boxShadow: '0 4px 15px rgba(5, 150, 105, 0.3)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '2rem', paddingBottom: '2rem', borderBottom: '1px solid var(--border-color)' }}>
+            <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'var(--primary)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', fontWeight: 800 }}>
               {userName.charAt(0).toUpperCase()}
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--foreground)', margin: 0 }}>
+                <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
                   {userName}
                 </h1>
-                <span className="mono-tag" style={{ background: 'rgba(5, 150, 105, 0.12)', color: 'var(--track-finance)', border: '1px solid rgba(5, 150, 105, 0.3)', padding: '0.2rem 0.55rem', borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 700 }}>
+                <span style={{ backgroundColor: 'var(--bg-surface-blue)', color: 'var(--primary)', padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 700 }}>
                   ALUNO CONECTADO
                 </span>
               </div>
-              <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--muted-foreground)', fontFamily: 'var(--font-mono)' }}>
+              <p style={{ margin: '4px 0 0 0', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
                 {userEmail}
               </p>
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
-            <div style={{ padding: '1.15rem 1rem', background: 'var(--surface-strong)', borderRadius: '12px', border: '1px solid var(--border)', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--muted-foreground)', fontWeight: 700, letterSpacing: '0.04em' }}>Aulas Feitas</div>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--foreground)', marginTop: '4px' }}>
-                {completedCount} <span style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)' }}>/ 55</span>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '3rem' }}>
+            <div style={{ padding: '1.5rem 1rem', backgroundColor: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 700, letterSpacing: '0.05em' }}>Aulas Feitas</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '0.5rem' }}>
+                {completedCount} <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>/ 55</span>
               </div>
             </div>
 
-            <div style={{ padding: '1.15rem 1rem', background: 'var(--surface-strong)', borderRadius: '12px', border: '1px solid var(--border)', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--muted-foreground)', fontWeight: 700, letterSpacing: '0.04em' }}>Quizzes</div>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--track-finance)', marginTop: '4px' }}>
+            <div style={{ padding: '1.5rem 1rem', backgroundColor: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 700, letterSpacing: '0.05em' }}>Quizzes</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 700, color: 'var(--primary)', marginTop: '0.5rem' }}>
                 {quizzesCount}
               </div>
             </div>
 
-            <div style={{ padding: '1.15rem 1rem', background: 'var(--surface-strong)', borderRadius: '12px', border: '1px solid var(--border)', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--muted-foreground)', fontWeight: 700, letterSpacing: '0.04em' }}>Sincronização</div>
-              <div style={{ fontSize: '0.88rem', fontWeight: 750, color: studentAuth.isSyncing ? '#38BDF8' : '#10B981', marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: studentAuth.isSyncing ? '#38BDF8' : '#10B981' }} />
+            <div style={{ padding: '1.5rem 1rem', backgroundColor: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 700, letterSpacing: '0.05em' }}>Sincronização</div>
+              <div style={{ fontSize: '0.875rem', fontWeight: 700, color: studentAuth.isSyncing ? 'var(--primary)' : 'var(--accent-green)', marginTop: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: studentAuth.isSyncing ? 'var(--primary)' : 'var(--accent-green)' }} />
                 {studentAuth.isSyncing ? 'Sincronizando' : 'Na Nuvem'}
               </div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <a
               href="#/matematica"
-              className="bfa-btn bfa-btn--primary-solid"
-              style={{ padding: '0.85rem', textAlign: 'center', textDecoration: 'none', fontWeight: 750, fontSize: '0.95rem' }}
+              className="btn-primary"
+              style={{ width: '100%', padding: '1rem', textAlign: 'center', textDecoration: 'none', fontWeight: 700, fontSize: '1rem', justifyContent: 'center' }}
             >
               Continuar Estudando →
             </a>
             <button
               type="button"
+              className="btn-secondary"
               onClick={async () => {
                 if (studentAuth?.signOut) await studentAuth.signOut();
                 window.location.hash = '#/';
               }}
               style={{
-                padding: '0.85rem',
-                borderRadius: '8px',
-                border: '1px solid rgba(239, 68, 68, 0.3)',
-                background: 'rgba(239, 68, 68, 0.06)',
+                width: '100%',
+                padding: '1rem',
                 color: '#EF4444',
-                fontWeight: 750,
-                fontSize: '0.92rem',
-                cursor: 'pointer',
-                transition: 'all 0.15s ease'
+                borderColor: '#EF4444',
+                fontWeight: 700,
+                fontSize: '1rem',
+                justifyContent: 'center'
               }}
             >
               Sair da Conta de Aluno
@@ -369,25 +368,28 @@ function LoginPage() {
   // Se o professor/admin já estiver conectado
   if (adminCtx?.isAuthenticated && adminCtx?.adminUser) {
     return (
-      <div style={{ minHeight: '80vh', padding: '4rem 1rem', background: 'var(--background)' }}>
-        <div style={{ maxWidth: '580px', margin: '0 auto', background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '20px', padding: '2.5rem', textAlign: 'center', boxShadow: '0 20px 40px -15px rgba(0,0,0,0.1)' }}>
-          <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(5, 150, 105, 0.12)', color: '#059669', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
-            <BfaIcon name="check" size={28} />
+      <div style={{ minHeight: '80vh', padding: '4rem 1rem', backgroundColor: 'var(--bg-surface)' }}>
+        <div style={{ maxWidth: '580px', margin: '0 auto', backgroundColor: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '3rem', textAlign: 'center', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
+          <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'var(--bg-surface-blue)', color: 'var(--primary)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
           </div>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--foreground)' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>
             Sessão Docente / Admin Ativa
           </h2>
-          <p style={{ margin: '0.5rem 0', color: 'var(--muted-foreground)', fontSize: '0.9rem' }}>
+          <p style={{ margin: '1rem 0 2rem 0', color: 'var(--text-secondary)', fontSize: '1rem' }}>
             Conectado como: <strong>{adminCtx.adminUser.name || adminCtx.adminUser.email}</strong> ({adminCtx.adminUser.role})
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1.75rem' }}>
-            <a href="#/admin" className="btn-primary" style={{ padding: '0.85rem', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <a href="#/admin" className="btn-primary" style={{ padding: '1rem', justifyContent: 'center', fontSize: '1rem' }}>
               Acessar Painel de Controle CMS →
             </a>
             <button
               type="button"
+              className="btn-secondary"
               onClick={() => adminCtx.logout && adminCtx.logout()}
-              style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'transparent', color: '#EF4444', fontWeight: 700, cursor: 'pointer' }}
+              style={{ padding: '1rem', color: '#EF4444', borderColor: 'transparent', justifyContent: 'center', fontSize: '1rem' }}
             >
               Sair da Conta Administrativa
             </button>
@@ -398,103 +400,105 @@ function LoginPage() {
   }
 
   return (
-    <div style={{ minHeight: '85vh', padding: '4rem 1.5rem', background: 'var(--background)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ width: '100%', maxWidth: '480px', background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '20px', padding: '2.5rem', boxShadow: '0 20px 50px -15px rgba(0,0,0,0.1)' }}>
+    <div style={{ minHeight: '85vh', padding: '6rem 1.5rem', backgroundColor: 'var(--bg-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: '100%', maxWidth: '440px', backgroundColor: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '3rem 2.5rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
         
         {/* Cabeçalho */}
-        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '48px', height: '48px', borderRadius: '12px', background: 'linear-gradient(135deg, #059669 0%, #0F172A 100%)', color: '#FFFFFF', fontWeight: 800, fontSize: '1.25rem', marginBottom: '1rem', boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)' }}>
-            BFA
-          </div>
-          <h1 style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--foreground)', letterSpacing: '-0.03em', margin: 0 }}>
+        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <img src="https://brhsic-main.vercel.app/brand/brhsic-lockup.png" alt="BRHSIC Academy" style={{ height: '40px', width: 'auto', marginBottom: '1.5rem', display: 'inline-block' }} />
+          
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>
             {activeTab === 'student-register'
               ? 'Criar Conta de Aluno'
               : (activeTab === 'admin-login'
-                  ? 'Acesso de Professor / Admin'
-                  : (activeTab === 'otp-verify' ? 'Confirmar Código de Acesso' : 'Entrar na Plataforma'))}
+                  ? 'Acesso Administrativo'
+                  : (activeTab === 'otp-verify' ? 'Confirmar Acesso' : 'Entrar na Plataforma'))}
           </h1>
-          <p style={{ fontSize: '0.88rem', color: 'var(--muted-foreground)', marginTop: '0.4rem', lineHeight: 1.5 }}>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
             {activeTab === 'student-register'
               ? 'Salve seu progresso de 55 aulas e notas de simulados na nuvem.'
               : (activeTab === 'admin-login'
                   ? 'Painel restrito para publicação de aulas e gestão de exercícios.'
                   : (activeTab === 'otp-verify'
                       ? 'Informe o código de 6 dígitos enviado por e-mail.'
-                      : 'Acesse para sincronizar seu histórico em qualquer dispositivo.'))}
+                      : 'Acesse para sincronizar seu histórico de estudos.'))}
           </p>
         </div>
 
         {/* Mensagens de Feedback */}
         {errorMsg && (
-          <div style={{ padding: '0.75rem 1rem', borderRadius: '8px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#EF4444', fontSize: '0.85rem', marginBottom: '1.25rem', lineHeight: 1.5 }}>
+          <div style={{ padding: '1rem', borderRadius: 'var(--radius-md)', backgroundColor: '#FEF2F2', border: '1px solid #F87171', color: '#B91C1C', fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
             {errorMsg}
           </div>
         )}
 
         {successMsg && (
-          <div style={{ padding: '0.75rem 1rem', borderRadius: '8px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)', color: '#10B981', fontSize: '0.85rem', marginBottom: '1.25rem', lineHeight: 1.5 }}>
+          <div style={{ padding: '1rem', borderRadius: 'var(--radius-md)', backgroundColor: '#F0FDF4', border: '1px solid #4ADE80', color: '#15803D', fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
             {successMsg}
           </div>
         )}
 
         {/* 3 Abas Unificadas: Aluno Entrar | Aluno Cadastro | Professor/Admin */}
         {activeTab !== 'otp-verify' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '4px', background: 'var(--surface-strong)', padding: '4px', borderRadius: '10px', marginBottom: '1.75rem', border: '1px solid var(--border)' }}>
+          <div style={{ display: 'flex', backgroundColor: 'var(--bg-surface)', padding: '0.25rem', borderRadius: 'var(--radius-md)', marginBottom: '2.5rem', border: '1px solid var(--border-color)' }}>
             <button
               type="button"
               onClick={() => handleTabChange('student-login')}
               style={{
-                padding: '0.55rem 0.3rem',
-                borderRadius: '7px',
+                flex: 1,
+                padding: '0.625rem 0.5rem',
+                borderRadius: 'calc(var(--radius-md) - 0.25rem)',
                 border: 'none',
-                background: activeTab === 'student-login' ? 'var(--card)' : 'transparent',
-                color: activeTab === 'student-login' ? 'var(--foreground)' : 'var(--muted-foreground)',
-                fontWeight: activeTab === 'student-login' ? 750 : 600,
-                fontSize: '0.78rem',
+                backgroundColor: activeTab === 'student-login' ? 'var(--bg-app)' : 'transparent',
+                color: activeTab === 'student-login' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                fontWeight: activeTab === 'student-login' ? 600 : 500,
+                fontSize: '0.8125rem',
                 cursor: 'pointer',
-                boxShadow: activeTab === 'student-login' ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
-                transition: 'all 0.15s ease'
+                boxShadow: activeTab === 'student-login' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                transition: 'all 0.2s ease'
               }}
             >
-              Aluno: Entrar
+              Entrar
             </button>
 
             <button
               type="button"
               onClick={() => handleTabChange('student-register')}
               style={{
-                padding: '0.55rem 0.3rem',
-                borderRadius: '7px',
+                flex: 1,
+                padding: '0.625rem 0.5rem',
+                borderRadius: 'calc(var(--radius-md) - 0.25rem)',
                 border: 'none',
-                background: activeTab === 'student-register' ? 'var(--card)' : 'transparent',
-                color: activeTab === 'student-register' ? 'var(--foreground)' : 'var(--muted-foreground)',
-                fontWeight: activeTab === 'student-register' ? 750 : 600,
-                fontSize: '0.78rem',
+                backgroundColor: activeTab === 'student-register' ? 'var(--bg-app)' : 'transparent',
+                color: activeTab === 'student-register' ? 'var(--text-primary)' : 'var(--text-secondary)',
+                fontWeight: activeTab === 'student-register' ? 600 : 500,
+                fontSize: '0.8125rem',
                 cursor: 'pointer',
-                boxShadow: activeTab === 'student-register' ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
-                transition: 'all 0.15s ease'
+                boxShadow: activeTab === 'student-register' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                transition: 'all 0.2s ease'
               }}
             >
-              Criar Conta
+              Cadastrar
             </button>
 
             <button
               type="button"
               onClick={() => handleTabChange('admin-login')}
               style={{
-                padding: '0.55rem 0.3rem',
-                borderRadius: '7px',
+                flex: 1,
+                padding: '0.625rem 0.5rem',
+                borderRadius: 'calc(var(--radius-md) - 0.25rem)',
                 border: 'none',
-                background: activeTab === 'admin-login' ? 'var(--card)' : 'transparent',
-                color: activeTab === 'admin-login' ? 'var(--track-math)' : 'var(--muted-foreground)',
-                fontWeight: activeTab === 'admin-login' ? 750 : 600,
-                fontSize: '0.78rem',
+                backgroundColor: activeTab === 'admin-login' ? 'var(--bg-app)' : 'transparent',
+                color: activeTab === 'admin-login' ? 'var(--primary)' : 'var(--text-secondary)',
+                fontWeight: activeTab === 'admin-login' ? 600 : 500,
+                fontSize: '0.8125rem',
                 cursor: 'pointer',
-                boxShadow: activeTab === 'admin-login' ? '0 2px 6px rgba(0,0,0,0.08)' : 'none',
-                transition: 'all 0.15s ease'
+                boxShadow: activeTab === 'admin-login' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                transition: 'all 0.2s ease'
               }}
             >
-              Professor/Admin
+              Admin
             </button>
           </div>
         )}
@@ -518,9 +522,9 @@ function LoginPage() {
             action="about:blank"
             onSubmit={handleStudentPasswordLogin}
           >
-            <div style={{ marginBottom: '1rem' }}>
-              <label htmlFor="bfa-student-username" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
-                E-mail do Aluno:
+            <div style={{ marginBottom: '1.25rem' }}>
+              <label htmlFor="bfa-student-username" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+                E-mail
               </label>
               <input
                 id="bfa-student-username"
@@ -528,24 +532,24 @@ function LoginPage() {
                 type="email"
                 autoComplete="username"
                 required
-                placeholder="seu.email@exemplo.com"
+                placeholder="nome@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.92rem', outline: 'none' }}
+                style={{ width: '100%', padding: '0.875rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '0.9375rem', outline: 'none' }}
               />
             </div>
 
-            <div style={{ marginBottom: '1.25rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
-                <label htmlFor="bfa-student-password" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)' }}>
-                  Senha:
+            <div style={{ marginBottom: '1.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <label htmlFor="bfa-student-password" style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                  Senha
                 </label>
                 <button
                   type="button"
                   onClick={handleSendOtp}
-                  style={{ background: 'transparent', border: 'none', color: 'var(--track-finance)', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer', padding: 0 }}
+                  style={{ background: 'transparent', border: 'none', color: 'var(--primary)', fontSize: '0.8125rem', fontWeight: 600, cursor: 'pointer', padding: 0 }}
                 >
-                  Entrar sem senha (OTP)
+                  Acesso sem senha
                 </button>
               </div>
               <input
@@ -557,7 +561,7 @@ function LoginPage() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.92rem', outline: 'none' }}
+                style={{ width: '100%', padding: '0.875rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '0.9375rem', outline: 'none' }}
               />
             </div>
 
@@ -565,9 +569,9 @@ function LoginPage() {
               type="submit"
               disabled={isLoading}
               className="btn-primary"
-              style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', fontWeight: 750, borderRadius: '8px', marginBottom: '1.25rem' }}
+              style={{ width: '100%', padding: '0.875rem', fontSize: '0.9375rem', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem', justifyContent: 'center' }}
             >
-              {isLoading ? 'Autenticando...' : 'Entrar na Minha Conta'}
+              {isLoading ? 'Autenticando...' : 'Entrar na Plataforma'}
             </button>
           </form>
         )}
@@ -580,9 +584,9 @@ function LoginPage() {
             action="about:blank"
             onSubmit={handleStudentRegister}
           >
-            <div style={{ marginBottom: '1rem' }}>
-              <label htmlFor="bfa-register-name" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
-                Nome Completo ou Apelido:
+            <div style={{ marginBottom: '1.25rem' }}>
+              <label htmlFor="bfa-register-name" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+                Nome Completo ou Apelido
               </label>
               <input
                 id="bfa-register-name"
@@ -593,13 +597,13 @@ function LoginPage() {
                 placeholder="Ex: Carlos Eduardo"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.92rem', outline: 'none' }}
+                style={{ width: '100%', padding: '0.875rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '0.9375rem', outline: 'none' }}
               />
             </div>
 
-            <div style={{ marginBottom: '1rem' }}>
-              <label htmlFor="bfa-register-username" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
-                E-mail:
+            <div style={{ marginBottom: '1.25rem' }}>
+              <label htmlFor="bfa-register-username" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+                E-mail
               </label>
               <input
                 id="bfa-register-username"
@@ -607,16 +611,16 @@ function LoginPage() {
                 type="email"
                 autoComplete="username"
                 required
-                placeholder="seu.email@exemplo.com"
+                placeholder="nome@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.92rem', outline: 'none' }}
+                style={{ width: '100%', padding: '0.875rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '0.9375rem', outline: 'none' }}
               />
             </div>
 
-            <div style={{ marginBottom: '1.25rem' }}>
-              <label htmlFor="bfa-register-password" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
-                Senha (mínimo 6 caracteres):
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label htmlFor="bfa-register-password" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+                Senha (mínimo 6 caracteres)
               </label>
               <input
                 id="bfa-register-password"
@@ -627,7 +631,7 @@ function LoginPage() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.92rem', outline: 'none' }}
+                style={{ width: '100%', padding: '0.875rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '0.9375rem', outline: 'none' }}
               />
             </div>
 
@@ -635,9 +639,9 @@ function LoginPage() {
               type="submit"
               disabled={isLoading}
               className="btn-primary"
-              style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', fontWeight: 750, borderRadius: '8px', marginBottom: '1.25rem' }}
+              style={{ width: '100%', padding: '0.875rem', fontSize: '0.9375rem', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem', justifyContent: 'center' }}
             >
-              {isLoading ? 'Criando Conta...' : 'Concluir Cadastro Gratuito'}
+              {isLoading ? 'Criando Conta...' : 'Concluir Cadastro'}
             </button>
           </form>
         )}
@@ -650,9 +654,9 @@ function LoginPage() {
             action="about:blank"
             onSubmit={handleAdminLogin}
           >
-            <div style={{ marginBottom: '1rem' }}>
-              <label htmlFor="bfa-admin-username" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
-                E-mail ou Usuário de Administrador:
+            <div style={{ marginBottom: '1.25rem' }}>
+              <label htmlFor="bfa-admin-username" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+                E-mail ou Usuário
               </label>
               <input
                 id="bfa-admin-username"
@@ -660,16 +664,16 @@ function LoginPage() {
                 type="text"
                 autoComplete="username"
                 required
-                placeholder="admin@bfa.org ou usuario"
+                placeholder="admin@bfa.org"
                 value={adminEmail}
                 onChange={(e) => setAdminEmail(e.target.value)}
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.92rem', outline: 'none' }}
+                style={{ width: '100%', padding: '0.875rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '0.9375rem', outline: 'none' }}
               />
             </div>
 
-            <div style={{ marginBottom: '1.25rem' }}>
-              <label htmlFor="bfa-admin-password" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem' }}>
-                Chave de Acesso / Senha:
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label htmlFor="bfa-admin-password" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+                Chave de Acesso
               </label>
               <input
                 id="bfa-admin-password"
@@ -680,7 +684,7 @@ function LoginPage() {
                 placeholder="••••••••"
                 value={adminPassword}
                 onChange={(e) => setAdminPassword(e.target.value)}
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '0.92rem', outline: 'none' }}
+                style={{ width: '100%', padding: '0.875rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '0.9375rem', outline: 'none' }}
               />
             </div>
 
@@ -688,9 +692,9 @@ function LoginPage() {
               type="submit"
               disabled={isLoading}
               className="btn-primary"
-              style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', fontWeight: 750, borderRadius: '8px', marginBottom: '1.25rem', backgroundColor: 'var(--track-math)' }}
+              style={{ width: '100%', padding: '0.875rem', fontSize: '0.9375rem', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem', justifyContent: 'center' }}
             >
-              {isLoading ? 'Verificando permissões...' : 'Acessar Painel do Professor'}
+              {isLoading ? 'Verificando permissões...' : 'Acessar Painel Admin'}
             </button>
           </form>
         )}
@@ -698,9 +702,9 @@ function LoginPage() {
         {/* 4. Formulário: Validação de OTP */}
         {activeTab === 'otp-verify' && (
           <form onSubmit={handleVerifyOtp}>
-            <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--foreground)', marginBottom: '0.35rem', textAlign: 'center' }}>
-                Código de 6 dígitos:
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem', textAlign: 'center' }}>
+                Código de 6 dígitos
               </label>
               <input
                 type="text"
@@ -709,7 +713,7 @@ function LoginPage() {
                 placeholder="123456"
                 value={otpToken}
                 onChange={(e) => setOtpToken(e.target.value)}
-                style={{ width: '100%', padding: '0.85rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--foreground)', fontSize: '1.2rem', textAlign: 'center', letterSpacing: '0.25em', fontFamily: 'var(--font-mono)' }}
+                style={{ width: '100%', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '1.5rem', textAlign: 'center', letterSpacing: '0.25em', fontFamily: 'var(--font-mono)', outline: 'none' }}
               />
             </div>
 
@@ -717,15 +721,16 @@ function LoginPage() {
               type="submit"
               disabled={isLoading}
               className="btn-primary"
-              style={{ width: '100%', padding: '0.85rem', fontSize: '0.95rem', fontWeight: 750, borderRadius: '8px', marginBottom: '0.75rem' }}
+              style={{ width: '100%', padding: '0.875rem', fontSize: '0.9375rem', borderRadius: 'var(--radius-md)', marginBottom: '1rem', justifyContent: 'center' }}
             >
               {isLoading ? 'Verificando...' : 'Confirmar e Conectar'}
             </button>
 
             <button
               type="button"
+              className="btn-secondary"
               onClick={() => handleTabChange('student-login')}
-              style={{ width: '100%', padding: '0.5rem', background: 'transparent', border: 'none', color: 'var(--muted-foreground)', fontSize: '0.82rem', cursor: 'pointer' }}
+              style={{ width: '100%', padding: '0.875rem', fontSize: '0.9375rem', borderRadius: 'var(--radius-md)', justifyContent: 'center', border: 'none' }}
             >
               Voltar para login com senha
             </button>
@@ -733,10 +738,10 @@ function LoginPage() {
         )}
 
         {/* Divisor e Opção Offline */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: '1.5rem 0', color: 'var(--muted-foreground)', fontSize: '0.78rem' }}>
-          <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: '2rem 0', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
+          <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--border-color)' }} />
           <span>OU</span>
-          <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
+          <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--border-color)' }} />
         </div>
 
         <a
@@ -744,18 +749,18 @@ function LoginPage() {
           style={{
             display: 'block',
             textAlign: 'center',
-            padding: '0.75rem',
-            borderRadius: '8px',
-            border: '1px solid var(--border)',
-            background: 'var(--surface-strong)',
-            color: 'var(--foreground)',
+            padding: '0.875rem',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--border-color)',
+            backgroundColor: 'var(--bg-surface)',
+            color: 'var(--text-primary)',
             textDecoration: 'none',
-            fontSize: '0.85rem',
-            fontWeight: 700,
-            transition: 'all 0.15s ease'
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            transition: 'all 0.2s ease'
           }}
         >
-          Continuar sem Conta (Progresso Apenas Local) →
+          Continuar sem Conta (Apenas Local) →
         </a>
 
       </div>

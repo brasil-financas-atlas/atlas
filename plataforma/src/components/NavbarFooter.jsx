@@ -81,15 +81,8 @@ function Navbar() {
     <>
       <header className="site-header">
       <div className="site-header__container">
-        <a href="#/" className="site-logo" style={{ textDecoration: 'none' }}>
-          {/* BRHSIC Authentic Logo SVG */}
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="24" height="24" rx="4" fill="var(--primary)"/>
-            <path d="M7 7H11C13.2091 7 15 8.79086 15 11C15 13.2091 13.2091 15 11 15H7V7Z" fill="white"/>
-            <path d="M7 11H13C14.1046 11 15 11.8954 15 13C15 14.1046 14.1046 15 13 15H7V11Z" fill="white"/>
-            <rect x="7" y="7" width="2" height="10" fill="white"/>
-          </svg>
-          <span style={{ color: 'var(--primary)' }}>BRHSIC</span> <span>Academy</span>
+        <a href="#/" className="site-logo" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <img src="https://brhsic-main.vercel.app/brand/brhsic-lockup.png" alt="BRHSIC" style={{ height: '32px', width: 'auto' }} />
         </a>
 
         {/* Global Search Bar with Autocomplete */}
