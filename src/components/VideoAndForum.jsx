@@ -19,10 +19,10 @@ function VideoPlayer({ videoUrl, onTimeUpdate, playerRef }) {
           <div className="bfa-video-placeholder__icon" style={{ display: 'inline-flex', padding: '1rem', borderRadius: '50%', background: 'var(--color-azul-light)', margin: '0 auto 0.75rem auto' }}>
             <BfaIcon name="video" size={48} color="var(--color-azul)" />
           </div>
-          <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', margin: '0 0 0.35rem 0' }}>
+          <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 0.35rem 0' }}>
             Material Didático Completo
           </h3>
-          <p style={{ fontSize: '0.9rem', color: 'var(--muted-foreground)', margin: '0 0 0.75rem 0' }}>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: '0 0 0.75rem 0' }}>
             Esta aula possui fundamentação teórica analítica, demonstrações matemáticas e verificação de aprendizagem abaixo.
           </p>
           <span className="bfa-badge bfa-badge--gold">Brasil Finanças Atlas</span>
