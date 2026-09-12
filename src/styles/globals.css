@@ -12,6 +12,8 @@
   /* BRHSIC Core Colors */
   --bg-app: #FFFFFF;
   --bg-surface: #F9FAFB;
+  --bg-surface-blue: #F0F6FF;
+  
   --text-primary: #111827;
   --text-secondary: #4B5563;
   --text-muted: #9CA3AF;
@@ -19,9 +21,12 @@
   --border-color: #E5E7EB;
   --border-color-hover: #D1D5DB;
 
-  --primary: #0066FF; /* BRHSIC Blue */
-  --primary-hover: #0052CC;
+  --primary: #004DE6; /* BRHSIC Authentic Blue */
+  --primary-hover: #003BCC;
   --primary-foreground: #FFFFFF;
+  
+  --accent-gold: #FFB800;
+  --accent-green: #00C48C;
 
   /* Typography */
   --font-sans: 'Figtree', ui-sans-serif, system-ui, -apple-system, sans-serif;
