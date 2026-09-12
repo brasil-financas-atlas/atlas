@@ -74,11 +74,11 @@ function ConfirmacaoPage() {
         
         {status === 'checking' && (
           <div>
-            <div style={{ width: '40px', height: '40px', border: '3px solid var(--border)', borderTopColor: 'var(--color-azul)', borderRadius: '50%', margin: '0 auto 1.5rem auto', animation: 'spin 0.8s linear infinite' }}></div>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--foreground)', margin: '0 0 0.5rem 0' }}>
+            <div style={{ width: '40px', height: '40px', border: '3px solid var(--border-color)', borderTopColor: 'var(--color-azul)', borderRadius: '50%', margin: '0 auto 1.5rem auto', animation: 'spin 0.8s linear infinite' }}></div>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>
               Confirmando...
             </h2>
-            <p style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', margin: 0 }}>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', margin: 0 }}>
               Validando seu endereço de e-mail.
             </p>
           </div>
@@ -93,11 +93,11 @@ function ConfirmacaoPage() {
               </svg>
             </div>
 
-            <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--foreground)', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
+            <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
               E-mail confirmado
             </h1>
 
-            <p style={{ color: 'var(--muted-foreground)', fontSize: '0.92rem', lineHeight: 1.5, margin: '0 0 1.75rem 0' }}>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.5, margin: '0 0 1.75rem 0' }}>
               Sua conta no Brasil Finanças Atlas está ativa{userEmail ? ` para ${userEmail}` : ''}.
             </p>
 
@@ -112,7 +112,7 @@ function ConfirmacaoPage() {
 
               <a
                 href="#/"
-                style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', textDecoration: 'none', padding: '0.4rem' }}
+                style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textDecoration: 'none', padding: '0.4rem' }}
               >
                 Ir para a página inicial
               </a>
@@ -131,11 +131,11 @@ function ConfirmacaoPage() {
               </svg>
             </div>
 
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--foreground)', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
               Link expirado
             </h1>
 
-            <p style={{ color: 'var(--muted-foreground)', fontSize: '0.9rem', lineHeight: 1.5, margin: '0 0 1.75rem 0' }}>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.5, margin: '0 0 1.75rem 0' }}>
               {errorDetails || 'O link de confirmação não é mais válido. Entre com seu e-mail e senha para acessar.'}
             </p>
 
@@ -150,7 +150,7 @@ function ConfirmacaoPage() {
 
               <a
                 href="#/"
-                style={{ fontSize: '0.85rem', color: 'var(--muted-foreground)', textDecoration: 'none', padding: '0.4rem' }}
+                style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textDecoration: 'none', padding: '0.4rem' }}
               >
                 Ir para a página inicial
               </a>
