@@ -658,14 +658,7 @@ function Footer() {
         <div>
           <div className="footer__manifesto">
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', fontSize: '1.25rem', fontFamily: 'var(--font-display)', fontWeight: 700 }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="24" height="24" rx="4" fill="var(--primary)"/>
-                <path d="M7 7H11C13.2091 7 15 8.79086 15 11C15 13.2091 13.2091 15 11 15H7V7Z" fill="white"/>
-                <path d="M7 11H13C14.1046 11 15 11.8954 15 13C15 14.1046 14.1046 15 13 15H7V11Z" fill="white"/>
-                <rect x="7" y="7" width="2" height="10" fill="white"/>
-              </svg>
-              <span style={{ color: 'var(--primary)' }}>BRHSIC</span> 
-              <span style={{ fontWeight: 400, opacity: 0.85 }}>Academy</span>
+              <img src="https://brhsic-main.vercel.app/brand/brhsic-lockup.png" alt="BRHSIC" style={{ height: '28px', width: 'auto' }} />
             </div>
             Processo importa mais do que resultado.
           </div>
