@@ -288,18 +288,21 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         height: '100vh',
         overflowY: 'auto',
         borderRight: '1px solid var(--border-color)',
-        backgroundColor: 'var(--bg-surface)'
+          backgroundColor: 'var(--bg-surface-blue)'
       }}>
-        <div style={{ padding: '1rem', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, backgroundColor: 'var(--bg-surface)', zIndex: 10 }}>
-          <div>
-            <span style={{ color: trackColor, fontWeight: 700, fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+        <div style={{ padding: '1rem', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, backgroundColor: 'var(--bg-surface-blue)', zIndex: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <img src="https://brhsic-main.vercel.app/brand/brhsic-symbol.png" alt="BRHSIC" style={{ height: '24px', width: 'auto' }} />
+              <div>
+              <span style={{ color: trackColor, fontWeight: 700, fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
               <BfaIcon name={isMatematica ? "math" : "finance"} size={13} />
               <span>{isMatematica ? 'TRILHA MATEMÁTICA' : 'TRILHA FINANÇAS'}</span>
             </span>
             <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text-primary)' }}>
-              Índice da Trilha
+              Í�ndice da Trilha
+              </div>
             </div>
-          </div>
+            </div>
           <button
             type="button"
             onClick={() => setSidebarOpen(false)}
@@ -856,3 +859,8 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 }
 
 window.AulaPage = AulaPage;
+
+
+
+
+

@@ -15,6 +15,7 @@ function Home() {
         <div className="hero__container">
           <div className="hero__content">
             <div className="eyebrow">PLATAFORMA EDUCACIONAL OFICIAL</div>
+            <img src="https://brhsic-main.vercel.app/brand/brhsic-symbol.png" alt="BRHSIC" style={{ height: '48px', width: 'auto', marginBottom: '1.5rem', display: 'inline-block' }} />
             <h1 className="hero__title">
               Educação financeira e matemática para quem quer ir além.
             </h1>
@@ -163,4 +164,6 @@ function Home() {
 }
 
 window.Home = Home;
+
+
 
