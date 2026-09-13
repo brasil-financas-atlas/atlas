@@ -18,7 +18,7 @@ function BrhsicPage() {
               </span>
             </div>
 
-            <img src="https://brhsic-main.vercel.app/brand/brhsic-symbol.png" alt="BRHSIC" style={{ height: '48px', width: 'auto', marginBottom: '1.5rem', display: 'inline-block' }} />`r`n            <EditableBlock id="brhsic-hero-title" as="h1" className="hero__title" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--primary)', marginBottom: '1rem' }}>
+            <EditableBlock id="brhsic-hero-title" as="h1" className="hero__title" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--primary)', marginBottom: '1rem' }}>
               Guia de Preparação de Alta Performance BRHSIC
             </EditableBlock>
 
@@ -142,7 +142,7 @@ function Exercicios() {
           <span className="eyebrow" style={{ color: 'var(--primary)' }}>
             BANCO DE QUESTÕES
           </span>
-          <img src="https://brhsic-main.vercel.app/brand/brhsic-symbol.png" alt="BRHSIC" style={{ height: '48px', width: 'auto', marginBottom: '1.5rem', display: 'inline-block' }} />`r`n            <EditableBlock id="ex-hero-title" as="h1" className="hero__title" style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+          <EditableBlock id="ex-hero-title" as="h1" className="hero__title" style={{ marginTop: '1rem', marginBottom: '1rem' }}>
             Hub de Exercícios & Problemas Práticos
           </EditableBlock>
           <EditableBlock id="ex-hero-sub" as="p" className="hero__subtitle" style={{ margin: '0 auto', maxWidth: '700px' }}>
@@ -254,7 +254,7 @@ function Cronograma() {
           <span className="eyebrow" style={{ color: 'var(--primary)' }}>
             PLANEJAMENTO ACADÊMICO
           </span>
-          <img src="https://brhsic-main.vercel.app/brand/brhsic-symbol.png" alt="BRHSIC" style={{ height: '48px', width: 'auto', marginBottom: '1.5rem', display: 'inline-block' }} />`r`n            <EditableBlock id="crono-title" as="h1" className="hero__title" style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+          <EditableBlock id="crono-title" as="h1" className="hero__title" style={{ marginTop: '1rem', marginBottom: '1rem' }}>
             Gerador de Cronograma Inteligente
           </EditableBlock>
           <EditableBlock id="crono-sub" as="p" className="hero__subtitle" style={{ margin: '0 auto', maxWidth: '700px' }}>
@@ -316,7 +316,7 @@ function Noticias() {
           <span className="eyebrow" style={{ color: 'var(--primary)' }}>
             ANÁLISES & MERCADO
           </span>
-          <img src="https://brhsic-main.vercel.app/brand/brhsic-symbol.png" alt="BRHSIC" style={{ height: '48px', width: 'auto', marginBottom: '1.5rem', display: 'inline-block' }} />`r`n            <EditableBlock id="news-hero-title" as="h1" className="hero__title" style={{ marginTop: '1rem' }}>
+          <EditableBlock id="news-hero-title" as="h1" className="hero__title" style={{ marginTop: '1rem' }}>
             Notícias & Macroeconomia Aplicada
           </EditableBlock>
         </div>
@@ -357,7 +357,7 @@ function Sobre() {
           <span className="eyebrow" style={{ color: 'var(--primary)' }}>
             INSTITUCIONAL
           </span>
-          <img src="https://brhsic-main.vercel.app/brand/brhsic-symbol.png" alt="BRHSIC" style={{ height: '48px', width: 'auto', marginBottom: '1.5rem', display: 'inline-block' }} />`r`n            <EditableBlock id="sobre-hero-title" as="h1" className="hero__title" style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+          <EditableBlock id="sobre-hero-title" as="h1" className="hero__title" style={{ marginTop: '1rem', marginBottom: '1rem' }}>
             Brasil Finanças Atlas (BFA)
           </EditableBlock>
           <EditableBlock id="sobre-hero-sub" as="p" className="hero__subtitle" style={{ margin: '0 auto', maxWidth: '720px' }}>
@@ -396,6 +396,8 @@ window.Exercicios = Exercicios;
 window.Cronograma = Cronograma;
 window.Noticias = Noticias;
 window.Sobre = Sobre;
+
+
 
 
 
