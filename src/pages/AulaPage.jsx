@@ -125,7 +125,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
     <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {subjectData.modulos.map((m, mIdx) => {
         const isCurrentMod = m.slug === moduloSlug;
-        const isExpanded = expandedMods[m.slug] !== false;
+        const isExpanded = !!expandedMods[m.slug];
         const modTotalCount = m.aulas.length;
         const modCompletedCount = m.aulas.filter(a => {
           const itemLessonId = `${subjectKey}-${m.slug}-${a.slug}`;
@@ -854,6 +854,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 }
 
 window.AulaPage = AulaPage;
+
 
 
 
