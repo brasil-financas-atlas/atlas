@@ -29,8 +29,8 @@ function BrhsicPage() {
         </div>
       </section>
 
-      {/* ── Trilhas de Estudo Fundamentais para a Olimpíada ───────────── */}
-      <section className="process-section">
+        {/* Trilhas de Estudo Fundamentais para a Olimpada */}
+        <section className="process-section" style={{ backgroundColor: 'var(--bg-surface-blue)' }}>
         <div className="process__container">
           <div className="process__header" style={{ textAlign: 'center', margin: '0 auto 4rem auto' }}>
             <h2 className="process__title">Estrutura de Avaliação Oficial</h2>
@@ -396,3 +396,5 @@ window.Exercicios = Exercicios;
 window.Cronograma = Cronograma;
 window.Noticias = Noticias;
 window.Sobre = Sobre;
+
+

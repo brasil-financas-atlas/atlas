@@ -81,20 +81,20 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background-color: transparent;
-  color: var(--text-primary);
-  font-weight: 600;
+  background-color: var(--bg-surface-blue);
+  color: var(--primary);
+  font-weight: 700;
   font-size: 0.875rem;
   padding: 0.625rem 1.25rem;
   border-radius: 9999px;
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
 }
 
 .btn-secondary:hover {
-  background-color: var(--bg-surface);
-  border-color: var(--border-color-hover);
+  background-color: rgba(0, 77, 230, 0.1);
+  color: var(--primary);
+  transform: translateY(-1px);
 }
 
 /* ── 3. Hero Section ─────────────────────────────────────────────────────── */
@@ -244,20 +244,26 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   background-color: var(--bg-app);
-  transition: box-shadow 0.2s, border-color 0.2s;
+  transition: all 0.2s ease;
 }
 
 .module-card:hover {
-  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
-  border-color: var(--border-color-hover);
+  box-shadow: 0 12px 32px -12px rgba(0, 77, 230, 0.15);
+  border-color: var(--primary);
+  transform: translateY(-2px);
 }
 
 .step-number {
   font-family: var(--font-mono);
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--text-muted);
+  color: var(--primary);
+  background-color: var(--bg-surface-blue);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  display: inline-block;
   margin-bottom: 1rem;
+  letter-spacing: 0.05em;
 }
 
 .module-card h3 {
@@ -338,3 +344,4 @@
   font-size: 0.875rem;
   color: var(--text-muted);
 }
+

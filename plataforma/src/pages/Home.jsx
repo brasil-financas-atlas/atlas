@@ -79,7 +79,7 @@ function Home() {
       </section>
 
       {/* ── 3. Process Section ───────────────────────────────────────────── */}
-      <section className="process-section" id="trilhas">
+      <section className="process-section" id="trilhas" style={{ backgroundColor: 'var(--bg-surface-blue)' }}>
         <div className="process__container">
           <div className="process__header">
             <div className="eyebrow">COMO FUNCIONA · TRILHAS ACADEMY</div>
@@ -163,3 +163,4 @@ function Home() {
 }
 
 window.Home = Home;
+
