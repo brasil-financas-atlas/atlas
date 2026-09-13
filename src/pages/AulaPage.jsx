@@ -571,9 +571,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
                   {/* Dynamic Interactive Lesson Visualizer (Chart.js / Simulation) */}
                   {window.LessonVisualizerRouter && (
-                    <div style={{ marginTop: '2rem' }}>
-                      <LessonVisualizerRouter lessonSlug={aulaSlug} />
-                    </div>
+                    
                   )}
 
                   {/* Practice CTA Card leading to Quiz */}
@@ -859,6 +857,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 }
 
 window.AulaPage = AulaPage;
+
 
 
 
