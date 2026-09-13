@@ -569,10 +569,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                     <LessonContent markdownContent={markdownContent} lessonId={lessonId} />
                   </article>
 
-                  {/* Dynamic Interactive Lesson Visualizer (Chart.js / Simulation) */}
-                  {window.LessonVisualizerRouter && (
-                    
-                  )}
+                  
 
                   {/* Practice CTA Card leading to Quiz */}
                   {lessonQuestions.length > 0 && (
@@ -857,6 +854,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 }
 
 window.AulaPage = AulaPage;
+
 
 
 
