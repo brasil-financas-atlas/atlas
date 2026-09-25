@@ -240,13 +240,13 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
       {/* Mobile Sidebar Backdrop */}
-      {sidebarOpen && (
-        <div
-          onClick={() => setSidebarOpen(false)}
-          aria-hidden="true"
-          style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 40 }}
-        />
-      )}
+      {sidebarOpen && typeof window !== 'undefined' && window.innerWidth < 768 && (
+          <div
+            onClick={() => setSidebarOpen(false)}
+            aria-hidden="true"
+            style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 40 }}
+          />
+        )}
 
       {/* Sidebar - Curriculum Tree */}
       <aside style={{
