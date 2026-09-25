@@ -299,7 +299,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               <span>{isMatematica ? 'TRILHA MATEMÁTICA' : 'TRILHA FINANÇAS'}</span>
             </span>
             <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text-primary)' }}>
-              Í�ndice da Trilha
+              ÍÍndice da Trilha
               </div>
             </div>
             </div>
