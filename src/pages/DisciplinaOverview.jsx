@@ -392,6 +392,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
 
       {/* Main Content Area */}
       <main style={{ flex: 1, minWidth: 0, padding: '3rem 4rem', backgroundColor: 'var(--bg-app)', height: '100vh', overflowY: 'auto' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         
         {/* Top Header Navigation */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
@@ -428,13 +429,13 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', margin: '0 0 1rem 0' }}>
             {moduloObj.titulo}
           </h1>
-          <p style={{ fontSize: '1.125rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.6, maxWidth: '800px' }}>
+          <p style={{ fontSize: '1.125rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.6 }}>
             Visão geral da ementa, objetivos de aprendizagem, pré-requisitos e roteiro de estudos recomendado.
           </p>
         </div>
 
         {/* Artigo Markdown de Introdução (Exatamente como o MkDocs index.md) */}
-        <article style={{ fontSize: '1.125rem', lineHeight: 1.8, color: 'var(--text-primary)', maxWidth: '800px' }}>
+        <article style={{ fontSize: '1.125rem', lineHeight: 1.8, color: 'var(--text-primary)' }}>
           <LessonContent markdownContent={moduloObj.index || moduloObj.indexContent || ""} lessonId={`intro-${moduloSlug}`} />
         </article>
 
