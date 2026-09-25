@@ -522,6 +522,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
           )}
         </div>
 
+      </div>
       </main>
     </div>
   );
