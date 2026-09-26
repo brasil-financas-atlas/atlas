@@ -1,0 +1,60 @@
+    return (
+      <div style={{ display: 'flex', minHeight: '100vh' }}>
+        {/* Mobile Sidebar Backdrop */}
+        {sidebarOpen && typeof window !== 'undefined' && window.innerWidth < 768 && (
+            <div
+              onClick={() => setSidebarOpen(false)}
+              aria-hidden="true"
+              style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 40 }}
+            />
+          )}
+  
+        {/* Sidebar - Curriculum Tree */}
+        <aside style={{
+          position: sidebarOpen && typeof window !== 'undefined' && window.innerWidth < 768 ? 'fixed' : 'relative',
+          zIndex: 50,
+          display: sidebarOpen ? 'block' : 'none',
+          width: '320px',
+          flexShrink: 0,
+          height: '100vh',
+          overflowY: 'auto',
+          borderRight: '1px solid var(--border-color)',
+          backgroundColor: 'var(--bg-surface)'
+        }}>
+          <div style={{ padding: '1rem', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', 
+top: 0, backgroundColor: 'var(--bg-surface)', zIndex: 10 }}>
+            <a href={`#/${subjectKey}`} style={{ color: trackColor, fontWeight: 700, fontSize: '0.875rem', textDecoration: 'none' }}>
+              â† Voltar para {isMatematica ? 'MatemÃ¡tica' : 'FinanÃ§as'}
+            </a>
+            {typeof window !== 'undefined' && window.innerWidth < 768 && (
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(false)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.25rem' }}
+              >
+                âœ•
+              </button>
+            )}
+          </div>
+  
+          <div style={{ padding: '1rem' }}>
+            {subjectData.modulos.map((m, idx) => {
+              const isCurrentMod = m.slug === moduloSlug;
+              const isExpanded = !!expandedMods[m.slug];
+              const mCompletedCount = m.aulas.filter(a => completedLessons && completedLessons.includes(`${subjectKey}-${m.slug}-${a.slug}`)).length;
+              const mTotalCount = m.aulas.length;
+              const isAllDone = mCompletedCount === mTotalCount;
+  
+              return (
+                <div
+                  key={m.slug}
+                  style={{
+                    marginBottom: '1rem',
+                    border: isCurrentMod ? `1px solid var(--primary)` : '1px solid var(--border-color)',
+                    borderRadius: 'var(--radius-md)',
+                    backgroundColor: 'var(--bg-app)',
+                    overflow: 'hidden'
+                  }}
+                >
+                  {/* Module Header Bar Accordion */}
+                  <div
