@@ -318,6 +318,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
       {/* Main Classroom Canvas */}
       <main style={{ flex: 1, minWidth: 0, padding: typeof window !== 'undefined' && window.innerWidth < 768 ? '2rem 1.5rem' : '3rem 4rem', backgroundColor: 'var(--bg-app)', height: '100vh', overflowY: 'auto' }}>
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
         {/* Sleek Unified Lesson Header Bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: 0 }}>
@@ -669,6 +670,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               Próxima Aula →
             </a>
           ) : <div />}
+        </div>
         </div>
         </div>
       </main>
