@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        async function checkFile(url) {
+            const resp = await fetch(url);
+            const text = await resp.text();
+            try {
+                Babel.transform(text, { presets: ['react'] });
+                console.log(url + ': OK');
+            } catch (e) {
+                console.error(url + ' ERROR:', e.message);
+                document.body.innerHTML += `<div style="color:red"><b>${url}</b>: ${e.message}</div>`;
+            }
+        }
+        window.onload = async () => {
+            await checkFile('src/App.jsx');
+            await checkFile('src/pages/DisciplinaOverview.jsx');
+            await checkFile('src/pages/AulaPage.jsx');
+        };
+    </script>
+</body>
+</html>
