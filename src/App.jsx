@@ -143,15 +143,12 @@ function App() {
       return <AdminDashboard />;
     }
 
-    // Dynamic Route: Introdução ao Módulo (/:subjectKey/:moduloSlug)
+    // Dynamic Route: Redirecionar /módulo para /módulo/introducao
     const parts = currentPath.split('/').filter(Boolean);
     if (parts.length === 2 && (parts[0] === 'matematica' || parts[0] === 'financas')) {
-      return (
-        <ModuloIntroPage
-          subjectKey={parts[0]}
-          moduloSlug={parts[1]}
-        />
-      );
+      // Redirect silently to introducao
+      setTimeout(() => { window.location.hash = `#/${parts[0]}/${parts[1]}/introducao`; }, 0);
+      return null;
     }
 
     // Dynamic Route: Aula (/:subjectKey/:moduloSlug/:aulaSlug)
