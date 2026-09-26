@@ -384,7 +384,8 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         )}
 
         {/* Lesson Title & Audio Header */}
-        <div style={{ marginBottom: '2.5rem' }}>
+        <div style={{ marginBottom: '2.5rem',
+                  margin: aulaSlug === 'introducao' ? '0 auto 2.5rem auto' : '0 0 2.5rem 0', textAlign: aulaSlug === 'introducao' ? 'center' : 'left' }}>
           <span style={{ color: trackColor, fontWeight: 700, fontSize: '0.75rem', padding: '0.25rem 0.75rem', backgroundColor: 'var(--bg-surface-blue)', borderRadius: '999px', display: 'inline-block', marginBottom: '1rem' }}>
             {isMatematica ? 'MATEMÁTICA APLICADA' : 'FINANÇAS & MERCADO'} · {moduloObj.titulo.toUpperCase()}
           </span>
@@ -422,6 +423,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                   borderRadius: 'var(--radius-md)',
                   border: '1px solid var(--border-color)',
                   marginBottom: '2.5rem',
+                  margin: aulaSlug === 'introducao' ? '0 auto 2.5rem auto' : '0 0 2.5rem 0',
                   maxWidth: '600px',
                   width: '100%'
                 }}
@@ -514,7 +516,8 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               {activeTab === 'teoria' && (
                 <div>
                   {/* Video Player & Admin Controls */}
-                  <div style={{ marginBottom: '2.5rem' }}>
+                  <div style={{ marginBottom: '2.5rem',
+                  margin: aulaSlug === 'introducao' ? '0 auto 2.5rem auto' : '0 0 2.5rem 0', textAlign: aulaSlug === 'introducao' ? 'center' : 'left' }}>
                     {isAuthenticated && inlineEditActive && (
                       <div className="bfa-admin-video-box" style={{ marginBottom: '1rem', padding: '0.85rem 1.25rem', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
