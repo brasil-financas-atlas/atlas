@@ -185,7 +185,7 @@ function App() {
           {renderCurrentPage()}
         </ErrorBoundary>
       </div>
-      {!isAulaRoute && <Footer />}
+      
       {window.FloatingAudioBar && <FloatingAudioBar />}
       <CookieConsent />
     </div>
