@@ -12,7 +12,7 @@ let SUPABASE_ANON_KEY = (typeof process !== 'undefined' && process.env?.VITE_SUP
 let supabaseClient = null;
 
 function initSupabase(url, key) {
-  if (typeof window !== 'undefined' && window.supabase && url && key) {
+  if (typeof window !== 'undefined' && url && key) {
     try {
       supabaseClient = createClient(url, key);
       console.log('[BFA Supabase] Backend Supabase conectado com sucesso!');

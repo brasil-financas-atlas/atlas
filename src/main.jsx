@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter } from 'react-router-dom';
+import HashRouter from './router';
 
 // Styles
 import 'katex/dist/katex.min.css';
