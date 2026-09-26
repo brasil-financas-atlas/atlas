@@ -565,7 +565,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                   </div>
 
                   {/* Markdown Theory Article */}
-                  <article className="bfa-lesson-article" style={{ maxWidth: '860px', margin: '0 auto' }}>
+                  <article className="bfa-lesson-article">
                     <LessonContent markdownContent={markdownContent} lessonId={lessonId} />
                   </article>
 
@@ -669,6 +669,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               Próxima Aula →
             </a>
           ) : <div />}
+        </div>
         </div>
       </main>
 
