@@ -672,7 +672,6 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           ) : <div />}
         </div>
         </div>
-        </div>
       </main>
 
       {/* Floating In-Context Admin Quick Edit Toggle */}
