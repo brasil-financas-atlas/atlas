@@ -1,4 +1,9 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import { shareContent } from '../utils/nativeShare';
+import { useHaptics } from '../utils/touchGestures';
+import { ProgressContext } from '../context/ProgressContext';
+import { AdminContext } from '../context/AdminContext';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 
 const DEFAULT_FIXATION_QUESTIONS = [
   {
@@ -59,8 +64,8 @@ const DEFAULT_FIXATION_QUESTIONS = [
 ];
 
 function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
-  const { isAuthenticated, inlineEditActive, cmsData, updateLesson } = useContext(AdminContext || createContext({}));
-  const { saveQuizScore, getQuizScore, toggleLessonComplete, completedLessons } = useContext(ProgressContext || createContext({}));
+  const { isAuthenticated, inlineEditActive, cmsData, updateLesson } = useContext(AdminContext);
+  const { saveQuizScore, getQuizScore, toggleLessonComplete, completedLessons } = useContext(ProgressContext);
 
   const quizQuestions = useMemo(() => {
     let rawList = null;
@@ -190,7 +195,7 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
 
   if (!quizQuestions || quizQuestions.length === 0) {
     return (
-      <div style={{ backgroundColor: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }} style={{ padding: '2rem', textAlign: 'center' }}>
+      <div style={{ backgroundColor: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '2rem', textAlign: 'center' }}>
         <h4 style={{ marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
           Quiz de Fixação
         </h4>
@@ -210,7 +215,7 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
 
   const currentQ = quizQuestions[currentIdx] || quizQuestions[0];
   const previousHighScore = getQuizScore ? getQuizScore(lessonId) : null;
-  const { hapticTap, hapticSuccess, hapticError, hapticMilestone } = (window.useHaptics ? window.useHaptics() : { hapticTap: () => {}, hapticSuccess: () => {}, hapticError: () => {}, hapticMilestone: () => {} });
+  const { hapticTap, hapticSuccess, hapticError, hapticMilestone } = (useHaptics ? useHaptics() : { hapticTap: () => {}, hapticSuccess: () => {}, hapticError: () => {}, hapticMilestone: () => {} });
 
   const handleSelectOption = (idx) => {
     if (submitted) return;
@@ -275,8 +280,8 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
 
   const handleShareScore = async () => {
     hapticTap();
-    if (window.shareContent) {
-      await window.shareContent({
+    if (shareContent) {
+      await shareContent({
         title: 'Quiz Brasil Finanças Atlas',
         text: `Acertei ${score} de ${quizQuestions.length} questões no quiz do Brasil Finanças Atlas!`,
         url: window.location.href
@@ -289,7 +294,7 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
     const pct = Math.round((finalScore / quizQuestions.length) * 100);
 
     return (
-      <div style={{ backgroundColor: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }} style={{ padding: '2.5rem 2rem', textAlign: 'center', maxWidth: '640px', margin: '0 auto' }}>
+      <div style={{ backgroundColor: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '2.5rem 2rem', textAlign: 'center', maxWidth: '640px', margin: '0 auto' }}>
         <span className="mono-tag" style={{ color: pct >= 70 ? 'var(--track-finance)' : 'var(--track-brhsic)', fontWeight: 800 }}>
           {pct >= 70 ? 'DESEMPENHO APROVADO' : 'REVISÃO RECOMENDADA'}
         </span>
@@ -348,7 +353,7 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
   }
 
   return (
-    <div style={{ backgroundColor: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }} style={{ padding: '2rem' }}>
+    <div style={{ backgroundColor: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '2rem' }}>
       {/* Header do Quiz */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', paddingBottom: '0.75rem', borderBottom: '1px solid var(--border-color)' }}>
         <div>
@@ -616,4 +621,5 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
   );
 }
 
-window.QuizEngine = QuizEngine;
+
+export default QuizEngine;

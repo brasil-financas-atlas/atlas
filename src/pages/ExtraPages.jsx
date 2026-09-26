@@ -1,4 +1,6 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+import { AdminContext } from '../context/AdminContext';
+import EditableBlock from '../components/EditableBlock';
 
 /* ==========================================================================
    1. TRILHA ESPECIAL PREPARAÇÃO BRHSIC
@@ -391,11 +393,8 @@ function Sobre() {
   );
 }
 
-window.BrhsicPage = BrhsicPage;
-window.Exercicios = Exercicios;
-window.Cronograma = Cronograma;
-window.Noticias = Noticias;
-window.Sobre = Sobre;
+export { BrhsicPage, Exercicios, Cronograma, Noticias, Sobre };
+export default BrhsicPage;
 
 
 

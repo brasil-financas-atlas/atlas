@@ -1,4 +1,8 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+import { AdminContext } from '../context/AdminContext';
+import { useRouter } from '../router';
+import BfaIcon from '../components/Icons';
+import { EXACT_CONTENT } from '../data/contentData';
 
 function ThemeSelector() {
   const { themePreference, setThemePreference } = useContext(AdminContext || createContext({}));
@@ -168,8 +172,7 @@ function AdminLogin() {
 
 function AdminDashboard() {
   const { isAuthenticated, adminUser, isAdmin, logout, cmsData, publicarConteudo, statusPublicacao, erroPublicacao, approvePendingEdit, rejectPendingEdit, updateLesson, addModule, addNews, addExercise, deleteNews, deleteExercise } = useContext(AdminContext || createContext({}));
-  const { EXACT_CONTENT } = window;
-  const [editingVideoLessonId, setEditingVideoLessonId] = useState(null);
+    const [editingVideoLessonId, setEditingVideoLessonId] = useState(null);
   const [videoUrlInput, setVideoUrlInput] = useState('');
 
   // Modals for creation
@@ -712,5 +715,5 @@ function AdminDashboard() {
   );
 }
 
-window.AdminLogin = AdminLogin;
-window.AdminDashboard = AdminDashboard;
+export { AdminLogin };
+export default AdminDashboard;

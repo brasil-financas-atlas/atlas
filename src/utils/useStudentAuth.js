@@ -1,12 +1,13 @@
+import { BfaSupabase } from './supabaseClient.js';
 /* ==========================================================================
    Brasil Finanças Atlas (BFA) — Hook de Autenticação e Sincronização Local-First
    Arquivo: src/utils/useStudentAuth.js
    Suporte Adaptativo a student_profiles (JSONB) e profiles/lesson_progress.
    ========================================================================== */
 
-const { useState, useEffect, useRef, useCallback } = React;
+import React, {  useState, useEffect, useRef, useCallback  } from 'react';
 
-function useStudentAuth() {
+export function useStudentAuth() {
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,12 +24,12 @@ function useStudentAuth() {
 
     async function initSession() {
       try {
-        if (!window.BfaSupabase || !window.BfaSupabase.client) {
+        if (!BfaSupabase || !BfaSupabase.client) {
           if (mounted) setIsLoading(false);
           return;
         }
 
-        const supabase = window.BfaSupabase.client;
+        const supabase = BfaSupabase.client;
         const { data } = await supabase.auth.getSession();
         const session = data?.session;
 
@@ -46,9 +47,9 @@ function useStudentAuth() {
     initSession();
 
     let authListener = null;
-    if (window.BfaSupabase && window.BfaSupabase.client) {
+    if (BfaSupabase && BfaSupabase.client) {
       try {
-        const { data } = window.BfaSupabase.client.auth.onAuthStateChange(async (event, session) => {
+        const { data } = BfaSupabase.client.auth.onAuthStateChange(async (event, session) => {
           if (!mounted) return;
           if (session && session.user) {
             setUser(session.user);
@@ -77,8 +78,8 @@ function useStudentAuth() {
 
   // Carrega e mescla o perfil do banco com os dados do LocalStorage
   const loadStudentProfile = async (userId, userEmail = '') => {
-    if (!window.BfaSupabase || !window.BfaSupabase.client || !userId) return;
-    const supabase = window.BfaSupabase.client;
+    if (!BfaSupabase || !BfaSupabase.client || !userId) return;
+    const supabase = BfaSupabase.client;
 
     let displayName = userEmail ? userEmail.split('@')[0] : 'Estudante';
     let userRole = 'student';
@@ -220,7 +221,7 @@ function useStudentAuth() {
     localStorage.setItem('bfa_user_progress', JSON.stringify(newCompletedLessons));
     localStorage.setItem('bfa_quiz_scores', JSON.stringify(newQuizScores));
 
-    if (!user || !window.BfaSupabase || !window.BfaSupabase.client) {
+    if (!user || !BfaSupabase || !BfaSupabase.client) {
       return;
     }
 
@@ -238,7 +239,7 @@ function useStudentAuth() {
     debounceTimerRef.current = setTimeout(async () => {
       try {
         setIsSyncing(true);
-        const supabase = window.BfaSupabase.client;
+        const supabase = BfaSupabase.client;
         const payload = pendingProgressRef.current;
 
         if (hasStudentProfilesTableRef.current) {
@@ -287,10 +288,10 @@ function useStudentAuth() {
 
   // Login via Link Mágico / OTP
   const signInWithEmail = async (email, name = '') => {
-    if (!window.BfaSupabase || !window.BfaSupabase.client) {
+    if (!BfaSupabase || !BfaSupabase.client) {
       throw new Error('Supabase não configurado');
     }
-    const supabase = window.BfaSupabase.client;
+    const supabase = BfaSupabase.client;
     const { data, error } = await supabase.auth.signInWithOtp({
       email,
       options: {
@@ -304,10 +305,10 @@ function useStudentAuth() {
 
   // Verificação de Código OTP
   const verifyOtpCode = async (email, token) => {
-    if (!window.BfaSupabase || !window.BfaSupabase.client) {
+    if (!BfaSupabase || !BfaSupabase.client) {
       throw new Error('Supabase não configurado');
     }
-    const supabase = window.BfaSupabase.client;
+    const supabase = BfaSupabase.client;
     const { data, error } = await supabase.auth.verifyOtp({
       email,
       token,
@@ -323,8 +324,8 @@ function useStudentAuth() {
 
   // Logout
   const signOut = async () => {
-    if (window.BfaSupabase && window.BfaSupabase.client) {
-      await window.BfaSupabase.client.auth.signOut();
+    if (BfaSupabase && BfaSupabase.client) {
+      await BfaSupabase.client.auth.signOut();
     }
     setUser(null);
     setProfile(null);
@@ -346,4 +347,4 @@ function useStudentAuth() {
   };
 }
 
-window.useStudentAuth = useStudentAuth;
+

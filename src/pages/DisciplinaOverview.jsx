@@ -1,8 +1,11 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+import { ProgressContext } from '../context/ProgressContext';
+import EditableBlock from '../components/EditableBlock';
+import LessonContent from '../components/LessonContent';
+import { EXACT_CONTENT } from '../data/contentData';
 
 function DisciplinaOverview({ subjectKey }) {
-  const { EXACT_CONTENT } = window;
-  const { completedLessons } = useContext(ProgressContext || createContext({}));
+    const { completedLessons } = useContext(ProgressContext || createContext({}));
 
   const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
 
@@ -206,8 +209,7 @@ function DisciplinaOverview({ subjectKey }) {
    3. PÁGINA DEDICADA DE INTRODUÇÃO AO MÓDULO (ESTILO MKDOCS)
    ========================================================================== */
 function ModuloIntroPage({ subjectKey, moduloSlug }) {
-  const { EXACT_CONTENT } = window;
-  const { completedLessons } = useContext(ProgressContext || createContext({}));
+    const { completedLessons } = useContext(ProgressContext || createContext({}));
   const [sidebarOpen, setSidebarOpen] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 768);
   const [expandedMods, setExpandedMods] = useState({ [moduloSlug]: true });
 
@@ -528,6 +530,6 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
   );
 }
 
-window.DisciplinaOverview = DisciplinaOverview;
-window.ModuloIntroPage = ModuloIntroPage;
+export { ModuloIntroPage };
+export default DisciplinaOverview;
 

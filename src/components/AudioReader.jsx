@@ -1,4 +1,6 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import BfaIcon from './Icons';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 
 function AudioReader({ markdownContent, lessonTitle }) {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -275,4 +277,5 @@ function AudioReader({ markdownContent, lessonTitle }) {
   );
 }
 
-window.AudioReader = AudioReader;
+
+export default AudioReader;

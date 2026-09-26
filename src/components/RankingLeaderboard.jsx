@@ -1,4 +1,6 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import BfaIcon from './Icons';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 
 // Dados de base representativos do ranking nacional BRHSIC
 const BASELINE_LEADERBOARD = [
@@ -246,4 +248,5 @@ function RankingLeaderboard() {
   );
 }
 
-window.RankingLeaderboard = RankingLeaderboard;
+
+export default RankingLeaderboard;

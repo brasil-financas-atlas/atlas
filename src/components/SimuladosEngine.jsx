@@ -1,7 +1,10 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import { SIMULADOS_DATA } from '../data/simuladosData';
+import BfaIcon from './Icons';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 
 function SimuladosEngine() {
-  const simuladosList = window.SIMULADOS_DATA || [];
+  const simuladosList = SIMULADOS_DATA || [];
   const [selectedSimuladoId, setSelectedSimuladoId] = useState('simulado-oficial-1');
   const [examState, setExamState] = useState('intro'); // 'intro' | 'running' | 'finished'
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -773,4 +776,5 @@ function SimuladosEngine() {
   );
 }
 
-window.SimuladosEngine = SimuladosEngine;
+
+export default SimuladosEngine;

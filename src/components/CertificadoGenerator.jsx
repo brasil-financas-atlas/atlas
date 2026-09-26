@@ -1,8 +1,13 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import { shareContent } from '../utils/nativeShare';
+import { EXACT_CONTENT } from '../data/contentData';
+import BfaIcon from './Icons';
+import { ProgressContext } from '../context/ProgressContext';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 
 function CertificadoGenerator() {
-  const { completedLessons } = useContext(ProgressContext || createContext({}));
-  const { EXACT_CONTENT } = window;
+  const { completedLessons } = useContext(ProgressContext);
+  const {  } = {}; // removed EXACT_CONTENT
 
   const [studentName, setStudentName] = useState(() => {
     return localStorage.getItem('bfa_student_name') || 'Estudante Exemplo';
@@ -130,8 +135,8 @@ function CertificadoGenerator() {
             </button>
             <button
               onClick={async () => {
-                if (window.shareContent) {
-                  await window.shareContent({
+                if (shareContent) {
+                  await shareContent({
                     title: `Certificado BFA — ${studentName}`,
                     text: `Concluí o módulo ${moduleObj?.titulo} no Brasil Finanças Atlas! Código de validação: ${authHash}`,
                     url: window.location.href
@@ -308,4 +313,5 @@ function CertificadoGenerator() {
   );
 }
 
-window.CertificadoGenerator = CertificadoGenerator;
+
+export default CertificadoGenerator;

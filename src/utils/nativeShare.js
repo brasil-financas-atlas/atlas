@@ -1,6 +1,6 @@
 // Utilitário de compartilhamento nativo para Mobile e Desktop (BFA)
 
-async function shareContent({ title, text, url }) {
+export async function shareContent({ title, text, url }) {
   const shareUrl = url || window.location.href;
   const shareData = {
     title: title || 'Brasil Finanças Atlas',
@@ -42,4 +42,4 @@ async function shareContent({ title, text, url }) {
   }
 }
 
-window.shareContent = shareContent;
+

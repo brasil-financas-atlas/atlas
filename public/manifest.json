@@ -1,0 +1,41 @@
+{
+  "name": "Brasil Finanças Atlas",
+  "short_name": "BFA",
+  "description": "Trilhas interativas abertas de matemática e finanças para o Brasil.",
+  "start_url": "./#/",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#090d16",
+  "theme_color": "#002b49",
+  "lang": "pt-BR",
+  "categories": ["education", "finance", "math"],
+  "icons": [
+    {
+      "src": "./src/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Trilha de Matemática",
+      "short_name": "Matemática",
+      "description": "Aprenda matemática do zero a funções financeiras",
+      "url": "./#/matematica"
+    },
+    {
+      "name": "Trilha de Finanças",
+      "short_name": "Finanças",
+      "description": "Fundamentos, análise de ações e portfólio",
+      "url": "./#/financas"
+    },
+    {
+      "name": "Calculadora de Juros",
+      "short_name": "Calculadora",
+      "description": "Simule o poder dos juros compostos",
+      "url": "./#/calculadora-juros-compostos"
+    }
+  ]
+}

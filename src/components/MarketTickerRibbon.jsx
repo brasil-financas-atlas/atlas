@@ -1,4 +1,5 @@
-const { useState, useEffect } = React;
+import React, { useState, useEffect } from 'react';
+
 
 function MarketTickerRibbon() {
   const [indicators, setIndicators] = useState([
@@ -92,4 +93,5 @@ function MarketTickerRibbon() {
   );
 }
 
-window.MarketTickerRibbon = MarketTickerRibbon;
+
+export default MarketTickerRibbon;

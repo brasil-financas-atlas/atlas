@@ -1,4 +1,6 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import BfaIcon from './Icons';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 
 const BADGES_LIST = [
   {
@@ -291,4 +293,5 @@ function BadgesConquistas() {
   );
 }
 
-window.BadgesConquistas = BadgesConquistas;
+
+export default BadgesConquistas;

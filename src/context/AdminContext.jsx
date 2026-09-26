@@ -1,3 +1,6 @@
+import React from 'react';
+import { BfaSupabase } from '../utils/supabaseClient.js';
+
 /* Não existe lista de usuários aqui, e isso é de propósito.
    Antes havia quatro pares usuário/senha escritos no código — e como este site
    é servido como arquivo estático, "escrito no código" significa "publicado na
@@ -72,9 +75,9 @@ const AVAILABLE_THEMES = [
   }
 ];
 
-const AdminContext = React.createContext(null);
+export const AdminContext = React.createContext(null);
 
-function AdminProvider({ children }) {
+export function AdminProvider({ children }) {
   // A sessão não é lida do localStorage de propósito: se o papel viesse de lá,
   // bastaria editar o navegador para se declarar admin. Quem guarda a sessão é
   // o Supabase; o papel vem do banco.
@@ -110,7 +113,7 @@ function AdminProvider({ children }) {
     };
 
     const carregar = async () => {
-      const sp = window.BfaSupabase;
+      const sp = BfaSupabase;
 
       if (sp && sp.isConfigured()) {
         const sessao = await sp.restoreSession();
@@ -231,7 +234,7 @@ function AdminProvider({ children }) {
   // se o banco não estiver configurado, ninguém entra. É melhor assim do que
   // manter uma senha de emergência escrita num arquivo público.
   const login = async (email, password) => {
-    const sp = window.BfaSupabase;
+    const sp = BfaSupabase;
     if (!sp || !sp.isConfigured()) {
       return { success: false, error: 'Banco de dados não configurado. Fale com quem administra o site.' };
     }
@@ -269,7 +272,7 @@ function AdminProvider({ children }) {
   };
 
   const logout = async () => {
-    const sp = window.BfaSupabase;
+    const sp = BfaSupabase;
     // Encerrar de verdade importa: sem isto o token de acesso continua válido
     // no navegador depois de "sair".
     if (sp && sp.isConfigured()) await sp.signOutUser();
@@ -283,7 +286,7 @@ function AdminProvider({ children }) {
   // conteúdo". Se a conta não for admin, a gravação é recusada lá — e não por
   // uma checagem no navegador, que qualquer pessoa poderia burlar.
   const publicarConteudo = async () => {
-    const sp = window.BfaSupabase;
+    const sp = BfaSupabase;
     if (!sp || !sp.isConfigured()) {
       setStatusPublicacao('erro');
       setErroPublicacao('Banco de dados não configurado.');
@@ -322,8 +325,8 @@ function AdminProvider({ children }) {
         status: 'pending'
       };
 
-      if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-        window.BfaSupabase.submitPendingEdit('lesson', lessonId, updatedData, currentUser.name || currentUser.email);
+      if (BfaSupabase && BfaSupabase.isConfigured()) {
+        BfaSupabase.submitPendingEdit('lesson', lessonId, updatedData, currentUser.name || currentUser.email);
       }
 
       setCmsData(prev => comHorario({
@@ -346,8 +349,8 @@ function AdminProvider({ children }) {
     const item = { id: `news_${Date.now()}`, date: new Date().toISOString().split('T')[0], ...newsItem };
 
     if (needsApproval) {
-      if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-        window.BfaSupabase.submitPendingEdit('news', item.id, newsItem, currentUser.name || currentUser.email);
+      if (BfaSupabase && BfaSupabase.isConfigured()) {
+        BfaSupabase.submitPendingEdit('news', item.id, newsItem, currentUser.name || currentUser.email);
       }
       setCmsData(prev => comHorario({
         ...prev,
@@ -362,8 +365,8 @@ function AdminProvider({ children }) {
 
   const saveOverride = (id, newContent) => {
     if (needsApproval) {
-      if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-        window.BfaSupabase.submitPendingEdit('override', id, { text: newContent }, currentUser.name || currentUser.email);
+      if (BfaSupabase && BfaSupabase.isConfigured()) {
+        BfaSupabase.submitPendingEdit('override', id, { text: newContent }, currentUser.name || currentUser.email);
       }
       setCmsData(prev => comHorario({
         ...prev,
@@ -393,8 +396,8 @@ function AdminProvider({ children }) {
     const modItem = { slug: `modulo-${Date.now()}`, title: moduleObj.title || moduleObj.titulo, aulas: [], ...moduleObj };
 
     if (needsApproval) {
-      if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-        window.BfaSupabase.submitPendingEdit('module', `${subjectKey}-${modItem.slug}`, modItem, currentUser.name || currentUser.email);
+      if (BfaSupabase && BfaSupabase.isConfigured()) {
+        BfaSupabase.submitPendingEdit('module', `${subjectKey}-${modItem.slug}`, modItem, currentUser.name || currentUser.email);
       }
       setCmsData(prev => comHorario({
         ...prev,
@@ -414,8 +417,8 @@ function AdminProvider({ children }) {
     const item = { id: `ex_${Date.now()}`, module: exObj.module || 'Geral', difficulty: exObj.difficulty || 'Médio', title: exObj.title, question: exObj.question, answer: exObj.answer, category: exObj.category || 'fixacao' };
 
     if (needsApproval) {
-      if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-        window.BfaSupabase.submitPendingEdit('exercise', item.id, item, currentUser.name || currentUser.email);
+      if (BfaSupabase && BfaSupabase.isConfigured()) {
+        BfaSupabase.submitPendingEdit('exercise', item.id, item, currentUser.name || currentUser.email);
       }
       setCmsData(prev => comHorario({
         ...prev,
@@ -458,8 +461,8 @@ function AdminProvider({ children }) {
     const targetEdit = (cmsData.pendingEdits || []).find(e => e.id === editId || e._id === editId);
     if (!targetEdit) return;
 
-    if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-      window.BfaSupabase.updatePendingEditStatus(editId, 'approved');
+    if (BfaSupabase && BfaSupabase.isConfigured()) {
+      BfaSupabase.updatePendingEditStatus(editId, 'approved');
     }
 
     setCmsData(prev => {
@@ -503,8 +506,8 @@ function AdminProvider({ children }) {
   };
 
   const rejectPendingEdit = (editId, reason = '') => {
-    if (window.BfaSupabase && window.BfaSupabase.isConfigured()) {
-      window.BfaSupabase.updatePendingEditStatus(editId, 'rejected', reason);
+    if (BfaSupabase && BfaSupabase.isConfigured()) {
+      BfaSupabase.updatePendingEditStatus(editId, 'rejected', reason);
     }
 
     setCmsData(prev => comHorario({
@@ -549,5 +552,5 @@ function AdminProvider({ children }) {
   return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;
 }
 
-window.AdminContext = AdminContext;
-window.AdminProvider = AdminProvider;
+
+

@@ -1,7 +1,7 @@
 // C:\codigos\bfa-main\plataforma\src\data\financasData.js
 // Trilha completa de Finanças (3 Módulos)
 
-window.financasData = {
+export const financasData = {
   id: "financas",
   titulo: "Finanças",
   descricao: "Trilha de finanças e investimentos, do zero conceitual até valuation e montagem de carteira.",

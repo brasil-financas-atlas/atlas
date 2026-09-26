@@ -1,4 +1,15 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+import { useRouter } from './router';
+import Home from './pages/Home';
+import DisciplinaOverview, { ModuloIntroPage } from './pages/DisciplinaOverview';
+import AulaPage from './pages/AulaPage';
+import BrhsicPage, { Exercicios, Noticias, Sobre } from './pages/ExtraPages';
+import AdminDashboard, { AdminLogin } from './pages/AdminPages';
+import LoginPage from './pages/LoginPage';
+import ConfirmacaoPage from './pages/ConfirmacaoPage';
+import Navbar from './components/NavbarFooter';
+import CookieConsent from './components/CookieConsent';
+import FloatingAudioBar from './components/FloatingAudioBar';
 
 function EmConstrucaoSection({ title = "Aba em Desenvolvimento e Calibração", description = "Este recurso está passando por calibração de modelos e será disponibilizado nas próximas atualizações da plataforma." }) {
   return (
@@ -189,10 +200,10 @@ function App() {
         </ErrorBoundary>
       </div>
       
-      {window.FloatingAudioBar && <FloatingAudioBar />}
+      {FloatingAudioBar && <FloatingAudioBar />}
       <CookieConsent />
     </div>
   );
 }
 
-window.App = App;
+export default App;

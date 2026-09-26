@@ -1,4 +1,14 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+import { ProgressContext } from '../context/ProgressContext';
+import { AdminContext } from '../context/AdminContext';
+import BfaIcon from '../components/Icons';
+import AudioReader from '../components/AudioReader';
+import LessonContent from '../components/LessonContent';
+import QuizEngine from '../components/QuizEngine';
+import ForumTimestamps from '../components/VideoAndForum';
+import { EXACT_CONTENT } from '../data/contentData';
+import { financasData } from '../data/financasData';
+import { matematicaData } from '../data/matematicaData';
 
 function getYouTubeEmbedUrl(url) {
   if (!url || typeof url !== 'string') return '';
@@ -14,8 +24,7 @@ function getYouTubeEmbedUrl(url) {
 }
 
 function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
-  const { EXACT_CONTENT } = window;
-  const { completedLessons, toggleLessonComplete } = useContext(ProgressContext || createContext({}));
+    const { completedLessons, toggleLessonComplete } = useContext(ProgressContext || createContext({}));
   const { isAuthenticated, inlineEditActive, toggleInlineEdit, isAdmin, cmsData, updateLesson } = useContext(AdminContext || createContext({}));
   const [sidebarOpen, setSidebarOpen] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 768);
   const [showVideoModal, setShowVideoModal] = useState(false);
@@ -396,7 +405,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
         {/* Quick In-Lesson Segmented Mode Navigation Bar */}
         {(() => {
-          const richData = subjectKey === 'financas' ? window.financasData : (subjectKey === 'matematica' ? window.matematicaData : null);
+          const richData = subjectKey === 'financas' ? financasData : (subjectKey === 'matematica' ? matematicaData : null);
           let richAula = null;
           if (richData && richData.modulos) {
             const rMod = richData.modulos.find(m => m.slug === moduloSlug);
@@ -855,7 +864,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   );
 }
 
-window.AulaPage = AulaPage;
+export default AulaPage;
 
 
 

@@ -1,17 +1,20 @@
+import { createClient } from '@supabase/supabase-js';
+import { VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY } from './env.js';
+
 /* ==========================================================================
    Brasil Finanças Atlas (BFA) — Supabase Client & Backend Integration
    Fallback gracioso para LocalStorage caso o Supabase não esteja configurado.
    ========================================================================== */
 
-let SUPABASE_URL = (typeof process !== 'undefined' && process.env?.VITE_SUPABASE_URL) || window?.VITE_SUPABASE_URL || localStorage.getItem('BFA_VITE_SUPABASE_URL') || '';
-let SUPABASE_ANON_KEY = (typeof process !== 'undefined' && process.env?.VITE_SUPABASE_ANON_KEY) || window?.VITE_SUPABASE_ANON_KEY || localStorage.getItem('BFA_VITE_SUPABASE_ANON_KEY') || '';
+let SUPABASE_URL = (typeof process !== 'undefined' && process.env?.VITE_SUPABASE_URL) || VITE_SUPABASE_URL || localStorage.getItem('BFA_VITE_SUPABASE_URL') || '';
+let SUPABASE_ANON_KEY = (typeof process !== 'undefined' && process.env?.VITE_SUPABASE_ANON_KEY) || VITE_SUPABASE_ANON_KEY || localStorage.getItem('BFA_VITE_SUPABASE_ANON_KEY') || '';
 
 let supabaseClient = null;
 
 function initSupabase(url, key) {
   if (typeof window !== 'undefined' && window.supabase && url && key) {
     try {
-      supabaseClient = window.supabase.createClient(url, key);
+      supabaseClient = createClient(url, key);
       console.log('[BFA Supabase] Backend Supabase conectado com sucesso!');
       return true;
     } catch (err) {
@@ -438,7 +441,7 @@ async function signInWithOAuth(provider = 'google') {
   }
 }
 
-window.BfaSupabase = {
+export const BfaSupabase = {
   get client() { return supabaseClient; },
   initSupabase,
   setCredentials,

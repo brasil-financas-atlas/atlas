@@ -1,10 +1,10 @@
 // Utilitários de Gestos de Toque e Feedback Háptico para Mobile (BFA)
-const { useState, useEffect, useRef, useCallback } = React;
+import React, {  useState, useEffect, useRef, useCallback  } from 'react';
 
 /**
  * Hook para feedback tátil (vibração) em dispositivos móveis compatíveis
  */
-function useHaptics() {
+export function useHaptics() {
   const isSupported = typeof window !== 'undefined' && 'navigator' in window && 'vibrate' in navigator;
 
   const trigger = useCallback((pattern) => {
@@ -34,7 +34,7 @@ function useHaptics() {
 /**
  * Hook para detecção de gestos de swipe horizontal (deslizar abas, avançar aulas)
  */
-function useSwipeGesture({ onSwipeLeft, onSwipeRight, threshold = 55, maxVerticalOffset = 65 }) {
+export function useSwipeGesture({ onSwipeLeft, onSwipeRight, threshold = 55, maxVerticalOffset = 65 }) {
   const touchStartRef = useRef({ x: 0, y: 0, time: 0 });
   const touchMoveRef = useRef({ x: 0, y: 0 });
   const [swiping, setSwiping] = useState(false);
@@ -101,7 +101,7 @@ function useSwipeGesture({ onSwipeLeft, onSwipeRight, threshold = 55, maxVertica
 /**
  * Hook para detectar direção do scroll e controlar auto-hide da barra inferior
  */
-function useScrollDirection(threshold = 10) {
+export function useScrollDirection(threshold = 10) {
   const [scrollDirection, setScrollDirection] = useState('up');
   const [scrollY, setScrollY] = useState(0);
   const lastScrollY = useRef(0);
@@ -133,6 +133,6 @@ function useScrollDirection(threshold = 10) {
   return { scrollDirection, scrollY, isHidden: scrollDirection === 'down' && scrollY > 80 };
 }
 
-window.useHaptics = useHaptics;
-window.useSwipeGesture = useSwipeGesture;
-window.useScrollDirection = useScrollDirection;
+
+
+

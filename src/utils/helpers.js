@@ -1,4 +1,4 @@
-function slugify(text) {
+export function slugify(text) {
   if (!text) return '';
   return text
     .toString()
@@ -11,7 +11,7 @@ function slugify(text) {
     .replace(/^-+|-+$/g, '');
 }
 
-function formatTime(seconds) {
+export function formatTime(seconds) {
   if (seconds === undefined || seconds === null || isNaN(seconds) || seconds < 0) {
     return '00:00';
   }
@@ -24,7 +24,7 @@ function formatTime(seconds) {
   return `${pad(mins)}:${pad(secs)}`;
 }
 
-function generateSchedule(deadlineDate, selectedSubjects = []) {
+export function generateSchedule(deadlineDate, selectedSubjects = []) {
   const targetDate = new Date(deadlineDate);
   const startDate = new Date();
   startDate.setHours(0, 0, 0, 0);
@@ -71,10 +71,10 @@ function generateSchedule(deadlineDate, selectedSubjects = []) {
   };
 }
 
-window.slugify = slugify;
-window.formatTime = formatTime;
-window.generateSchedule = generateSchedule;
 
-window.slugify = slugify;
-window.formatTime = formatTime;
-window.generateSchedule = generateSchedule;
+
+
+
+
+
+

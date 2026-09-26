@@ -1,6 +1,9 @@
-const ProgressContext = React.createContext(null);
+import React from 'react';
+import { useStudentAuth } from '../utils/useStudentAuth.js';
 
-function ProgressProvider({ children }) {
+export const ProgressContext = React.createContext(null);
+
+export function ProgressProvider({ children }) {
   const [completedLessons, setCompletedLessons] = React.useState(() => {
     try {
       const saved = localStorage.getItem('bfa_user_progress');
@@ -29,7 +32,7 @@ function ProgressProvider({ children }) {
   });
 
   // Instancia o hook de autenticação e sincronização
-  const studentAuth = window.useStudentAuth ? window.useStudentAuth() : null;
+  const studentAuth = useStudentAuth ? useStudentAuth() : null;
 
   // Escuta atualizações remotas de progresso mescladas pelo hook
   React.useEffect(() => {
@@ -134,5 +137,5 @@ function ProgressProvider({ children }) {
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
 }
 
-window.ProgressContext = ProgressContext;
-window.ProgressProvider = ProgressProvider;
+
+

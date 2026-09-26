@@ -1,9 +1,14 @@
-const { useState, useEffect, useContext, useMemo } = React;
+import { useScrollDirection, useHaptics } from '../utils/touchGestures';
+import BottomSheet from './BottomSheet';
+import BfaIcon from './Icons';
+import { useRouter } from '../router';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
+
 
 function BottomNavBar() {
   const { currentPath, navigate } = useRouter();
-  const { isHidden } = (window.useScrollDirection ? window.useScrollDirection(15) : { isHidden: false });
-  const { hapticTap } = (window.useHaptics ? window.useHaptics() : { hapticTap: () => {} });
+  const { isHidden } = (useScrollDirection(15));
+  const { hapticTap } = (useHaptics());
   const [toolsSheetOpen, setToolsSheetOpen] = useState(false);
 
   const isActive = (targetPath) => {
@@ -148,4 +153,5 @@ function BottomNavBar() {
   );
 }
 
-window.BottomNavBar = BottomNavBar;
+
+export default BottomNavBar;

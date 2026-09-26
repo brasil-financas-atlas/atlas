@@ -1,4 +1,10 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import mermaid from 'mermaid';
+import katex from 'katex';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
+import { AdminContext } from '../context/AdminContext';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 
 function splitMarkdownIntoBlocks(markdown) {
   if (!markdown) return [];
@@ -135,12 +141,12 @@ function splitMarkdownIntoBlocks(markdown) {
 
 function LessonContent({ markdownContent, lessonId = 'lc' }) {
   const containerRef = useRef(null);
-  const { cmsData } = useContext(AdminContext || createContext({}));
+  const { cmsData } = useContext(AdminContext);
 
   const renderizarTex = (tex, emDestaque) => {
-    if (!(window.katex && window.katex.renderToString)) return tex;
+    if (!(katex && katex.renderToString)) return tex;
     try {
-      return window.katex.renderToString(tex.trim(), {
+      return katex.renderToString(tex.trim(), {
         displayMode: emDestaque,
         throwOnError: false,
         strict: false
@@ -153,13 +159,13 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
 
   // Re-executa o Mermaid sempre que os blocos renderizarem
   useEffect(() => {
-    if (!window.mermaid || !containerRef.current) return;
+    if (!mermaid || !containerRef.current) return;
 
     try {
       const theme = document.documentElement.getAttribute('data-theme') || 'brasil-atlas';
       const isDark = theme.includes('dark');
       
-      window.mermaid.initialize({
+      mermaid.initialize({
         startOnLoad: false,
         suppressErrorRendering: true,
         theme: isDark ? 'dark' : 'neutral',
@@ -190,7 +196,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
           const rawCode = mDiv.getAttribute('data-mermaid-code');
           if (rawCode) {
             const uniqueId = `mermaid-render-${lessonId}-${idx}-${Math.random().toString(36).substring(2, 7)}`;
-            window.mermaid.render(uniqueId, rawCode).then(({ svg }) => {
+            mermaid.render(uniqueId, rawCode).then(({ svg }) => {
               mDiv.innerHTML = svg;
               mDiv.setAttribute('data-processed', 'true');
             }).catch(e => {
@@ -308,7 +314,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
           .map(line => line.replace(/^( {1,4}|\t)/, ''))
           .join('\n')
           .trim();
-        const bodyText = (window.marked && window.marked.parse) ? window.marked.parse(cleanBody) : cleanBody;
+        const bodyText = (marked && marked.parse) ? marked.parse(cleanBody) : cleanBody;
 
         return `<div class="bfa-admonition bfa-admonition--${type}">
           <div class="bfa-admonition__header">
@@ -331,7 +337,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
           .map(line => line.replace(/^( {1,4}|\t)/, ''))
           .join('\n')
           .trim();
-        const bodyText = (window.marked && window.marked.parse) ? window.marked.parse(cleanBody) : cleanBody;
+        const bodyText = (marked && marked.parse) ? marked.parse(cleanBody) : cleanBody;
         const openAttr = isOpen ? 'open' : '';
 
         return `<details class="bfa-collapsible bfa-collapsible--${type}" ${openAttr}>
@@ -347,7 +353,7 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
       }
     );
 
-    let parsedHtml = (window.marked && window.marked.parse) ? window.marked.parse(formatted) : formatted;
+    let parsedHtml = (marked && marked.parse) ? marked.parse(formatted) : formatted;
 
     // Normalizar links relativos .md para rotas SPA hash
     parsedHtml = parsedHtml.replace(/href="([^"]+?\.md)"/g, (match, url) => {
@@ -366,8 +372,8 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
     });
 
     // Sanitização com DOMPurify
-    if (window.DOMPurify && window.DOMPurify.sanitize) {
-      parsedHtml = window.DOMPurify.sanitize(parsedHtml, {
+    if (DOMPurify && DOMPurify.sanitize) {
+      parsedHtml = DOMPurify.sanitize(parsedHtml, {
         ADD_TAGS: ['details', 'summary', 'svg', 'path', 'line', 'circle', 'polygon', 'polyline', 'g', 'rect', 'text', 'tspan', 'defs', 'marker', 'use', 'script', 'img', 'figure', 'figcaption', 'iframe', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
         ADD_ATTR: ['open', 'target', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'data-mermaid-code', 'data-processed', 'class', 'style', 'id', 'x', 'y', 'dx', 'dy', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'width', 'height', 'text-anchor', 'transform', 'marker-end', 'marker-start', 'type', 'src', 'alt', 'loading', 'allow', 'allowfullscreen', 'frameborder']
       });
@@ -426,4 +432,5 @@ function LessonContent({ markdownContent, lessonId = 'lc' }) {
   );
 }
 
-window.LessonContent = LessonContent;
+
+export default LessonContent;

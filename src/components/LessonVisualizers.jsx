@@ -1,4 +1,6 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import Chart from 'chart.js/auto';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 
 /* ==========================================================================
    1. Visualizador de Juros Simples vs. Compostos (Curva Exponencial)
@@ -48,11 +50,11 @@ function VisualizadorJurosCompostos() {
   }, [capital, aporte, taxaAnual, anos]);
 
   useEffect(() => {
-    if (!chartRef.current || !window.Chart) return;
+    if (!chartRef.current || !Chart) return;
     if (chartInstance.current) chartInstance.current.destroy();
 
     const ctx = chartRef.current.getContext('2d');
-    chartInstance.current = new window.Chart(ctx, {
+    chartInstance.current = new Chart(ctx, {
       type: 'line',
       data: {
         labels: dadosCalculados.labels,
@@ -211,11 +213,11 @@ function VisualizadorDistribuicaoNormal() {
   }, [media, desvioPadrao]);
 
   useEffect(() => {
-    if (!chartRef.current || !window.Chart) return;
+    if (!chartRef.current || !Chart) return;
     if (chartInstance.current) chartInstance.current.destroy();
 
     const ctx = chartRef.current.getContext('2d');
-    chartInstance.current = new window.Chart(ctx, {
+    chartInstance.current = new Chart(ctx, {
       type: 'line',
       data: {
         labels: dadosGauss.labels,
@@ -627,11 +629,11 @@ function VisualizadorRegressaoLinear() {
   }, [inclinacao, intercepto]);
 
   useEffect(() => {
-    if (!chartRef.current || !window.Chart) return;
+    if (!chartRef.current || !Chart) return;
     if (chartInstance.current) chartInstance.current.destroy();
 
     const ctx = chartRef.current.getContext('2d');
-    chartInstance.current = new window.Chart(ctx, {
+    chartInstance.current = new Chart(ctx, {
       type: 'scatter',
       data: {
         datasets: [
@@ -921,13 +923,6 @@ function LessonVisualizerRouter({ lessonSlug }) {
 }
 
 // Global Exports
-window.VisualizadorJurosCompostos = VisualizadorJurosCompostos;
-window.VisualizadorDistribuicaoNormal = VisualizadorDistribuicaoNormal;
-window.VisualizadorDREWaterfall = VisualizadorDREWaterfall;
-window.VisualizadorBalancoPatrimonial = VisualizadorBalancoPatrimonial;
-window.VisualizadorDCFValuation = VisualizadorDCFValuation;
-window.VisualizadorRegressaoLinear = VisualizadorRegressaoLinear;
-window.VisualizadorFracoesDecimais = VisualizadorFracoesDecimais;
-window.VisualizadorEquacaoFisher = VisualizadorEquacaoFisher;
-window.VisualizadorTabelaRegressivaIR = VisualizadorTabelaRegressivaIR;
-window.LessonVisualizerRouter = LessonVisualizerRouter;
+
+export { VisualizadorJurosCompostos, VisualizadorDistribuicaoNormal, VisualizadorDREWaterfall, VisualizadorBalancoPatrimonial, VisualizadorDCFValuation, VisualizadorRegressaoLinear, VisualizadorFracoesDecimais, VisualizadorEquacaoFisher, VisualizadorTabelaRegressivaIR };
+export default LessonVisualizerRouter;

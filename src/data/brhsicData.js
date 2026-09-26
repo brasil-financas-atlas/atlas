@@ -1,7 +1,7 @@
 // C:\codigos\bfa-main\plataforma\src\data\brhsicData.js
 // Conteúdo de Preparação para a Competição BRHSIC (Brazilian High School Investment Competition)
 
-window.brhsicData = {
+export const brhsicData = {
   titulo: "Preparação para a BRHSIC 2024",
   subtitulo: "Guia completo de Equity Research, estrutura de relatório, critérios de avaliação e dicas de apresentação para a maior competição de investimentos do ensino médio do Brasil.",
   edicaoAtual: "BRHSIC 2026",

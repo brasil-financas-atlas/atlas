@@ -1,7 +1,10 @@
-const { useState, useEffect, useContext, createContext } = React;
+import BfaIcon from './Icons';
+import { AdminContext } from '../context/AdminContext';
+import React, { useState, useEffect, useContext, createContext } from 'react';
+
 
 function ThemeSelector() {
-  const { currentTheme, setTheme, availableThemes } = useContext(AdminContext || createContext({}));
+  const { currentTheme, setTheme, availableThemes } = useContext(AdminContext);
 
   if (!availableThemes || availableThemes.length === 0) {
     return null;

@@ -1,5 +1,4 @@
-// React CDN global components destructuring
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
 
 // Simple Hash-based Router implementation for CDN Standalone React without npm bundle dependency
 const RouterContext = createContext({
@@ -53,5 +52,5 @@ function HashRouter({ children }) {
   );
 }
 
-window.useRouter = useRouter;
-window.HashRouter = HashRouter;
+export { useRouter };
+export default HashRouter;

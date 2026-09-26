@@ -3,11 +3,13 @@
    Arquivo: src/pages/LoginPage.jsx
    ========================================================================== */
 
-const { useState, useEffect, useContext, createContext } = React;
+import React, { useState, useEffect, useContext, createContext } from 'react';
+import { ProgressContext } from '../context/ProgressContext';
+import { AdminContext } from '../context/AdminContext';
 
 function LoginPage() {
-  const { studentAuth, completedLessons, quizScores } = useContext(window.ProgressContext || createContext({}));
-  const adminCtx = useContext(window.AdminContext || createContext({}));
+  const { studentAuth, completedLessons, quizScores } = useContext(createContext({}));
+  const adminCtx = useContext(createContext({}));
   const [activeTab, setActiveTab] = useState('student-login'); // 'student-login' | 'student-register' | 'admin-login' | 'otp-verify'
   
   // Form fields
@@ -768,4 +770,4 @@ function LoginPage() {
   );
 }
 
-window.LoginPage = LoginPage;
+export default LoginPage;

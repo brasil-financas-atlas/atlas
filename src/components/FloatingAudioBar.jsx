@@ -1,7 +1,10 @@
-const { useState, useEffect, useRef, useCallback } = React;
+import { useHaptics } from '../utils/touchGestures';
+import BfaIcon from './Icons';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+
 
 // Global event bus para o audio player flutuante
-window.BfaAudioBus = {
+export const BfaAudioBus = {
   listeners: new Set(),
   state: {
     isPlaying: false,
@@ -94,11 +97,11 @@ window.BfaAudioBus = {
 };
 
 function FloatingAudioBar() {
-  const [audioState, setAudioState] = useState(window.BfaAudioBus.state);
-  const { hapticTap } = (window.useHaptics ? window.useHaptics() : { hapticTap: () => {} });
+  const [audioState, setAudioState] = useState(BfaAudioBus.state);
+  const { hapticTap } = (useHaptics());
 
   useEffect(() => {
-    return window.BfaAudioBus.subscribe(setAudioState);
+    return BfaAudioBus.subscribe(setAudioState);
   }, []);
 
   if (!audioState.visible) return null;
@@ -132,7 +135,7 @@ function FloatingAudioBar() {
             className="bfa-floating-audio-bar__play-btn"
             onClick={() => {
               hapticTap();
-              window.BfaAudioBus.togglePlay();
+              BfaAudioBus.togglePlay();
             }}
             aria-label={audioState.isPlaying ? 'Pausar' : 'Reproduzir'}
           >
@@ -143,7 +146,7 @@ function FloatingAudioBar() {
             className="bfa-floating-audio-bar__close-btn"
             onClick={() => {
               hapticTap();
-              window.BfaAudioBus.stop();
+              BfaAudioBus.stop();
             }}
             aria-label="Fechar player"
           >
@@ -155,4 +158,5 @@ function FloatingAudioBar() {
   );
 }
 
-window.FloatingAudioBar = FloatingAudioBar;
+
+export default FloatingAudioBar;

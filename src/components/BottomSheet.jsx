@@ -1,4 +1,8 @@
-const { useState, useEffect, useRef, useCallback } = React;
+import { useHaptics } from '../utils/touchGestures';
+import BottomSheet from './BottomSheet';
+import BfaIcon from './Icons';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+
 
 /**
  * BottomSheet nativa e deslizante para Mobile com suporte a arrastar para fechar
@@ -8,7 +12,7 @@ function BottomSheet({ isOpen, onClose, title, subtitle, children, maxHeight = '
   const [currentTranslateY, setCurrentTranslateY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const sheetRef = useRef(null);
-  const { hapticTap } = (window.useHaptics ? window.useHaptics() : { hapticTap: () => {} });
+  const { hapticTap } = (useHaptics());
 
   useEffect(() => {
     if (isOpen) {
@@ -102,4 +106,5 @@ function BottomSheet({ isOpen, onClose, title, subtitle, children, maxHeight = '
   );
 }
 
-window.BottomSheet = BottomSheet;
+
+export default BottomSheet;

@@ -1,4 +1,8 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import { useHaptics } from '../utils/touchGestures';
+import Chart from 'chart.js/auto';
+import BfaIcon from './Icons';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 
 function CalculadoraJurosCompostos() {
   const [initialDeposit, setInitialDeposit] = useState(1000);
@@ -92,7 +96,7 @@ function CalculadoraJurosCompostos() {
 
   const maxVal = Math.max(calculations.finalCompound, 1);
 
-  const { hapticTap } = (window.useHaptics ? window.useHaptics() : { hapticTap: () => {} });
+  const { hapticTap } = (useHaptics());
 
   const setDepositWithHaptic = (val) => {
     hapticTap();
@@ -551,4 +555,5 @@ function CalculadoraJurosCompostos() {
   );
 }
 
-window.CalculadoraJurosCompostos = CalculadoraJurosCompostos;
+
+export default CalculadoraJurosCompostos;

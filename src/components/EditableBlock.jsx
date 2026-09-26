@@ -1,7 +1,13 @@
-﻿const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import katex from 'katex';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
+import BfaIcon from './Icons';
+import { AdminContext } from '../context/AdminContext';
+﻿import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 
 function EditableBlock({ id, content, initialContent, children, onSave, as: Component = 'div', className = '', style }) {
-  const { isAuthenticated, inlineEditActive, cmsData, saveOverride } = useContext(AdminContext || createContext({}));
+  const { isAuthenticated, inlineEditActive, cmsData, saveOverride } = useContext(AdminContext);
   
   const defaultText = useMemo(() => {
     if (typeof children === 'string' || typeof children === 'number') {
@@ -246,7 +252,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
           .map(line => line.replace(/^( {1,4}|\t)/, ''))
           .join('\n')
           .trim();
-        const bodyText = (window.marked && window.marked.parse) ? window.marked.parse(cleanBody) : cleanBody;
+        const bodyText = (marked && marked.parse) ? marked.parse(cleanBody) : cleanBody;
 
         return `<div class="bfa-admonition bfa-admonition--${type}">
           <div class="bfa-admonition__header">
@@ -269,7 +275,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
           .map(line => line.replace(/^( {1,4}|\t)/, ''))
           .join('\n')
           .trim();
-        const bodyText = (window.marked && window.marked.parse) ? window.marked.parse(cleanBody) : cleanBody;
+        const bodyText = (marked && marked.parse) ? marked.parse(cleanBody) : cleanBody;
         const openAttr = isOpen ? 'open' : '';
 
         return `<details class="bfa-collapsible bfa-collapsible--${type}" ${openAttr}>
@@ -285,11 +291,11 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
       }
     );
 
-    let parsed = (window.marked && window.marked.parse) ? window.marked.parse(formatted) : formatted;
+    let parsed = (marked && marked.parse) ? marked.parse(formatted) : formatted;
 
     // SanitizaÃ§Ã£o com DOMPurify
-    if (window.DOMPurify && window.DOMPurify.sanitize) {
-      parsed = window.DOMPurify.sanitize(parsed, {
+    if (DOMPurify && DOMPurify.sanitize) {
+      parsed = DOMPurify.sanitize(parsed, {
         ADD_TAGS: ['details', 'summary', 'svg', 'path', 'line', 'circle', 'polygon', 'polyline', 'g', 'rect', 'text', 'tspan', 'defs', 'script', 'img', 'iframe', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
         ADD_ATTR: ['open', 'viewBox', 'fill', 'stroke', 'stroke-width', 'class', 'style', 'id', 'src', 'alt', 'type', 'allow', 'allowfullscreen', 'frameborder']
       });
@@ -299,9 +305,9 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
     parsed = parsed.replace(/@@BFAMATH_(\d+)@@/g, (marcador, i) => {
       const f = formulas[Number(i)];
       if (!f) return marcador;
-      if (window.katex && window.katex.renderToString) {
+      if (katex && katex.renderToString) {
         try {
-          return window.katex.renderToString(f.tex.trim(), {
+          return katex.renderToString(f.tex.trim(), {
             displayMode: f.emDestaque,
             throwOnError: false,
             strict: false
@@ -912,5 +918,6 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
   );
 }
 
-window.EditableBlock = EditableBlock;
 
+
+export default EditableBlock;

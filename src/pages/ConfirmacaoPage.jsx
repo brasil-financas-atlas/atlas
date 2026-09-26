@@ -1,4 +1,4 @@
-const { useState, useEffect } = React;
+import React, { useState, useEffect } from 'react';
 
 function ConfirmacaoPage() {
   const [status, setStatus] = useState('checking'); // 'checking' | 'success' | 'error'
@@ -163,4 +163,4 @@ function ConfirmacaoPage() {
   );
 }
 
-window.ConfirmacaoPage = ConfirmacaoPage;
+export default ConfirmacaoPage;

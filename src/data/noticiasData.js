@@ -1,7 +1,7 @@
 // C:\codigos\bfa-main\plataforma\src\data\noticiasData.js
 // Noticias e Análises do Portal BFA
 
-window.noticiasData = [
+export const noticiasData = [
   {
     id: "noticia-01",
     slug: "copom-mantem-selic-e-sinaliza-cautela",

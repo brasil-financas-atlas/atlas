@@ -1,4 +1,7 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import BfaIcon from './Icons';
+import { ProgressContext } from '../context/ProgressContext';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 function VideoPlayer({ videoUrl, onTimeUpdate, playerRef }) {
   const iframeRef = useRef(null);
 
@@ -46,7 +49,7 @@ function VideoPlayer({ videoUrl, onTimeUpdate, playerRef }) {
 }
 
 function ForumTimestamps({ lessonId }) {
-  const { comments, addComment, addReply } = useContext(ProgressContext || createContext({}));
+  const { comments, addComment, addReply } = useContext(ProgressContext);
   const [newAuthor, setNewAuthor] = useState('');
   const [newText, setNewText] = useState('');
   const [timestampMinutes, setTimestampMinutes] = useState(0);
@@ -232,3 +235,6 @@ function ForumTimestamps({ lessonId }) {
     </div>
   );
 }
+
+export { VideoPlayer };
+export default ForumTimestamps;

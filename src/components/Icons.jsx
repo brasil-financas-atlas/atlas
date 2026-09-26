@@ -1,4 +1,6 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import Chart from 'chart.js/auto';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 
 function BfaIcon({ name, size = 20, color = "currentColor", className = "", style = {} }) {
   const defaultProps = {
@@ -423,4 +425,5 @@ function BfaIcon({ name, size = 20, color = "currentColor", className = "", styl
   }
 }
 
-window.BfaIcon = BfaIcon;
+
+export default BfaIcon;

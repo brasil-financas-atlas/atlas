@@ -1,4 +1,6 @@
-const { useState, useEffect } = React;
+import BfaIcon from './Icons';
+import React, { useState, useEffect } from 'react';
+
 
 function CookieConsent() {
   const [visible, setVisible] = useState(false);
@@ -72,4 +74,5 @@ function CookieConsent() {
   );
 }
 
-window.CookieConsent = CookieConsent;
+
+export default CookieConsent;

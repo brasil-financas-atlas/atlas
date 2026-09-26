@@ -1,7 +1,7 @@
 // C:\codigos\bfa-main\plataforma\src\data\sobreData.js
 // Conteúdo da página Sobre a Plataforma BFA
 
-window.sobreData = {
+export const sobreData = {
   titulo: "Sobre o BFA — Brasil Finanças Atlas",
   subtitulo: "Plataforma aberta para o ensino de matemática aplicada e finanças corporativas.",
   origem: {

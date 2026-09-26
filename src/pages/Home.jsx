@@ -1,12 +1,12 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+import BfaIcon from '../components/Icons';
 
 /* ==========================================================================
    Home Page — BRHSIC Academy Official Learning Platform
    Estética 100% alinhada com brhsic-academy.vercel.app e brhsic-main.vercel.app
    ========================================================================== */
 function Home() {
-  const BfaIcon = window.BfaIcon || (() => null);
-
+  
   return (
     <div className="site-wrapper">
       
@@ -162,7 +162,7 @@ function Home() {
   );
 }
 
-window.Home = Home;
+export default Home;
 
 
 

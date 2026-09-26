@@ -1,4 +1,7 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
+import Chart from 'chart.js/auto';
+import BfaIcon from './Icons';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
 
 // Definição das classes de ativos disponíveis no mercado brasileiro para a BRHSIC
 const ASSET_CLASSES = [
@@ -780,4 +783,5 @@ function SimuladorCarteiraInvestimentos() {
   );
 }
 
-window.SimuladorCarteiraInvestimentos = SimuladorCarteiraInvestimentos;
+
+export default SimuladorCarteiraInvestimentos;

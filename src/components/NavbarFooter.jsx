@@ -1,8 +1,15 @@
-const { useState, useEffect, useContext, createContext, useMemo, useRef } = React;
-const BfaIcon = window.BfaIcon || (() => null);
+import MarketTickerRibbon from './MarketTickerRibbon';
+import { EXACT_CONTENT } from '../data/contentData';
+import BfaIcon from './Icons';
+import { useRouter } from '../router';
+import { ProgressContext } from '../context/ProgressContext';
+import { AdminContext } from '../context/AdminContext';
+import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+
+
 
 function Navbar() {
-  const { studentAuth, completedLessons, quizScores } = useContext(window.ProgressContext || createContext({}));
+  const { studentAuth, completedLessons, quizScores } = useContext(ProgressContext);
   const [studentModalOpen, setStudentModalOpen] = useState(false);
   const [authStep, setAuthStep] = useState('email'); // 'email' | 'otp' | 'profile'
   const [authEmail, setAuthEmail] = useState('');
@@ -13,7 +20,7 @@ function Navbar() {
   const [authLoading, setAuthLoading] = useState(false);
   const { currentPath } = useRouter();
   const { adminUser, isAdmin, logout, publicarConteudo, statusPublicacao, erroPublicacao, currentTheme, setTheme: setContextTheme } =
-    useContext(AdminContext || createContext({}));
+    useContext(AdminContext);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -30,7 +37,7 @@ function Navbar() {
 
   const allLessonsIndex = useMemo(() => {
     const index = [];
-    const content = window.EXACT_CONTENT;
+    const content = EXACT_CONTENT;
     if (!content) return index;
 
     ['matematica', 'financas'].forEach((subjKey) => {
@@ -75,7 +82,7 @@ function Navbar() {
     { label: "Sobre", path: "/sobre" },
   ];
 
-  const MarketTicker = window.MarketTickerRibbon;
+  const MarketTicker = MarketTickerRibbon;
 
   return (
     <>
@@ -700,7 +707,8 @@ function Footer() {
   );
 }
 
-window.Navbar = Navbar;
-window.Footer = Footer;
 
 
+
+export { Footer };
+export default Navbar;

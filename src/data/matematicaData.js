@@ -1,4 +1,4 @@
-window.matematicaData = {
+export const matematicaData = {
   "id": "matematica-aplicada",
   "titulo": "Matemática Aplicada a Finanças",
   "descricao": "Trilha de matemática construída para destravar finanças — cada módulo existe para resolver um problema real de dinheiro, não matemática pela matemática.",

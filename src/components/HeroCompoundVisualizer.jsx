@@ -1,4 +1,5 @@
-const { useState, useMemo, useRef } = React;
+import React, { useState, useMemo, useRef } from 'react';
+
 
 function HeroCompoundVisualizer() {
   const [monthlyContribution, setMonthlyContribution] = useState(800);
@@ -221,4 +222,5 @@ function HeroCompoundVisualizer() {
   );
 }
 
-window.HeroCompoundVisualizer = HeroCompoundVisualizer;
+
+export default HeroCompoundVisualizer;
