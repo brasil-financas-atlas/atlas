@@ -9,24 +9,53 @@
 @import url('./themes.css');
 
 :root {
-  /* BRHSIC Core Colors */
-  --bg-app: #FFFFFF;
-  --bg-surface: #F9FAFB;
-  --bg-surface-blue: #F0F6FF;
-  
-  --text-primary: #111827;
-  --text-secondary: #4B5563;
-  --text-muted: #9CA3AF;
-  
-  --border-color: #E5E7EB;
-  --border-color-hover: #D1D5DB;
+  /* BRHSIC Official Color Palette (from brhsic-academy & brhsic-main) */
+  --ink: #001F37;
+  --ink-soft: #172237;
+  --white: #FFFFFF;
+  --paper: #EEF6FC;
+  --paper-light: #F4F8FC;
+  --paper-soft: #EAF4FB;
+  --line: #C0CDD5;
+  --line-light: #DCE8F0;
+  --muted: #4C5A67;
+  --muted-light: #6A7B8C;
 
-  --primary: #004DE6; /* BRHSIC Authentic Blue */
-  --primary-hover: #003BCC;
-  --primary-foreground: #FFFFFF;
+  /* BRHSIC Blues */
+  --blue: #00A6DF;               /* BRHSIC Electric Sky/Cyan Blue */
+  --blue-hover: #0092C5;
+  --blue-vibrant: #2F9BFF;       /* BRHSIC Main High Blue */
+  --blue-deep: #002B4D;          /* BRHSIC Deep Navy Blue */
+  --blue-deep-hover: #001F37;
+  --cyan: #5BC8E8;
+
+  /* BRHSIC Accents */
+  --coral: #F86E42;
+  --lime: #C4ED64;
+
+  /* App Semantic Mapping */
+  --bg-app: #FFFFFF;
+  --bg-surface: var(--paper-light);
+  --bg-surface-blue: var(--paper);
   
-  --accent-gold: #FFB800;
-  --accent-green: #00C48C;
+  --text-primary: var(--ink);
+  --text-secondary: var(--muted);
+  --text-muted: var(--muted-light);
+  
+  --border-color: var(--line);
+  --border-color-hover: var(--blue);
+
+  --primary: var(--blue-deep);       /* Deep Navy Blue for buttons & solid identity */
+  --primary-hover: var(--blue-deep-hover);
+  --primary-foreground: #FFFFFF;
+
+  --accent-blue: var(--blue);
+  --accent-gold: var(--coral);
+  --accent-green: var(--lime);
+
+  --track-math: var(--blue);
+  --track-finance: #0087BA;
+  --track-brhsic: var(--coral);
 
   /* Typography */
   --font-sans: 'Figtree', ui-sans-serif, system-ui, -apple-system, sans-serif;

@@ -308,8 +308,8 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               <span>{isMatematica ? 'TRILHA MATEMÁTICA' : 'TRILHA FINANÇAS'}</span>
             </span>
             <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text-primary)' }}>
-              ÍÍndice da Trilha
-              </div>
+              Índice da Trilha
+            </div>
             </div>
             </div>
           <button
@@ -394,7 +394,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
         {/* Lesson Title & Audio Header */}
         <div style={{ marginBottom: '2.5rem' }}>
-          <span style={{ color: trackColor, fontWeight: 700, fontSize: '0.75rem', padding: '0.25rem 0.75rem', backgroundColor: 'var(--bg-surface-blue)', borderRadius: '999px', display: 'inline-block', marginBottom: '1rem' }}>
+          <span style={{ color: 'var(--blue-deep)', fontWeight: 800, fontSize: '0.75rem', padding: '0.25rem 0.75rem', backgroundColor: 'var(--paper)', border: '1px solid var(--line)', borderRadius: '9999px', display: 'inline-block', marginBottom: '1rem', letterSpacing: '0.04em' }}>
             {isMatematica ? 'MATEMÁTICA APLICADA' : 'FINANÇAS & MERCADO'} · {moduloObj.titulo.toUpperCase()}
           </span>
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '3rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', margin: '0 0 1rem 0', lineHeight: 1.1 }}>

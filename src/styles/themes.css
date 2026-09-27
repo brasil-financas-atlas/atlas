@@ -2,28 +2,28 @@
    Brasil Finanças Atlas (BFA) — Theme Definitions & WCAG AAA Dark Contrast
    ========================================================================== */
 
-/* 1. Theme Classic Institucional (Default Light) */
+/* 1. Theme Classic Institucional (BRHSIC Official Light) */
 :root,
 [data-theme="brasil-atlas"] {
-  --background: #F8FAFC;
-  --foreground: #0F172A;
+  --background: #FFFFFF;
+  --foreground: #001F37;
   --card: #FFFFFF;
-  --primary: #0F172A;
-  --primary-foreground: #F8FAFC;
-  --secondary: #F1F5F9;
-  --muted-foreground: #64748B;
-  --border: #E2E8F0;
+  --primary: #002B4D;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EEF6FC;
+  --muted-foreground: #4C5A67;
+  --border: #C0CDD5;
 
-  --market: #059669;
-  --gold: #D97706;
-  --gold-deep: #B45309;
+  --market: #C4ED64;
+  --gold: #F86E42;
+  --gold-deep: #D4422E;
 
-  --track-finance: #1B6B3A;
-  --track-math: #1B3A5C;
-  --track-brhsic: #C8963E;
+  --track-finance: #0087BA;
+  --track-math: #00A6DF;
+  --track-brhsic: #F86E42;
 
   --surface: #FFFFFF;
-  --surface-strong: #F1F5F9;
+  --surface-strong: #EEF6FC;
 }
 
 /* 2. Theme Executive B3 Corporate */
