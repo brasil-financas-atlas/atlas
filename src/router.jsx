@@ -14,7 +14,7 @@ function useRouter() {
 function extractCleanHashPath() {
   if (typeof window === 'undefined') return '/';
   const rawHash = window.location.hash || '';
-  if (!rawHash || rawHash === '#') return '/';
+  if (!rawHash || rawHash === '#' || rawHash === '#/') return '/';
 
   // Se o hash contiver tokens de autenticação do Supabase (#access_token=... ou #error=...)
   if (rawHash.includes('access_token=') || rawHash.includes('error_description=') || rawHash.includes('type=signup') || rawHash.includes('type=recovery')) {
@@ -22,9 +22,20 @@ function extractCleanHashPath() {
     return '/';
   }
 
+  // Âncoras dentro da mesma página (ex: #trilhas, #inicio)
+  if (!rawHash.startsWith('#/')) {
+    const anchorId = rawHash.substring(1);
+    setTimeout(() => {
+      const el = document.getElementById(anchorId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+    return '/';
+  }
+
   const clean = rawHash.substring(1);
-  if (!clean) return '/';
-  return clean.startsWith('/') ? clean : '/' + clean;
+  return clean || '/';
 }
 
 function HashRouter({ children }) {
@@ -32,9 +43,13 @@ function HashRouter({ children }) {
 
   useEffect(() => {
     const handleHashChange = () => {
+      const rawHash = window.location.hash || '';
       const newPath = extractCleanHashPath();
       setPath(newPath);
-      window.scrollTo(0, 0);
+      // Rola para o topo apenas se for uma nova página (#/)
+      if (rawHash.startsWith('#/')) {
+        window.scrollTo(0, 0);
+      }
     };
 
     window.addEventListener('hashchange', handleHashChange);

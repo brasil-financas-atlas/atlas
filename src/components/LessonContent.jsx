@@ -3,6 +3,7 @@ import katex from 'katex';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { AdminContext } from '../context/AdminContext';
+import EditableBlock from './EditableBlock';
 import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
 
 

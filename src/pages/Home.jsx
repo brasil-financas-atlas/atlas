@@ -22,7 +22,14 @@ function Home() {
               A base estruturada do básico ao avançado para dominar matemática financeira, mercado de capitais e se destacar na olimpíada nacional de investimentos. Tudo gratuito e aberto.
             </p>
             <div className="hero__actions">
-              <a href="#trilhas" className="btn-primary">
+              <a
+                href="#trilhas"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('trilhas')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="btn-primary"
+              >
                 Começar a Estudar →
               </a>
               <a href="https://brhsic.com" target="_blank" rel="noreferrer" className="btn-secondary">
@@ -42,14 +49,59 @@ function Home() {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ padding: '1rem', background: 'var(--bg-surface)', borderRadius: '0.75rem', border: '1px solid var(--border-color)' }}>
-                  <strong style={{ display: 'block', marginBottom: '0.25rem' }}>01. Matemática Financeira</strong>
-                  <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>4 Módulos · 29 Aulas</span>
-                </div>
-                <div style={{ padding: '1rem', background: 'var(--bg-surface)', borderRadius: '0.75rem', border: '1px solid var(--border-color)' }}>
-                  <strong style={{ display: 'block', marginBottom: '0.25rem' }}>02. Mercado de Capitais</strong>
-                  <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>3 Módulos · 26 Aulas</span>
-                </div>
+                <a
+                  href="#/matematica"
+                  style={{
+                    padding: '1.15rem 1.25rem',
+                    background: 'var(--bg-surface)',
+                    borderRadius: '0.75rem',
+                    border: '1px solid var(--border-color)',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    transition: 'all 0.2s ease',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <div>
+                    <strong style={{ display: 'block', marginBottom: '0.25rem', color: 'var(--text-primary)', fontSize: '1rem' }}>
+                      01. Matemática Financeira
+                    </strong>
+                    <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                      4 Módulos · 29 Aulas
+                    </span>
+                  </div>
+                  <span style={{ color: 'var(--primary)', fontSize: '1.25rem', fontWeight: 700, marginLeft: '1rem' }}>→</span>
+                </a>
+
+                <a
+                  href="#/financas"
+                  style={{
+                    padding: '1.15rem 1.25rem',
+                    background: 'var(--bg-surface)',
+                    borderRadius: '0.75rem',
+                    border: '1px solid var(--border-color)',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    transition: 'all 0.2s ease',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <div>
+                    <strong style={{ display: 'block', marginBottom: '0.25rem', color: 'var(--text-primary)', fontSize: '1rem' }}>
+                      02. Mercado de Capitais
+                    </strong>
+                    <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                      3 Módulos · 26 Aulas
+                    </span>
+                  </div>
+                  <span style={{ color: 'var(--primary)', fontSize: '1.25rem', fontWeight: 700, marginLeft: '1rem' }}>→</span>
+                </a>
               </div>
             </div>
           </div>
@@ -152,7 +204,15 @@ function Home() {
         <div className="eyebrow" style={{ justifyContent: 'center' }}>ACESSO LIVRE E GRATUITO</div>
         <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '3rem', margin: '1.5rem 0', letterSpacing: '-0.02em' }}>Sua próxima tese começa aqui.</h2>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5rem' }}>
-          <a href="#trilhas" className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
+          <a
+            href="#trilhas"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('trilhas')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="btn-primary"
+            style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}
+          >
             Acessar Plataforma Agora
           </a>
         </div>
