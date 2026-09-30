@@ -385,6 +385,7 @@ function Sobre() {
               <li><strong>100% Gratuito e Aberto:</strong> Todo o conteúdo e simuladores disponíveis sem paywall ou cobranças.</li>
               <li><strong>Intuição Antes da Fórmula:</strong> Explicações visuais e demonstrações interativas antes da álgebra formal.</li>
               <li><strong>Alinhamento com a Realidade Nacional:</strong> Modelagem direta da dinâmica macroeconômica brasileira (Selic, IPCA, CDI e B3).</li>
+              <li><strong>Desenvolvimento & Engenharia:</strong> Plataforma concebida e desenvolvida por David Ferro.</li>
             </ul>
           </article>
         </div>
