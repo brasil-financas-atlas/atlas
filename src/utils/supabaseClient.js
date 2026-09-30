@@ -461,3 +461,8 @@ export const BfaSupabase = {
   fetchPendingEdits,
   updatePendingEditStatus
 };
+
+if (typeof window !== 'undefined') {
+  window.BfaSupabase = BfaSupabase;
+}
+
