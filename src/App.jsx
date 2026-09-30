@@ -7,7 +7,7 @@ import BrhsicPage, { Exercicios, Noticias, Sobre } from './pages/ExtraPages';
 import AdminDashboard, { AdminLogin } from './pages/AdminPages';
 import LoginPage from './pages/LoginPage';
 import ConfirmacaoPage from './pages/ConfirmacaoPage';
-import Navbar from './components/NavbarFooter';
+import Navbar, { Footer } from './components/NavbarFooter';
 import CookieConsent from './components/CookieConsent';
 import FloatingAudioBar from './components/FloatingAudioBar';
 
@@ -199,6 +199,7 @@ function App() {
           {renderCurrentPage()}
         </ErrorBoundary>
       </div>
+      {!isAulaRoute && <Footer />}
       
       {FloatingAudioBar && <FloatingAudioBar />}
       <CookieConsent />

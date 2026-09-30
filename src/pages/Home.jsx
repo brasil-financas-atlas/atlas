@@ -33,7 +33,7 @@ function Home() {
                 Começar a Estudar →
               </a>
               <a href="https://brhsic.com" target="_blank" rel="noreferrer" className="btn-secondary">
-                Conhecer a Competição ↗
+                Portal BRHSIC ↗
               </a>
             </div>
           </div>
