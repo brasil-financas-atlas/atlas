@@ -696,7 +696,7 @@ function Footer() {
       <div className="footer__container" style={{ marginTop: 0 }}>
         <div className="footer__bottom" style={{ width: '100%' }}>
           <div>
-            © 2026 BRHSIC Academy · Conteúdo educacional aberto e gratuito.
+            © 2026 BRHSIC Academy · Conteúdo educacional aberto e gratuito · Desenvolvido por David Ferro
           </div>
           <div style={{ display: 'flex', gap: '1.5rem' }}>
             <a href="#/" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ color: 'var(--text-primary)', fontWeight: 600, textDecoration: 'none' }}>Voltar ao topo ↑</a>
