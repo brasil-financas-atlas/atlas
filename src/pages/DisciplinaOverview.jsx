@@ -62,18 +62,18 @@ function DisciplinaOverview({ subjectKey }) {
 
             {/* Right Column: Progress Telemetry Island */}
             <div>
-              <div style={{ background: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-xl)', padding: '2rem', boxShadow: '0 10px 30px -10px rgba(0,0,0,0.05)' }}>
+              <div style={{ background: 'var(--bg-app)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-xl)', padding: '2rem', boxShadow: '0 10px 30px -10px rgba(0,43,77,0.08)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                  <span style={{ color: 'var(--text-secondary)', fontWeight: 600, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     SEU PROGRESSO NA TRILHA
                   </span>
-                  <span style={{ color: 'var(--primary)', fontWeight: 700, fontSize: '1.15rem', fontFamily: 'var(--font-display)' }}>
+                  <span style={{ color: 'var(--blue)', fontWeight: 700, fontSize: '1.25rem', fontFamily: 'var(--font-display)' }}>
                     {progressPct}% Concluído
                   </span>
                 </div>
 
-                <div style={{ height: '8px', width: '100%', background: 'var(--border-color)', borderRadius: '999px', overflow: 'hidden', marginBottom: '1.5rem' }}>
-                  <div style={{ height: '100%', width: `${progressPct}%`, background: 'var(--primary)', borderRadius: '999px', transition: 'width 0.4s ease' }} />
+                <div style={{ height: '10px', width: '100%', background: 'var(--paper)', borderRadius: '999px', overflow: 'hidden', marginBottom: '1.5rem', border: '1px solid var(--line)' }}>
+                  <div style={{ height: '100%', width: `${progressPct}%`, background: 'linear-gradient(90deg, var(--blue-deep) 0%, var(--blue) 100%)', borderRadius: '999px', transition: 'width 0.4s ease' }} />
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)' }}>
@@ -110,7 +110,7 @@ function DisciplinaOverview({ subjectKey }) {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem', paddingBottom: '1.25rem', borderBottom: '1px solid var(--border-color)' }}>
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                      <span style={{ color: trackColor, background: 'var(--bg-surface-blue)', padding: '0.25rem 0.5rem', borderRadius: '4px', fontWeight: 700, fontSize: '0.75rem' }}>
+                      <span style={{ color: 'var(--blue-deep)', background: 'var(--paper)', border: '1px solid var(--line)', padding: '0.25rem 0.65rem', borderRadius: '9999px', fontWeight: 800, fontSize: '0.75rem', letterSpacing: '0.04em' }}>
                         MÓDULO {idx + 1}
                       </span>
                       <span style={{ color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.875rem' }}>

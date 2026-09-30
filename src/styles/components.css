@@ -8,21 +8,21 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  border-bottom: 1px solid var(--border);
-  background-color: rgba(248, 250, 252, 0.85);
+  border-bottom: 1px solid var(--border-color);
+  background-color: rgba(238, 246, 252, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
 
 [data-theme="dark-obsidian"] .site-header,
 .dark .site-header {
-  background-color: rgba(13, 17, 23, 0.85);
+  background-color: rgba(13, 17, 23, 0.9);
 }
 
 .site-header__container {
   margin: 0 auto;
   display: flex;
-  height: 4rem;
+  height: 4.5rem;
   max-width: 1400px;
   align-items: center;
   gap: 1.5rem;
@@ -42,27 +42,27 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-md);
-  background-color: var(--primary);
+  background-color: var(--blue-deep);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: -0.05em;
-  color: var(--primary-foreground);
+  color: #FFFFFF;
 }
 
 .nav-link {
-  border-radius: var(--radius-md);
-  padding: 0.5rem 0.75rem;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--muted-foreground);
-  transition: background-color 0.15s ease, color 0.15s ease;
+  border-radius: 9999px;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.15s ease;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  background-color: var(--secondary);
-  color: var(--foreground);
+  background-color: var(--paper);
+  color: var(--blue-deep);
 }
 
 /* ÔöÇÔöÇ 2. Cards & Modules ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
@@ -2903,26 +2903,29 @@
   color: var(--text-primary);
 }
 
-/* â”€â”€ 2. Buttons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── 2. Buttons ──────────────────────────────────────────────────────────── */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background-color: var(--primary);
-  color: var(--primary-foreground);
-  font-weight: 600;
+  background: linear-gradient(135deg, var(--blue-deep) 0%, #001F37 100%);
+  color: #FFFFFF;
+  font-weight: 700;
   font-size: 0.875rem;
   padding: 0.625rem 1.25rem;
   border-radius: 8px;
-  border: none;
+  border: 1px solid rgba(0, 166, 223, 0.4);
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 4px 14px rgba(0, 43, 77, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #001F37 0%, #001526 100%);
+  border-color: var(--blue);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 166, 223, 0.3);
 }
 
 .btn-secondary {
@@ -2930,26 +2933,29 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background-color: var(--bg-surface-blue);
-  color: var(--primary);
+  background-color: var(--paper);
+  color: var(--blue-deep);
   font-weight: 700;
   font-size: 0.875rem;
   padding: 0.625rem 1.25rem;
   border-radius: 8px;
   transition: all 0.2s ease;
-  border: 1px solid transparent;
+  border: 1px solid var(--line);
 }
 
 .btn-secondary:hover {
-  background-color: rgba(0, 77, 230, 0.1);
-  color: var(--primary);
+  background-color: #DCEEFB;
+  border-color: var(--blue);
+  color: #001F37;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 166, 223, 0.15);
 }
 
-/* â”€â”€ 3. Hero Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── 3. Hero Section ─────────────────────────────────────────────────── */
 .hero {
   padding: 6rem 0;
-  background-color: var(--bg-app);
+  background: linear-gradient(180deg, var(--paper) 0%, #FFFFFF 100%);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .hero__container {
@@ -2980,10 +2986,17 @@
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-weight: 800;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--primary);
+  color: #007EA7;
+  background-color: rgba(0, 166, 223, 0.12);
+  border: 1px solid rgba(0, 166, 223, 0.3);
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .hero__title {
@@ -2991,7 +3004,7 @@
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
   line-height: 1.1;
-  color: var(--text-primary);
+  color: var(--ink);
   letter-spacing: -0.02em;
 }
 
@@ -3029,19 +3042,20 @@
   position: relative;
   width: 100%;
   aspect-ratio: 4/3;
-  background-color: var(--bg-surface);
+  background-color: #FFFFFF;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05);
+  box-shadow: 0 20px 40px -15px rgba(0, 43, 77, 0.1);
 }
 
-/* â”€â”€ 4. Stats Ribbon â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── 4. Stats Ribbon ─────────────────────────────────────────────────── */
 .stats-section {
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--bg-surface);
-  padding: 2.5rem 0;
+  border-top: 1px solid var(--blue-deep);
+  border-bottom: 1px solid var(--blue-deep);
+  background-color: var(--ink);
+  padding: 3rem 0;
+  color: #FFFFFF;
 }
 
 .stats__container {
@@ -3063,16 +3077,17 @@
 
 .stat-value {
   font-family: var(--font-display);
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: var(--cyan);
   line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .stat-label {
   font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+  font-weight: 600;
+  color: var(--line);
 }
 
 /* â”€â”€ 5. Process / Modules Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
@@ -3110,21 +3125,22 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   background-color: var(--bg-app);
-  transition: all 0.2s ease;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .module-card:hover {
-  box-shadow: 0 12px 32px -12px rgba(0, 77, 230, 0.15);
-  border-color: var(--primary);
-  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -12px rgba(0, 166, 223, 0.25);
+  border-color: var(--blue);
+  transform: translateY(-3px);
 }
 
 .step-number {
   font-family: var(--font-mono);
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--primary);
-  background-color: var(--bg-surface-blue);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--blue-deep);
+  background-color: var(--paper);
+  border: 1px solid rgba(0, 166, 223, 0.35);
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
   display: inline-block;
