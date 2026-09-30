@@ -6,10 +6,11 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { ProgressContext } from '../context/ProgressContext';
 import { AdminContext } from '../context/AdminContext';
+import { BfaSupabase } from '../utils/supabaseClient';
 
 function LoginPage() {
-  const { studentAuth, completedLessons, quizScores } = useContext(createContext({}));
-  const adminCtx = useContext(createContext({}));
+  const { studentAuth, completedLessons, quizScores } = useContext(ProgressContext) || {};
+  const adminCtx = useContext(AdminContext) || {};
   const [activeTab, setActiveTab] = useState('student-login'); // 'student-login' | 'student-register' | 'admin-login' | 'otp-verify'
   
   // Form fields
@@ -47,11 +48,12 @@ function LoginPage() {
     setSuccessMsg('');
 
     try {
-      if (!window.BfaSupabase || !window.BfaSupabase.client) {
+      const sp = BfaSupabase || (typeof window !== 'undefined' ? window.BfaSupabase : null);
+      if (!sp || !sp.client) {
         throw new Error('Serviço de autenticação Supabase indisponível no momento.');
       }
 
-      const supabase = window.BfaSupabase.client;
+      const supabase = sp.client;
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email.trim(),
         password: password
@@ -59,8 +61,8 @@ function LoginPage() {
 
       if (error) throw error;
 
-      if (window.BfaSupabase?.savePasswordCredential) {
-        window.BfaSupabase.savePasswordCredential(email.trim(), password, name || email.trim());
+      if (sp?.savePasswordCredential) {
+        sp.savePasswordCredential(email.trim(), password, name || email.trim());
       }
 
       setSuccessMsg('Login realizado com sucesso! Sincronizando seu progresso...');
@@ -101,11 +103,12 @@ function LoginPage() {
     setSuccessMsg('');
 
     try {
-      if (!window.BfaSupabase || !window.BfaSupabase.client) {
+      const sp = BfaSupabase || (typeof window !== 'undefined' ? window.BfaSupabase : null);
+      if (!sp || !sp.client) {
         throw new Error('Serviço de autenticação Supabase indisponível no momento.');
       }
 
-      const supabase = window.BfaSupabase.client;
+      const supabase = sp.client;
       const localLessons = JSON.parse(localStorage.getItem('bfa_user_progress') || '[]');
       const localScores = JSON.parse(localStorage.getItem('bfa_quiz_scores') || '{}');
 
@@ -160,8 +163,8 @@ function LoginPage() {
       }
 
       if (data?.session) {
-        if (window.BfaSupabase?.savePasswordCredential) {
-          window.BfaSupabase.savePasswordCredential(email.trim(), password, name.trim());
+        if (sp?.savePasswordCredential) {
+          sp.savePasswordCredential(email.trim(), password, name.trim());
         }
         setSuccessMsg('Cadastro realizado com sucesso! Conectando...');
         if (studentAuth?.reloadProfile) {
@@ -171,8 +174,8 @@ function LoginPage() {
           window.location.hash = '#/';
         }, 1000);
       } else {
-        if (window.BfaSupabase?.savePasswordCredential) {
-          window.BfaSupabase.savePasswordCredential(email.trim(), password, name.trim());
+        if (sp?.savePasswordCredential) {
+          sp.savePasswordCredential(email.trim(), password, name.trim());
         }
         setSuccessMsg('Conta de aluno criada com sucesso! Caso a confirmação de e-mail esteja ativada no seu Supabase, verifique sua caixa de entrada para confirmar o acesso.');
         setTimeout(() => {
@@ -205,19 +208,22 @@ function LoginPage() {
 
     try {
       if (adminCtx?.login) {
-        const ok = await adminCtx.login(adminEmail.trim(), adminPassword);
-        if (ok) {
-          if (window.BfaSupabase?.savePasswordCredential) {
-            window.BfaSupabase.savePasswordCredential(adminEmail.trim(), adminPassword, 'Administrador BFA');
+        const res = await adminCtx.login(adminEmail.trim(), adminPassword);
+        if (res && (res.success || res === true)) {
+          const sp = BfaSupabase || (typeof window !== 'undefined' ? window.BfaSupabase : null);
+          if (sp?.savePasswordCredential) {
+            sp.savePasswordCredential(adminEmail.trim(), adminPassword, 'Administrador BFA');
           }
           setSuccessMsg('Acesso administrativo autorizado! Redirecionando para o painel...');
           setTimeout(() => {
             window.location.hash = '#/admin';
           }, 800);
           return;
+        } else {
+          throw new Error(res?.error || 'Credenciais de administrador inválidas.');
         }
       }
-      throw new Error('Credenciais de administrador inválidas.');
+      throw new Error('Módulo administrativo indisponível.');
     } catch (err) {
       setErrorMsg(err.message || 'Falha na autenticação de administrador.');
     } finally {
