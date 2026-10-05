@@ -132,3 +132,127 @@
   --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6);
   --shadow-elevated: 0 12px 32px -12px rgba(0, 0, 0, 0.8);
 }
+
+/* --------------------------------------------------------------------------
+   4b. Dark Obsidian — tokens do design BRHSIC
+   O design atual (globals.css / fim de components.css) usa os tokens abaixo,
+   e nao os do bloco 4. Sem isto, so o cabecalho escurecia e o resto do site
+   continuava claro, com texto claro sobre fundo claro.
+   -------------------------------------------------------------------------- */
+[data-theme="dark-obsidian"],
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --ink: #F1F5F9;
+  --ink-soft: #CBD5E1;
+  --paper: #152036;
+  --paper-light: #0E1626;
+  --paper-soft: #111B2E;
+  --line: rgba(255, 255, 255, 0.14);
+  --line-light: rgba(255, 255, 255, 0.08);
+  --muted: #A3B1C2;
+  --muted-light: #8796A8;
+  --cyan: #67D2F0;
+  --on-paper: #8FDDF5;
+
+  --background: #0A0F18;
+  --bg-app: #0A0F18;
+  --bg-surface: #0F1726;
+  --bg-surface-blue: #0C1524;
+
+  --text-primary: #F1F5F9;
+  --text-secondary: #A3B1C2;
+  --text-muted: #8796A8;
+
+  --border-color: rgba(255, 255, 255, 0.12);
+  --border-color-hover: var(--blue);
+  --border: rgba(255, 255, 255, 0.12);
+
+  --card: #0F1726;
+  --surface: #0F1726;
+  --surface-strong: #152036;
+}
+
+/* Componentes que usavam cores fixas ou o azul-marinho como cor de texto */
+[data-theme="dark-obsidian"] .site-logo__img,
+[data-theme="dark-obsidian"] .bfa-brand-img,
+[data-theme="dark"] .bfa-brand-img,
+[data-theme="dark-obsidian"] .site-footer__logo,
+[data-theme="dark"] .site-logo__img,
+[data-theme="dark"] .site-footer__logo {
+  filter: brightness(0) invert(1);
+}
+
+[data-theme="dark-obsidian"] .hero,
+[data-theme="dark"] .hero {
+  background: linear-gradient(180deg, var(--paper-light) 0%, var(--bg-app) 100%);
+}
+
+[data-theme="dark-obsidian"] .hero__visual,
+[data-theme="dark"] .hero__visual {
+  background-color: var(--bg-surface);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark-obsidian"] .stats-section,
+[data-theme="dark"] .stats-section {
+  background-color: #060A12;
+  border-color: var(--line);
+}
+
+[data-theme="dark-obsidian"] .eyebrow,
+[data-theme="dark"] .eyebrow {
+  color: var(--cyan);
+}
+
+[data-theme="dark-obsidian"] .step-number,
+[data-theme="dark"] .step-number,
+[data-theme="dark-obsidian"] .nav-link.active,
+[data-theme="dark"] .nav-link.active {
+  color: var(--cyan);
+}
+
+[data-theme="dark-obsidian"] .btn-secondary,
+[data-theme="dark"] .btn-secondary {
+  background-color: var(--paper);
+  color: var(--text-primary);
+  border-color: var(--line);
+}
+
+[data-theme="dark-obsidian"] .btn-secondary:hover,
+[data-theme="dark"] .btn-secondary:hover {
+  background-color: #1C2A44;
+  color: #FFFFFF;
+  border-color: var(--blue);
+}
+
+[data-theme="dark-obsidian"] .btn-primary,
+[data-theme="dark"] .btn-primary {
+  background: linear-gradient(135deg, #0A6FA3 0%, #064B73 100%);
+  border-color: rgba(103, 210, 240, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark-obsidian"] .btn-primary:hover,
+[data-theme="dark"] .btn-primary:hover {
+  background: linear-gradient(135deg, #0C7FBA 0%, #075683 100%);
+}
+
+[data-theme="dark-obsidian"] .module-card:hover,
+[data-theme="dark"] .module-card:hover {
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark-obsidian"] .nav-search-panel,
+[data-theme="dark"] .nav-search-panel {
+  box-shadow: 0 16px 30px -12px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .module-card,
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .bfa-card,
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .tool-card,
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .bfa-quiz,
+[data-theme="dark-obsidian"].bfa-glassmorphism-active .bfa-forum {
+  background-color: rgba(15, 23, 38, 0.75) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}

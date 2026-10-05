@@ -322,7 +322,7 @@ function CalculadoraJurosCompostos() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           {/* Key Metrics Grid */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem' }}>
-            <div style={{ background: '#FFFFFF', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+            <div style={{ background: 'var(--bg-app)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
               <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', display: 'block', marginBottom: '0.2rem' }}>
                 Total Investido
               </span>
@@ -344,7 +344,7 @@ function CalculadoraJurosCompostos() {
               </span>
             </div>
 
-            <div style={{ background: '#FFFFFF', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+            <div style={{ background: 'var(--bg-app)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
               <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', display: 'block', marginBottom: '0.2rem' }}>
                 Total Juros Simples
               </span>
@@ -356,7 +356,7 @@ function CalculadoraJurosCompostos() {
           </div>
 
           {/* Visual Progress Bar Chart Comparison */}
-          <div style={{ background: '#FFFFFF', padding: '1.25rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
+          <div style={{ background: 'var(--bg-app)', padding: '1.25rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
             <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--color-azul-dark)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <BfaIcon name="chart" size={16} color="var(--color-azul)" /> Comparativo de Acumulação Final
             </h4>
@@ -458,7 +458,7 @@ function CalculadoraJurosCompostos() {
         </div>
 
         {activeTab === 'chart' ? (
-          <div style={{ background: '#FFFFFF', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
+          <div style={{ background: 'var(--bg-app)', padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
             {/* Interactive SVG Yield Curve Chart */}
             <div style={{ position: 'relative', width: '100%', height: '260px', marginBottom: '1rem' }}>
               {(() => {

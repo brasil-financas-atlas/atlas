@@ -413,7 +413,7 @@ function LoginPage() {
         
         {/* Cabeçalho */}
         <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-          <img src="https://brhsic-main.vercel.app/brand/brhsic-lockup.png" alt="BRHSIC Academy" style={{ height: '40px', width: 'auto', marginBottom: '1.5rem', display: 'inline-block' }} />
+          <img src="https://brhsic-main.vercel.app/brand/brhsic-lockup.png" alt="BRHSIC Academy" className="bfa-brand-img" style={{ height: '40px', width: 'auto', marginBottom: '1.5rem', display: 'inline-block' }} />
           
           <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>
             {activeTab === 'student-register'
@@ -435,13 +435,13 @@ function LoginPage() {
 
         {/* Mensagens de Feedback */}
         {errorMsg && (
-          <div style={{ padding: '1rem', borderRadius: 'var(--radius-md)', backgroundColor: '#FEF2F2', border: '1px solid #F87171', color: '#B91C1C', fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
+          <div style={{ padding: '1rem', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--status-danger-bg, #FEF2F2)', border: '1px solid #F87171', color: 'var(--status-danger, #B91C1C)', fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
             {errorMsg}
           </div>
         )}
 
         {successMsg && (
-          <div style={{ padding: '1rem', borderRadius: 'var(--radius-md)', backgroundColor: '#F0FDF4', border: '1px solid #4ADE80', color: '#15803D', fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
+          <div style={{ padding: '1rem', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--status-success-bg, #F0FDF4)', border: '1px solid #4ADE80', color: 'var(--status-success, #15803D)', fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
             {successMsg}
           </div>
         )}

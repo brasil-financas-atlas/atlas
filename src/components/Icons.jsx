@@ -406,6 +406,91 @@ function BfaIcon({ name, size = 20, color = "currentColor", className = "", styl
           <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
         </svg>
       );
+    /* Conjunto do menu lateral: mesmo traco (1.75), cantos arredondados, 24x24 */
+    case "nav-math":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <path d="M18 7V4H6l6 8-6 8h12v-3" />
+        </svg>
+      );
+    case "nav-finance":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <path d="M3 3v18h18" />
+          <path d="m7 15 4-4 3 3 5-6" />
+        </svg>
+      );
+    case "nav-brhsic":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <path d="M5 21V4" />
+          <path d="M5 4h12l-2.5 4L17 12H5" />
+        </svg>
+      );
+    case "nav-exercises":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <rect x="8" y="2" width="8" height="4" rx="1" />
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+          <path d="m9 14 2 2 4-4" />
+        </svg>
+      );
+    case "nav-news":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <rect x="3" y="4" width="18" height="16" rx="2" />
+          <path d="M7 9h10" />
+          <path d="M7 13h10" />
+          <path d="M7 17h6" />
+        </svg>
+      );
+    case "nav-info":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 11v5" />
+          <path d="M12 8h.01" />
+        </svg>
+      );
+    case "nav-external":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <path d="M14 4h6v6" />
+          <path d="M20 4l-9 9" />
+          <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+        </svg>
+      );
+    case "nav-publish":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <path d="M12 15V3" />
+          <path d="m7 8 5-5 5 5" />
+          <path d="M5 21h14" />
+        </svg>
+      );
+    case "nav-dashboard":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <rect x="3" y="3" width="7" height="9" rx="1" />
+          <rect x="14" y="3" width="7" height="5" rx="1" />
+          <rect x="14" y="12" width="7" height="9" rx="1" />
+          <rect x="3" y="16" width="7" height="5" rx="1" />
+        </svg>
+      );
+    case "nav-teacher":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <path d="M22 10 12 5 2 10l10 5 10-5z" />
+          <path d="M6 12v5c3 2 9 2 12 0v-5" />
+        </svg>
+      );
+    case "nav-user":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 21a8 8 0 0 1 16 0" />
+        </svg>
+      );
     case "search":
       return (
         <svg {...defaultProps}>

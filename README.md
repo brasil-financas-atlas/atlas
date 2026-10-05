@@ -67,7 +67,17 @@ O topo do site foi pensado para ter **poucos botões**:
 | **Matemática · Finanças · BRHSIC · Exercícios** | Atalhos para as trilhas (em telas pequenas ficam dentro do menu) |
 | **Lupa** | Abre a busca de aulas. Atalho no teclado: tecla `/` ou `Ctrl + K` |
 | **Entrar** | Cria a conta ou entra com o e-mail. Depois de entrar, vira um círculo com a sua inicial |
-| **Menu (três linhas)** | Todo o resto: trilhas, exercícios, conquistas, Sobre, Notícias, Portal BRHSIC, modo escuro e Área do Professor |
+| **Menu (três linhas)** | Conta do aluno, trilhas, Notícias, Sobre, interruptor de modo escuro, Portal BRHSIC e Área do Professor |
+
+Onde ficou o que saiu do topo:
+
+| Item | Onde encontrar |
+| :--- | :--- |
+| Modo escuro | Menu lateral (interruptor) e rodapé de todas as páginas |
+| Sobre e Notícias | Menu lateral e rodapé (coluna "Plataforma") |
+| Portal BRHSIC | Botão na página inicial, menu lateral e rodapé (coluna "Ecossistema") |
+| Área do Professor | Menu lateral e rodapé |
+| Publicar e Painel Admin | Barra flutuante "Admin" no canto inferior direito, visível só para administradores, e também no menu lateral |
 
 Dicas:
 - **Sem conta**, o progresso fica salvo só naquele navegador.
