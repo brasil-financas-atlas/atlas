@@ -36,7 +36,7 @@ function DisciplinaOverview({ subjectKey }) {
       {/* ── 1. Hero Overview (BRHSIC Clean Design) ───────────────── */}
       <section style={{ padding: '4.5rem 0 3.5rem 0', background: 'var(--bg-surface-blue)', borderBottom: '1px solid var(--border-color)', position: 'relative' }}>
         <div className="site-container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4rem', alignItems: 'center' }}>
+          <div className="disciplina-hero__grid">
             
             {/* Left Column: Curriculum Info */}
             <div>
@@ -156,7 +156,7 @@ function DisciplinaOverview({ subjectKey }) {
                 </div>
 
                 {/* Module Lessons Grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: '1rem' }}>
                   {mod.aulas.map((aula, aIdx) => {
                     const lessonId = `${subjectKey}-${mod.slug}-${aula.slug}`;
                     const isDone = completedLessons && completedLessons.includes(lessonId);
@@ -463,7 +463,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
             )}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: '1rem' }}>
             {moduloObj.aulas.map((aula, aIdx) => {
               const lessonId = `${subjectKey}-${moduloSlug}-${aula.slug}`;
               const isDone = completedLessons && completedLessons.includes(lessonId);

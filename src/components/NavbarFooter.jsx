@@ -74,97 +74,74 @@ function Navbar() {
     ).slice(0, 6);
   }, [searchQuery, allLessonsIndex]);
 
+  // Apenas as trilhas principais ficam visiveis no cabecalho.
+  // Todo o resto (Sobre, Noticias, Portal, tema, admin) vive no menu lateral.
   const navLinks = [
     { label: "Matemática", path: "/matematica" },
     { label: "Finanças", path: "/financas" },
-    { label: "Preparação BRHSIC", path: "/preparacao-brhsic" },
+    { label: "BRHSIC", path: "/preparacao-brhsic" },
     { label: "Exercícios", path: "/exercicios" },
-    { label: "Sobre", path: "/sobre" },
   ];
 
-  const MarketTicker = MarketTickerRibbon;
+  const isAuthenticated = !!(studentAuth && studentAuth.isAuthenticated);
+  const userInitial = (studentAuth?.profile?.name || studentAuth?.user?.email || 'A').charAt(0).toUpperCase();
+  const searchInputRef = useRef(null);
+
+  const closeSearch = () => {
+    setSearchOpen(false);
+    setSearchQuery('');
+  };
+
+  const openProfile = () => {
+    setAuthStep('profile');
+    setStudentModalOpen(true);
+  };
+
+  // Atalhos: "/" ou Ctrl+K abrem a busca, Esc fecha busca e menu.
+  useEffect(() => {
+    const onKey = (e) => {
+      const tag = (e.target && e.target.tagName) || '';
+      const typing = tag === 'INPUT' || tag === 'TEXTAREA' || (e.target && e.target.isContentEditable);
+      if ((e.key === '/' && !typing) || (e.key.toLowerCase() === 'k' && (e.ctrlKey || e.metaKey))) {
+        e.preventDefault();
+        setMobileMenuOpen(false);
+        setSearchOpen(true);
+      } else if (e.key === 'Escape') {
+        setSearchOpen(false);
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) searchInputRef.current.focus();
+  }, [searchOpen]);
+
+  // Fecha busca e menu ao trocar de pagina.
+  useEffect(() => {
+    setSearchOpen(false);
+    setMobileMenuOpen(false);
+  }, [currentPath]);
 
   return (
     <>
       <header className="site-header">
       <div className="site-header__container">
-        <a href="#/" className="site-logo" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-          <img src="https://brhsic-main.vercel.app/brand/brhsic-lockup.png" alt="BRHSIC" style={{ height: '32px', width: 'auto' }} />
+        <a href="#/" className="site-logo" aria-label="Página inicial">
+          <img src="https://brhsic-main.vercel.app/brand/brhsic-lockup.png" alt="BRHSIC" className="site-logo__img" />
         </a>
 
-        {/* Global Search Bar with Autocomplete */}
-        <div className="navbar-search" style={{ position: 'relative', minWidth: '250px' }}>
-          <input
-            type="text"
-            placeholder="Buscar aula..."
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setSearchOpen(true);
-            }}
-            onFocus={() => setSearchOpen(true)}
-            onBlur={() => setTimeout(() => setSearchOpen(false), 200)}
-            style={{
-              width: '100%',
-              padding: '0.5rem 1rem',
-              fontSize: '0.875rem',
-              borderRadius: '9999px',
-              border: '1px solid var(--border-color)',
-              backgroundColor: 'var(--bg-app)',
-              color: 'var(--text-primary)',
-              outline: 'none'
-            }}
-          />
-          {searchOpen && searchResults.length > 0 && (
-            <div style={{
-              position: 'absolute',
-              top: 'calc(100% + 6px)',
-              left: 0,
-              right: 0,
-              backgroundColor: 'var(--bg-app)',
-              border: '1px solid var(--border-color)',
-              borderRadius: 'var(--radius-lg)',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.05)',
-              zIndex: 9999,
-              maxHeight: '65vh',
-              overflowY: 'auto'
-            }}>
-              {searchResults.map((item) => (
-                <a
-                  key={item.url}
-                  href={item.url}
-                  onClick={() => setSearchOpen(false)}
-                  style={{
-                    display: 'block',
-                    padding: '0.75rem 1rem',
-                    textDecoration: 'none',
-                    borderBottom: '1px solid var(--border-color)',
-                    fontSize: '0.875rem',
-                    color: 'var(--text-primary)'
-                  }}
-                >
-                  <strong style={{ display: 'block' }}>{item.aulaTitle}</strong>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                    {item.subjectTitle} · {item.moduloTitle}
-                  </span>
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <nav className="nav-links">
+        <nav className="nav-links" aria-label="Trilhas principais">
           {navLinks.map((link) => {
             const isActive = currentPath === link.path || (link.path !== '/' && currentPath.startsWith(link.path));
             return (
               <a
                 key={link.path}
                 href={`#${link.path}`}
-                className="nav-link"
-                style={{
-                  fontWeight: isActive ? 600 : 500,
-                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
-                }}
+                className={`nav-link${isActive ? ' nav-link--active' : ''}`}
+                aria-current={isActive ? 'page' : undefined}
               >
                 {link.label}
               </a>
@@ -172,94 +149,88 @@ function Navbar() {
           })}
         </nav>
 
-        <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          {/* Link para o site oficial */}
-          <a
-            href="https://brhsic.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-secondary"
+        <div className="navbar-actions">
+          <button
+            type="button"
+            className="nav-icon-btn"
+            onClick={() => { setMobileMenuOpen(false); searchOpen ? closeSearch() : setSearchOpen(true); }}
+            aria-label="Buscar aula"
+            aria-expanded={searchOpen}
+            title="Buscar aula (atalho: /)"
           >
-            Portal BRHSIC ↗
-          </a>
+            <BfaIcon name={searchOpen ? "close" : "search"} size={18} />
+          </button>
 
-          {/* Botão de Autenticação / Perfil do Aluno */}
-          {studentAuth && studentAuth.isAuthenticated ? (
+          {isAuthenticated ? (
             <button
               type="button"
-              onClick={() => {
-                setAuthStep('profile');
-                setStudentModalOpen(true);
-              }}
-              className="btn-secondary"
-              title="Meu Perfil"
-              style={{ padding: '0.4rem 0.8rem' }}
+              onClick={openProfile}
+              className="nav-avatar-btn"
+              title="Meu perfil"
+              aria-label="Abrir meu perfil"
             >
-              <div style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                backgroundColor: studentAuth.isSyncing ? 'var(--primary)' : '#10B981'
-              }} />
-              <span>
-                {studentAuth.profile?.name || studentAuth.user?.email?.split('@')[0] || 'Aluno'}
-              </span>
+              {userInitial}
+              <span
+                className="nav-avatar-btn__status"
+                style={{ backgroundColor: studentAuth.isSyncing ? 'var(--primary)' : '#10B981' }}
+              />
             </button>
           ) : (
-            <a
-              href="#/login"
-              className="btn-primary"
-            >
-              Entrar / Cadastrar
+            <a href="#/login" className="btn-primary nav-login-btn">
+              Entrar
             </a>
           )}
 
-          {/* Botão Hamburger Mobile */}
           <button
             type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="btn-secondary bfa-mobile-nav-toggle"
-            aria-label="Abrir menu"
-            style={{ padding: '0.5rem' }}
+            onClick={() => { setSearchOpen(false); setMobileMenuOpen(!mobileMenuOpen); }}
+            className="nav-icon-btn"
+            aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={mobileMenuOpen}
+            title="Menu"
           >
             <BfaIcon name={mobileMenuOpen ? "close" : "menu"} size={18} />
           </button>
-
-          {adminUser && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              {isAdmin && (
-                <button
-                  type="button"
-                  className="btn-primary"
-                  onClick={publicarConteudo}
-                  disabled={statusPublicacao === 'publicando'}
-                  title={erroPublicacao || 'Publicar as alterações para todos os visitantes'}
-                  style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem' }}
-                >
-                  {statusPublicacao === 'publicando' && 'Publicando...'}
-                  {statusPublicacao === 'publicado' && 'Publicado'}
-                  {statusPublicacao === 'erro' && 'Erro ao publicar'}
-                  {(statusPublicacao === 'idle' || !statusPublicacao) && 'Publicar'}
-                </button>
-              )}
-              <a
-                href="#/admin"
-                className="nav-link active"
-                style={{
-                  fontSize: '0.75rem',
-                  padding: '0.35rem 0.7rem',
-                  borderRadius: '6px',
-                  background: 'var(--surface-strong)',
-                  border: '1px solid var(--border)'
-                }}
-              >
-                Painel Admin
-              </a>
-            </div>
-          )}
         </div>
       </div>
+
+      {/* Painel de busca: abre abaixo do cabecalho, em qualquer tamanho de tela */}
+      {searchOpen && (
+        <div className="nav-search-panel" role="search">
+          <div className="nav-search-panel__inner">
+            <input
+              ref={searchInputRef}
+              type="search"
+              className="nav-search-panel__input"
+              placeholder="Buscar aula por nome, módulo ou trilha..."
+              aria-label="Buscar aula"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && searchResults[0]) {
+                  window.location.hash = searchResults[0].url;
+                  closeSearch();
+                }
+              }}
+            />
+            {searchQuery.trim() && (
+              <div className="nav-search-panel__results">
+                {searchResults.length === 0 && (
+                  <div className="nav-search-panel__empty">Nenhuma aula encontrada para "{searchQuery}".</div>
+                )}
+                {searchResults.map((item) => (
+                  <a key={item.url} href={item.url} onClick={closeSearch} className="nav-search-panel__result">
+                    <strong>{item.aulaTitle}</strong>
+                    <span>{item.subjectTitle} · {item.moduloTitle}</span>
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </header>
+    {searchOpen && <div className="nav-search-backdrop" onClick={closeSearch} />}
 
     
       {/* Modal de Autenticação e Perfil de Aluno */}
@@ -520,7 +491,7 @@ function Navbar() {
         <div className="bfa-mobile-nav-drawer">
           <div className="bfa-mobile-nav-header">
             <span className="mono-tag" style={{ color: 'var(--track-finance)', fontWeight: 800 }}>
-              EXPLORAR O ATLAS
+              MENU
             </span>
             <button
               type="button"
@@ -545,7 +516,13 @@ function Navbar() {
             <div className="bfa-mobile-nav-group" style={{ background: 'var(--surface-strong)', padding: '0.85rem 1rem', borderRadius: '12px', border: '1px solid var(--border)' }}>
               <a
                 href="#/login"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  if (isAuthenticated) {
+                    e.preventDefault();
+                    openProfile();
+                  }
+                }}
                 style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', color: 'var(--text-primary)' }}
               >
                 <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--track-finance), #0F172A)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.95rem' }}>
@@ -624,7 +601,7 @@ function Navbar() {
             <div className="bfa-mobile-nav-group">
               <div className="bfa-mobile-nav-grouptitle">INSTITUCIONAL</div>
               <a href="#/sobre" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
-                <BfaIcon name="institution" size={18} color="var(--color-azul)" />
+                <BfaIcon name="institution" size={18} color="var(--blue)" />
                 <div style={{ flex: 1, fontWeight: 700, color: 'var(--text-primary)' }}>Sobre o Atlas & Metodologia</div>
                 <BfaIcon name="arrowRight" size={14} color="var(--text-secondary)" />
               </a>
@@ -633,7 +610,42 @@ function Navbar() {
                 <div style={{ flex: 1, fontWeight: 700, color: 'var(--text-primary)' }}>Notícias & Macroeconomia</div>
                 <BfaIcon name="arrowRight" size={14} color="var(--text-secondary)" />
               </a>
+              <a href="https://brhsic.com/" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                <BfaIcon name="globe" size={18} color="var(--ring)" />
+                <div style={{ flex: 1, fontWeight: 700, color: 'var(--text-primary)' }}>Portal BRHSIC (site oficial)</div>
+                <BfaIcon name="externalLink" size={14} color="var(--text-secondary)" />
+              </a>
             </div>
+
+            {/* Grupo 4: Administracao (somente professores/admins logados) */}
+            {adminUser && (
+              <div className="bfa-mobile-nav-group">
+                <div className="bfa-mobile-nav-grouptitle">ADMINISTRAÇÃO</div>
+                {isAdmin && (
+                  <button
+                    type="button"
+                    onClick={publicarConteudo}
+                    disabled={statusPublicacao === 'publicando'}
+                    title={erroPublicacao || 'Publicar as alterações para todos os visitantes'}
+                    className="bfa-mobile-nav-link"
+                    style={{ width: '100%', textAlign: 'left', cursor: 'pointer', font: 'inherit' }}
+                  >
+                    <BfaIcon name="share" size={18} color="var(--ring)" />
+                    <div style={{ flex: 1, fontWeight: 700, color: 'var(--text-primary)' }}>
+                      {statusPublicacao === 'publicando' && 'Publicando...'}
+                      {statusPublicacao === 'publicado' && 'Publicado'}
+                      {statusPublicacao === 'erro' && 'Erro ao publicar'}
+                      {(statusPublicacao === 'idle' || !statusPublicacao) && 'Publicar alterações'}
+                    </div>
+                  </button>
+                )}
+                <a href="#/admin" onClick={() => setMobileMenuOpen(false)} className="bfa-mobile-nav-link">
+                  <BfaIcon name="settings" size={18} color="var(--ring)" />
+                  <div style={{ flex: 1, fontWeight: 700, color: 'var(--text-primary)' }}>Painel Admin</div>
+                  <BfaIcon name="arrowRight" size={14} color="var(--text-secondary)" />
+                </a>
+              </div>
+            )}
 
             {/* Rodapé do Menu */}
             <div style={{ marginTop: '1.5rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

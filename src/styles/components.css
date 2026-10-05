@@ -898,18 +898,6 @@
 
 /* ÔöÇÔöÇ Responsive Mobile Rules ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
 @media (max-width: 768px) {
-  .site-header__container {
-    flex-wrap: wrap;
-    height: auto;
-    padding: 0.75rem 1rem;
-    gap: 0.75rem;
-  }
-  .site-header nav {
-    width: 100%;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-    justify-content: flex-start;
-  }
   .bfa-quiz__title {
     flex-direction: column;
     align-items: flex-start;
@@ -936,9 +924,6 @@
 }
 
 @media (max-width: 480px) {
-  .site-header__container {
-    padding: 0.5rem;
-  }
   .bfa-btn {
     width: 100%;
     justify-content: center;
@@ -2968,11 +2953,23 @@
   padding: 0 1.5rem;
 }
 
-@media (max-width: 768px) {
+/* Coluna unica: telas estreitas e tablets em pe (inclusive os mais altos/largos) */
+@media (max-width: 960px), (orientation: portrait) and (max-width: 1100px) {
   .hero__container {
     grid-template-columns: 1fr;
     gap: 2.5rem;
-    padding: 4rem 1.25rem;
+  }
+  .hero__subtitle {
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 3rem 0;
+  }
+  .hero__container {
+    padding: 0 1.25rem;
   }
 }
 
@@ -3248,3 +3245,354 @@
 
 @media (min-width: 769px) { .bfa-mobile-nav-toggle { display: none !important; } }
 
+
+/* ==========================================================================
+   Cabecalho compacto + layout responsivo (celular em pe/deitado, tablets
+   altos/largos, telas dobraveis). Esta secao fica no fim de proposito:
+   ela substitui as regras antigas de cabecalho declaradas acima.
+   ========================================================================== */
+
+/* -- Cabecalho: logo | trilhas | busca, entrar, menu ----------------------- */
+.site-header__container {
+  height: 4rem;
+  gap: 1rem;
+  justify-content: flex-start;
+  padding-left: max(1.5rem, env(safe-area-inset-left));
+  padding-right: max(1.5rem, env(safe-area-inset-right));
+}
+
+.site-logo {
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.site-logo__img {
+  display: block;
+  height: 32px;
+  width: auto;
+}
+
+.nav-links {
+  gap: 0.25rem;
+  margin-left: 1rem;
+  min-width: 0;
+}
+
+.nav-link {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-link--active {
+  color: var(--text-primary);
+  font-weight: 600;
+  background-color: var(--paper);
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.nav-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.nav-icon-btn:hover,
+.nav-icon-btn[aria-expanded="true"] {
+  border-color: var(--blue);
+  background-color: var(--paper);
+}
+
+.nav-icon-btn:focus-visible,
+.nav-avatar-btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.navbar-actions .nav-login-btn {
+  white-space: nowrap;
+  height: 40px;
+  padding: 0 1rem;
+}
+
+.nav-avatar-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--track-finance), #0F172A);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.nav-avatar-btn__status {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-app);
+}
+
+/* -- Painel de busca ------------------------------------------------------- */
+.nav-search-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  padding: 0.75rem max(1.5rem, env(safe-area-inset-right)) 1rem max(1.5rem, env(safe-area-inset-left));
+  background-color: var(--bg-app);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 16px 30px -12px rgba(0, 43, 77, 0.25);
+  animation: bfaFadeIn 0.15s ease;
+}
+
+.nav-search-panel__inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.nav-search-panel__input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem; /* 16px evita o zoom automatico do iOS */
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.nav-search-panel__input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0, 166, 223, 0.18);
+}
+
+.nav-search-panel__results {
+  margin-top: 0.5rem;
+  max-height: min(60vh, 420px);
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.nav-search-panel__result {
+  display: block;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+
+.nav-search-panel__result:last-child {
+  border-bottom: none;
+}
+
+.nav-search-panel__result:hover,
+.nav-search-panel__result:focus-visible {
+  background-color: var(--paper);
+}
+
+.nav-search-panel__result strong {
+  display: block;
+}
+
+.nav-search-panel__result span,
+.nav-search-panel__empty {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.nav-search-panel__empty {
+  padding: 0.75rem 1rem;
+}
+
+.nav-search-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(15, 23, 42, 0.35);
+}
+
+/* Trilhas saem do topo e ficam so no menu lateral */
+@media (max-width: 759px) {
+  .nav-links {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-header__container {
+    height: 3.5rem;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  .site-logo__img {
+    height: 28px;
+  }
+  .nav-search-panel {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* Celular em pe: o "Entrar" vai para o topo do menu lateral */
+@media (max-width: 479px) {
+  .navbar-actions .nav-login-btn {
+    display: none;
+  }
+}
+
+.bfa-mobile-nav-drawer {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* -- Pagina inicial -------------------------------------------------------- */
+.hero__visual {
+  aspect-ratio: auto;
+}
+
+.hero__actions {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 479px) {
+  .hero__actions > a {
+    flex: 1 1 100%;
+  }
+}
+
+.process__grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+}
+
+@media (max-width: 768px) {
+  .process-section {
+    padding: 3.5rem 0;
+  }
+  .process__header {
+    margin-bottom: 2rem;
+  }
+  .process__title {
+    font-size: 1.85rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-section {
+    padding: 2rem 0;
+  }
+  .stats__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 1rem;
+  }
+  .stat-value {
+    font-size: 2.1rem;
+  }
+  .stat-label {
+    text-align: center;
+  }
+}
+
+/* Celular deitado / telas baixas: menos espaco vertical desperdicado */
+@media (orientation: landscape) and (max-height: 540px) {
+  .hero {
+    padding: 2rem 0;
+  }
+  .hero__title {
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+  }
+  .process-section {
+    padding: 3rem 0;
+  }
+}
+
+/* -- Rodape ---------------------------------------------------------------- */
+.footer__bottom {
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    padding: 3rem 0 calc(2rem + env(safe-area-inset-bottom));
+  }
+  .footer__bottom {
+    margin-top: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* -- Aviso de privacidade (LGPD) ------------------------------------------- */
+.bfa-cookie-banner {
+  position: fixed;
+  left: 1.5rem;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  z-index: 99998;
+  max-width: 420px;
+}
+
+@media (max-width: 600px) {
+  .bfa-cookie-banner {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    max-width: none;
+    padding: 1rem 1.15rem !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 540px) {
+  .bfa-cookie-banner {
+    max-width: 360px;
+    padding: 0.85rem 1rem !important;
+  }
+  .bfa-cookie-banner p {
+    margin-bottom: 0.6rem !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+/* -- Visao geral da disciplina (Matematica / Financas) --------------------- */
+.disciplina-hero__grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (max-width: 960px), (orientation: portrait) and (max-width: 1100px) {
+  .disciplina-hero__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
