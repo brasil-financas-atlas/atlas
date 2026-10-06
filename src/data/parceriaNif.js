@@ -16,23 +16,25 @@ export const FOTOS_NIF = {
 };
 
 export const NUMEROS_REDE = [
-  { valor: 55, rotulo: 'Aulas na plataforma' },
-  { valor: 9, rotulo: 'Núcleos ativos' },
-  { valor: 5, rotulo: 'Estados conectados' },
+  { valor: 55, rotulo: 'Aulas completas' },
+  { valor: 7, rotulo: 'Módulos de formação' },
+  { valor: 100, sufixo: '%', rotulo: 'Gratuito e livre' },
   { valor: 400, prefixo: '+', rotulo: 'Alunos alcançados' },
 ];
 
-export const PILARES_NIF = [
-  { titulo: 'Economia e cenário macro', texto: 'Entender o que move o mundo antes de olhar um ativo.' },
-  { titulo: 'Investimentos e risco', texto: 'Analisar decisões, hipóteses e consequências.' },
-  { titulo: 'Relatórios e projetos', texto: 'Transformar curiosidade em pesquisa bem construída.' },
-  { titulo: 'Educação financeira real', texto: 'Levar o conhecimento para a vida e para a comunidade.' },
+// O que a plataforma oferece (foco no Atlas, nao no NIF)
+export const RECURSOS_PLATAFORMA = [
+  { titulo: 'Trilhas do zero ao avançado', texto: 'Matemática financeira, mercado e análise de empresas, em aulas curtas com exemplos do dia a dia.' },
+  { titulo: 'Exercícios com gabarito', texto: 'Quiz em cada aula e um banco de exercícios com resolução passo a passo.' },
+  { titulo: 'Guia oficial da BRHSIC', texto: 'Valuation, Equity Research e pitch para competir na olimpíada de investimentos.' },
+  { titulo: 'Progresso salvo e certificado', texto: 'Crie sua conta, continue de qualquer aparelho e emita o certificado ao concluir.' },
 ];
 
-export const PASSOS_LIDER = [
-  { titulo: 'Converse com a gente', texto: 'Entendemos sua escola, seus objetivos e por onde começar.' },
-  { titulo: 'Receba a estrutura', texto: 'Conteúdo, formação, apoio e contato com outros líderes.' },
-  { titulo: 'Multiplique localmente', texto: 'Reúna jovens, conduza encontros e faça o núcleo ganhar vida.' },
+// Como a plataforma ajuda quem lidera um NIF
+export const APOIO_NUCLEOS = [
+  { titulo: 'Material pronto para os encontros', texto: 'Cada aula já vem com explicação, exemplos e fórmulas para projetar na sala.' },
+  { titulo: 'Exercícios para treinar em grupo', texto: 'Listas por tema e dificuldade, com gabarito para conferir junto com a turma.' },
+  { titulo: 'Preparação para a competição', texto: 'O guia da BRHSIC organiza o caminho até a tese de investimento do núcleo.' },
 ];
 
 export const LINKS_NIF = {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
 import BfaIcon from '../components/Icons';
 import MarketTickerRibbon from '../components/MarketTickerRibbon';
-import { FOTOS_NIF, NUMEROS_REDE, PILARES_NIF, PASSOS_LIDER, LINKS_NIF } from '../data/parceriaNif';
+import { FOTOS_NIF, NUMEROS_REDE, RECURSOS_PLATAFORMA, APOIO_NUCLEOS, LINKS_NIF } from '../data/parceriaNif';
 
 /* ==========================================================================
    Home Page — BRHSIC Academy Official Learning Platform
@@ -114,7 +114,7 @@ function Home() {
       <section className="stats-section">
         <div className="stats__container">
           {NUMEROS_REDE.map((n) => (
-            <ContadorAnimado key={n.rotulo} valor={n.valor} prefixo={n.prefixo} rotulo={n.rotulo} />
+            <ContadorAnimado key={n.rotulo} valor={n.valor} prefixo={n.prefixo} sufixo={n.sufixo} rotulo={n.rotulo} />
           ))}
         </div>
       </section>
@@ -122,16 +122,16 @@ function Home() {
       {/* ── 3. Indicadores de mercado em movimento ──────────────────────── */}
       <MarketTickerRibbon />
 
-      {/* ── 4. Dentro de um NIF ─────────────────────────────────────────── */}
+      {/* ── 4. A plataforma em uso ─────────────────────────────────────────── */}
       <section className="hn-sec" aria-labelledby="hn-nif-titulo">
         <div className="hn-wrap">
           <div className="hn-cabeca">
-            <p className="hn-rotulo">PARCEIRO DA REDE ACADEMY · NIF</p>
-            <h2 id="hn-nif-titulo" className="hn-titulo">Aprender fazendo muda tudo.</h2>
+            <p className="hn-rotulo">A PLATAFORMA EM USO</p>
+            <h2 id="hn-nif-titulo" className="hn-titulo">Para estudar sozinho ou em grupo.</h2>
             <p className="hn-texto">
-              Um NIF, Núcleo de Inteligência Financeira, é um lugar para pensar, testar, discutir e construir
-              repertório junto. O Atlas é a plataforma de estudo dos núcleos: as trilhas, os exercícios e o guia
-              da BRHSIC que os NIFs usam nos encontros.
+              O Atlas reúne trilhas, exercícios e o guia da BRHSIC em um só lugar, de graça para qualquer
+              estudante. É também o material de apoio dos NIFs, os Núcleos de Inteligência Financeira da rede
+              Academy, que levam as aulas daqui para dentro das escolas.
             </p>
           </div>
 
@@ -149,15 +149,15 @@ function Home() {
         </div>
       </section>
 
-      {/* ── 5. Origem: o primeiro NIF ───────────────────────────────────── */}
+      {/* ── 5. Origem da plataforma ───────────────────────────────────── */}
       <section className="hn-sec hn-sec--alt" aria-labelledby="hn-origem-titulo">
         <div className="hn-wrap hn-duas">
           <div>
-            <p className="hn-rotulo">DA ESCOLA PARA O BRASIL</p>
-            <h2 id="hn-origem-titulo" className="hn-titulo">Um núcleo local mostrou o tamanho da oportunidade.</h2>
-            <p className="hn-texto">O primeiro NIF nasceu no Colégio La Salle Canoas para reunir jovens interessados em finanças, economia e investimentos.</p>
-            <p className="hn-texto">O que começou como um clube virou uma comunidade com aulas semanais, projetos, análises e alunos ensinando alunos.</p>
-            <p className="hn-texto hn-texto--forte">Hoje, a Academy leva esse modelo para todo o país.</p>
+            <p className="hn-rotulo">NASCEU NA SALA DE AULA</p>
+            <h2 id="hn-origem-titulo" className="hn-titulo">Feita por quem ensina e aprende junto.</h2>
+            <p className="hn-texto">O Atlas foi desenvolvido no âmbito do NIF, que começou no Colégio La Salle Canoas com aulas semanais e alunos ensinando alunos.</p>
+            <p className="hn-texto">Organizamos esse conteúdo em trilhas para que qualquer estudante, em qualquer escola, possa seguir o mesmo caminho, no seu ritmo.</p>
+            <p className="hn-texto hn-texto--forte">Da escola para o Brasil, sem custo para ninguém.</p>
           </div>
           <figure className="hn-foto hn-foto--origem bfa-reveal">
             <FotoNif foto={FOTOS_NIF.origem} />
@@ -203,40 +203,43 @@ function Home() {
         </div>
       </section>
 
-      {/* ── 7. O que se aprende num NIF ─────────────────────────────────── */}
+      {/* ── 7. O que a plataforma oferece ─────────────────────────────────── */}
       <section className="hn-sec hn-sec--alt" aria-labelledby="hn-pilares-titulo">
         <div className="hn-wrap hn-duas hn-duas--topo">
           <div>
-            <p className="hn-rotulo">DENTRO DE UM NIF</p>
-            <h2 id="hn-pilares-titulo" className="hn-titulo">Jovens construindo para jovens.</h2>
-            <p className="hn-texto">A Academy é uma vertente da BRHSIC, a maior competição de investimentos para estudantes do ensino médio da América Latina.</p>
+            <p className="hn-rotulo">O QUE VOCÊ ENCONTRA AQUI</p>
+            <h2 id="hn-pilares-titulo" className="hn-titulo">Tudo o que um estudante precisa em um só lugar.</h2>
+            <p className="hn-texto">A plataforma oficial de estudo da BRHSIC Academy, vertente da BRHSIC, a maior competição de investimentos para estudantes do ensino médio da América Latina.</p>
           </div>
-          <ListaNumerada itens={PILARES_NIF} />
+          <ListaNumerada itens={RECURSOS_PLATAFORMA} />
         </div>
       </section>
 
-      {/* ── 8. Voce lidera, a rede ajuda ────────────────────────────────── */}
+      {/* ── 8. Como a plataforma ajuda os nucleos ────────────────────────────────── */}
       <section className="hn-sec" aria-labelledby="hn-lider-titulo">
         <div className="hn-wrap hn-duas hn-duas--topo">
           <div>
-            <p className="hn-rotulo">COMO FUNCIONA · LÍDERES ACADEMY</p>
-            <h2 id="hn-lider-titulo" className="hn-titulo">Você lidera. A rede ajuda.</h2>
-            <p className="hn-texto">Quem participa do Líderes Academy recebe a base para construir um NIF conectado à realidade da própria escola.</p>
+            <p className="hn-rotulo">PARA QUEM LIDERA UM NIF</p>
+            <h2 id="hn-lider-titulo" className="hn-titulo">A plataforma trabalha junto com o núcleo.</h2>
+            <p className="hn-texto">Líderes de núcleo usam o Atlas para preparar encontros, passar exercícios e levar a turma até a BRHSIC.</p>
+            <a href={LINKS_NIF.contato} target="_blank" rel="noopener noreferrer" className="hn-link">
+              Quero levar um NIF para minha escola <BfaIcon name="nav-external" size={14} />
+            </a>
           </div>
-          <ListaNumerada itens={PASSOS_LIDER} />
+          <ListaNumerada itens={APOIO_NUCLEOS} />
         </div>
       </section>
 
       {/* ── 9. Chamada final ────────────────────────────────────────────── */}
       <section className="hn-final">
         <div className="hn-wrap">
-          <p className="hn-rotulo hn-rotulo--claro">O PRÓXIMO NIF COMEÇA COM UMA CONVERSA.</p>
-          <h2 className="hn-final__titulo">Leve educação financeira para a sua escola.</h2>
+          <p className="hn-rotulo hn-rotulo--claro">GRATUITO, SEM EXCEÇÃO.</p>
+          <h2 className="hn-final__titulo">Sua próxima tese começa aqui.</h2>
           <div className="hn-acoes">
-            <a href={LINKS_NIF.contato} target="_blank" rel="noopener noreferrer" className="hn-btn hn-btn--cheio">
-              Falar com a Academy <span aria-hidden="true">→</span>
+            <a href="#/matematica" className="hn-btn hn-btn--cheio">
+              Começar a estudar <span aria-hidden="true">→</span>
             </a>
-            <a href="#/matematica" className="hn-btn">Começar a estudar <span aria-hidden="true">→</span></a>
+            <a href="#/login" className="hn-btn">Criar minha conta <span aria-hidden="true">→</span></a>
             <a href={LINKS_NIF.rede} target="_blank" rel="noopener noreferrer" className="hn-link">
               Conhecer a rede Academy <BfaIcon name="nav-external" size={14} />
             </a>
