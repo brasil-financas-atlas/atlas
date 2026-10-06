@@ -240,13 +240,6 @@ flowchart TD
 
 ---
 
-## 9. Regras do projeto
-
-1. **Nada de emojis.** Use sempre ícones SVG de `src/components/Icons.jsx` (`BfaIcon`).
-2. **Tabelas em HTML de verdade** (`table`, `thead`, `tbody`), com bom contraste.
-3. **Teste em várias telas.** Antes de publicar, confira o site no computador, num tablet em pé e deitado e num celular em pé e deitado. O navegador simula isso pelo modo de desenvolvedor (F12, depois o ícone de celular).
-4. **Não volte a encher o topo de botões.** Item novo de navegação vai para o menu lateral, a menos que seja uma trilha principal.
-
 ---
 
 ## 10. Licença
