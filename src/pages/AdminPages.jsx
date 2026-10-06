@@ -4,172 +4,6 @@ import { useRouter } from '../router';
 import BfaIcon from '../components/Icons';
 import { EXACT_CONTENT } from '../data/contentData';
 
-function ThemeSelector() {
-  const { themePreference, setThemePreference } = useContext(AdminContext || createContext({}));
-
-  const themes = [
-    { id: 'brasil-atlas', name: 'Brasil Atlas Classic', desc: 'Verde Floresta & Azul Marinho' },
-    { id: 'b3-corporate', name: 'B3 Corporate Executive', desc: 'Grafite & Azul B3' },
-    { id: 'khan-minimalist', name: 'Academic Minimalist', desc: 'Azul Acadêmico & Branco' },
-    { id: 'dark-obsidian', name: 'Dark Obsidian Pro', desc: 'Modo Escuro com Emerald' }
-  ];
-
-  return (
-    <div className="tool-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
-      <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        Configuração Visual da Plataforma
-      </h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
-        {themes.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => setThemePreference && setThemePreference(t.id)}
-            className={`btn-primary ${themePreference === t.id ? '' : 'btn-secondary'}`}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              padding: '1rem',
-              textAlign: 'left',
-              backgroundColor: themePreference === t.id ? 'var(--track-math)' : undefined,
-              color: themePreference === t.id ? '#FFFFFF' : 'var(--text-primary)'
-            }}
-          >
-            <strong style={{ fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              {themePreference === t.id && <BfaIcon name="check" size={14} color="#FFFFFF" />}
-              <span>{t.name}</span>
-            </strong>
-            <span style={{ fontSize: '0.78rem', opacity: 0.8, marginTop: '0.2rem' }}>{t.desc}</span>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function AdminLogin() {
-  const { login, isAuthenticated, adminUser } = useContext(AdminContext || createContext({}));
-  const { navigate } = useRouter();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
-  const [carregando, setCarregando] = useState(false);
-
-  if (isAuthenticated && adminUser) {
-    return (
-      <div className="bfa-container" style={{ padding: '4rem 1.5rem', maxWidth: '500px', margin: '0 auto' }}>
-        <div className="tool-card" style={{ padding: '2.5rem', textAlign: 'center' }}>
-          <div style={{ margin: '0 auto 1rem auto', display: 'inline-flex', padding: '1rem', borderRadius: '50%', background: 'rgba(52, 211, 153, 0.15)' }}>
-            <BfaIcon name="check" size={32} color="#059669" />
-          </div>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>
-            Sessão Ativa: <strong>{adminUser.name || adminUser.email}</strong>
-          </h2>
-          <p style={{ margin: '0.75rem 0 0.5rem 0', color: 'var(--text-secondary)' }}>
-            Papel no sistema: <strong>{adminUser.role}</strong>
-          </p>
-          <p style={{ margin: '0 0 1.5rem 0', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-            Você está autenticado no Painel Admin do BFA.
-          </p>
-          <a href="#/admin" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-            Acessar Painel de Controle CMS →
-          </a>
-        </div>
-      </div>
-    );
-  }
-
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    setErrorMsg('');
-    setCarregando(true);
-    try {
-      const res = await login(username, password);
-      if (res && res.success) {
-        if (window.BfaSupabase?.savePasswordCredential) {
-          window.BfaSupabase.savePasswordCredential(username, password, 'Professor / Admin BFA');
-        }
-        navigate('/admin');
-      } else {
-        setErrorMsg((res && res.error) || 'Credenciais inválidas.');
-      }
-    } catch (err) {
-      setErrorMsg(err.message || 'Erro ao conectar ao servidor.');
-    } finally {
-      setCarregando(false);
-    }
-  };
-
-  return (
-    <div className="bfa-container" style={{ padding: '4rem 1.5rem', maxWidth: '480px', margin: '0 auto' }}>
-      <div className="tool-card" style={{ padding: '2.5rem' }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>Área do Professor</h2>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Acesso de edição e moderação do Brasil Finanças Atlas</p>
-        </div>
-
-        {errorMsg && (
-          <div style={{ marginBottom: '1.25rem', padding: '0.75rem 1rem', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: 'var(--radius-md)', color: '#F87171', fontSize: '0.875rem' }}>
-            {errorMsg}
-          </div>
-        )}
-
-        <iframe
-          name="bfa_admin_auth_iframe"
-          id="bfa_admin_auth_iframe"
-          style={{ display: 'none', width: 0, height: 0, border: 0 }}
-          tabIndex={-1}
-          aria-hidden="true"
-          src="about:blank"
-          title="bfa-admin-auth"
-        />
-
-        <form
-          target="bfa_admin_auth_iframe"
-          method="POST"
-          action="about:blank"
-          onSubmit={handleLoginSubmit}
-        >
-          <div style={{ marginBottom: '1rem' }}>
-            <label htmlFor="admin-page-username" style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--text-primary)' }}>E-mail:</label>
-            <input
-              id="admin-page-username"
-              name="username"
-              type="email"
-              autoComplete="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="seu-email@exemplo.com"
-              style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--text-primary)', fontSize: '0.9rem' }}
-              required
-              autoFocus
-            />
-          </div>
-
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label htmlFor="admin-page-password" style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.35rem', display: 'block', color: 'var(--text-primary)' }}>Senha:</label>
-            <input
-              id="admin-page-password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--text-primary)', fontSize: '0.9rem' }}
-              required
-            />
-          </div>
-
-          <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={carregando}>
-            {carregando ? 'Autenticando...' : 'Entrar no Painel CMS →'}
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-}
-
 const TIPOS_EDICAO = { lesson: 'Aula', news: 'Notícia', override: 'Texto', module: 'Módulo', exercise: 'Exercício' };
 
 function resumoEdicao(edit) {
@@ -188,7 +22,7 @@ function resumoEdicao(edit) {
 const ROTULOS_PAPEL = { admin_chief: 'Administrador chefe', admin: 'Administrador', teacher: 'Professor', collaborator: 'Colaborador' };
 
 function AdminDashboard() {
-  const { isAuthenticated, adminUser, isAdmin, logout, cmsData, publicarConteudo, statusPublicacao, erroPublicacao, approvePendingEdit, rejectPendingEdit, updateLesson, addModule, addNews, addExercise } = useContext(AdminContext || createContext({}));
+  const { isAuthenticated, carregandoSessao, adminUser, isAdmin, logout, cmsData, publicarConteudo, statusPublicacao, erroPublicacao, approvePendingEdit, rejectPendingEdit, updateLesson, addModule, addNews, addExercise } = useContext(AdminContext || createContext({}));
 
   const [tab, setTab] = useState(() => {
     try { return localStorage.getItem('bfa_admin_tab') || 'visao'; } catch (e) { return 'visao'; }
@@ -236,11 +70,14 @@ function AdminDashboard() {
   }, [isSuperAdmin]);
 
   if (!isAuthenticated) {
+    if (carregandoSessao) {
+      return <div className="adm-wrap adm-denied"><p>Verificando seu acesso...</p></div>;
+    }
     return (
       <div className="adm-wrap adm-denied">
-        <h2>Acesso não autorizado</h2>
-        <p>Entre com uma conta de professor ou administrador para abrir o painel.</p>
-        <a href="#/admin/login" className="btn-primary">Fazer login</a>
+        <h2>Painel da equipe</h2>
+        <p>Entre com sua conta. Se ela for de professor ou administrador, o painel abre automaticamente.</p>
+        <a href="#/login" className="btn-primary">Entrar</a>
       </div>
     );
   }
@@ -750,5 +587,4 @@ function AdminDashboard() {
   );
 }
 
-export { AdminLogin };
 export default AdminDashboard;

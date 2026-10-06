@@ -82,6 +82,7 @@ Onde ficou o que saiu do topo:
 Dicas:
 - **Sem conta**, o progresso fica salvo só naquele navegador.
 - **Com conta**, você recebe um código no e-mail (não precisa de senha) e o progresso fica salvo na nuvem.
+- **Professores e administradores** entram pela mesma tela de login. Se a conta for da equipe, o site abre o painel na hora e mostra um botão de painel no topo.
 - A tecla `Esc` fecha a busca e o menu.
 
 ---
