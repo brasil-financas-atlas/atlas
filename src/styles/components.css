@@ -4028,3 +4028,363 @@
     right: 0;
   }
 }
+
+/* ==========================================================================
+   Pagina inicial: secoes abaixo do hero (NIF, jornada, recursos, chamada)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .bfa-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+.home-wrap {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: 1.5rem;
+}
+
+.home-h2 {
+  margin: 0.75rem 0 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.home-lead {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 560px;
+}
+
+/* -- Parceria NIF ---------------------------------------------------------- */
+.home-nif {
+  padding: 6rem 0;
+  background:
+    radial-gradient(1000px 400px at 100% 0%, rgba(0, 166, 223, 0.10), transparent 60%),
+    var(--bg-app);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.home-nif__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 4rem;
+  align-items: center;
+}
+
+.home-nif__pontos {
+  list-style: none;
+  margin: 1.5rem 0 2rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.home-nif__pontos li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.home-nif__pontos .bfa-svg-icon {
+  flex-shrink: 0;
+  padding: 7px;
+  box-sizing: content-box;
+  border-radius: 10px;
+  background-color: var(--paper);
+  color: var(--blue);
+}
+
+.home-nif__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.home-nif__mosaico {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+}
+
+.home-foto {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+  aspect-ratio: 4 / 3;
+  box-shadow: 0 18px 40px -20px rgba(0, 43, 77, 0.35);
+}
+
+.home-foto--destaque {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 8;
+}
+
+.home-foto img,
+.home-foto__reserva,
+.home-foto__reserva svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-foto img {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-foto:hover img {
+  transform: scale(1.04);
+}
+
+.home-foto figcaption {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  max-width: calc(100% - 1.5rem);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(0, 20, 40, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* -- Trilhas e recursos com icone ----------------------------------------- */
+.home-trilha,
+.home-recurso {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+
+.home-trilha__icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  background-color: var(--paper);
+  color: var(--blue);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.home-trilha:hover .home-trilha__icone,
+.home-recurso:hover .home-trilha__icone {
+  background-color: var(--blue);
+  color: #FFFFFF;
+}
+
+.home-trilha__cta {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--on-paper, var(--primary));
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.home-trilha__cta span {
+  transition: transform 0.2s ease;
+}
+
+.home-trilha:hover .home-trilha__cta span {
+  transform: translateX(4px);
+}
+
+/* -- Jornada -------------------------------------------------------------- */
+.home-jornada {
+  padding: 6rem 0;
+  background-color: var(--bg-app);
+}
+
+.home-jornada__passos {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+  counter-reset: passo;
+}
+
+.home-passo {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+}
+
+.home-passo:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 2.6rem;
+  right: -1.25rem;
+  width: 1.25rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), transparent);
+}
+
+.home-passo__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue));
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+
+.home-passo h3 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.home-passo p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* -- Chamada final --------------------------------------------------------- */
+.home-cta {
+  padding: 5rem 0;
+  background-color: var(--bg-app);
+}
+
+.home-cta__box {
+  padding: 4rem 2rem !important;
+  border-radius: 24px;
+  text-align: center;
+  background:
+    radial-gradient(600px 300px at 15% 0%, rgba(0, 166, 223, 0.35), transparent 70%),
+    radial-gradient(500px 260px at 90% 100%, rgba(91, 200, 232, 0.25), transparent 70%),
+    linear-gradient(135deg, #001F37, #002B4D);
+  color: #FFFFFF;
+  max-width: 1232px;
+}
+
+.home-cta__box .eyebrow {
+  color: #8FDDF5;
+  border-color: rgba(143, 221, 245, 0.4);
+  background-color: rgba(143, 221, 245, 0.12);
+}
+
+.home-cta__titulo {
+  margin: 1.25rem 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+}
+
+.home-cta__texto {
+  margin: 0 auto 2rem;
+  max-width: 520px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.home-cta__acoes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.home-cta__box .btn-secondary {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #FFFFFF;
+}
+
+.home-cta__box .btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+}
+
+/* -- Responsivo ------------------------------------------------------------ */
+@media (max-width: 1024px) {
+  .home-jornada__passos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-passo::after {
+    display: none;
+  }
+}
+
+@media (max-width: 960px), (orientation: portrait) and (max-width: 1100px) {
+  .home-nif__grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-wrap {
+    padding-inline: 1.25rem;
+  }
+  .home-nif,
+  .home-jornada {
+    padding: 3.5rem 0;
+  }
+  .home-cta {
+    padding: 2.5rem 0 3.5rem;
+  }
+  .home-cta__box {
+    border-radius: 18px;
+    padding: 3rem 1.25rem !important;
+    width: calc(100% - 2.5rem);
+  }
+}
+
+@media (max-width: 560px) {
+  .home-jornada__passos {
+    grid-template-columns: 1fr;
+  }
+  .home-nif__mosaico {
+    gap: 0.6rem;
+  }
+  .home-foto figcaption {
+    font-size: 0.7rem;
+    left: 0.5rem;
+    bottom: 0.5rem;
+  }
+  .home-nif__acoes > a,
+  .home-cta__acoes > a {
+    flex: 1 1 100%;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 540px) {
+  .home-nif,
+  .home-jornada {
+    padding: 2.5rem 0;
+  }
+}
