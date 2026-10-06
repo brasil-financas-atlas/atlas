@@ -188,6 +188,12 @@ function Navbar() {
             <BfaIcon name={searchOpen ? "close" : "search"} size={18} />
           </button>
 
+          {adminUser && (
+            <a href="#/admin" className="nav-icon-btn" aria-label="Painel de administração" title="Painel de administração">
+              <BfaIcon name="nav-dashboard" size={18} />
+            </a>
+          )}
+
           {isAuthenticated ? (
             <button
               type="button"
@@ -606,7 +612,7 @@ function Navbar() {
                 Portal BRHSIC <BfaIcon name="nav-external" size={12} />
               </a>
               {!adminUser && (
-                <a href="#/admin/login" onClick={() => setMobileMenuOpen(false)}>Área do professor</a>
+                <a href="#/login" onClick={() => setMobileMenuOpen(false)}>Área do professor</a>
               )}
             </div>
           </div>
@@ -676,7 +682,7 @@ function Footer() {
           <ul>
             <li><a href="#/noticias">Notícias</a></li>
             <li><a href="#/sobre">Sobre o Atlas</a></li>
-            <li><a href="#/admin/login">Área do Professor</a></li>
+            <li><a href="#/login">Área do Professor</a></li>
           </ul>
         </div>
 

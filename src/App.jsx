@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import DisciplinaOverview, { ModuloIntroPage } from './pages/DisciplinaOverview';
 import AulaPage from './pages/AulaPage';
 import BrhsicPage, { Exercicios, Noticias, Sobre } from './pages/ExtraPages';
-import AdminDashboard, { AdminLogin } from './pages/AdminPages';
+import AdminDashboard from './pages/AdminPages';
 import LoginPage from './pages/LoginPage';
 import ConfirmacaoPage from './pages/ConfirmacaoPage';
 import Navbar, { Footer } from './components/NavbarFooter';
@@ -146,8 +146,9 @@ function App() {
       return <ConfirmacaoPage />;
     }
 
+    // Login unico: a antiga tela de login do professor agora e a mesma do aluno
     if (currentPath === '/admin/login') {
-      return <AdminLogin />;
+      return <LoginPage />;
     }
 
     if (currentPath === '/admin') {
