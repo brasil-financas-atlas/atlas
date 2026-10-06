@@ -1,9 +1,9 @@
 /* ==========================================================================
-   Brasil Finan├ºas Atlas (BFA) ÔÇö Component Design System (From Scratch)
+   Brasil Finanças Atlas (BFA) — Component Design System (From Scratch)
    Inspirado 100% em lovable-project-2bcdc0ac
    ========================================================================== */
 
-/* ÔöÇÔöÇ 1. Header & Navigation ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── 1. Header & Navigation ──────────────────────────────────────────────── */
 .site-header {
   position: sticky;
   top: 0;
@@ -65,7 +65,7 @@
   color: var(--blue-deep);
 }
 
-/* ÔöÇÔöÇ 2. Cards & Modules ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── 2. Cards & Modules ──────────────────────────────────────────────────── */
 .module-card {
   position: relative;
   display: flex;
@@ -90,8 +90,8 @@
   box-shadow: var(--shadow-elevated);
 }
 
-/* ÔöÇÔöÇ 3. Buttons ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
-/* ÔöÇÔöÇ 3. Buttons ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── 3. Buttons ─────────────────────────────────────────────────────────── */
+/* ── 3. Buttons ─────────────────────────────────────────────────────────── */
 .bfa-btn {
   display: inline-flex;
   align-items: center;
@@ -211,7 +211,7 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* ÔöÇÔöÇ 4. Badges ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── 4. Badges ──────────────────────────────────────────────────────────── */
 .badge-market {
   display: inline-flex;
   align-items: center;
@@ -233,7 +233,7 @@
   background-color: var(--market);
 }
 
-/* ÔöÇÔöÇ 5. Napkin Briefing Card ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── 5. Napkin Briefing Card ────────────────────────────────────────────── */
 .napkin-card {
   border: 1px dashed var(--gold);
   background-color: rgba(217, 119, 6, 0.05);
@@ -242,7 +242,7 @@
   margin-bottom: 1.5rem;
 }
 
-/* ÔöÇÔöÇ 6. Footer ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── 6. Footer ──────────────────────────────────────────────────────────── */
 .site-footer {
   border-top: 1px solid var(--border);
   background-color: var(--card);
@@ -250,7 +250,7 @@
   margin-top: 4rem;
 }
 
-/* ÔöÇÔöÇ 7. Forum & Comments Section ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── 7. Forum & Comments Section ────────────────────────────────────────── */
 .bfa-forum {
   background-color: var(--card);
   border: 1px solid var(--border);
@@ -545,7 +545,7 @@
   gap: 0.75rem;
 }
 
-/* ÔöÇÔöÇ 8. Interactive Quiz Engine ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── 8. Interactive Quiz Engine ─────────────────────────────────────────── */
 .bfa-quiz {
   background-color: var(--card);
   border: 1px solid var(--border);
@@ -737,7 +737,7 @@
   color: var(--gold-deep);
 }
 
-/* ÔöÇÔöÇ 9. Video Player Placeholder ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── 9. Video Player Placeholder ────────────────────────────────────────── */
 .bfa-video-wrapper {
   position: relative;
   width: 100%;
@@ -781,7 +781,7 @@
   margin-bottom: 1rem;
 }
 
-/* ÔöÇÔöÇ 10. Modals & Overlays (Admin & Interactive Editors) ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── 10. Modals & Overlays (Admin & Interactive Editors) ─────────────────── */
 .bfa-inline-editor-modal {
   position: fixed;
   inset: 0;
@@ -833,7 +833,7 @@
   margin-top: 0.75rem;
 }
 
-/* ÔöÇÔöÇ 11. Khan Academy Style Fixation Quiz Controls ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── 11. Khan Academy Style Fixation Quiz Controls ───────────────────────── */
 .bfa-quiz__pills {
   display: flex;
   gap: 0.35rem;
@@ -861,7 +861,7 @@
   background-color: var(--status-danger);
 }
 
-/* ÔöÇÔöÇ 12. Tab Buttons ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── 12. Tab Buttons ─────────────────────────────────────────────────────── */
 .bfa-tab-btn {
   padding: 0.65rem 1.25rem;
   border-radius: var(--radius-md);
@@ -896,7 +896,7 @@
   border-color: var(--gold-deep);
 }
 
-/* ÔöÇÔöÇ Responsive Mobile Rules ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── Responsive Mobile Rules ────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .bfa-quiz__title {
     flex-direction: column;
@@ -930,7 +930,7 @@
   }
 }
 
-/* ÔöÇÔöÇ Specific Component Responsive Classes ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── Specific Component Responsive Classes ────────────────────────────────────────────── */
 .navbar-search {
   position: relative;
   margin-left: 1rem;
@@ -1807,7 +1807,7 @@
   margin-bottom: 0;
 }
 
-/* Modificadores Tem├íticos de Callout */
+/* Modificadores Temáticos de Callout */
 .bfa-collapsible--math,
 .bfa-admonition--math {
   border-left: 4px solid #2563EB;
@@ -1851,7 +1851,7 @@
 }
 
 /* ==========================================================================
-   Barra de Roteiro R├ípido no Topo da Aula (Quick In-Lesson TOC)
+   Barra de Roteiro Rápido no Topo da Aula (Quick In-Lesson TOC)
    ========================================================================== */
 .bfa-quick-toc {
   display: flex;
@@ -1898,7 +1898,7 @@
 }
 
 /* ==========================================================================
-   Sum├írio Executivo do M├│dulo (Module Syllabus Card)
+   Sumário Executivo do Módulo (Module Syllabus Card)
    ========================================================================== */
 .bfa-module-summary-card {
   background: var(--card);
@@ -1950,7 +1950,7 @@
   margin: 0 auto;
 }
 
-/* ÔöÇÔöÇÔöÇ Markdown Tables (Executive Financial Ledger Standard ÔÇö Centralizadas e Destacadas) ÔöÇÔöÇÔöÇ */
+/* ─── Markdown Tables (Executive Financial Ledger Standard — Centralizadas e Destacadas) ─── */
 .bfa-table-wrapper {
   display: block;
   width: 100%;
@@ -2026,7 +2026,7 @@
   background: rgba(56, 189, 248, 0.08) !important;
 }
 
-/* Segunda coluna (Equa├º├Áes, f├│rmulas ou n├║meros) */
+/* Segunda coluna (Equações, fórmulas ou números) */
 .bfa-markdown-body td:nth-child(2) {
   font-family: var(--font-mono);
   font-weight: 700;
@@ -2123,7 +2123,7 @@
   margin-bottom: 0;
 }
 
-/* Cores espec├¡ficas de Admonitions */
+/* Cores específicas de Admonitions */
 .bfa-admonition--note, .bfa-admonition--info {
   border-left-color: #2563EB;
 }
@@ -2152,7 +2152,7 @@
 .bfa-admonition--math .bfa-admonition__icon { color: #8B5CF6; }
 
 /* ==========================================================================
-   COLLAPSIBLES / GABARITOS RETR├üTEIS (??? e ???+)
+   COLLAPSIBLES / GABARITOS RETRÁTEIS (??? e ???+)
    ========================================================================== */
 .bfa-collapsible {
   margin: 2rem 0;
@@ -2313,7 +2313,7 @@
    Mobile-Native Experience & Thumb-Zone Components (BFA)
    ========================================================================== */
 
-/* ÔöÇÔöÇ Bottom Navigation Bar (Desativado) ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── Bottom Navigation Bar (Desativado) ─────────────────────────────────── */
 .bfa-bottom-nav {
   display: none !important;
 }
@@ -2372,7 +2372,7 @@
   }
 }
 
-/* ÔöÇÔöÇ Bottom Sheet Component ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── Bottom Sheet Component ───────────────────────────────────────────── */
 .bfa-bottom-sheet-overlay {
   position: fixed;
   inset: 0;
@@ -2463,7 +2463,7 @@
   max-height: calc(75vh - 60px);
 }
 
-/* ÔöÇÔöÇ Tools Sheet Grid & Cards ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── Tools Sheet Grid & Cards ─────────────────────────────────────────── */
 .bfa-tools-sheet-grid {
   display: flex;
   flex-direction: column;
@@ -2518,7 +2518,7 @@
   font-size: 0.9rem;
 }
 
-/* ÔöÇÔöÇ Floating Mini Audio Bar ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── Floating Mini Audio Bar ──────────────────────────────────────────── */
 .bfa-floating-audio-bar {
   position: fixed;
   bottom: calc(70px + var(--sab));
@@ -2628,7 +2628,7 @@
   cursor: pointer;
 }
 
-/* ÔöÇÔöÇ Toast Banner ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ── Toast Banner ─────────────────────────────────────────────────────── */
 .bfa-toast-banner {
   position: fixed;
   top: calc(20px + var(--sat));
@@ -2668,10 +2668,10 @@
 }
 
 /* ==========================================================================
-   DIAGRAMAS VISUAIS DE CONTE├ÜDO (HTML/SVG NATIVO)
+   DIAGRAMAS VISUAIS DE CONTEÚDO (HTML/SVG NATIVO)
    ========================================================================== */
 
-/* ÔöÇÔöÇÔöÇ Grade de 4 Opera├º├Áes (bfa-ops) ÔöÇÔöÇÔöÇ */
+/* ─── Grade de 4 Operações (bfa-ops) ─── */
 .bfa-ops {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2734,7 +2734,7 @@
 .bfa-ops__item--div   { border-top-color: #F59E0B; }
 .bfa-ops__item--div   .bfa-ops__sinal { color: #F59E0B; }
 
-/* ÔöÇÔöÇÔöÇ Barras de Compara├º├úo (bfa-barras) ÔöÇÔöÇÔöÇ */
+/* ─── Barras de Comparação (bfa-barras) ─── */
 .bfa-barras {
   margin: 1.5rem 0;
   padding: 1.2rem 1.3rem;
@@ -2785,7 +2785,7 @@
   text-align: center;
 }
 
-/* ÔöÇÔöÇÔöÇ Reta Num├®rica Financeira (SVG bfa-reta) ÔöÇÔöÇÔöÇ */
+/* ─── Reta Numérica Financeira (SVG bfa-reta) ─── */
 .bfa-reta {
   display: block;
   width: 100%;
@@ -2833,10 +2833,10 @@
 /* ====== NEW DESIGN OVERRIDES ====== */
 
 /* ==========================================================================
-   BRHSIC Academy â€” Components (Official Design System)
+   BRHSIC Academy — Components (Official Design System)
    ========================================================================== */
 
-/* â”€â”€ 1. Header & Navigation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── 1. Header & Navigation ──────────────────────────────────────────────── */
 .site-header {
   position: sticky;
   top: 0;
@@ -3087,7 +3087,7 @@
   color: var(--line);
 }
 
-/* â”€â”€ 5. Process / Modules Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── 5. Process / Modules Section ────────────────────────────────────────── */
 .process-section {
   padding: 6rem 0;
 }
@@ -3157,7 +3157,7 @@
   color: var(--text-secondary);
 }
 
-/* â”€â”€ 6. Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── 6. Footer ───────────────────────────────────────────────────────────── */
 .site-footer {
   border-top: 1px solid var(--border-color);
   padding: 4rem 0 2rem;
@@ -3956,5 +3956,75 @@
 @media (max-width: 600px) {
   .footer__container {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* -- Modo professor: blocos editaveis e botao do lapis ---------------------- */
+.bfa-editable-wrapper.can-edit {
+  position: relative;
+  border-radius: 8px;
+  outline: 1px dashed transparent;
+  outline-offset: 6px;
+  transition: outline-color 0.15s ease;
+}
+
+.bfa-editable-wrapper.can-edit:hover,
+.bfa-editable-wrapper.can-edit:focus-within {
+  outline-color: var(--blue);
+}
+
+.bfa-edit-pencil-btn {
+  position: absolute;
+  top: -14px;
+  right: -6px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--blue);
+  border-radius: 50%;
+  background-color: var(--bg-app);
+  color: var(--blue);
+  box-shadow: 0 4px 12px -2px rgba(0, 43, 77, 0.25);
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.15s ease, transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.bfa-editable-wrapper.can-edit:hover > .bfa-edit-pencil-btn,
+.bfa-editable-wrapper.can-edit:focus-within > .bfa-edit-pencil-btn,
+.bfa-edit-pencil-btn:focus-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.bfa-edit-pencil-btn:hover {
+  background-color: var(--blue);
+  color: #FFFFFF;
+}
+
+.bfa-edit-pencil-btn:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* Telas de toque nao tem hover: o lapis fica sempre visivel */
+@media (hover: none) {
+  .bfa-edit-pencil-btn {
+    opacity: 1;
+    transform: none;
+    width: 36px;
+    height: 36px;
+    top: -18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bfa-edit-pencil-btn {
+    right: 0;
   }
 }

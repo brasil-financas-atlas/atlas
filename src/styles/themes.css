@@ -24,6 +24,12 @@
 
   --surface: #FFFFFF;
   --surface-strong: #EEF6FC;
+
+  /* Pares claros dos tokens que so existiam no tema escuro (icones e destaques azuis) */
+  --ring: #00A6DF;
+  --color-azul: #0087BA;
+  --color-azul-dark: #002B4D;
+  --card-foreground: #001F37;
 }
 
 /* 2. Theme Executive B3 Corporate */

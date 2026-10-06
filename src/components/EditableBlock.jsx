@@ -49,7 +49,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
   const handleCloseEditor = () => {
     if (editorText !== currentText) {
-      if (!window.confirm('VocÃª tem alteraÃ§Ãµes nÃ£o salvas. Deseja realmente fechar o editor?')) {
+      if (!window.confirm('Você tem alterações não salvas. Deseja realmente fechar o editor?')) {
         return;
       }
     }
@@ -70,7 +70,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
   };
 
   const handleReset = () => {
-    if (window.confirm('Deseja restaurar o conteÃºdo original desta seÃ§Ã£o?')) {
+    if (window.confirm('Deseja restaurar o conteúdo original desta seção?')) {
       if (saveOverride) {
         saveOverride(id, null);
       }
@@ -99,18 +99,18 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
   const applyWizardInsertion = () => {
     if (activeWizard === 'gabarito') {
-      const titulo = wizardInputs.gabaritoTitulo || 'Gabarito com resoluÃ§Ã£o';
+      const titulo = wizardInputs.gabaritoTitulo || 'Gabarito com resolução';
       const modelo = wizardInputs.gabaritoModelo || 'passo';
       
       let corpo = '';
       if (modelo === 'passo') {
-        corpo = `    **Passo 1:** Calcule o valor inicial aplicando a fÃ³rmula correspondente: $200 \\times 0{,}05 = 10$.\n    **Passo 2:** Some ao montante principal: $500 + 10 = \\mathbf{510}$.\n    **ConclusÃ£o / Sobra:** Carlos fecha o mÃªs com saldo de **R$ 510,00**.`;
+        corpo = `    **Passo 1:** Calcule o valor inicial aplicando a fórmula correspondente: $200 \\times 0{,}05 = 10$.\n    **Passo 2:** Some ao montante principal: $500 + 10 = \\mathbf{510}$.\n    **Conclusão / Sobra:** Carlos fecha o mês com saldo de **R$ 510,00**.`;
       } else if (modelo === 'questoes') {
-        corpo = `    **1.** Primeiro a multiplicaÃ§Ã£o: $200 \\times 0{,}05 = 10$. Depois a soma: $500 + 10 = \\mathbf{510}$.\n\n    **2.** ParÃªnteses primeiro: $800 - 300 = 500$. Depois: $500 \\div 4 = \\mathbf{125}$.\n\n    **3.** $-450 + 200 + 150 = \\mathbf{-100}$ (dÃ­vida remanescente).\n\n    **4.** MÃªs: $15 \\times 22 = \\mathbf{330}$ reais. Ano: $330 \\times 12 = \\mathbf{3.960}$ reais.`;
+        corpo = `    **1.** Primeiro a multiplicação: $200 \\times 0{,}05 = 10$. Depois a soma: $500 + 10 = \\mathbf{510}$.\n\n    **2.** Parênteses primeiro: $800 - 300 = 500$. Depois: $500 \\div 4 = \\mathbf{125}$.\n\n    **3.** $-450 + 200 + 150 = \\mathbf{-100}$ (dívida remanescente).\n\n    **4.** Mês: $15 \\times 22 = \\mathbf{330}$ reais. Ano: $330 \\times 12 = \\mathbf{3.960}$ reais.`;
       } else if (modelo === 'insight') {
-        corpo = `    **Resposta:** OpÃ§Ã£o B.\n\n    **ExplicaÃ§Ã£o detalhada:** Cortando o gasto pela metade, atinge a meta em 5 meses em vez de 9 meses. A divisÃ£o revela o impacto das taxas no tempo.`;
+        corpo = `    **Resposta:** Opção B.\n\n    **Explicação detalhada:** Cortando o gasto pela metade, atinge a meta em 5 meses em vez de 9 meses. A divisão revela o impacto das taxas no tempo.`;
       } else if (modelo === 'custom') {
-        const rawCustom = wizardInputs.gabaritoCustomText || 'Passo 1: ...\nPasso 2: ...\nExplicaÃ§Ã£o detalhada: ...';
+        const rawCustom = wizardInputs.gabaritoCustomText || 'Passo 1: ...\nPasso 2: ...\nExplicação detalhada: ...';
         corpo = rawCustom.split('\n').map(line => '    ' + line).join('\n');
       }
 
@@ -118,15 +118,15 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
     } else if (activeWizard === 'tabela') {
       const tipo = wizardInputs.tabelaTipo || 'comparativa';
       if (tipo === 'comparativa') {
-        insertAtCursor(`\n\n| Conceito | FÃ³rmula / CÃ¡lculo | Significado Simples |\n|---|---|---|\n| Margem Bruta | $\\frac{\\text{Lucro Bruto}}{\\text{Receita}}$ | Rentabilidade direta do produto |\n| Margem LÃ­quida | $\\frac{\\text{Lucro LÃ­quido}}{\\text{Receita}}$ | O que sobra final para os acionistas |\n| ROE | $\\frac{\\text{Lucro LÃ­quido}}{\\text{PatrimÃ´nio LÃ­quido}}$ | Retorno sobre o capital prÃ³prio |\n\n`);
+        insertAtCursor(`\n\n| Conceito | Fórmula / Cálculo | Significado Simples |\n|---|---|---|\n| Margem Bruta | $\\frac{\\text{Lucro Bruto}}{\\text{Receita}}$ | Rentabilidade direta do produto |\n| Margem Líquida | $\\frac{\\text{Lucro Líquido}}{\\text{Receita}}$ | O que sobra final para os acionistas |\n| ROE | $\\frac{\\text{Lucro Líquido}}{\\text{Patrimônio Líquido}}$ | Retorno sobre o capital próprio |\n\n`);
       } else if (tipo === 'balanco') {
-        insertAtCursor(`\n\n| Linha / Item | Valor (R$ mi) | ProporÃ§Ã£o / Margem |\n|---|---:|---:|\n| Receita Operacional LÃ­quida | 300,00 | 100% |\n| (âˆ’) Custo dos Produtos (CPV) | -180,00 | 60% |\n| (=) Lucro Bruto | 120,00 | 40% |\n| (âˆ’) Despesas Operacionais | -75,00 | 25% |\n| (=) Lucro LÃ­quido | 23,00 | 7,7% |\n\n`);
+        insertAtCursor(`\n\n| Linha / Item | Valor (R$ mi) | Proporção / Margem |\n|---|---:|---:|\n| Receita Operacional Líquida | 300,00 | 100% |\n| (−) Custo dos Produtos (CPV) | -180,00 | 60% |\n| (=) Lucro Bruto | 120,00 | 40% |\n| (−) Despesas Operacionais | -75,00 | 25% |\n| (=) Lucro Líquido | 23,00 | 7,7% |\n\n`);
       } else if (tipo === 'investimentos') {
-        insertAtCursor(`\n\n| Ativo / AplicaÃ§Ã£o | Rentabilidade | Liquidez | Grau de Risco |\n|---|---|---|---|\n| Tesouro Selic | 100% do CDI | D+1 (DiÃ¡ria) | MÃ­nimo soberano |\n| CDB PrÃ©-fixado | 12,5% ao ano | No Vencimento | Baixo (FGC) |\n| Fundos ImobiliÃ¡rios | Dividend Yield mÃ©dio | D+2 (Bolsa) | Moderado |\n| AÃ§Ãµes (IBOV) | VariaÃ§Ã£o de mercado | D+2 (Bolsa) | Elevado |\n\n`);
+        insertAtCursor(`\n\n| Ativo / Aplicação | Rentabilidade | Liquidez | Grau de Risco |\n|---|---|---|---|\n| Tesouro Selic | 100% do CDI | D+1 (Diária) | Mínimo soberano |\n| CDB Pré-fixado | 12,5% ao ano | No Vencimento | Baixo (FGC) |\n| Fundos Imobiliários | Dividend Yield médio | D+2 (Bolsa) | Moderado |\n| Ações (IBOV) | Variação de mercado | D+2 (Bolsa) | Elevado |\n\n`);
       } else if (tipo === 'operacoes') {
-        insertAtCursor(`\n\n| OperaÃ§Ã£o | Pergunta Chave | Exemplo Financeiro |\n|---|---|---|\n| Soma (+) | Quanto dÃ¡ no total? | $150 + 80 = 230$ |\n| SubtraÃ§Ã£o (âˆ’) | O que sobra? Qual a diferenÃ§a? | $230 - 180 = 50$ |\n| MultiplicaÃ§Ã£o (Ã—) | E se isso se repetir ao longo do tempo? | $7 \\times 22 = 154$ |\n| DivisÃ£o (Ã·) | Quanto representa? Qual a taxa (%)? | $80 \\div 1.000 = 8\\%$ |\n\n`);
+        insertAtCursor(`\n\n| Operação | Pergunta Chave | Exemplo Financeiro |\n|---|---|---|\n| Soma (+) | Quanto dá no total? | $150 + 80 = 230$ |\n| Subtração (−) | O que sobra? Qual a diferença? | $230 - 180 = 50$ |\n| Multiplicação (×) | E se isso se repetir ao longo do tempo? | $7 \\times 22 = 154$ |\n| Divisão (÷) | Quanto representa? Qual a taxa (%)? | $80 \\div 1.000 = 8\\%$ |\n\n`);
       } else if (tipo === 'simples') {
-        insertAtCursor(`\n\n| Item | DescriÃ§Ã£o | Exemplo |\n|---|---|---|\n| Entrada A | DescriÃ§Ã£o da primeira entrada | R$ 100,00 |\n| Entrada B | DescriÃ§Ã£o da segunda entrada | R$ 200,00 |\n| Total | Soma das entradas | R$ 300,00 |\n\n`);
+        insertAtCursor(`\n\n| Item | Descrição | Exemplo |\n|---|---|---|\n| Entrada A | Descrição da primeira entrada | R$ 100,00 |\n| Entrada B | Descrição da segunda entrada | R$ 200,00 |\n| Total | Soma das entradas | R$ 300,00 |\n\n`);
       } else if (tipo === 'personalizada') {
         const rawCols = wizardInputs.colunasCustom || 'Coluna 1, Coluna 2, Coluna 3';
         const cols = rawCols.split(',').map(c => c.trim()).filter(Boolean);
@@ -138,8 +138,8 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
       }
     } else if (activeWizard === 'admonition') {
       const tipo = wizardInputs.tipo || 'tip';
-      const titulo = wizardInputs.titulo || 'Dica PrÃ¡tica';
-      const rawCorpo = wizardInputs.corpo || 'ExplicaÃ§Ã£o aprofundada do conceito para os estudantes.';
+      const titulo = wizardInputs.titulo || 'Dica Prática';
+      const rawCorpo = wizardInputs.corpo || 'Explicação aprofundada do conceito para os estudantes.';
       const corpoIndented = rawCorpo.split('\n').map(line => '    ' + line).join('\n');
       insertAtCursor(`\n\n!!! ${tipo} "${titulo}"\n${corpoIndented}\n\n`);
     } else if (activeWizard === 'katex') {
@@ -172,15 +172,15 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
     } else if (activeWizard === 'mermaid') {
       const tipoMermaid = wizardInputs.mermaidTipo || 'fluxo_decisao';
       if (tipoMermaid === 'fluxo_decisao') {
-        insertAtCursor(`\n\n\`\`\`mermaid\nflowchart TD\n  A[Recebimento de Renda] --> B{Tem DÃ­vidas Caras?}\n  B -- Sim --> C[Quitar CartÃ£o e Cheque Especial]\n  B -- NÃ£o --> D[Construir Reserva de EmergÃªncia]\n  D --> E{Reserva Completa (6 meses)?}\n  E -- Sim --> F[Investir em Renda VariÃ¡vel e FIIs]\n  E -- NÃ£o --> G[Aportar em Tesouro Selic / CDB]\n\`\`\`\n\n`);
+        insertAtCursor(`\n\n\`\`\`mermaid\nflowchart TD\n  A[Recebimento de Renda] --> B{Tem Dívidas Caras?}\n  B -- Sim --> C[Quitar Cartão e Cheque Especial]\n  B -- Não --> D[Construir Reserva de Emergência]\n  D --> E{Reserva Completa (6 meses)?}\n  E -- Sim --> F[Investir em Renda Variável e FIIs]\n  E -- Não --> G[Aportar em Tesouro Selic / CDB]\n\`\`\`\n\n`);
       } else if (tipoMermaid === 'ciclo_caixa') {
-        insertAtCursor(`\n\n\`\`\`mermaid\nflowchart LR\n  A[Compra de Estoque] --> B[ProduÃ§Ã£o / Venda]\n  B --> C[Faturamento a Prazo]\n  C --> D[Recebimento de Caixa]\n  D --> E[Reinvestimento no NegÃ³cio]\n\`\`\`\n\n`);
+        insertAtCursor(`\n\n\`\`\`mermaid\nflowchart LR\n  A[Compra de Estoque] --> B[Produção / Venda]\n  B --> C[Faturamento a Prazo]\n  C --> D[Recebimento de Caixa]\n  D --> E[Reinvestimento no Negócio]\n\`\`\`\n\n`);
       } else if (tipoMermaid === 'arvore_ativos') {
-        insertAtCursor(`\n\n\`\`\`mermaid\nflowchart TD\n  Carteira[Carteira BFA] --> RF[Renda Fixa 70%]\n  Carteira --> RV[Renda VariÃ¡vel 30%]\n  RF --> Selic[Tesouro Selic]\n  RF --> IPCA[Tesouro IPCA+]\n  RV --> Acoes[AÃ§Ãµes Dividendos]\n  RV --> FII[Fundos ImobiliÃ¡rios]\n\`\`\`\n\n`);
+        insertAtCursor(`\n\n\`\`\`mermaid\nflowchart TD\n  Carteira[Carteira BFA] --> RF[Renda Fixa 70%]\n  Carteira --> RV[Renda Variável 30%]\n  RF --> Selic[Tesouro Selic]\n  RF --> IPCA[Tesouro IPCA+]\n  RV --> Acoes[Ações Dividendos]\n  RV --> FII[Fundos Imobiliários]\n\`\`\`\n\n`);
       }
     } else if (activeWizard === 'imagem') {
       const url = wizardInputs.url || 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800';
-      const alt = wizardInputs.alt || 'GrÃ¡fico Ilustrativo';
+      const alt = wizardInputs.alt || 'Gráfico Ilustrativo';
       insertAtCursor(`\n\n![${alt}](${url})\n`);
     }
     setActiveWizard(null);
@@ -189,7 +189,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
   // Real-time Preview Renderer strictly identical to LessonContent
   const previewHtml = useMemo(() => {
-    if (!editorText) return '<p style="color:var(--text-secondary);font-style:italic;">Nenhum conteÃºdo inserido.</p>';
+    if (!editorText) return '<p style="color:var(--text-secondary);font-style:italic;">Nenhum conteúdo inserido.</p>';
     
     let formatted = editorText;
 
@@ -200,7 +200,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
       return `\n\n@@BFAMERMAID_${mermaidBlocks.length - 1}@@\n\n`;
     });
 
-    // 2. Salvar fÃ³rmulas KaTeX antes de parsear markdown
+    // 2. Salvar fórmulas KaTeX antes de parsear markdown
     const formulas = [];
     const guardar = (tex, emDestaque) => {
       formulas.push({ tex: tex.trim(), emDestaque });
@@ -293,7 +293,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
     let parsed = (marked && marked.parse) ? marked.parse(formatted) : formatted;
 
-    // SanitizaÃ§Ã£o com DOMPurify
+    // Sanitização com DOMPurify
     if (DOMPurify && DOMPurify.sanitize) {
       parsed = DOMPurify.sanitize(parsed, {
         ADD_TAGS: ['details', 'summary', 'svg', 'path', 'line', 'circle', 'polygon', 'polyline', 'g', 'rect', 'text', 'tspan', 'defs', 'script', 'img', 'iframe', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
@@ -376,7 +376,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
           title="Editar este trecho / recurso (Modo Admin)"
           style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
         >
-          <BfaIcon name="pencil" size={13} color="var(--color-azul-dark)" />
+          <BfaIcon name="pencil" size={14} />
         </button>
       )}
 
@@ -397,12 +397,12 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
             {/* Top Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <div style={{ background: 'rgba(2, 132, 199, 0.1)', padding: '0.4rem', borderRadius: '6px' }}>
-                  <BfaIcon name="pencil" size={18} color="var(--color-azul)" />
+                <div style={{ background: 'rgba(0, 166, 223, 0.12)', padding: '0.4rem', borderRadius: '6px', display: 'inline-flex' }}>
+                  <BfaIcon name="pencil" size={18} color="var(--blue)" />
                 </div>
                 <div>
                   <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>
-                    Editor AvanÃ§ado BFA & InserÃ§Ã£o de Recursos
+                    Editor Avançado BFA & Inserção de Recursos
                   </h3>
                   <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
                     ID do Bloco: {id}
@@ -465,7 +465,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       padding: '0.25rem 0.55rem'
                     }}
                   >
-                    PrÃ©via
+                    Prévia
                   </button>
                 </div>
 
@@ -475,8 +475,9 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                   className="bfa-btn bfa-btn--ghost bfa-btn--sm"
                   style={{ padding: '0.25rem 0.5rem', fontSize: '0.85rem' }}
                   title="Fechar Editor"
+                  aria-label="Fechar editor"
                 >
-                  âœ•
+                  <BfaIcon name="close" size={14} />
                 </button>
               </div>
             </div>
@@ -485,18 +486,18 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
             {showLatexGuide && (
               <div style={{ background: 'var(--secondary)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '0.85rem 1rem', marginBottom: '0.85rem', maxHeight: '190px', overflowY: 'auto' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                  <strong style={{ fontSize: '0.85rem', color: 'var(--text-primary)' }}>Guia RÃ¡pido de FÃ³rmulas KaTeX (Clique para Inserir no Cursor):</strong>
-                  <button type="button" onClick={() => setShowLatexGuide(false)} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ padding: '0.1rem 0.35rem', fontSize: '0.75rem' }}>âœ• Fechar</button>
+                  <strong style={{ fontSize: '0.85rem', color: 'var(--text-primary)' }}>Guia Rápido de Fórmulas KaTeX (Clique para Inserir no Cursor):</strong>
+                  <button type="button" onClick={() => setShowLatexGuide(false)} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ padding: '0.1rem 0.35rem', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}><BfaIcon name="close" size={12} /> Fechar</button>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.4rem' }}>
                   <button type="button" onClick={() => insertAtCursor(' $\\frac{a}{b}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
-                    <strong>FraÃ§Ã£o:</strong> <code>\frac&#123;a&#125;&#123;b&#125;</code>
+                    <strong>Fração:</strong> <code>\frac&#123;a&#125;&#123;b&#125;</code>
                   </button>
                   <button type="button" onClick={() => insertAtCursor(' $(1 + i)^{t}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Juros Compostos:</strong> <code>(1+i)^&#123;t&#125;</code>
                   </button>
                   <button type="button" onClick={() => insertAtCursor(' $x^{n}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
-                    <strong>PotÃªncia:</strong> <code>x^&#123;n&#125;</code>
+                    <strong>Potência:</strong> <code>x^&#123;n&#125;</code>
                   </button>
                   <button type="button" onClick={() => insertAtCursor(' $x_{i}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Subscrito:</strong> <code>x_&#123;i&#125;</code>
@@ -505,28 +506,28 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                     <strong>Raiz Quadrada:</strong> <code>\sqrt&#123;x&#125;</code>
                   </button>
                   <button type="button" onClick={() => insertAtCursor(' $\\sqrt[n]{1 + R}$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
-                    <strong>Raiz EnÃ©sima:</strong> <code>\sqrt[n]&#123;x&#125;</code>
+                    <strong>Raiz Enésima:</strong> <code>\sqrt[n]&#123;x&#125;</code>
                   </button>
                   <button type="button" onClick={() => insertAtCursor(' $$\\text{VPL} = \\sum_{t=1}^{n} \\frac{\\text{FC}_t}{(1+r)^t} - I_0$$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>VPL:</strong> <code>\sum \frac&#123;FC&#125;&#123;(1+r)^t&#125;</code>
                   </button>
                   <button type="button" onClick={() => insertAtCursor(' $$\\prod_{i=1}^{k} (1 + r_i)$$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
-                    <strong>ProdutÃ³rio:</strong> <code>\prod (1+r_i)</code>
+                    <strong>Produtório:</strong> <code>\prod (1+r_i)</code>
                   </button>
                   <button type="button" onClick={() => insertAtCursor(' $\\cdot$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
-                    <strong>MultiplicaÃ§Ã£o Ponto:</strong> <code>\cdot</code>
+                    <strong>Multiplicação Ponto:</strong> <code>\cdot</code>
                   </button>
                   <button type="button" onClick={() => insertAtCursor(' $\\times$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
-                    <strong>MultiplicaÃ§Ã£o Cruz:</strong> <code>\times</code>
+                    <strong>Multiplicação Cruz:</strong> <code>\times</code>
                   </button>
                   <button type="button" onClick={() => insertAtCursor(' $\\sigma$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Volatilidade:</strong> <code>\sigma</code>
                   </button>
                   <button type="button" onClick={() => insertAtCursor(' $\\mu$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
-                    <strong>Retorno MÃ©dio:</strong> <code>\mu</code>
+                    <strong>Retorno Médio:</strong> <code>\mu</code>
                   </button>
                   <button type="button" onClick={() => insertAtCursor(' $\\Delta$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
-                    <strong>VariaÃ§Ã£o Delta:</strong> <code>\Delta</code>
+                    <strong>Variação Delta:</strong> <code>\Delta</code>
                   </button>
                   <button type="button" onClick={() => insertAtCursor(' $\\text{R\\$ } 1.000,00$ ')} className="bfa-btn bfa-btn--ghost bfa-btn--sm" style={{ justifyContent: 'flex-start', fontSize: '0.75rem', background: 'var(--bg-surface)' }}>
                     <strong>Moeda Formatada:</strong> <code>\text&#123;R\$ &#125;</code>
@@ -538,7 +539,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
             {/* Configurable Wizards / Assistants Bar */}
             <div style={{ display: 'flex', gap: '0.45rem', marginBottom: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
               <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-secondary)', marginRight: '2px' }}>
-                FERRAMENTAS DE INSERÃ‡ÃƒO:
+                FERRAMENTAS DE INSERÇÃO:
               </span>
               <button
                 type="button"
@@ -570,7 +571,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                 onClick={() => setActiveWizard(activeWizard === 'katex' ? null : 'katex')}
                 style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
               >
-                + FÃ³rmulas Financeiras
+                + Fórmulas Financeiras
               </button>
               <button
                 type="button"
@@ -578,7 +579,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                 onClick={() => setActiveWizard(activeWizard === 'fracao' ? null : 'fracao')}
                 style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
               >
-                + FraÃ§Ã£o
+                + Fração
               </button>
               <button
                 type="button"
@@ -586,7 +587,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                 onClick={() => setActiveWizard(activeWizard === 'potencia' ? null : 'potencia')}
                 style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
               >
-                + Juros / PotÃªncia
+                + Juros / Potência
               </button>
               <button
                 type="button"
@@ -612,8 +613,8 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                     <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Inserir Gabarito Oculto:</span>
                     <input
                       type="text"
-                      placeholder="TÃ­tulo do Gabarito (ex: Gabarito com resoluÃ§Ã£o)"
-                      value={wizardInputs.gabaritoTitulo || 'Gabarito com resoluÃ§Ã£o'}
+                      placeholder="Título do Gabarito (ex: Gabarito com resolução)"
+                      value={wizardInputs.gabaritoTitulo || 'Gabarito com resolução'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, gabaritoTitulo: e.target.value })}
                       style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', width: '220px' }}
                     />
@@ -622,14 +623,14 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       onChange={(e) => setWizardInputs({ ...wizardInputs, gabaritoModelo: e.target.value })}
                       style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     >
-                      <option value="passo">Passo a Passo Detalhado (Passo 1, Passo 2, ConclusÃ£o/Sobra)</option>
-                      <option value="questoes">Lista de QuestÃµes Numeradas (1, 2, 3, 4)</option>
-                      <option value="insight">Resposta com ExplicaÃ§Ã£o Conceitual e Insight</option>
+                      <option value="passo">Passo a Passo Detalhado (Passo 1, Passo 2, Conclusão/Sobra)</option>
+                      <option value="questoes">Lista de Questões Numeradas (1, 2, 3, 4)</option>
+                      <option value="insight">Resposta com Explicação Conceitual e Insight</option>
                       <option value="custom">Texto Livre Personalizado</option>
                     </select>
                     {wizardInputs.gabaritoModelo === 'custom' && (
                       <textarea
-                        placeholder="Digite o texto da explicaÃ§Ã£o ou gabarito (todas as linhas serÃ£o indentadas automaticamente)..."
+                        placeholder="Digite o texto da explicação ou gabarito (todas as linhas serão indentadas automaticamente)..."
                         value={wizardInputs.gabaritoCustomText || ''}
                         onChange={(e) => setWizardInputs({ ...wizardInputs, gabaritoCustomText: e.target.value })}
                         style={{ width: '100%', minHeight: '65px', padding: '0.4rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}
@@ -646,17 +647,17 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       onChange={(e) => setWizardInputs({ ...wizardInputs, tabelaTipo: e.target.value })}
                       style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     >
-                      <option value="comparativa">Tabela Comparativa / Indicadores (Conceito, FÃ³rmula, Significado)</option>
+                      <option value="comparativa">Tabela Comparativa / Indicadores (Conceito, Fórmula, Significado)</option>
                       <option value="balanco">Tabela Financeira / DRE (Linha, Valor R$, Margem %)</option>
                       <option value="investimentos">Comparativo de Investimentos (Ativo, Rentabilidade, Liquidez, Risco)</option>
-                      <option value="operacoes">4 OperaÃ§Ãµes em FinanÃ§as (OperaÃ§Ã£o, Pergunta Chave, Exemplo)</option>
+                      <option value="operacoes">4 Operações em Finanças (Operação, Pergunta Chave, Exemplo)</option>
                       <option value="simples">Tabela Geral (3 Colunas)</option>
                       <option value="personalizada">Tabela Personalizada (Definir Colunas)</option>
                     </select>
                     {wizardInputs.tabelaTipo === 'personalizada' && (
                       <input
                         type="text"
-                        placeholder="CabeÃ§alhos separados por vÃ­rgula (ex: MÃªs, Aporte, Saldo)"
+                        placeholder="Cabeçalhos separados por vírgula (ex: Mês, Aporte, Saldo)"
                         value={wizardInputs.colunasCustom || ''}
                         onChange={(e) => setWizardInputs({ ...wizardInputs, colunasCustom: e.target.value })}
                         style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', flex: 1, minWidth: '220px' }}
@@ -667,32 +668,32 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
                 {activeWizard === 'admonition' && (
                   <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Caixa PedagÃ³gica:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Caixa Pedagógica:</span>
                     <select
                       value={wizardInputs.tipo || 'tip'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, tipo: e.target.value })}
                       style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     >
-                      <option value="tip">Dica PrÃ¡tica (Verde)</option>
-                      <option value="note">Nota / AtenÃ§Ã£o (Azul)</option>
+                      <option value="tip">Dica Prática (Verde)</option>
+                      <option value="note">Nota / Atenção (Azul)</option>
                       <option value="warning">Alerta / Cuidado (Amarelo)</option>
-                      <option value="danger">Perigo / Erro CrÃ­tico (Vermelho)</option>
-                      <option value="math">FÃ³rmula MatemÃ¡tica (Roxo)</option>
-                      <option value="info">InformaÃ§Ã£o Geral</option>
+                      <option value="danger">Perigo / Erro Crítico (Vermelho)</option>
+                      <option value="math">Fórmula Matemática (Roxo)</option>
+                      <option value="info">Informação Geral</option>
                       <option value="example">Exemplo Resolvido</option>
                       <option value="pbl">Problema Investigativo (PBL)</option>
                       <option value="abstract">Resumo de Bolso</option>
                     </select>
                     <input
                       type="text"
-                      placeholder="TÃ­tulo da Caixa"
+                      placeholder="Título da Caixa"
                       value={wizardInputs.titulo || ''}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, titulo: e.target.value })}
                       style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', width: '160px' }}
                     />
                     <input
                       type="text"
-                      placeholder="Texto do ConteÃºdo"
+                      placeholder="Texto do Conteúdo"
                       value={wizardInputs.corpo || ''}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, corpo: e.target.value })}
                       style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem', flex: 1, minWidth: '200px' }}
@@ -702,27 +703,27 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
                 {activeWizard === 'katex' && (
                   <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>FÃ³rmula Financeira:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Fórmula Financeira:</span>
                     <select
                       value={wizardInputs.formulaTipo || 'vpl'}
                       onChange={(e) => setWizardInputs({ ...wizardInputs, formulaTipo: e.target.value })}
                       style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     >
-                      <option value="vpl">VPL â€” Valor Presente LÃ­quido (SomatÃ³rio de Fluxos)</option>
-                      <option value="juros_compostos">Juros Compostos â€” M = C(1+i)^t</option>
-                      <option value="fisher">EquaÃ§Ã£o de Fisher â€” Taxa Real e InflaÃ§Ã£o</option>
-                      <option value="somatorio">SomatÃ³rio Sigma (Î£)</option>
-                      <option value="produtorio">ProdutÃ³rio Pi (Î )</option>
-                      <option value="raiz">Raiz EnÃ©sima de Taxa Acumulada</option>
-                      <option value="volatilidade">Volatilidade â€” Desvio PadrÃ£o Populacional (Ïƒ)</option>
-                      <option value="moeda">Moeda Brasileira Formatada â€” R$ 1.000,00</option>
+                      <option value="vpl">VPL — Valor Presente Líquido (Somatório de Fluxos)</option>
+                      <option value="juros_compostos">Juros Compostos — M = C(1+i)^t</option>
+                      <option value="fisher">Equação de Fisher — Taxa Real e Inflação</option>
+                      <option value="somatorio">Somatório Sigma (Σ)</option>
+                      <option value="produtorio">Produtório Pi (Π)</option>
+                      <option value="raiz">Raiz Enésima de Taxa Acumulada</option>
+                      <option value="volatilidade">Volatilidade — Desvio Padrão Populacional (σ)</option>
+                      <option value="moeda">Moeda Brasileira Formatada — R$ 1.000,00</option>
                     </select>
                   </>
                 )}
 
                 {activeWizard === 'fracao' && (
                   <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>FraÃ§Ã£o:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Fração:</span>
                     <input
                       type="text"
                       placeholder="Numerador (ex: Lucro Bruto)"
@@ -743,7 +744,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
 
                 {activeWizard === 'potencia' && (
                   <>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>PotÃªncia:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--color-azul)' }}>Potência:</span>
                     <input
                       type="text"
                       placeholder="Base (ex: 1 + i)"
@@ -770,9 +771,9 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                       onChange={(e) => setWizardInputs({ ...wizardInputs, mermaidTipo: e.target.value })}
                       style={{ padding: '0.35rem 0.55rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     >
-                      <option value="fluxo_decisao">Tomada de DecisÃ£o Financeira (DÃ­vidas vs Reserva vs Aporte)</option>
+                      <option value="fluxo_decisao">Tomada de Decisão Financeira (Dívidas vs Reserva vs Aporte)</option>
                       <option value="ciclo_caixa">Ciclo Operacional & Financeiro de Caixa</option>
-                      <option value="arvore_ativos">AlocaÃ§Ã£o de Carteira (Renda Fixa vs VariÃ¡vel)</option>
+                      <option value="arvore_ativos">Alocação de Carteira (Renda Fixa vs Variável)</option>
                     </select>
                   </>
                 )}
@@ -823,7 +824,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                 <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
                     <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                      CÃ“DIGO FONTE (MARKDOWN + LATEX):
+                      CÓDIGO FONTE (MARKDOWN + LATEX):
                     </span>
                     <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
                       {editorText.length} caracteres
@@ -857,10 +858,10 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                 <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
                     <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-azul)' }}>
-                      PRÃ‰-VISUALIZAÃ‡ÃƒO EM TEMPO REAL:
+                      PRÉ-VISUALIZAÇÃO EM TEMPO REAL:
                     </span>
                     <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
-                      RenderizaÃ§Ã£o Final
+                      Renderização Final
                     </span>
                   </div>
                   <div
@@ -890,7 +891,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                 title="Restaurar texto original"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
               >
-                <BfaIcon name="refresh" size={14} /> Restaurar PadrÃ£o
+                <BfaIcon name="refresh" size={14} /> Restaurar Padrão
               </button>
 
               <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -907,7 +908,7 @@ function EditableBlock({ id, content, initialContent, children, onSave, as: Comp
                   onClick={handleSave}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
                 >
-                  Salvar AlteraÃ§Ãµes <BfaIcon name="save" size={14} />
+                  Salvar Alterações <BfaIcon name="save" size={14} />
                 </button>
               </div>
             </div>
