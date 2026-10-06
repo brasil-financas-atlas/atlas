@@ -4422,3 +4422,64 @@
     padding: 2.5rem 0;
   }
 }
+
+/* -- Faixa de numeros: editorial, fundo claro, numeros na cor do texto ------ */
+.stats-section {
+  padding: 0;
+  background-color: var(--bg-app);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.stats__container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+}
+
+.stat-item {
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 2.5rem 1.5rem;
+  border-left: 1px solid var(--border-color);
+}
+
+.stat-item:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.stat-value {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: left;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .stats__container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .stat-item {
+    padding: 1.75rem 1rem;
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+  }
+  .stat-item:nth-child(-n + 2) {
+    border-top: none;
+  }
+  .stat-item:nth-child(odd) {
+    padding-left: 0;
+  }
+  .stat-item:nth-child(even) {
+    border-left: 1px solid var(--border-color);
+  }
+}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
 import BfaIcon from '../components/Icons';
-import MarketTickerRibbon from '../components/MarketTickerRibbon';
 import { FOTOS_NIF, NUMEROS_REDE, RECURSOS_PLATAFORMA, APOIO_NUCLEOS, LINKS_NIF } from '../data/parceriaNif';
 
 /* ==========================================================================
@@ -118,9 +117,6 @@ function Home() {
           ))}
         </div>
       </section>
-
-      {/* ── 3. Indicadores de mercado em movimento ──────────────────────── */}
-      <MarketTickerRibbon />
 
       {/* ── 4. A plataforma em uso ─────────────────────────────────────────── */}
       <section className="hn-sec" aria-labelledby="hn-nif-titulo">
