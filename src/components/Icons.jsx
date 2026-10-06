@@ -539,6 +539,13 @@ function BfaIcon({ name, size = 20, color = "currentColor", className = "", styl
           <path d="M22 12A10 10 0 0 0 12 2v10z" />
         </svg>
       );
+    case "facebook-brand":
+      return (
+        <svg {...defaultProps} viewBox="0 0 24 24" stroke="none">
+          <circle cx="12" cy="12" r="11" fill="#1877F2" />
+          <path d="M15.12 15.47l.5-3.25h-3.12V10.1c0-.89.44-1.76 1.83-1.76h1.42V5.57s-1.29-.22-2.52-.22c-2.57 0-4.25 1.56-4.25 4.38v2.49H6.13v3.25h2.85V23.3a11.3 11.3 0 0 0 3.52 0v-7.83h2.62z" fill="#FFFFFF" />
+        </svg>
+      );
     case "search":
       return (
         <svg {...defaultProps}>

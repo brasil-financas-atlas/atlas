@@ -7,6 +7,61 @@ import React, { useState, useEffect, useContext, createContext } from 'react';
 import { ProgressContext } from '../context/ProgressContext';
 import { AdminContext } from '../context/AdminContext';
 import { BfaSupabase } from '../utils/supabaseClient';
+import BfaIcon from '../components/Icons';
+
+// Botoes "Continuar com Google / Apple / Facebook". So aparecem os provedores
+// ligados no painel do Supabase (Authentication > Providers).
+const PROVEDORES_SOCIAIS = [
+  { id: 'google', nome: 'Google', icone: 'google' },
+  { id: 'apple', nome: 'Apple', icone: 'apple' },
+  { id: 'facebook', nome: 'Facebook', icone: 'facebook-brand' },
+];
+
+function BotoesSociais({ onErro }) {
+  const [ativos, setAtivos] = useState(null);
+  const [indo, setIndo] = useState('');
+
+  useEffect(() => {
+    let vivo = true;
+    const sp = BfaSupabase || (typeof window !== 'undefined' ? window.BfaSupabase : null);
+    if (!sp || !sp.fetchAuthProviders) { setAtivos([]); return undefined; }
+    sp.fetchAuthProviders().then((lista) => { if (vivo) setAtivos(lista || []); });
+    return () => { vivo = false; };
+  }, []);
+
+  const visiveis = PROVEDORES_SOCIAIS.filter((p) => (ativos || []).includes(p.id));
+  if (!visiveis.length) return null;
+
+  const entrar = async (id) => {
+    setIndo(id);
+    // Marca que o login veio desta tela: na volta do provedor, quem e da
+    // equipe vai direto ao painel.
+    try { sessionStorage.setItem('bfa_login_pendente', '1'); } catch (e) {}
+    const res = await BfaSupabase.signInWithOAuth(id);
+    if (!res || !res.success) {
+      setIndo('');
+      onErro && onErro((res && res.error) || 'Não foi possível abrir o login externo.');
+    }
+  };
+
+  return (
+    <div className="login-social">
+      {visiveis.map((p) => (
+        <button
+          key={p.id}
+          type="button"
+          className={`login-social__btn login-social__btn--${p.id}`}
+          onClick={() => entrar(p.id)}
+          disabled={!!indo}
+        >
+          <BfaIcon name={p.icone} size={20} />
+          <span>{indo === p.id ? 'Abrindo...' : `Continuar com ${p.nome}`}</span>
+        </button>
+      ))}
+      <div className="login-social__ou" role="separator"><span>ou com e-mail</span></div>
+    </div>
+  );
+}
 
 function LoginPage() {
   const { studentAuth, completedLessons, quizScores } = useContext(ProgressContext) || {};
@@ -468,6 +523,10 @@ function LoginPage() {
           title="bfa-auth-target"
         />
 
+        {(activeTab === 'student-login' || activeTab === 'student-register') && (
+          <BotoesSociais onErro={setErrorMsg} />
+        )}
+
         {/* 1. Formulário: Aluno Entrar */}
         {activeTab === 'student-login' && (
           <form
@@ -609,6 +668,9 @@ function LoginPage() {
               </label>
               <input
                 type="text"
+                name="otp"
+                autoComplete="one-time-code"
+                inputMode="numeric"
                 required
                 maxLength={8}
                 placeholder="123456"

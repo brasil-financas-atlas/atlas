@@ -4028,3 +4028,81 @@
     right: 0;
   }
 }
+
+/* -- Login com Google, Apple e Facebook ------------------------------------ */
+.login-social {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.login-social__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.login-social__btn:hover {
+  border-color: var(--blue);
+  background-color: var(--paper);
+}
+
+.login-social__btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.login-social__btn:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* Botao da Apple segue o padrao da marca: preto com texto branco (branco no escuro) */
+.login-social__btn--apple {
+  background-color: #000000;
+  border-color: #000000;
+  color: #FFFFFF;
+}
+
+.login-social__btn--apple:hover {
+  background-color: #1F1F1F;
+  border-color: #1F1F1F;
+}
+
+[data-theme="dark-obsidian"] .login-social__btn--apple,
+[data-theme="dark"] .login-social__btn--apple {
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;
+  color: #000000;
+}
+
+.login-social__ou {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.login-social__ou::before,
+.login-social__ou::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--border-color);
+}

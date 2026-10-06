@@ -361,6 +361,8 @@ function Navbar() {
                     <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.35rem' }}>Seu Nome ou Apelido (Opcional):</label>
                     <input
                       type="text"
+                      name="name"
+                      autoComplete="name"
                       placeholder="Ex: Ana Silva"
                       value={authName}
                       onChange={(e) => setAuthName(e.target.value)}
@@ -371,6 +373,8 @@ function Navbar() {
                     <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.35rem' }}>E-mail:</label>
                     <input
                       type="email"
+                      name="email"
+                      autoComplete="email"
                       required
                       placeholder="seu.email@exemplo.com"
                       value={authEmail}
@@ -419,6 +423,9 @@ function Navbar() {
                   <div style={{ marginBottom: '1.25rem' }}>
                     <input
                       type="text"
+                      name="otp"
+                      autoComplete="one-time-code"
+                      inputMode="numeric"
                       required
                       maxLength={10}
                       placeholder="Código de 6 dígitos"

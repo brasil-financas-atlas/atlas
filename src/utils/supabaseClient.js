@@ -441,6 +441,30 @@ async function signInWithOAuth(provider = 'google') {
   }
 }
 
+/**
+ * Lista os provedores de login externo (Google, Apple, Facebook...) que estao
+ * LIGADOS no painel do Supabase. A tela de login so mostra os botoes desses,
+ * para ninguem clicar num provedor desativado e cair numa pagina de erro.
+ */
+let provedoresCache = null;
+async function fetchAuthProviders() {
+  if (provedoresCache) return provedoresCache;
+  if (!supabaseClient) return [];
+  try {
+    const url = supabaseClient.supabaseUrl || SUPABASE_URL;
+    const key = supabaseClient.supabaseKey || SUPABASE_ANON_KEY;
+    const res = await fetch(`${url}/auth/v1/settings`, { headers: { apikey: key } });
+    if (!res.ok) return [];
+    const json = await res.json();
+    const externos = json && json.external ? json.external : {};
+    provedoresCache = Object.keys(externos).filter((nome) => externos[nome] === true);
+    return provedoresCache;
+  } catch (err) {
+    console.warn('[BFA Supabase] Nao foi possivel ler os provedores de login:', err);
+    return [];
+  }
+}
+
 export const BfaSupabase = {
   get client() { return supabaseClient; },
   initSupabase,
@@ -451,6 +475,7 @@ export const BfaSupabase = {
   fetchUserProgress,
   signInUser,
   signInWithOAuth,
+  fetchAuthProviders,
   savePasswordCredential,
   signOutUser,
   restoreSession,
