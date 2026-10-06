@@ -615,7 +615,7 @@ function Navbar() {
     )}
 
     {/* Atalhos de admin fora das aulas (nas aulas a AulaPage tem a propria barra) */}
-    {adminUser && !isAulaRoute && (
+    {adminUser && !isAulaRoute && !currentPath.startsWith('/admin') && (
       <div className="admin-quick-bar" role="toolbar" aria-label="Atalhos de administração">
         <span className="admin-quick-bar__dot" aria-hidden="true" />
         <span className="admin-quick-bar__label">Admin</span>
