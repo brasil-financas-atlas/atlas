@@ -583,7 +583,7 @@
 
 .bfa-quiz__bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--track-finance) 0%, var(--ring) 100%);
+  background: var(--track-finance);
   transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -1251,8 +1251,6 @@
   overflow: hidden;
   white-space: nowrap;
   position: relative;
-  mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
 }
 
 .bfa-ticker-track {
@@ -1337,7 +1335,7 @@
   left: 15%;
   right: 15%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.6), transparent);
+  background: rgba(52, 211, 153, 0.6);
 }
 
 .bfa-hero-showpiece__header {
@@ -1664,8 +1662,7 @@
   transform: translate(-50%, -50%);
   width: 340px;
   height: 340px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(59, 130, 246, 0.12) 40%, transparent 70%);
-  filter: blur(50px);
+  display: none;
   pointer-events: none;
   z-index: 0;
 }
@@ -2894,7 +2891,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, var(--blue-deep) 0%, #001F37 100%);
+  background: var(--blue-deep);
   color: #FFFFFF;
   font-weight: 700;
   font-size: 0.875rem;
@@ -2907,7 +2904,7 @@
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #001F37 0%, #001526 100%);
+  background: #001F37;
   border-color: var(--blue);
   transform: translateY(-2px);
   box-shadow: 0 8px 22px rgba(0, 166, 223, 0.3);
@@ -2939,7 +2936,7 @@
 /* ── 3. Hero Section ─────────────────────────────────────────────────── */
 .hero {
   padding: 6rem 0;
-  background: linear-gradient(180deg, var(--paper) 0%, #FFFFFF 100%);
+  background: var(--paper);
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -3342,7 +3339,7 @@
   height: 40px;
   border-radius: 50%;
   border: none;
-  background: linear-gradient(135deg, var(--track-finance), #0F172A);
+  background: var(--blue-deep);
   color: #FFFFFF;
   font-weight: 800;
   font-size: 1rem;
@@ -4030,7 +4027,8 @@
 }
 
 /* ==========================================================================
-   Pagina inicial: secoes abaixo do hero (NIF, jornada, recursos, chamada)
+   Pagina inicial: secoes abaixo do hero, no estilo editorial do material da
+   BRHSIC Academy. Regra do projeto: cores chapadas, sem gradientes.
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   .bfa-reveal {
@@ -4040,135 +4038,194 @@
   }
 }
 
-.home-wrap {
+.hn-wrap {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
   padding-inline: 1.5rem;
 }
 
-.home-h2 {
-  margin: 0.75rem 0 1rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  color: var(--text-primary);
-}
-
-.home-lead {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: var(--text-secondary);
-  max-width: 560px;
-}
-
-/* -- Parceria NIF ---------------------------------------------------------- */
-.home-nif {
+.hn-sec {
   padding: 6rem 0;
-  background:
-    radial-gradient(1000px 400px at 100% 0%, rgba(0, 166, 223, 0.10), transparent 60%),
-    var(--bg-app);
+  background-color: var(--bg-app);
   border-bottom: 1px solid var(--border-color);
 }
 
-.home-nif__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  gap: 4rem;
-  align-items: center;
+.hn-sec--alt {
+  background-color: var(--bg-surface);
 }
 
-.home-nif__pontos {
-  list-style: none;
-  margin: 1.5rem 0 2rem;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+.hn-rotulo {
+  margin: 0 0 1rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--on-paper, var(--blue-deep));
 }
 
-.home-nif__pontos li {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-weight: 600;
+.hn-titulo {
+  margin: 0 0 1.25rem;
+  max-width: 16ch;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
   color: var(--text-primary);
 }
 
-.home-nif__pontos .bfa-svg-icon {
-  flex-shrink: 0;
-  padding: 7px;
-  box-sizing: content-box;
-  border-radius: 10px;
-  background-color: var(--paper);
-  color: var(--blue);
+.hn-texto {
+  margin: 0 0 1rem;
+  max-width: 60ch;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
 }
 
-.home-nif__acoes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+.hn-texto--forte {
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
-.home-nif__mosaico {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 1rem;
+.hn-cabeca {
+  margin-bottom: 3rem;
 }
 
-.home-foto {
+/* Fotos */
+.hn-foto {
   position: relative;
   margin: 0;
   overflow: hidden;
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-surface);
-  aspect-ratio: 4 / 3;
-  box-shadow: 0 18px 40px -20px rgba(0, 43, 77, 0.35);
+  border-radius: 6px;
+  background-color: var(--paper);
 }
 
-.home-foto--destaque {
-  grid-column: 1 / -1;
-  aspect-ratio: 16 / 8;
-}
-
-.home-foto img,
-.home-foto__reserva,
-.home-foto__reserva svg {
+.hn-foto img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.home-foto img {
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.home-foto:hover img {
-  transform: scale(1.04);
+.hn-foto:hover img {
+  transform: scale(1.03);
 }
 
-.home-foto figcaption {
+.hn-foto--larga {
+  aspect-ratio: 16 / 7;
+  margin-bottom: 1rem;
+}
+
+.hn-galeria {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.hn-galeria .hn-foto {
+  aspect-ratio: 3 / 4;
+}
+
+.hn-foto__legenda {
   position: absolute;
-  left: 0.75rem;
-  bottom: 0.75rem;
-  max-width: calc(100% - 1.5rem);
-  padding: 0.35rem 0.75rem;
-  border-radius: 999px;
-  background: rgba(0, 20, 40, 0.72);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  left: 0;
+  bottom: 0;
+  max-width: 100%;
+  padding: 0.4rem 0.75rem;
+  background-color: var(--blue-deep);
   color: #FFFFFF;
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
-/* -- Trilhas e recursos com icone ----------------------------------------- */
-.home-trilha,
-.home-recurso {
+.hn-duas {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 4rem;
+  align-items: center;
+}
+
+.hn-duas--topo {
+  align-items: start;
+}
+
+.hn-foto--origem {
+  aspect-ratio: 16 / 10;
+  overflow: visible;
+  background: none;
+}
+
+.hn-foto--origem img {
+  border-radius: 6px;
+}
+
+.hn-foto--origem .hn-foto__legenda {
+  display: none;
+}
+
+.hn-legenda-bloco {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-top: 0.85rem;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--blue);
+}
+
+.hn-legenda-bloco span {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.hn-legenda-bloco strong {
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+/* Lista numerada com linhas finas (01, 02, 03...) */
+.hn-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.hn-lista__item {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.hn-lista__num {
+  padding-top: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--on-paper, var(--blue-deep));
+}
+
+.hn-lista__item h3 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.hn-lista__item p {
+  margin: 0;
+  max-width: 48ch;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Cartoes de trilha com icone */
+.home-trilha {
   display: flex;
   flex-direction: column;
   text-decoration: none;
@@ -4182,14 +4239,13 @@
   width: 44px;
   height: 44px;
   margin-bottom: 1rem;
-  border-radius: 12px;
+  border-radius: 8px;
   background-color: var(--paper);
   color: var(--blue);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.home-trilha:hover .home-trilha__icone,
-.home-recurso:hover .home-trilha__icone {
+.home-trilha:hover .home-trilha__icone {
   background-color: var(--blue);
   color: #FFFFFF;
 }
@@ -4213,178 +4269,156 @@
   transform: translateX(4px);
 }
 
-/* -- Jornada -------------------------------------------------------------- */
-.home-jornada {
+/* Chamada final: faixa laranja fina no topo, como no material da Academy */
+.hn-final {
   padding: 6rem 0;
   background-color: var(--bg-app);
+  border-top: 6px solid var(--coral);
 }
 
-.home-jornada__passos {
-  list-style: none;
-  margin: 2.5rem 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.25rem;
-  counter-reset: passo;
+.hn-rotulo--claro {
+  color: var(--text-muted);
 }
 
-.home-passo {
-  position: relative;
-  padding: 1.5rem;
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-surface);
-}
-
-.home-passo:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: 2.6rem;
-  right: -1.25rem;
-  width: 1.25rem;
-  height: 2px;
-  background: linear-gradient(90deg, var(--blue), transparent);
-}
-
-.home-passo__num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue-deep), var(--blue));
-  color: #FFFFFF;
+.hn-final__titulo {
+  margin: 0 0 2.5rem;
+  max-width: 14ch;
   font-family: var(--font-display);
-  font-weight: 800;
-}
-
-.home-passo h3 {
-  margin: 1rem 0 0.5rem;
-  font-size: 1.1rem;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
   color: var(--text-primary);
 }
 
-.home-passo p {
-  margin: 0;
-  font-size: 0.92rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
-}
-
-/* -- Chamada final --------------------------------------------------------- */
-.home-cta {
-  padding: 5rem 0;
-  background-color: var(--bg-app);
-}
-
-.home-cta__box {
-  padding: 4rem 2rem !important;
-  border-radius: 24px;
-  text-align: center;
-  background:
-    radial-gradient(600px 300px at 15% 0%, rgba(0, 166, 223, 0.35), transparent 70%),
-    radial-gradient(500px 260px at 90% 100%, rgba(91, 200, 232, 0.25), transparent 70%),
-    linear-gradient(135deg, #001F37, #002B4D);
-  color: #FFFFFF;
-  max-width: 1232px;
-}
-
-.home-cta__box .eyebrow {
-  color: #8FDDF5;
-  border-color: rgba(143, 221, 245, 0.4);
-  background-color: rgba(143, 221, 245, 0.12);
-}
-
-.home-cta__titulo {
-  margin: 1.25rem 0 0.75rem;
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3rem);
-  letter-spacing: -0.02em;
-  color: #FFFFFF;
-}
-
-.home-cta__texto {
-  margin: 0 auto 2rem;
-  max-width: 520px;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.home-cta__acoes {
+.hn-acoes {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
 }
 
-.home-cta__box .btn-secondary {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.35);
+.hn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-width: 240px;
+  min-height: 52px;
+  padding: 0 1.25rem;
+  border: 1px solid var(--text-primary);
+  border-radius: 4px;
+  background-color: transparent;
+  color: var(--text-primary);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.hn-btn:hover {
+  background-color: var(--text-primary);
+  color: var(--bg-app);
+}
+
+.hn-btn--cheio {
+  border-color: var(--blue-deep);
+  background-color: var(--blue-deep);
   color: #FFFFFF;
 }
 
-.home-cta__box .btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.18);
+.hn-btn--cheio:hover {
+  background-color: #001F37;
   color: #FFFFFF;
 }
 
-/* -- Responsivo ------------------------------------------------------------ */
-@media (max-width: 1024px) {
-  .home-jornada__passos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+[data-theme="dark-obsidian"] .hn-btn--cheio,
+[data-theme="dark"] .hn-btn--cheio {
+  border-color: #0A6FA3;
+  background-color: #0A6FA3;
+}
+
+.hn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.hn-btn:focus-visible,
+.hn-link:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* Responsivo */
+@media (max-width: 1100px) {
+  .hn-galeria {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .home-passo::after {
-    display: none;
+  .hn-galeria .hn-foto:nth-child(n + 4) {
+    aspect-ratio: 4 / 3;
+  }
+  .hn-galeria .hn-foto:nth-child(4) {
+    grid-column: span 2;
+    aspect-ratio: auto;
   }
 }
 
 @media (max-width: 960px), (orientation: portrait) and (max-width: 1100px) {
-  .home-nif__grid {
+  .hn-duas {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
 }
 
 @media (max-width: 768px) {
-  .home-wrap {
+  .hn-wrap {
     padding-inline: 1.25rem;
   }
-  .home-nif,
-  .home-jornada {
+  .hn-sec,
+  .hn-final {
     padding: 3.5rem 0;
   }
-  .home-cta {
-    padding: 2.5rem 0 3.5rem;
+  .hn-foto--larga {
+    aspect-ratio: 4 / 3;
   }
-  .home-cta__box {
-    border-radius: 18px;
-    padding: 3rem 1.25rem !important;
-    width: calc(100% - 2.5rem);
+  .hn-cabeca {
+    margin-bottom: 2rem;
   }
 }
 
-@media (max-width: 560px) {
-  .home-jornada__passos {
-    grid-template-columns: 1fr;
-  }
-  .home-nif__mosaico {
+@media (max-width: 600px) {
+  .hn-galeria {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.6rem;
   }
-  .home-foto figcaption {
-    font-size: 0.7rem;
-    left: 0.5rem;
-    bottom: 0.5rem;
+  .hn-galeria .hn-foto,
+  .hn-galeria .hn-foto:nth-child(n + 4) {
+    aspect-ratio: 3 / 4;
   }
-  .home-nif__acoes > a,
-  .home-cta__acoes > a {
-    flex: 1 1 100%;
+  .hn-galeria .hn-foto:nth-child(4) {
+    grid-column: auto;
+    aspect-ratio: 3 / 4;
+  }
+  .hn-galeria .hn-foto:last-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 4 / 3;
+  }
+  .hn-acoes {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hn-btn {
+    min-width: 0;
   }
 }
 
 @media (orientation: landscape) and (max-height: 540px) {
-  .home-nif,
-  .home-jornada {
+  .hn-sec,
+  .hn-final {
     padding: 2.5rem 0;
   }
 }

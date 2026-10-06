@@ -191,7 +191,7 @@
 
 [data-theme="dark-obsidian"] .hero,
 [data-theme="dark"] .hero {
-  background: linear-gradient(180deg, var(--paper-light) 0%, var(--bg-app) 100%);
+  background: var(--paper-light);
 }
 
 [data-theme="dark-obsidian"] .hero__visual,
@@ -234,14 +234,14 @@
 
 [data-theme="dark-obsidian"] .btn-primary,
 [data-theme="dark"] .btn-primary {
-  background: linear-gradient(135deg, #0A6FA3 0%, #064B73 100%);
+  background: #0A6FA3;
   border-color: rgba(103, 210, 240, 0.35);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="dark-obsidian"] .btn-primary:hover,
 [data-theme="dark"] .btn-primary:hover {
-  background: linear-gradient(135deg, #0C7FBA 0%, #075683 100%);
+  background: #0C7FBA;
 }
 
 [data-theme="dark-obsidian"] .module-card:hover,

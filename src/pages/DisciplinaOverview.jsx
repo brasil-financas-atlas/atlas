@@ -73,7 +73,7 @@ function DisciplinaOverview({ subjectKey }) {
                 </div>
 
                 <div style={{ height: '10px', width: '100%', background: 'var(--paper)', borderRadius: '999px', overflow: 'hidden', marginBottom: '1.5rem', border: '1px solid var(--line)' }}>
-                  <div style={{ height: '100%', width: `${progressPct}%`, background: 'linear-gradient(90deg, var(--blue-deep) 0%, var(--blue) 100%)', borderRadius: '999px', transition: 'width 0.4s ease' }} />
+                  <div style={{ height: '100%', width: `${progressPct}%`, background: 'var(--blue)', borderRadius: '999px', transition: 'width 0.4s ease' }} />
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)' }}>

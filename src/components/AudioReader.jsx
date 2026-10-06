@@ -168,7 +168,7 @@ function AudioReader({ markdownContent, lessonTitle }) {
 
   return (
     <div className="bfa-audio-reader" style={{
-      background: 'linear-gradient(135deg, var(--bg-surface) 0%, var(--color-slate-50) 100%)',
+      background: 'var(--bg-surface)',
       border: '1px solid var(--border-color)',
       borderRadius: 'var(--radius-lg)',
       padding: '0.85rem 1.25rem',

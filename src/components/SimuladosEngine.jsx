@@ -588,7 +588,7 @@ function SimuladosEngine() {
       </div>
 
       {/* Submissão ao Ranking Nacional */}
-      <div style={{ background: 'linear-gradient(135deg, var(--card) 0%, var(--surface-strong) 100%)', padding: '1.75rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-ouro)', marginBottom: '2.5rem' }}>
+      <div style={{ background: 'var(--card)', padding: '1.75rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-ouro)', marginBottom: '2.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
           <div>
             <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>

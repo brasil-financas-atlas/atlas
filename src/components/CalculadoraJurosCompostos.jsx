@@ -410,7 +410,7 @@ function CalculadoraJurosCompostos() {
                   style={{
                     height: '100%',
                     width: `${Math.min(100, (calculations.finalCompound / maxVal) * 100)}%`,
-                    background: 'linear-gradient(90deg, var(--color-verde) 0%, #2ED573 100%)',
+                    background: 'var(--color-verde, #10B981)',
                     borderRadius: '10px',
                     transition: 'width 0.3s ease'
                   }}

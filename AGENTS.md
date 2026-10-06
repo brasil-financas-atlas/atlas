@@ -5,6 +5,10 @@
 2. **Utilizar Sempre Ícones SVG Limpos:** Toda representação gráfica deve ser feita através de componentes SVG vetoriais (`BfaIcon` ou SVG inline).
 3. **Comunicação do Agente:** Em todas as respostas de chat, planos e briefings, o agente não deve utilizar nenhum emoji.
 
+## Proibição de Gradientes
+1. **NUNCA UTILIZAR GRADIENTES** (`linear-gradient`, `radial-gradient`, `conic-gradient`, inclusive em SVG e em máscaras).
+2. Fundos, botões, barras de progresso e destaques usam **cores chapadas** da marca, como no material da BRHSIC Academy.
+
 ---
 
 ## Protocolo de Início de Sessão (/session-start)

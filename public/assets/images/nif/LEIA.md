@@ -1,11 +1,11 @@
 # Fotos do NIF (página inicial)
 
-Coloque aqui as fotos da seção "Parceria NIF" da página inicial:
+Fotos usadas na página inicial. Os nomes e os textos de cada uma ficam em `src/data/parceriaNif.js`.
 
-- `nif-encontro.jpg`: encontro de um núcleo
-- `nif-competicao.jpg`: apresentação na BRHSIC
-- `nif-oficina.jpg`: oficina ou aula
+| Arquivo | Onde aparece |
+| :--- | :--- |
+| `hero-documental-v2.webp` | Foto larga de "Aprender fazendo muda tudo" |
+| `aula-valuation.webp`, `aula-nif.webp`, `certificado-nif.webp`, `aula-renda-fixa.webp`, `aula-auditorio.webp` | Galeria logo abaixo |
+| `nif-auditorio.webp` | "Um núcleo local mostrou o tamanho da oportunidade" (primeiro NIF, La Salle Canoas) |
 
-Use JPG em formato paisagem (de preferência 1200 x 800 px e menos de 300 KB cada).
-Enquanto uma foto não existir, o site mostra uma ilustração da marca no lugar.
-Para usar outros nomes ou textos, edite `src/data/parceriaNif.js`.
+Para trocar uma foto, substitua o arquivo mantendo o nome ou ajuste `src/data/parceriaNif.js`. Prefira WebP com até 300 KB.

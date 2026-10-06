@@ -769,7 +769,7 @@ function VisualizadorFracoesDecimais() {
           <span>{porcentagem}%</span>
         </div>
         <div style={{ height: '24px', background: 'var(--card)', borderRadius: '999px', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
-          <div style={{ width: `${porcentagem}%`, height: '100%', background: 'linear-gradient(90deg, #38BDF8, #10B981)', transition: 'width 0.2s ease' }} />
+          <div style={{ width: `${porcentagem}%`, height: '100%', background: '#10B981', transition: 'width 0.2s ease' }} />
         </div>
       </div>
     </div>

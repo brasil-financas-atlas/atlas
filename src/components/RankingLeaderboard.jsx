@@ -97,7 +97,7 @@ function RankingLeaderboard() {
           </div>
 
           {/* 1º Lugar (Ouro - Destaque Central) */}
-          <div className="bfa-bento-card" style={{ textAlign: 'center', padding: '2rem 1.5rem', borderTop: '4px solid var(--color-ouro)', background: 'linear-gradient(135deg, var(--bg-surface) 0%, rgba(245, 158, 11, 0.08) 100%)', transform: 'scale(1.03)', boxShadow: '0 12px 28px rgba(0,0,0,0.12)' }}>
+          <div className="bfa-bento-card" style={{ textAlign: 'center', padding: '2rem 1.5rem', borderTop: '4px solid var(--color-ouro)', background: 'var(--bg-surface)', transform: 'scale(1.03)', boxShadow: '0 12px 28px rgba(0,0,0,0.12)' }}>
             <div style={{ display: 'inline-flex', padding: '0.65rem', borderRadius: '50%', background: 'rgba(245, 158, 11, 0.2)', marginBottom: '0.5rem' }}>
               <BfaIcon name="crown" size={36} color="var(--color-ouro)" />
             </div>

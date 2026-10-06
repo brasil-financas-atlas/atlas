@@ -450,7 +450,7 @@ function Navbar() {
             {authStep === 'profile' && (
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem', padding: '1rem', borderRadius: '12px', background: 'var(--surface-strong)', border: '1px solid var(--border)' }}>
-                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--track-finance), #0F172A)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1.2rem' }}>
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--blue-deep)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1.2rem' }}>
                     {(studentAuth?.profile?.name || studentAuth?.user?.email || 'A').charAt(0).toUpperCase()}
                   </div>
                   <div>
