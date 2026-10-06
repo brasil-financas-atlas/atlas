@@ -406,6 +406,146 @@ function BfaIcon({ name, size = 20, color = "currentColor", className = "", styl
           <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
         </svg>
       );
+    /* Conjunto do menu lateral: mesmo traco (1.75), cantos arredondados, 24x24 */
+    case "nav-math":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <path d="M18 7V4H6l6 8-6 8h12v-3" />
+        </svg>
+      );
+    case "nav-finance":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <path d="M3 3v18h18" />
+          <path d="m7 15 4-4 3 3 5-6" />
+        </svg>
+      );
+    case "nav-brhsic":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <path d="M5 21V4" />
+          <path d="M5 4h12l-2.5 4L17 12H5" />
+        </svg>
+      );
+    case "nav-exercises":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <rect x="8" y="2" width="8" height="4" rx="1" />
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+          <path d="m9 14 2 2 4-4" />
+        </svg>
+      );
+    case "nav-news":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <rect x="3" y="4" width="18" height="16" rx="2" />
+          <path d="M7 9h10" />
+          <path d="M7 13h10" />
+          <path d="M7 17h6" />
+        </svg>
+      );
+    case "nav-info":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 11v5" />
+          <path d="M12 8h.01" />
+        </svg>
+      );
+    case "nav-external":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <path d="M14 4h6v6" />
+          <path d="M20 4l-9 9" />
+          <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+        </svg>
+      );
+    case "nav-publish":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <path d="M12 15V3" />
+          <path d="m7 8 5-5 5 5" />
+          <path d="M5 21h14" />
+        </svg>
+      );
+    case "nav-dashboard":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <rect x="3" y="3" width="7" height="9" rx="1" />
+          <rect x="14" y="3" width="7" height="5" rx="1" />
+          <rect x="14" y="12" width="7" height="9" rx="1" />
+          <rect x="3" y="16" width="7" height="5" rx="1" />
+        </svg>
+      );
+    case "nav-teacher":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <path d="M22 10 12 5 2 10l10 5 10-5z" />
+          <path d="M6 12v5c3 2 9 2 12 0v-5" />
+        </svg>
+      );
+    case "nav-user":
+      return (
+        <svg {...defaultProps} strokeWidth={1.75}>
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 21a8 8 0 0 1 16 0" />
+        </svg>
+      );
+    case "save":
+      return (
+        <svg {...defaultProps}>
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+          <polyline points="17 21 17 13 7 13 7 21" />
+          <polyline points="7 3 7 8 15 8" />
+        </svg>
+      );
+    case "trash":
+      return (
+        <svg {...defaultProps}>
+          <polyline points="3 6 5 6 21 6" />
+          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+          <path d="M10 11v6" />
+          <path d="M14 11v6" />
+          <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+        </svg>
+      );
+    case "alert":
+      return (
+        <svg {...defaultProps}>
+          <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+      );
+    case "lightbulb":
+      return (
+        <svg {...defaultProps}>
+          <path d="M9 18h6" />
+          <path d="M10 22h4" />
+          <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z" />
+        </svg>
+      );
+    case "dollarSign":
+      return (
+        <svg {...defaultProps}>
+          <line x1="12" y1="1" x2="12" y2="23" />
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+        </svg>
+      );
+    case "pieChart":
+      return (
+        <svg {...defaultProps}>
+          <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
+          <path d="M22 12A10 10 0 0 0 12 2v10z" />
+        </svg>
+      );
+    case "search":
+      return (
+        <svg {...defaultProps}>
+          <circle cx="11" cy="11" r="7" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      );
     case "menu":
       return (
         <svg {...defaultProps}>

@@ -27,12 +27,8 @@ function CookieConsent() {
 
   return (
     <div
+      className="bfa-cookie-banner"
       style={{
-        position: 'fixed',
-        bottom: '1.5rem',
-        left: '1.5rem',
-        zIndex: 99998,
-        maxWidth: '420px',
         backgroundColor: 'var(--bg-surface)',
         color: 'var(--text-primary)',
         border: '1px solid var(--border-color)',

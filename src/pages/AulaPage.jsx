@@ -25,7 +25,7 @@ function getYouTubeEmbedUrl(url) {
 
 function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
     const { completedLessons, toggleLessonComplete } = useContext(ProgressContext || createContext({}));
-  const { isAuthenticated, inlineEditActive, toggleInlineEdit, isAdmin, cmsData, updateLesson } = useContext(AdminContext || createContext({}));
+  const { isAuthenticated, inlineEditActive, toggleInlineEdit, isAdmin, cmsData, updateLesson, publicarConteudo, statusPublicacao, erroPublicacao } = useContext(AdminContext || createContext({}));
   const [sidebarOpen, setSidebarOpen] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 768);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [inputVideoUrl, setInputVideoUrl] = useState('');
@@ -301,7 +301,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
       }}>
         <div style={{ padding: '1rem', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, backgroundColor: 'var(--bg-surface-blue)', zIndex: 10 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <img src="https://brhsic-main.vercel.app/brand/brhsic-symbol.png" alt="BRHSIC" style={{ height: '24px', width: 'auto' }} />
+              <img src="https://brhsic-main.vercel.app/brand/brhsic-symbol.png" alt="BRHSIC" className="bfa-brand-img" style={{ height: '24px', width: 'auto' }} />
               <div>
               <span style={{ color: trackColor, fontWeight: 700, fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
               <BfaIcon name={isMatematica ? "math" : "finance"} size={13} />
@@ -386,7 +386,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         </div>
 
         {shareToast && (
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '1rem', backgroundColor: '#E6F9F3', color: 'var(--accent-green)', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '1rem', backgroundColor: 'var(--status-success-bg, #E6F9F3)', color: 'var(--accent-green)', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem' }}>
             <BfaIcon name="check" size={16} color="var(--accent-green)" />
             <span style={{ fontWeight: 500 }}>Link da aula copiado para a área de transferência!</span>
           </div>
@@ -394,7 +394,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
         {/* Lesson Title & Audio Header */}
         <div style={{ marginBottom: '2.5rem' }}>
-          <span style={{ color: 'var(--blue-deep)', fontWeight: 800, fontSize: '0.75rem', padding: '0.25rem 0.75rem', backgroundColor: 'var(--paper)', border: '1px solid var(--line)', borderRadius: '9999px', display: 'inline-block', marginBottom: '1rem', letterSpacing: '0.04em' }}>
+          <span style={{ color: 'var(--on-paper, var(--blue-deep))', fontWeight: 800, fontSize: '0.75rem', padding: '0.25rem 0.75rem', backgroundColor: 'var(--paper)', border: '1px solid var(--line)', borderRadius: '9999px', display: 'inline-block', marginBottom: '1rem', letterSpacing: '0.04em' }}>
             {isMatematica ? 'MATEMÁTICA APLICADA' : 'FINANÇAS & MERCADO'} · {moduloObj.titulo.toUpperCase()}
           </span>
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '3rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', margin: '0 0 1rem 0', lineHeight: 1.1 }}>
@@ -720,6 +720,23 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
             <BfaIcon name="pencil" size={13} />
             <span>{inlineEditActive ? 'Edição Ativa' : 'Editar Conteúdo'}</span>
           </button>
+          {isAdmin && publicarConteudo && (
+            <button
+              type="button"
+              onClick={publicarConteudo}
+              disabled={statusPublicacao === 'publicando'}
+              className="bfa-btn bfa-btn--sm bfa-btn--ghost"
+              title={erroPublicacao || 'Publicar as alterações para todos os visitantes'}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.78rem' }}
+            >
+              <BfaIcon name="nav-publish" size={13} />
+              <span>
+                {statusPublicacao === 'publicando' ? 'Publicando...' :
+                  statusPublicacao === 'publicado' ? 'Publicado' :
+                  statusPublicacao === 'erro' ? 'Erro ao publicar' : 'Publicar'}
+              </span>
+            </button>
+          )}
           {isAdmin && (
             <a
               href="#/admin"

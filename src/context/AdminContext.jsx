@@ -9,6 +9,14 @@ import { BfaSupabase } from '../utils/supabaseClient.js';
    Para criar o primeiro admin, veja a seção 11 de src/data/schema.sql. */
 
 const PAPEIS_ADMIN = ['admin', 'admin_chief'];
+// Quem tem acesso ao painel e ao modo de edicao (professores e colaboradores
+// editam, mas suas edicoes vao para aprovacao do admin chefe).
+const PAPEIS_EQUIPE = ['admin_chief', 'admin', 'teacher', 'collaborator'];
+const ROTAS_DE_LOGIN = ['/login', '/auth', '/admin/login', '/confirmacao', '/confirmacao-email', '/auth-confirm', '/auth/confirm', '/auth/callback'];
+
+function ehEquipe(usuario) {
+  return !!usuario && PAPEIS_EQUIPE.includes(normalizarPapel(usuario.role));
+}
 const LOCAL_STORAGE_CMS_KEY = 'bfa_cms_overrides';
 const LOCAL_STORAGE_INLINE_EDIT_KEY = 'bfa_inline_edit_mode';
 const LOCAL_STORAGE_THEME_KEY = 'bfa_theme_preference';
@@ -117,7 +125,7 @@ export function AdminProvider({ children }) {
 
       if (sp && sp.isConfigured()) {
         const sessao = await sp.restoreSession();
-        if (!cancelado && sessao) setCurrentUser(sessao);
+        if (!cancelado && ehEquipe(sessao)) setCurrentUser(sessao);
 
         const doBanco = await sp.fetchSiteContent();
         if (doBanco) {
@@ -206,6 +214,52 @@ export function AdminProvider({ children }) {
     }
   }, [currentUser]);
 
+  // Login unico: o aluno, o professor e o admin entram pela mesma tela (senha,
+  // codigo por e-mail ou Google/Facebook/Apple). Sempre que a sessao do Supabase
+  // muda, o papel e lido do banco; se for da equipe, as funcoes de admin ligam
+  // na hora e quem acabou de entrar pela tela de login vai direto ao painel.
+  React.useEffect(() => {
+    const sp = BfaSupabase;
+    const client = sp && sp.isConfigured() ? sp.client : null;
+    if (!client || !client.auth || !client.auth.onAuthStateChange) return undefined;
+
+    const { data } = client.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT') {
+        setCurrentUser(null);
+        setInlineEditActive(false);
+        return;
+      }
+      if (event !== 'SIGNED_IN' && event !== 'USER_UPDATED') return;
+
+      // O Supabase pede para nao chamar o banco dentro deste callback.
+      setTimeout(async () => {
+        const usuario = await sp.restoreSession();
+        if (!ehEquipe(usuario)) {
+          setCurrentUser(null);
+          return;
+        }
+        setCurrentUser((anterior) => {
+          if (!anterior || anterior.id !== usuario.id) setInlineEditActive(true);
+          return usuario;
+        });
+
+        let veioDoLogin = false;
+        try {
+          veioDoLogin = sessionStorage.getItem('bfa_login_pendente') === '1';
+          sessionStorage.removeItem('bfa_login_pendente');
+        } catch (e) {}
+        const rota = (window.location.hash || '').replace(/^#/, '').split('?')[0] || '/';
+        if (event === 'SIGNED_IN' && (veioDoLogin || ROTAS_DE_LOGIN.includes(rota))) {
+          window.location.hash = '#/admin';
+        }
+      }, 0);
+    });
+
+    return () => {
+      if (data && data.subscription) data.subscription.unsubscribe();
+    };
+  }, []);
+
   React.useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_CMS_KEY, JSON.stringify(cmsData));
   }, [cmsData]);
@@ -240,6 +294,9 @@ export function AdminProvider({ children }) {
     }
 
     const res = await sp.signInUser(String(email).trim(), password);
+    if (res.success && !ehEquipe(res.user)) {
+      return { ...res, isStaff: false };
+    }
     if (res.success) {
       setCurrentUser(res.user);
       setInlineEditActive(true);
@@ -524,6 +581,7 @@ export function AdminProvider({ children }) {
     isAdminChief: isChief,
     userRole,
     carregandoSessao,
+    isStaff: ehEquipe(currentUser),
     login,
     logout,
     publicarConteudo,

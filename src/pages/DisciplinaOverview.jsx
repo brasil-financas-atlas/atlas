@@ -36,7 +36,7 @@ function DisciplinaOverview({ subjectKey }) {
       {/* ── 1. Hero Overview (BRHSIC Clean Design) ───────────────── */}
       <section style={{ padding: '4.5rem 0 3.5rem 0', background: 'var(--bg-surface-blue)', borderBottom: '1px solid var(--border-color)', position: 'relative' }}>
         <div className="site-container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4rem', alignItems: 'center' }}>
+          <div className="disciplina-hero__grid">
             
             {/* Left Column: Curriculum Info */}
             <div>
@@ -110,7 +110,7 @@ function DisciplinaOverview({ subjectKey }) {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem', paddingBottom: '1.25rem', borderBottom: '1px solid var(--border-color)' }}>
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                      <span style={{ color: 'var(--blue-deep)', background: 'var(--paper)', border: '1px solid var(--line)', padding: '0.25rem 0.65rem', borderRadius: '9999px', fontWeight: 800, fontSize: '0.75rem', letterSpacing: '0.04em' }}>
+                      <span style={{ color: 'var(--on-paper, var(--blue-deep))', background: 'var(--paper)', border: '1px solid var(--line)', padding: '0.25rem 0.65rem', borderRadius: '9999px', fontWeight: 800, fontSize: '0.75rem', letterSpacing: '0.04em' }}>
                         MÓDULO {idx + 1}
                       </span>
                       <span style={{ color: 'var(--text-secondary)', fontWeight: 500, fontSize: '0.875rem' }}>
@@ -156,7 +156,7 @@ function DisciplinaOverview({ subjectKey }) {
                 </div>
 
                 {/* Module Lessons Grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: '1rem' }}>
                   {mod.aulas.map((aula, aIdx) => {
                     const lessonId = `${subjectKey}-${mod.slug}-${aula.slug}`;
                     const isDone = completedLessons && completedLessons.includes(lessonId);
@@ -186,7 +186,7 @@ function DisciplinaOverview({ subjectKey }) {
                           </span>
                         </div>
                         {isDone ? (
-                          <span style={{ color: 'var(--accent-green)', background: '#E6F9F3', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 600, fontSize: '0.75rem' }}>
+                          <span style={{ color: 'var(--accent-green)', background: 'var(--status-success-bg, #E6F9F3)', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 600, fontSize: '0.75rem' }}>
                             Concluída
                           </span>
                         ) : (
@@ -463,7 +463,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
             )}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: '1rem' }}>
             {moduloObj.aulas.map((aula, aIdx) => {
               const lessonId = `${subjectKey}-${moduloSlug}-${aula.slug}`;
               const isDone = completedLessons && completedLessons.includes(lessonId);
@@ -493,7 +493,7 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                     </span>
                   </div>
                   {isDone ? (
-                    <span style={{ color: 'var(--accent-green)', background: '#E6F9F3', padding: '0.25rem 0.75rem', borderRadius: '999px', fontWeight: 600, fontSize: '0.75rem' }}>
+                    <span style={{ color: 'var(--accent-green)', background: 'var(--status-success-bg, #E6F9F3)', padding: '0.25rem 0.75rem', borderRadius: '999px', fontWeight: 600, fontSize: '0.75rem' }}>
                       Concluída
                     </span>
                   ) : (

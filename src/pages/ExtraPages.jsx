@@ -15,7 +15,7 @@ function BrhsicPage() {
               <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '0.25rem 0.75rem', backgroundColor: 'var(--accent-gold)', color: '#fff', borderRadius: '999px', letterSpacing: '0.05em' }}>
                 COMPETIÇÃO NACIONAL
               </span>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '0.25rem 0.75rem', backgroundColor: 'var(--accent-green)', color: '#fff', borderRadius: '999px', letterSpacing: '0.05em' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '0.25rem 0.75rem', backgroundColor: 'var(--accent-green)', color: '#001F37', borderRadius: '999px', letterSpacing: '0.05em' }}>
                 EQUITY RESEARCH
               </span>
             </div>

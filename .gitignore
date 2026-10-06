@@ -26,3 +26,5 @@ node_modules/
 dist/
 .vite/
 NUL
+# Cache local do Supabase CLI
+supabase/.temp/
