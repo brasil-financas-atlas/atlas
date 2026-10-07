@@ -1,6 +1,7 @@
 import MarketTickerRibbon from './MarketTickerRibbon';
 import { EXACT_CONTENT } from '../data/contentData';
 import BfaIcon from './Icons';
+import { normalizarEmail, emailValido, normalizarCodigo, lerCampo, traduzirErroAuth } from '../utils/authHelpers';
 import { useRouter } from '../router';
 import { ProgressContext } from '../context/ProgressContext';
 import { AdminContext } from '../context/AdminContext';
@@ -335,24 +336,29 @@ function Navbar() {
                 <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1.25rem' }}>
                   Informe seu e-mail para receber um código de acesso seguro sem necessidade de senha. Seu progresso será sincronizado na nuvem.
                 </p>
-                <form onSubmit={async (e) => {
+                <form noValidate onSubmit={async (e) => {
                   e.preventDefault();
-                  if (!authEmail.trim()) {
-                    setAuthError('Por favor, informe um e-mail válido.');
+                  // Le do formulario: cobre o preenchimento automatico do navegador
+                  const emailLimpo = normalizarEmail(lerCampo(e.currentTarget, 'email', authEmail));
+                  const nomeLimpo = lerCampo(e.currentTarget, 'name', authName).trim();
+                  setAuthEmail(emailLimpo);
+                  setAuthName(nomeLimpo);
+                  if (!emailValido(emailLimpo)) {
+                    setAuthError('E-mail inválido. Confira se está no formato nome@email.com.');
                     return;
                   }
                   setAuthLoading(true);
                   setAuthError('');
                   try {
                     if (studentAuth?.signInWithEmail) {
-                      await studentAuth.signInWithEmail(authEmail, authName);
-                      setAuthMessage('Código de acesso enviado para seu e-mail!');
+                      await studentAuth.signInWithEmail(emailLimpo, nomeLimpo);
+                      setAuthMessage(`Código enviado para ${emailLimpo}. Confira a caixa de entrada e o spam.`);
                       setAuthStep('otp');
                     } else {
                       setAuthError('Módulo de autenticação Supabase indisponível no momento.');
                     }
                   } catch (err) {
-                    setAuthError(err?.message || 'Erro ao enviar código.');
+                    setAuthError(traduzirErroAuth(err));
                   } finally {
                     setAuthLoading(false);
                   }
@@ -361,6 +367,8 @@ function Navbar() {
                     <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.35rem' }}>Seu Nome ou Apelido (Opcional):</label>
                     <input
                       type="text"
+                      name="name"
+                      autoComplete="name"
                       placeholder="Ex: Ana Silva"
                       value={authName}
                       onChange={(e) => setAuthName(e.target.value)}
@@ -371,6 +379,8 @@ function Navbar() {
                     <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.35rem' }}>E-mail:</label>
                     <input
                       type="email"
+                      name="email"
+                      autoComplete="email"
                       required
                       placeholder="seu.email@exemplo.com"
                       value={authEmail}
@@ -396,9 +406,11 @@ function Navbar() {
                 <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1.25rem' }}>
                   Digite o código de 6 dígitos enviado para <strong>{authEmail}</strong>:
                 </p>
-                <form onSubmit={async (e) => {
+                <form noValidate onSubmit={async (e) => {
                   e.preventDefault();
-                  if (!authOtp.trim()) {
+                  const codigo = normalizarCodigo(lerCampo(e.currentTarget, 'otp', authOtp));
+                  setAuthOtp(codigo);
+                  if (!codigo) {
                     setAuthError('Por favor, informe o código.');
                     return;
                   }
@@ -406,12 +418,12 @@ function Navbar() {
                   setAuthError('');
                   try {
                     if (studentAuth?.verifyOtpCode) {
-                      await studentAuth.verifyOtpCode(authEmail, authOtp);
+                      await studentAuth.verifyOtpCode(authEmail, codigo);
                       setAuthStep('profile');
                       setAuthMessage('Login realizado com sucesso!');
                     }
                   } catch (err) {
-                    setAuthError(err?.message || 'Código inválido ou expirado.');
+                    setAuthError(traduzirErroAuth(err));
                   } finally {
                     setAuthLoading(false);
                   }
@@ -419,6 +431,9 @@ function Navbar() {
                   <div style={{ marginBottom: '1.25rem' }}>
                     <input
                       type="text"
+                      name="otp"
+                      autoComplete="one-time-code"
+                      inputMode="numeric"
                       required
                       maxLength={10}
                       placeholder="Código de 6 dígitos"

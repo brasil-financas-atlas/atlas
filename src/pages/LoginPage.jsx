@@ -7,6 +7,7 @@ import React, { useState, useEffect, useContext, createContext } from 'react';
 import { ProgressContext } from '../context/ProgressContext';
 import { AdminContext } from '../context/AdminContext';
 import { BfaSupabase } from '../utils/supabaseClient';
+import { normalizarEmail, emailValido, normalizarCodigo, lerCampo, traduzirErroAuth } from '../utils/authHelpers';
 
 function LoginPage() {
   const { studentAuth, completedLessons, quizScores } = useContext(ProgressContext) || {};
@@ -24,6 +25,14 @@ function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [reenvioEm, setReenvioEm] = useState(0);
+
+  // Contagem para poder pedir outro codigo (o Supabase limita pedidos seguidos)
+  useEffect(() => {
+    if (reenvioEm <= 0) return undefined;
+    const t = setTimeout(() => setReenvioEm(reenvioEm - 1), 1000);
+    return () => clearTimeout(t);
+  }, [reenvioEm]);
 
   // Login unico: depois de entrar, quem e da equipe (professor/admin) vai
   // direto ao painel; aluno vai para a pagina inicial.
@@ -48,8 +57,18 @@ function LoginPage() {
   // Login de Aluno com E-mail e Senha
   const handleStudentPasswordLogin = async (e) => {
     e.preventDefault();
-    if (!email.trim() || !password.trim()) {
+    // Le do formulario: cobre o preenchimento automatico do navegador
+    const form = e.currentTarget;
+    const emailLimpo = normalizarEmail(lerCampo(form, 'username', email));
+    const senha = lerCampo(form, 'password', password);
+    setEmail(emailLimpo);
+    setPassword(senha);
+    if (!emailLimpo || !senha) {
       setErrorMsg('Por favor, informe seu e-mail e senha.');
+      return;
+    }
+    if (!emailValido(emailLimpo)) {
+      setErrorMsg('E-mail inválido. Confira se está no formato nome@email.com.');
       return;
     }
 
@@ -65,14 +84,14 @@ function LoginPage() {
 
       const supabase = sp.client;
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password: password
+        email: emailLimpo,
+        password: senha
       });
 
       if (error) throw error;
 
       if (sp?.savePasswordCredential) {
-        sp.savePasswordCredential(email.trim(), password, name || email.trim());
+        sp.savePasswordCredential(emailLimpo, senha, name || emailLimpo);
       }
 
       setSuccessMsg('Login realizado com sucesso! Sincronizando seu progresso...');
@@ -83,11 +102,7 @@ function LoginPage() {
       await irDepoisDoLogin();
     } catch (err) {
       console.warn('[BFA Login] Erro no login do aluno:', err);
-      let msg = err.message || 'Falha ao autenticar.';
-      if (msg.includes('Invalid login credentials')) {
-        msg = 'E-mail ou senha incorretos. Verifique suas credenciais ou use o acesso sem senha via OTP.';
-      }
-      setErrorMsg(msg);
+      setErrorMsg(traduzirErroAuth(err));
     } finally {
       setIsLoading(false);
     }
@@ -96,12 +111,24 @@ function LoginPage() {
   // Cadastro de Novo Aluno
   const handleStudentRegister = async (e) => {
     e.preventDefault();
-    if (!name.trim() || !email.trim() || !password.trim()) {
+    const form = e.currentTarget;
+    const nomeLimpo = lerCampo(form, 'name', name).trim();
+    const emailLimpo = normalizarEmail(lerCampo(form, 'username', email));
+    const senha = lerCampo(form, 'password', password);
+    setName(nomeLimpo);
+    setEmail(emailLimpo);
+    setPassword(senha);
+    if (!nomeLimpo || !emailLimpo || !senha) {
       setErrorMsg('Por favor, preencha todos os campos obrigatórios.');
       return;
     }
 
-    if (password.length < 6) {
+    if (!emailValido(emailLimpo)) {
+      setErrorMsg('E-mail inválido. Confira se está no formato nome@email.com.');
+      return;
+    }
+
+    if (senha.length < 6) {
       setErrorMsg('A senha deve conter no mínimo 6 caracteres.');
       return;
     }
@@ -129,13 +156,13 @@ function LoginPage() {
       const redirectUrl = typeof window !== 'undefined' ? (window.location.origin + window.location.pathname + '#/confirmacao') : '';
 
       const { data, error } = await supabase.auth.signUp({
-        email: email.trim(),
-        password: password,
+        email: emailLimpo,
+        password: senha,
         options: {
           emailRedirectTo: redirectUrl,
           data: {
-            name: name.trim(),
-            full_name: name.trim()
+            name: nomeLimpo,
+            full_name: nomeLimpo
           }
         }
       });
@@ -147,7 +174,7 @@ function LoginPage() {
         try {
           await supabase.from('student_profiles').upsert({
             id: data.user.id,
-            name: name.trim(),
+            name: nomeLimpo,
             role: 'student',
             progress: initialProgress,
             updated_at: new Date().toISOString()
@@ -160,8 +187,8 @@ function LoginPage() {
         try {
           await supabase.from('profiles').upsert({
             id: data.user.id,
-            email: email.trim(),
-            full_name: name.trim(),
+            email: emailLimpo,
+            full_name: nomeLimpo,
             role: 'student',
             updated_at: new Date().toISOString()
           });
@@ -172,7 +199,7 @@ function LoginPage() {
 
       if (data?.session) {
         if (sp?.savePasswordCredential) {
-          sp.savePasswordCredential(email.trim(), password, name.trim());
+          sp.savePasswordCredential(emailLimpo, senha, nomeLimpo);
         }
         setSuccessMsg('Cadastro realizado com sucesso! Conectando...');
         if (studentAuth?.reloadProfile) {
@@ -183,7 +210,7 @@ function LoginPage() {
         }, 1000);
       } else {
         if (sp?.savePasswordCredential) {
-          sp.savePasswordCredential(email.trim(), password, name.trim());
+          sp.savePasswordCredential(emailLimpo, senha, nomeLimpo);
         }
         setSuccessMsg('Conta de aluno criada com sucesso! Caso a confirmação de e-mail esteja ativada no seu Supabase, verifique sua caixa de entrada para confirmar o acesso.');
         setTimeout(() => {
@@ -192,11 +219,7 @@ function LoginPage() {
       }
     } catch (err) {
       console.warn('[BFA Register] Erro no cadastro:', err);
-      let msg = err.message || 'Falha ao criar conta.';
-      if (msg.includes('User already registered')) {
-        msg = 'Este e-mail já está cadastrado. Por favor, faça login.';
-      }
-      setErrorMsg(msg);
+      setErrorMsg(traduzirErroAuth(err));
     } finally {
       setIsLoading(false);
     }
@@ -205,8 +228,15 @@ function LoginPage() {
   // Envio de Código OTP para Aluno
   const handleSendOtp = async (e) => {
     e.preventDefault();
-    if (!email.trim()) {
+    const form = (e.currentTarget && e.currentTarget.form) || null;
+    const emailLimpo = normalizarEmail(lerCampo(form, 'username', email));
+    setEmail(emailLimpo);
+    if (!emailLimpo) {
       setErrorMsg('Por favor, informe seu e-mail.');
+      return;
+    }
+    if (!emailValido(emailLimpo)) {
+      setErrorMsg('E-mail inválido. Confira se está no formato nome@email.com.');
       return;
     }
 
@@ -216,14 +246,15 @@ function LoginPage() {
 
     try {
       if (studentAuth?.signInWithEmail) {
-        await studentAuth.signInWithEmail(email.trim(), name.trim());
-        setSuccessMsg(`Código de acesso enviado para ${email}. Verifique seu e-mail.`);
+        await studentAuth.signInWithEmail(emailLimpo, name.trim());
+        setSuccessMsg(`Código enviado para ${emailLimpo}. Confira a caixa de entrada e o spam.`);
+        setReenvioEm(60);
         setActiveTab('otp-verify');
       } else {
         throw new Error('Módulo de autenticação indisponível.');
       }
     } catch (err) {
-      setErrorMsg(err.message || 'Erro ao enviar código de acesso.');
+      setErrorMsg(traduzirErroAuth(err));
     } finally {
       setIsLoading(false);
     }
@@ -232,7 +263,9 @@ function LoginPage() {
   // Validação de OTP
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
-    if (!otpToken.trim()) {
+    const codigo = normalizarCodigo(lerCampo(e.currentTarget, 'otp', otpToken));
+    setOtpToken(codigo);
+    if (!codigo) {
       setErrorMsg('Por favor, informe o código de 6 dígitos.');
       return;
     }
@@ -243,12 +276,12 @@ function LoginPage() {
 
     try {
       if (studentAuth?.verifyOtpCode) {
-        await studentAuth.verifyOtpCode(email.trim(), otpToken.trim());
+        await studentAuth.verifyOtpCode(email, codigo);
         setSuccessMsg('Código validado com sucesso! Conectando...');
         await irDepoisDoLogin();
       }
     } catch (err) {
-      setErrorMsg(err.message || 'Código inválido ou expirado.');
+      setErrorMsg(traduzirErroAuth(err));
     } finally {
       setIsLoading(false);
     }
@@ -471,6 +504,7 @@ function LoginPage() {
         {/* 1. Formulário: Aluno Entrar */}
         {activeTab === 'student-login' && (
           <form
+            noValidate
             target="bfa_auth_iframe"
             method="POST"
             action="about:blank"
@@ -533,6 +567,7 @@ function LoginPage() {
         {/* 2. Formulário: Aluno Cadastro */}
         {activeTab === 'student-register' && (
           <form
+            noValidate
             target="bfa_auth_iframe"
             method="POST"
             action="about:blank"
@@ -602,13 +637,16 @@ function LoginPage() {
 
         {/* 3. Formulário: Professor / Admin */}
         {activeTab === 'otp-verify' && (
-          <form onSubmit={handleVerifyOtp}>
+          <form onSubmit={handleVerifyOtp} noValidate>
             <div style={{ marginBottom: '1.5rem' }}>
               <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem', textAlign: 'center' }}>
                 Código de 6 dígitos
               </label>
               <input
                 type="text"
+                name="otp"
+                autoComplete="one-time-code"
+                inputMode="numeric"
                 required
                 maxLength={8}
                 placeholder="123456"
@@ -625,6 +663,16 @@ function LoginPage() {
               style={{ width: '100%', padding: '0.875rem', fontSize: '0.9375rem', borderRadius: 'var(--radius-md)', marginBottom: '1rem', justifyContent: 'center' }}
             >
               {isLoading ? 'Verificando...' : 'Confirmar e Conectar'}
+            </button>
+
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={handleSendOtp}
+              disabled={isLoading || reenvioEm > 0}
+              style={{ width: '100%', padding: '0.875rem', fontSize: '0.9375rem', borderRadius: 'var(--radius-md)', justifyContent: 'center', marginBottom: '0.5rem' }}
+            >
+              {reenvioEm > 0 ? `Reenviar código em ${reenvioEm}s` : 'Reenviar código'}
             </button>
 
             <button

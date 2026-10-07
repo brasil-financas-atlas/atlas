@@ -6,6 +6,7 @@ import { BfaSupabase } from './supabaseClient.js';
    ========================================================================== */
 
 import React, {  useState, useEffect, useRef, useCallback  } from 'react';
+import { normalizarEmail, normalizarCodigo } from './authHelpers';
 
 export function useStudentAuth() {
   const [user, setUser] = useState(null);
@@ -293,7 +294,7 @@ export function useStudentAuth() {
     }
     const supabase = BfaSupabase.client;
     const { data, error } = await supabase.auth.signInWithOtp({
-      email,
+      email: normalizarEmail(email),
       options: {
         data: { name: name || 'Estudante' },
         emailRedirectTo: typeof window !== 'undefined' ? (window.location.origin + window.location.pathname + '#/confirmacao') : ''
@@ -310,8 +311,8 @@ export function useStudentAuth() {
     }
     const supabase = BfaSupabase.client;
     const { data, error } = await supabase.auth.verifyOtp({
-      email,
-      token,
+      email: normalizarEmail(email),
+      token: normalizarCodigo(token),
       type: 'email'
     });
     if (error) throw error;
