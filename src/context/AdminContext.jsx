@@ -132,26 +132,29 @@ export function AdminProvider({ children }) {
           adotarSeMaisNovo(doBanco);
         }
 
-        // Carrega as edições pendentes do banco
-        try {
-          const pending = await sp.fetchPendingEdits();
-          if (!cancelado && pending && Array.isArray(pending) && pending.length > 0) {
-            const normalizedPending = pending.map(p => ({
-              id: p.id,
-              authorName: p.author_name || p.authorName || 'Colaborador',
-              resourceType: p.resource_type || p.resourceType,
-              resourceId: p.resource_id || p.resourceId,
-              changesJson: p.changes_json || p.changesJson,
-              createdAt: p.created_at || p.createdAt,
-              status: p.status || 'pending'
-            }));
-            setCmsData(prev => ({
-              ...prev,
-              pendingEdits: normalizedPending
-            }));
+        // As edições pendentes só existem para a equipe. Pedir isso a um
+        // visitante sem sessão fazia o banco responder 401 em toda página.
+        if (ehEquipe(sessao)) {
+          try {
+            const pending = await sp.fetchPendingEdits();
+            if (!cancelado && pending && Array.isArray(pending) && pending.length > 0) {
+              const normalizedPending = pending.map(p => ({
+                id: p.id,
+                authorName: p.author_name || p.authorName || 'Colaborador',
+                resourceType: p.resource_type || p.resourceType,
+                resourceId: p.resource_id || p.resourceId,
+                changesJson: p.changes_json || p.changesJson,
+                createdAt: p.created_at || p.createdAt,
+                status: p.status || 'pending'
+              }));
+              setCmsData(prev => ({
+                ...prev,
+                pendingEdits: normalizedPending
+              }));
+            }
+          } catch (pErr) {
+            console.warn('[BFA] Não foi possível carregar pendências do Supabase:', pErr);
           }
-        } catch (pErr) {
-          console.warn('[BFA] Não foi possível carregar pendências do Supabase:', pErr);
         }
 
         if (doBanco) {

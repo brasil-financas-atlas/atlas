@@ -168,13 +168,10 @@ export function useStudentAuth() {
           updated_at: new Date().toISOString()
         });
       }
-      await supabase.from('profiles').upsert({
-        id: userId,
-        email: userEmail || `${userId}@user.atlas`,
-        full_name: displayName,
-        role: userRole,
-        updated_at: new Date().toISOString()
-      }, { onConflict: 'id' });
+      // `profiles` NAO e gravada daqui de proposito: o perfil nasce de um
+      // gatilho no cadastro, o papel so muda por SQL feito por admin, e o banco
+      // recusa (403) qualquer upsert com `role` ou INSERT vindo do navegador.
+      // Antes, cada login disparava essa gravacao e falhava em silencio.
     } catch (saveErr) {
       console.warn('[BFA Auth] Erro ao persistir perfil no login:', saveErr?.message);
     }

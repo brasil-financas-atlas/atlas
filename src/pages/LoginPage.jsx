@@ -7,6 +7,7 @@ import React, { useState, useEffect, useContext, createContext } from 'react';
 import { ProgressContext } from '../context/ProgressContext';
 import { AdminContext } from '../context/AdminContext';
 import { BfaSupabase } from '../utils/supabaseClient';
+import { traduzirErroAuth, erroEmailNaoConfirmado } from '../utils/authErrors';
 
 function LoginPage() {
   const { studentAuth, completedLessons, quizScores } = useContext(ProgressContext) || {};
@@ -24,6 +25,8 @@ function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  // Conta existe mas o e-mail nao foi confirmado: libera o botao de reenvio.
+  const [precisaConfirmar, setPrecisaConfirmar] = useState(false);
 
   // Login unico: depois de entrar, quem e da equipe (professor/admin) vai
   // direto ao painel; aluno vai para a pagina inicial.
@@ -43,6 +46,35 @@ function LoginPage() {
     setActiveTab(tab);
     setErrorMsg('');
     setSuccessMsg('');
+    setPrecisaConfirmar(false);
+  };
+
+  // Reenvia o e-mail de confirmacao de cadastro.
+  const handleResendConfirmation = async () => {
+    if (!email.trim()) {
+      setErrorMsg('Informe o e-mail para reenviar a confirmação.');
+      return;
+    }
+    setIsLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    try {
+      const sp = BfaSupabase || (typeof window !== 'undefined' ? window.BfaSupabase : null);
+      if (!sp || !sp.client) throw new Error('Serviço de autenticação Supabase indisponível no momento.');
+      const { error } = await sp.client.auth.resend({
+        type: 'signup',
+        email: email.trim(),
+        options: { emailRedirectTo: window.location.origin + window.location.pathname + '#/confirmacao' }
+      });
+      if (error) throw error;
+      setPrecisaConfirmar(false);
+      setSuccessMsg(`Enviamos um novo e-mail de confirmação para ${email.trim()}. Veja também a caixa de spam.`);
+    } catch (err) {
+      console.warn('[BFA Login] Erro ao reenviar confirmação:', err);
+      setErrorMsg(traduzirErroAuth(err, 'Não foi possível reenviar o e-mail agora.'));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Login de Aluno com E-mail e Senha
@@ -56,6 +88,7 @@ function LoginPage() {
     setIsLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
+    setPrecisaConfirmar(false);
 
     try {
       const sp = BfaSupabase || (typeof window !== 'undefined' ? window.BfaSupabase : null);
@@ -83,11 +116,8 @@ function LoginPage() {
       await irDepoisDoLogin();
     } catch (err) {
       console.warn('[BFA Login] Erro no login do aluno:', err);
-      let msg = err.message || 'Falha ao autenticar.';
-      if (msg.includes('Invalid login credentials')) {
-        msg = 'E-mail ou senha incorretos. Verifique suas credenciais ou use o acesso sem senha via OTP.';
-      }
-      setErrorMsg(msg);
+      setPrecisaConfirmar(erroEmailNaoConfirmado(err));
+      setErrorMsg(traduzirErroAuth(err, 'Falha ao autenticar.'));
     } finally {
       setIsLoading(false);
     }
@@ -109,6 +139,7 @@ function LoginPage() {
     setIsLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
+    setPrecisaConfirmar(false);
 
     try {
       const sp = BfaSupabase || (typeof window !== 'undefined' ? window.BfaSupabase : null);
@@ -117,15 +148,6 @@ function LoginPage() {
       }
 
       const supabase = sp.client;
-      const localLessons = JSON.parse(localStorage.getItem('bfa_user_progress') || '[]');
-      const localScores = JSON.parse(localStorage.getItem('bfa_quiz_scores') || '{}');
-
-      const initialProgress = {
-        completed_lessons: localLessons,
-        quiz_scores: localScores,
-        badges: ['pioneiro_atlas']
-      };
-
       const redirectUrl = typeof window !== 'undefined' ? (window.location.origin + window.location.pathname + '#/confirmacao') : '';
 
       const { data, error } = await supabase.auth.signUp({
@@ -142,33 +164,19 @@ function LoginPage() {
 
       if (error) throw error;
 
-      if (data?.user) {
-        // 1. Tenta salvar na tabela compacta student_profiles
-        try {
-          await supabase.from('student_profiles').upsert({
-            id: data.user.id,
-            name: name.trim(),
-            role: 'student',
-            progress: initialProgress,
-            updated_at: new Date().toISOString()
-          });
-        } catch (dbErr) {
-          console.warn('[BFA DB] student_profiles ignorado ou gerenciado por trigger:', dbErr?.message);
-        }
-
-        // 2. Tenta salvar também na tabela profiles tradicional (role: student)
-        try {
-          await supabase.from('profiles').upsert({
-            id: data.user.id,
-            email: email.trim(),
-            full_name: name.trim(),
-            role: 'student',
-            updated_at: new Date().toISOString()
-          });
-        } catch (pErr) {
-          console.warn('[BFA DB] profiles ignorado ou gerenciado por trigger:', pErr?.message);
-        }
+      // Com a confirmacao de e-mail ligada, o Supabase nao devolve erro para um
+      // e-mail ja cadastrado (para nao revelar quem tem conta): devolve um
+      // usuario "falso" sem identidades. Sem esta checagem, o aluno veria
+      // "conta criada" e ficaria esperando um e-mail que nunca vem.
+      if (data?.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+        setErrorMsg('Este e-mail já está cadastrado. Entre na aba "Entrar" ou use o acesso sem senha.');
+        return;
       }
+
+      // O perfil (profiles) nasce de um gatilho no banco, a partir do nome
+      // enviado em `data` acima. O papel nasce sempre como aluno, e o app nao
+      // tem permissao de gravar nessa tabela: o progresso local e mesclado no
+      // primeiro login (useStudentAuth).
 
       if (data?.session) {
         if (sp?.savePasswordCredential) {
@@ -185,18 +193,14 @@ function LoginPage() {
         if (sp?.savePasswordCredential) {
           sp.savePasswordCredential(email.trim(), password, name.trim());
         }
-        setSuccessMsg('Conta de aluno criada com sucesso! Caso a confirmação de e-mail esteja ativada no seu Supabase, verifique sua caixa de entrada para confirmar o acesso.');
+        setSuccessMsg(`Conta criada! Enviamos um e-mail de confirmação para ${email.trim()}. Clique no link da mensagem (veja também o spam) e depois entre com sua senha.`);
         setTimeout(() => {
           setActiveTab('student-login');
-        }, 2500);
+        }, 6000);
       }
     } catch (err) {
       console.warn('[BFA Register] Erro no cadastro:', err);
-      let msg = err.message || 'Falha ao criar conta.';
-      if (msg.includes('User already registered')) {
-        msg = 'Este e-mail já está cadastrado. Por favor, faça login.';
-      }
-      setErrorMsg(msg);
+      setErrorMsg(traduzirErroAuth(err, 'Falha ao criar conta.'));
     } finally {
       setIsLoading(false);
     }
@@ -223,7 +227,7 @@ function LoginPage() {
         throw new Error('Módulo de autenticação indisponível.');
       }
     } catch (err) {
-      setErrorMsg(err.message || 'Erro ao enviar código de acesso.');
+      setErrorMsg(traduzirErroAuth(err, 'Erro ao enviar código de acesso.'));
     } finally {
       setIsLoading(false);
     }
@@ -248,7 +252,7 @@ function LoginPage() {
         await irDepoisDoLogin();
       }
     } catch (err) {
-      setErrorMsg(err.message || 'Código inválido ou expirado.');
+      setErrorMsg(traduzirErroAuth(err, 'Código inválido ou expirado.'));
     } finally {
       setIsLoading(false);
     }
@@ -402,6 +406,16 @@ function LoginPage() {
         {errorMsg && (
           <div style={{ padding: '1rem', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--status-danger-bg, #FEF2F2)', border: '1px solid #F87171', color: 'var(--status-danger, #B91C1C)', fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
             {errorMsg}
+            {precisaConfirmar && (
+              <button
+                type="button"
+                onClick={handleResendConfirmation}
+                disabled={isLoading}
+                style={{ display: 'block', marginTop: '0.75rem', background: 'transparent', border: 'none', padding: 0, color: 'var(--primary)', fontWeight: 700, fontSize: '0.875rem', cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                Reenviar e-mail de confirmação
+              </button>
+            )}
           </div>
         )}
 
