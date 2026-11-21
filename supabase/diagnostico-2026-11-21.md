@@ -175,4 +175,10 @@ Registro de 2026-11-21:
   "Acesso sem senha" para conta nova e para conta existente, com o código
   digitado na tela (aceito também com espaço) e verificado com sucesso.
   As contas de teste usam o domínio `euploading.com`.
+- Spam: o envio está autenticado (DKIM de gmail.com, servidor do Google). Os
+  modelos foram enxugados contra filtros: sem imagem externa, sem texto
+  escondido de enchimento, sem trechos de marketing e com menos links.
+  Aplicados ao vivo. Próximo passo, depois de publicar o `preview` no
+  `main`: `node supabase/templates/aplicar.mjs --link-proprio`, que troca o
+  link `supabase.co/auth/v1/verify` por um link do próprio site.
 

@@ -3,6 +3,9 @@
 //
 //   SUPABASE_ACCESS_TOKEN=sbp_xxx node supabase/templates/aplicar.mjs
 //   (opcional) --dry-run  mostra o que seria enviado sem alterar nada
+//   (opcional) --link-proprio  botao aponta para o site (#/confirmacao?token_hash=...)
+//              em vez de supabase.co. So use com o site publicado ja tendo a
+//              ConfirmacaoPage nova; antes disso os links nao funcionariam.
 import { MODELOS } from './gerar.mjs';
 
 const PROJECT_REF = process.env.SUPABASE_PROJECT_REF || 'wvcjjwvauibsculmqhxi';

@@ -7,12 +7,18 @@
 // - cores chapadas (o projeto proibe gradientes) e nenhum emoji;
 // - botao "a prova de balas": funciona mesmo com imagens bloqueadas;
 // - o codigo {{ .Token }} aparece em texto, selecionavel para copiar.
+//
+// Contra o spam: sem imagem externa (o logo e texto), sem texto escondido de
+// enchimento, sem trechos de marketing e poucos links. Com --link-proprio, o
+// botao aponta para o proprio site (#/confirmacao?token_hash=...) em vez de
+// supabase.co; so use depois que o site publicado tiver a pagina que valida
+// o token (src/pages/ConfirmacaoPage.jsx).
 import { writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const DIR = dirname(fileURLToPath(import.meta.url));
-const LOGO = 'https://brhsic-main.vercel.app/brand/brhsic-lockup.png';
+const LINK_PROPRIO = process.argv.includes('--link-proprio') || process.env.LINK_PROPRIO === '1';
 const SITE = 'https://atlas-c2i.pages.dev';
 const SITE_ROTULO = 'atlas-c2i.pages.dev';
 const SUPORTE = 'brhsicacademy@gmail.com';
@@ -36,12 +42,19 @@ const MONO = "'IBM Plex Mono', 'SF Mono', Consolas, 'Courier New', monospace";
 const p = (t, extra = '') =>
   `<p style="margin: 0 0 14px; font-family: ${FONT}; font-size: 16px; line-height: 1.65; color: ${C.muted};${extra}">${t}</p>`;
 
-function botao(texto) {
+// Endereco do botao: o do Supabase (padrao) ou o do proprio site.
+function link(tipo) {
+  return LINK_PROPRIO
+    ? `{{ .SiteURL }}/#/confirmacao?token_hash={{ .TokenHash }}&amp;type=${tipo}`
+    : '{{ .ConfirmationURL }}';
+}
+
+function botao(texto, tipo) {
   return `
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: 8px auto 4px;">
   <tr>
     <td align="center" bgcolor="${C.navy}" style="border-radius: 10px; background-color: ${C.navy};">
-      <a href="{{ .ConfirmationURL }}" target="_blank"
+      <a href="${link(tipo)}" target="_blank"
          style="display: inline-block; padding: 15px 34px; font-family: ${FONT}; font-size: 16px; font-weight: 700; line-height: 1.2; color: ${C.white}; text-decoration: none; border-radius: 10px; border: 1px solid ${C.navy};">${texto}</a>
     </td>
   </tr>
@@ -89,11 +102,12 @@ function lista(itens) {
 </table>`;
 }
 
-function linkReserva() {
+function linkReserva(tipo) {
+  const url = link(tipo);
   return `
 <p style="margin: 22px 0 0; font-family: ${FONT}; font-size: 13px; line-height: 1.6; color: ${C.soft};">
   O botão não abriu? Copie e cole este endereço no navegador:<br>
-  <a href="{{ .ConfirmationURL }}" style="color: ${C.blue}; text-decoration: underline; word-break: break-all;">{{ .ConfirmationURL }}</a>
+  <span style="color: ${C.blue}; word-break: break-all;">${url}</span>
 </p>`;
 }
 
@@ -102,8 +116,6 @@ function etiqueta(texto) {
 }
 
 function layout({ preheader, etiquetaTopo, titulo, corpo, seguranca }) {
-  // O espacador apos o preheader evita que o Gmail puxe o texto do corpo para a previa.
-  const espacador = '&#8199;&#65279;&#847; '.repeat(40);
   return `<!DOCTYPE html>
 <html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -125,7 +137,7 @@ function layout({ preheader, etiquetaTopo, titulo, corpo, seguranca }) {
   </style>
 </head>
 <body style="margin: 0; padding: 0; background-color: ${C.bg};">
-  <div style="display: none; max-height: 0; max-width: 0; overflow: hidden; opacity: 0; mso-hide: all;">${preheader}${espacador}</div>
+  <div style="display: none; max-height: 0; max-width: 0; overflow: hidden; opacity: 0; mso-hide: all;">${preheader}</div>
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="${C.bg}" style="background-color: ${C.bg};">
     <tr>
       <td align="center" class="bfa-pad" style="padding: 36px 20px 40px;">
@@ -133,7 +145,7 @@ function layout({ preheader, etiquetaTopo, titulo, corpo, seguranca }) {
           <!-- Marca -->
           <tr>
             <td style="padding: 0 4px 22px;">
-              <a href="${SITE}" target="_blank" style="text-decoration: none;"><img src="${LOGO}" alt="BRHSIC Academy" height="34" style="display: block; height: 34px; width: auto; border: 0; outline: none; font-family: ${FONT}; font-size: 22px; font-weight: 800; letter-spacing: 0.04em; color: ${C.navy};"></a>
+              <span style="font-family: ${FONT}; font-size: 22px; font-weight: 800; letter-spacing: 0.06em; color: ${C.navy};">BRHSIC</span><span style="font-family: ${FONT}; font-size: 22px; font-weight: 500; color: ${C.muted};">&nbsp;Academy</span>
             </td>
           </tr>
           <!-- Cartao -->
@@ -165,10 +177,9 @@ ${corpo}
           <!-- Rodape -->
           <tr>
             <td align="center" style="padding: 26px 12px 0; font-family: ${FONT}; font-size: 12px; line-height: 1.7; color: ${C.soft};">
-              <strong style="color: ${C.muted};">BRHSIC Academy</strong> · Matemática financeira e mercado de capitais, de graça.<br>
-              <a href="${SITE}" target="_blank" style="color: ${C.muted}; text-decoration: underline;">${SITE_ROTULO}</a>
-              &nbsp;·&nbsp; Dúvidas: <a href="mailto:${SUPORTE}" style="color: ${C.muted}; text-decoration: underline;">${SUPORTE}</a><br>
-              <span style="color: ${C.soft};">Este é um e-mail automático da sua conta. A equipe nunca pede sua senha.</span>
+              <strong style="color: ${C.muted};">BRHSIC Academy</strong> · Plataforma de estudos de matemática financeira.<br>
+              Você recebeu esta mensagem porque este endereço foi usado em ${SITE_ROTULO}.<br>
+              Dúvidas: responda para ${SUPORTE}. A equipe nunca pede sua senha.
             </td>
           </tr>
         </table>
@@ -194,15 +205,10 @@ export const MODELOS = {
       titulo: 'Confirme seu e-mail para ativar a conta',
       corpo: [
         p('Que bom ter você na <strong style="color: ' + C.ink + ';">BRHSIC Academy</strong>. Confirme que este endereço é seu para ativar a conta e guardar seu progresso em qualquer aparelho.'),
-        botao('Confirmar meu e-mail'),
+        botao('Confirmar meu e-mail', 'signup'),
         divisor('ou digite o código'),
         codigo('Código de confirmação', VALIDADE),
-        lista([
-          ['55 aulas gratuitas', 'de matemática aplicada e finanças, do zero ao avançado.'],
-          ['Exercícios com correção', 'e explicação passo a passo em cada aula.'],
-          ['Preparação para a olimpíada', 'BRHSIC, com simulados no formato da prova.'],
-        ]),
-        linkReserva(),
+        linkReserva('signup'),
       ].join('\n'),
       seguranca: 'Não criou uma conta na BRHSIC Academy? Ignore este e-mail: sem a confirmação, nenhuma conta é ativada.',
     }),
@@ -217,7 +223,7 @@ export const MODELOS = {
         p('Digite o código abaixo na tela de login para entrar na sua conta. Não precisa de senha.'),
         codigo('Código de acesso', VALIDADE),
         divisor('ou entre com um clique'),
-        botao('Entrar na plataforma'),
+        botao('Entrar na plataforma', 'magiclink'),
       ].join('\n'),
       seguranca: 'Não pediu este código? Ignore este e-mail. Ninguém entra na sua conta sem ele, e ele expira sozinho.',
     }),
@@ -230,9 +236,9 @@ export const MODELOS = {
       titulo: 'Redefinir sua senha',
       corpo: [
         p('Recebemos um pedido para redefinir a senha da conta <strong style="color: ' + C.ink + ';">{{ .Email }}</strong>. Clique no botão para escolher uma senha nova.'),
-        botao('Criar nova senha'),
+        botao('Criar nova senha', 'recovery'),
         p('O link vale por 1 hora e só pode ser usado uma vez.', ` margin-top: 18px; font-size: 14px; color: ${C.soft}; text-align: center;`),
-        linkReserva(),
+        linkReserva('recovery'),
       ].join('\n'),
       seguranca: 'Não pediu a troca? Ignore este e-mail: sua senha atual continua valendo. Se isso se repetir, avise a equipe.',
     }),
@@ -254,8 +260,8 @@ export const MODELOS = {
     </td>
   </tr>
 </table>`,
-        botao('Confirmar novo e-mail'),
-        linkReserva(),
+        botao('Confirmar novo e-mail', 'email_change'),
+        linkReserva('email_change'),
       ].join('\n'),
       seguranca: 'Não pediu esta troca? Ignore este e-mail e troque sua senha. O e-mail da conta só muda depois da confirmação.',
     }),
@@ -263,18 +269,13 @@ export const MODELOS = {
   invite: {
     assunto: 'Você foi convidado para a BRHSIC Academy',
     html: layout({
-      preheader: 'Aceite o convite e comece a estudar de graça.',
+      preheader: 'Aceite o convite para criar sua conta.',
       etiquetaTopo: 'Convite',
       titulo: 'Você foi convidado para a BRHSIC Academy',
       corpo: [
-        p('Você recebeu um convite para participar da BRHSIC Academy, a plataforma gratuita de matemática financeira, mercado de capitais e preparação para a olimpíada BRHSIC.'),
-        botao('Aceitar convite'),
-        lista([
-          ['55 aulas gratuitas', 'de matemática aplicada e finanças.'],
-          ['Exercícios com correção', 'e explicação passo a passo.'],
-          ['Simulados', 'no formato da olimpíada BRHSIC.'],
-        ]),
-        linkReserva(),
+        p('Você recebeu um convite para participar da BRHSIC Academy, a plataforma de estudos de matemática financeira, mercado de capitais e preparação para a olimpíada BRHSIC.'),
+        botao('Aceitar convite', 'invite'),
+        linkReserva('invite'),
       ].join('\n'),
       seguranca: 'Não esperava este convite? Pode ignorar este e-mail. Nenhuma conta é criada sem o seu aceite.',
     }),
