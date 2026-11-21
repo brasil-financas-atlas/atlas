@@ -270,7 +270,9 @@ export function AdminProvider({ children }) {
           sessionStorage.removeItem('bfa_login_pendente');
         } catch (e) {}
         const rota = (window.location.hash || '').replace(/^#/, '').split('?')[0] || '/';
-        if (event === 'SIGNED_IN' && (veioDoLogin || ROTAS_DE_LOGIN.includes(rota))) {
+        let definindoSenha = false;
+        try { definindoSenha = sessionStorage.getItem('bfa_definindo_senha') === '1'; } catch (e) {}
+        if (event === 'SIGNED_IN' && !definindoSenha && (veioDoLogin || ROTAS_DE_LOGIN.includes(rota))) {
           window.location.hash = '#/admin';
         }
       }, 0);

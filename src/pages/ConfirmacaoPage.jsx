@@ -1,159 +1,207 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { BfaSupabase } from '../utils/supabaseClient';
+import { traduzirErroAuth, comTempoLimite } from '../utils/authHelpers';
+import BfaIcon from '../components/Icons';
+
+/* Pagina para onde os links dos e-mails levam.
+   Formato novo (link para o proprio site, menos chance de cair no spam):
+     #/confirmacao?token_hash=...&type=signup|magiclink|recovery|invite|email_change|email
+   Formato antigo (link do Supabase, que volta com #access_token=...) continua
+   funcionando: o Supabase cria a sessao sozinho e esta pagina so confirma. */
+
+const TIPOS = ['signup', 'email', 'magiclink', 'recovery', 'invite', 'email_change'];
+
+function lerParametros() {
+  const hash = window.location.hash || '';
+  const iq = hash.indexOf('?');
+  const doHash = new URLSearchParams(iq >= 0 ? hash.slice(iq + 1) : '');
+  const daBusca = new URLSearchParams(window.location.search || '');
+  const pegar = (k) => doHash.get(k) || daBusca.get(k) || '';
+  return { tokenHash: pegar('token_hash'), tipo: pegar('type'), erro: pegar('error_description') };
+}
+
+const TEXTOS = {
+  signup: { titulo: 'E-mail confirmado', texto: 'Sua conta está ativa' },
+  email: { titulo: 'Tudo certo', texto: 'Você entrou na sua conta' },
+  magiclink: { titulo: 'Você entrou', texto: 'Acesso liberado' },
+  email_change: { titulo: 'E-mail atualizado', texto: 'O e-mail da sua conta foi trocado' },
+  recovery: { titulo: 'Senha alterada', texto: 'Sua nova senha já vale' },
+  invite: { titulo: 'Conta criada', texto: 'Seu convite foi aceito' },
+};
+
+function Icone({ tipo }) {
+  const ok = tipo === 'ok';
+  const cor = ok ? '#047857' : tipo === 'erro' ? '#B91C1C' : 'var(--text-primary)';
+  return (
+    <div style={{ width: '52px', height: '52px', border: `2px solid ${cor}`, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem auto', color: cor }}>
+      <BfaIcon name={ok ? 'check' : tipo === 'erro' ? 'alert' : 'lock'} size={22} color={cor} />
+    </div>
+  );
+}
 
 function ConfirmacaoPage() {
-  const [status, setStatus] = useState('checking'); // 'checking' | 'success' | 'error'
+  // checking | nova-senha | success | pendente | error
+  const [status, setStatus] = useState('checking');
+  const [tipo, setTipo] = useState('signup');
   const [userEmail, setUserEmail] = useState('');
   const [errorDetails, setErrorDetails] = useState('');
+  const [senha, setSenha] = useState('');
+  const [senha2, setSenha2] = useState('');
+  const [salvando, setSalvando] = useState(false);
+  const [erroSenha, setErroSenha] = useState('');
+  const executou = useRef(false);
 
   useEffect(() => {
-    let mounted = true;
+    // O token so pode ser usado uma vez; no modo de desenvolvimento o React
+    // roda este efeito duas vezes, entao a trava evita a segunda chamada.
+    if (executou.current) return;
+    executou.current = true;
+    const supabase = BfaSupabase && BfaSupabase.client;
 
-    async function checkConfirmationState() {
+    async function verificar() {
+      const { tokenHash, tipo: tipoUrl, erro } = lerParametros();
+      const t = TIPOS.includes(tipoUrl) ? tipoUrl : 'signup';
+      setTipo(t);
+
+      if (erro) {
+        {
+          setErrorDetails(decodeURIComponent(erro.replace(/\+/g, ' ')));
+          setStatus('error');
+        }
+        return;
+      }
+      if (!supabase) {
+        { setErrorDetails('Não foi possível conectar ao servidor agora. Tente de novo em instantes.'); setStatus('error'); }
+        return;
+      }
+
       try {
-        const hash = window.location.hash || '';
-        const search = window.location.search || '';
-
-        // 1. Verificar erro na URL
-        if (hash.includes('error_description=') || search.includes('error_description=')) {
-          const urlParams = new URLSearchParams(hash.includes('?') ? hash.split('?')[1] : hash.substring(1));
-          const errorDesc = urlParams.get('error_description') || 'O link de confirmação expirou ou é inválido.';
-          if (mounted) {
-            setErrorDetails(decodeURIComponent(errorDesc.replace(/\+/g, ' ')));
-            setStatus('error');
-          }
+        if (tokenHash) {
+          // Avisa o painel para nao levar a equipe ao #/admin antes de salvar a senha.
+          if (t === 'recovery' || t === 'invite') { try { sessionStorage.setItem('bfa_definindo_senha', '1'); } catch (e) {} }
+          const { data, error } = await comTempoLimite(supabase.auth.verifyOtp({ token_hash: tokenHash, type: t }));
+          // O token so vale uma vez: tira da barra de endereco para um
+          // recarregamento nao tentar usar de novo.
+          try { window.history.replaceState(null, '', `${window.location.pathname}#/confirmacao`); } catch (e) {}
+          if (error) throw error;
+          setUserEmail(data?.user?.email || '');
+          if (t === 'recovery' || t === 'invite') { setStatus('nova-senha'); return; }
+          // Troca de e-mail com confirmacao dupla: o primeiro link aceito nao
+          // abre sessao e avisa que falta o outro endereco.
+          if (t === 'email_change' && !data?.session) { setStatus('pendente'); return; }
+          setStatus('success');
           return;
         }
 
-        // 2. Verificar sessão ativa no Supabase
-        if (window.BfaSupabase && window.BfaSupabase.client) {
-          const supabase = window.BfaSupabase.client;
-          const { data: { session } } = await supabase.auth.getSession();
-
-          if (session?.user && mounted) {
-            setUserEmail(session.user.email || '');
-            setStatus('success');
-            return;
-          }
-        }
-
-        // 3. Fallback de verificação
-        const timer = setTimeout(async () => {
-          if (!mounted) return;
-          if (window.BfaSupabase && window.BfaSupabase.client) {
-            const { data: { session } } = await window.BfaSupabase.client.auth.getSession();
-            if (session?.user) {
-              setUserEmail(session.user.email || '');
-              setStatus('success');
-            } else {
-              setStatus('success');
-            }
-          } else {
-            setStatus('success');
-          }
-        }, 1200);
-
-        return () => clearTimeout(timer);
+        // Formato antigo: a sessao chega pela URL e o Supabase ja tratou.
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) setUserEmail(session.user.email || '');
+        setStatus('success');
       } catch (err) {
-        if (mounted) {
-          setErrorDetails('Não foi possível verificar automaticamente. Acesse com seu e-mail e senha.');
+        {
+          setErrorDetails(traduzirErroAuth(err));
           setStatus('error');
         }
       }
     }
 
-    checkConfirmationState();
-
-    return () => {
-      mounted = false;
-    };
+    verificar();
   }, []);
+
+  const salvarSenha = async (e) => {
+    e.preventDefault();
+    setErroSenha('');
+    if (senha.length < 6) { setErroSenha('A senha precisa ter pelo menos 6 caracteres.'); return; }
+    if (senha !== senha2) { setErroSenha('As duas senhas não são iguais.'); return; }
+    setSalvando(true);
+    try {
+      const { error } = await comTempoLimite(BfaSupabase.client.auth.updateUser({ password: senha }));
+      if (error) throw error;
+      try { sessionStorage.removeItem('bfa_definindo_senha'); } catch (e2) {}
+      setStatus('success');
+    } catch (err) {
+      setErroSenha(traduzirErroAuth(err));
+    } finally {
+      setSalvando(false);
+    }
+  };
+
+  const campo = {
+    width: '100%', padding: '0.75rem 0.9rem', borderRadius: '8px', border: '1px solid var(--border-color)',
+    background: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '1rem', marginBottom: '0.75rem', boxSizing: 'border-box',
+  };
+  const textos = TEXTOS[tipo] || TEXTOS.signup;
 
   return (
     <div style={{ minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 1rem' }}>
       <div style={{ maxWidth: '420px', width: '100%', textAlign: 'center' }}>
-        
+
         {status === 'checking' && (
-          <div>
-            <div style={{ width: '40px', height: '40px', border: '3px solid var(--border-color)', borderTopColor: 'var(--color-azul)', borderRadius: '50%', margin: '0 auto 1.5rem auto', animation: 'spin 0.8s linear infinite' }}></div>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>
-              Confirmando...
-            </h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', margin: 0 }}>
-              Validando seu endereço de e-mail.
-            </p>
+          <div role="status">
+            <div style={{ width: '40px', height: '40px', border: '3px solid var(--border-color)', borderTopColor: 'var(--text-primary)', borderRadius: '50%', margin: '0 auto 1.5rem auto', animation: 'spin 0.8s linear infinite' }}></div>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>Confirmando...</h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', margin: 0 }}>Validando o link do seu e-mail.</p>
           </div>
+        )}
+
+        {status === 'nova-senha' && (
+          <form onSubmit={salvarSenha} noValidate style={{ textAlign: 'left' }}>
+            <Icone tipo="senha" />
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 0.5rem 0', textAlign: 'center' }}>
+              {tipo === 'invite' ? 'Crie sua senha' : 'Escolha uma nova senha'}
+            </h1>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.5, margin: '0 0 1.5rem 0', textAlign: 'center' }}>
+              {userEmail ? <>Para a conta <strong style={{ color: 'var(--text-primary)' }}>{userEmail}</strong>.</> : 'Use pelo menos 6 caracteres.'}
+            </p>
+            <input type="email" name="username" autoComplete="username" value={userEmail} readOnly hidden />
+            <label htmlFor="nova-senha" style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>Nova senha</label>
+            <input id="nova-senha" type="password" autoComplete="new-password" value={senha} onChange={(e) => setSenha(e.target.value)} style={campo} />
+            <label htmlFor="nova-senha-2" style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>Repita a senha</label>
+            <input id="nova-senha-2" type="password" autoComplete="new-password" value={senha2} onChange={(e) => setSenha2(e.target.value)} style={campo} />
+            {erroSenha && <p role="alert" style={{ color: '#B91C1C', fontSize: '0.875rem', margin: '0 0 0.75rem 0' }}>{erroSenha}</p>}
+            <button type="submit" className="btn-primary" disabled={salvando} style={{ width: '100%', justifyContent: 'center', marginTop: '0.25rem' }}>
+              {salvando ? 'Salvando...' : 'Salvar senha'}
+            </button>
+          </form>
         )}
 
         {status === 'success' && (
           <div>
-            {/* Ícone Minimalista de Sucesso */}
-            <div style={{ width: '52px', height: '52px', background: 'rgba(5, 150, 105, 0.1)', border: '1px solid rgba(5, 150, 105, 0.25)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem auto', color: '#059669' }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            </div>
-
-            <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
-              E-mail confirmado
-            </h1>
-
+            <Icone tipo="ok" />
+            <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>{textos.titulo}</h1>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.5, margin: '0 0 1.75rem 0' }}>
-              Sua conta no Brasil Finanças Atlas está ativa{userEmail ? ` para ${userEmail}` : ''}.
+              {textos.texto}{userEmail ? ` para ${userEmail}` : ''}.
             </p>
-
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-              <a
-                href="#/matematica/modulo-1-algebra-do-zero/aula-01-numeros-e-operacoes"
-                className="bfa-btn bfa-btn--verde"
-                style={{ width: '100%', padding: '0.75rem 1.25rem', fontSize: '0.92rem', fontWeight: 700, textDecoration: 'none', borderRadius: '8px' }}
-              >
-                Acessar plataforma
+              <a href="#/matematica/modulo-1-algebra-do-zero/aula-01-numeros-e-operacoes" className="btn-primary" style={{ width: '100%', justifyContent: 'center', textDecoration: 'none' }}>
+                Começar a estudar
               </a>
-
-              <a
-                href="#/"
-                style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textDecoration: 'none', padding: '0.4rem' }}
-              >
-                Ir para a página inicial
-              </a>
+              <a href="#/" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', padding: '0.4rem' }}>Ir para a página inicial</a>
             </div>
+          </div>
+        )}
+
+        {status === 'pendente' && (
+          <div>
+            <Icone tipo="senha" />
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>Falta um passo</h1>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.5, margin: '0 0 1.75rem 0' }}>
+              Este endereço foi confirmado. Por segurança, abra também o link enviado para o outro e-mail para concluir a troca.
+            </p>
+            <a href="#/" className="btn-secondary" style={{ textDecoration: 'none' }}>Ir para a página inicial</a>
           </div>
         )}
 
         {status === 'error' && (
           <div>
-            {/* Ícone Minimalista de Erro */}
-            <div style={{ width: '52px', height: '52px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.25)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem auto', color: '#EF4444' }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
-            </div>
-
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
-              Link expirado
-            </h1>
-
+            <Icone tipo="erro" />
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>Link inválido ou expirado</h1>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.5, margin: '0 0 1.75rem 0' }}>
-              {errorDetails || 'O link de confirmação não é mais válido. Entre com seu e-mail e senha para acessar.'}
+              {errorDetails || 'Os links valem por 1 hora e só uma vez. Peça um novo na tela de login.'}
             </p>
-
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-              <a
-                href="#/login"
-                className="bfa-btn bfa-btn--verde"
-                style={{ width: '100%', padding: '0.75rem 1.25rem', fontSize: '0.92rem', fontWeight: 700, textDecoration: 'none', borderRadius: '8px' }}
-              >
-                Fazer login
-              </a>
-
-              <a
-                href="#/"
-                style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textDecoration: 'none', padding: '0.4rem' }}
-              >
-                Ir para a página inicial
-              </a>
+              <a href="#/login" className="btn-primary" style={{ width: '100%', justifyContent: 'center', textDecoration: 'none' }}>Ir para o login</a>
+              <a href="#/" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', padding: '0.4rem' }}>Ir para a página inicial</a>
             </div>
           </div>
         )}

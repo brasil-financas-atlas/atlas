@@ -17,6 +17,11 @@ function extractCleanHashPath() {
   if (!rawHash || rawHash === '#' || rawHash === '#/') return '/';
 
   // Se o hash contiver tokens de autenticação do Supabase (#access_token=... ou #error=...)
+  // Links dos e-mails no formato #/confirmacao?token_hash=...&type=... vao para
+  // a pagina de confirmacao, que valida o token.
+  if (rawHash.startsWith('#/') && rawHash.includes('token_hash=')) {
+    return rawHash.substring(1).split('?')[0] || '/';
+  }
   if (rawHash.includes('access_token=') || rawHash.includes('error_description=') || rawHash.includes('type=signup') || rawHash.includes('type=recovery')) {
     console.log('[BFA Router] Callback de autenticação Supabase detectado na URL.');
     return '/';
@@ -34,7 +39,8 @@ function extractCleanHashPath() {
     return '/';
   }
 
-  const clean = rawHash.substring(1);
+  // Parametros depois de "?" nao fazem parte do caminho.
+  const clean = rawHash.substring(1).split('?')[0];
   return clean || '/';
 }
 
