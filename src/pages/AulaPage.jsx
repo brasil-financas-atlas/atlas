@@ -346,14 +346,14 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         // conteiner .aula-layout tem overflow hidden, entao sticky deslocaria
         // a trilha para baixo). No celular ela abre como gaveta fixa.
         position: isMobile ? 'fixed' : 'relative',
-        top: isMobile ? 'var(--bfa-header-h, 4rem)' : undefined,
+        top: isMobile ? 'var(--bfa-header-h, 65px)' : undefined,
         left: 0,
         zIndex: isMobile ? 96 : 30,
         display: sidebarOpen ? 'block' : 'none',
         width: isMobile ? 'min(320px, 86vw)' : '320px',
         flexShrink: 0,
         alignSelf: 'flex-start',
-        height: 'calc(100vh - var(--bfa-header-h, 4rem))',
+        height: 'calc(100vh - var(--bfa-header-h, 65px))',
         overflowY: 'auto',
         borderRight: '1px solid var(--border-color)',
           backgroundColor: 'var(--bg-surface-blue)'
@@ -385,7 +385,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
       </aside>
 
       {/* Main Classroom Canvas */}
-      <main ref={mainRef} style={{ flex: 1, minWidth: 0, padding: isMobile ? '2rem 1.5rem' : '3rem 4rem', backgroundColor: 'var(--bg-app)', height: 'calc(100vh - var(--bfa-header-h, 4rem))', overflowY: 'auto' }}>
+      <main ref={mainRef} style={{ flex: 1, minWidth: 0, padding: isMobile ? '2rem 1.5rem' : '3rem 4rem', backgroundColor: 'var(--bg-app)', height: 'calc(100vh - var(--bfa-header-h, 65px))', overflowY: 'auto' }}>
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
         {/* Sleek Unified Lesson Header Bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
