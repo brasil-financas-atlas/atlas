@@ -8,6 +8,11 @@ import { AdminContext } from '../context/AdminContext';
 import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
 import BrandImg from './BrandImg';
 
+// Busca sem acento e sem maiusculas: "funcao" acha "Função".
+function semAcento(texto) {
+  return String(texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+}
+
 
 
 function Navbar() {
@@ -67,12 +72,12 @@ function Navbar() {
   }, []);
 
   const searchResults = useMemo(() => {
-    if (!searchQuery.trim()) return [];
-    const q = searchQuery.toLowerCase().trim();
+    const q = semAcento(searchQuery);
+    if (!q) return [];
     return allLessonsIndex.filter(item =>
-      item.aulaTitle.toLowerCase().includes(q) ||
-      item.moduloTitle.toLowerCase().includes(q) ||
-      item.subjectTitle.toLowerCase().includes(q)
+      semAcento(item.aulaTitle).includes(q) ||
+      semAcento(item.moduloTitle).includes(q) ||
+      semAcento(item.subjectTitle).includes(q)
     ).slice(0, 6);
   }, [searchQuery, allLessonsIndex]);
 
@@ -139,6 +144,7 @@ function Navbar() {
         setSearchOpen(true);
       } else if (e.key === 'Escape') {
         setSearchOpen(false);
+        setSearchQuery('');
         setMobileMenuOpen(false);
       }
     };
