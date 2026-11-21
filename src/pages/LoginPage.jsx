@@ -8,6 +8,7 @@ import { ProgressContext } from '../context/ProgressContext';
 import { AdminContext } from '../context/AdminContext';
 import { BfaSupabase } from '../utils/supabaseClient';
 import { normalizarEmail, emailValido, normalizarCodigo, lerCampo, traduzirErroAuth } from '../utils/authHelpers';
+import BrandImg from '../components/BrandImg';
 
 function LoginPage() {
   const { studentAuth, completedLessons, quizScores } = useContext(ProgressContext) || {};
@@ -212,7 +213,7 @@ function LoginPage() {
         if (sp?.savePasswordCredential) {
           sp.savePasswordCredential(emailLimpo, senha, nomeLimpo);
         }
-        setSuccessMsg('Conta de aluno criada com sucesso! Caso a confirmação de e-mail esteja ativada no seu Supabase, verifique sua caixa de entrada para confirmar o acesso.');
+        setSuccessMsg('Enviamos um e-mail de confirmação. Abra-o para ativar sua conta.');
         setTimeout(() => {
           setActiveTab('student-login');
         }, 2500);
@@ -415,7 +416,7 @@ function LoginPage() {
         
         {/* Cabeçalho */}
         <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-          <img src="https://brhsic-main.vercel.app/brand/brhsic-lockup.png" alt="BRHSIC Academy" className="bfa-brand-img" style={{ height: '40px', width: 'auto', marginBottom: '1.5rem', display: 'inline-block' }} />
+          <BrandImg alt="BRHSIC Academy" className="bfa-brand-img" style={{ height: '40px', width: 'auto', marginBottom: '1.5rem', display: 'inline-block' }} />
           
           <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.5rem 0' }}>
             {activeTab === 'student-register'

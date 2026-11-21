@@ -6,6 +6,7 @@ import { useRouter } from '../router';
 import { ProgressContext } from '../context/ProgressContext';
 import { AdminContext } from '../context/AdminContext';
 import React, { useState, useEffect, useContext, createContext, useMemo, useRef } from 'react';
+import BrandImg from './BrandImg';
 
 
 
@@ -160,7 +161,7 @@ function Navbar() {
       <header className="site-header">
       <div className="site-header__container">
         <a href="#/" className="site-logo" aria-label="Página inicial">
-          <img src="https://brhsic-main.vercel.app/brand/brhsic-lockup.png" alt="BRHSIC" className="site-logo__img" />
+          <BrandImg className="site-logo__img" />
         </a>
 
         <nav className="nav-links" aria-label="Trilhas principais">
@@ -675,7 +676,7 @@ function Footer() {
         <div>
           <div className="footer__manifesto">
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', fontSize: '1.25rem', fontFamily: 'var(--font-display)', fontWeight: 700 }}>
-              <img src="https://brhsic-main.vercel.app/brand/brhsic-lockup.png" alt="BRHSIC" className="site-footer__logo" style={{ height: '28px', width: 'auto' }} />
+              <BrandImg className="site-footer__logo" style={{ height: '28px', width: 'auto' }} />
             </div>
             Processo importa mais do que resultado.
           </div>

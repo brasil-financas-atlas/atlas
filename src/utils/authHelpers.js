@@ -70,7 +70,10 @@ export function traduzirErroAuth(err) {
   if (codigo === 'validation_failed' || m.includes('invalid format') || m.includes('unable to validate email')) {
     return 'E-mail inválido. Confira se está no formato nome@email.com.';
   }
-  if (m.includes('failed to fetch') || m.includes('network')) {
+  if (m.includes('database error saving new user') || m.includes('database error')) {
+    return 'Não foi possível criar sua conta agora por uma falha no servidor. Avise a equipe da BRHSIC Academy. (erro ao salvar usuário)';
+  }
+  if (codigo === 'tempo_esgotado' || m.includes('failed to fetch') || m.includes('network')) {
     return 'Sem conexão com o servidor. Verifique sua internet e tente de novo.';
   }
   return msg || 'Não foi possível concluir o login. Tente de novo.';
