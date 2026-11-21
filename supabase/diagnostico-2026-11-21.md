@@ -166,3 +166,13 @@ Registro de 2026-11-21:
   para 20 por hora, para ficar abaixo do limite diário do Gmail.
 - Teste: `POST /auth/v1/otp` para o próprio Gmail da plataforma voltou
   HTTP 200 (servidor de e-mail aceitou o envio).
+- Modelos de e-mail redesenhados (`supabase/templates/gerar.mjs`) e
+  aplicados com `aplicar.mjs`. Observação: o serviço de autenticação do
+  Supabase pode levar vários minutos para passar a usar modelos e assuntos
+  novos; uma alteração pequena posterior forçou a recarga.
+- Testes com e-mails temporários (mail.tm): cadastro com senha pela tela
+  (e-mail em cerca de 1 s, link confirma a conta e cria perfil `student`),
+  "Acesso sem senha" para conta nova e para conta existente, com o código
+  digitado na tela (aceito também com espaço) e verificado com sucesso.
+  As contas de teste usam o domínio `euploading.com`.
+
