@@ -5,12 +5,12 @@ Para cada aba abaixo: cole o **assunto** no campo *Subject* e o conteúdo do arq
 
 | Aba no Supabase | Assunto (Subject) | Arquivo |
 | :--- | :--- | :--- |
-| Confirm sign up | `Confirme seu e-mail na BRHSIC Academy` | `confirmation.html` |
-| Magic Link | `Seu código de acesso: {{ .Token }}` | `magic_link.html` |
-| Reset Password | `Redefinir sua senha da BRHSIC Academy` | `recovery.html` |
+| Confirm sign up | `Confirme seu e-mail na BRHSIC Academy (código {{ .Token }})` | `confirmation.html` |
+| Magic Link | `Seu código de acesso à BRHSIC Academy: {{ .Token }}` | `magic_link.html` |
+| Reset Password | `Redefina sua senha da BRHSIC Academy` | `recovery.html` |
 | Change Email Address | `Confirme a troca de e-mail na BRHSIC Academy` | `email_change.html` |
 | Invite user | `Você foi convidado para a BRHSIC Academy` | `invite.html` |
-| Reauthentication | `Código de confirmação: {{ .Token }}` | `reauthentication.html` |
+| Reauthentication | `Código de confirmação da BRHSIC Academy: {{ .Token }}` | `reauthentication.html` |
 
 Não troque os trechos entre chaves (`{{ .Token }}`, `{{ .ConfirmationURL }}`, `{{ .Email }}`, `{{ .NewEmail }}`): o Supabase os substitui ao enviar.
 
