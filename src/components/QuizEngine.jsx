@@ -63,11 +63,57 @@ const DEFAULT_FIXATION_QUESTIONS = [
   }
 ];
 
+// Embaralhamento deterministico: a mesma aula mostra sempre a mesma ordem,
+// mas a alternativa correta deixa de cair sempre na mesma letra.
+function hashTexto(str) {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function geradorAleatorio(semente) {
+  let a = semente || 1;
+  return () => {
+    a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// Alternativas que dependem da posicao ("Todas as anteriores") ficam onde estao.
+const ALTERNATIVA_FIXA = /anteriores|acima|todas as alternativas|nenhuma das alternativas/i;
+
+export function embaralharAlternativas(questao, semente) {
+  const alts = questao.alternativas || [];
+  if (alts.length < 2 || questao.correta < 0 || questao.correta >= alts.length) return questao;
+  const moveis = alts.map((_, i) => i).filter(i => !ALTERNATIVA_FIXA.test(String(alts[i])));
+  const rand = geradorAleatorio(hashTexto(semente));
+  const ordem = [...moveis];
+  for (let i = ordem.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [ordem[i], ordem[j]] = [ordem[j], ordem[i]];
+  }
+  // posicaoNova[k] = indice original que vai para a posicao k
+  const posicaoNova = alts.map((_, i) => i);
+  moveis.forEach((slot, k) => { posicaoNova[slot] = ordem[k]; });
+  return {
+    ...questao,
+    alternativas: posicaoNova.map(i => alts[i]),
+    correta: posicaoNova.indexOf(questao.correta)
+  };
+}
+
+const NOTA_MINIMA_CONCLUSAO = 70;
+
 function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
   const { isAuthenticated, inlineEditActive, cmsData, updateLesson } = useContext(AdminContext);
   const { saveQuizScore, getQuizScore, toggleLessonComplete, completedLessons } = useContext(ProgressContext);
 
-  const quizQuestions = useMemo(() => {
+  const baseQuestions = useMemo(() => {
     let rawList = null;
     if (cmsData?.lessons?.[lessonId]?.customQuiz && cmsData.lessons[lessonId].customQuiz.length > 0) {
       rawList = cmsData.lessons[lessonId].customQuiz;
@@ -111,6 +157,13 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
     });
   }, [cmsData, lessonId, questions]);
 
+  // Versao exibida ao aluno: alternativas embaralhadas (semente = aula + indice).
+  // A edicao do admin continua usando baseQuestions, na ordem original.
+  const quizQuestions = useMemo(
+    () => baseQuestions.map((q, i) => embaralharAlternativas(q, `${lessonId}#${i}`)),
+    [baseQuestions, lessonId]
+  );
+
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [submitted, setSubmitted] = useState(false);
@@ -142,7 +195,7 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
   };
 
   const openEditModal = (idx) => {
-    const q = quizQuestions[idx];
+    const q = baseQuestions[idx];
     if (!q) return;
     setEditingQuestionIdx(idx);
     setQText(q.pergunta || '');
@@ -168,9 +221,9 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
 
     let updatedList;
     if (editingQuestionIdx !== null) {
-      updatedList = quizQuestions.map((q, i) => (i === editingQuestionIdx ? newQuestionObj : q));
+      updatedList = baseQuestions.map((q, i) => (i === editingQuestionIdx ? newQuestionObj : q));
     } else {
-      updatedList = [...quizQuestions, newQuestionObj];
+      updatedList = [...baseQuestions, newQuestionObj];
     }
 
     if (updateLesson) {
@@ -183,7 +236,7 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
   const handleDeleteQuestion = (idx) => {
     if (!window.confirm("Deseja realmente excluir esta questão do quiz?")) return;
 
-    const updatedList = quizQuestions.filter((_, i) => i !== idx);
+    const updatedList = baseQuestions.filter((_, i) => i !== idx);
     if (updateLesson) {
       updateLesson(lessonId, { customQuiz: updatedList });
     }
@@ -192,6 +245,8 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
       setCurrentIdx(Math.max(0, updatedList.length - 1));
     }
   };
+
+  const { hapticTap, hapticSuccess, hapticError, hapticMilestone } = useHaptics();
 
   if (!quizQuestions || quizQuestions.length === 0) {
     return (
@@ -215,7 +270,6 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
 
   const currentQ = quizQuestions[currentIdx] || quizQuestions[0];
   const previousHighScore = getQuizScore ? getQuizScore(lessonId) : null;
-  const { hapticTap, hapticSuccess, hapticError, hapticMilestone } = (useHaptics ? useHaptics() : { hapticTap: () => {}, hapticSuccess: () => {}, hapticError: () => {}, hapticMilestone: () => {} });
 
   const handleSelectOption = (idx) => {
     if (submitted) return;
@@ -258,7 +312,9 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
           console.warn('[BFA] saveQuizScore error:', err);
         }
       }
-      if (toggleLessonComplete && completedLessons && !completedLessons.includes(lessonId)) {
+      // So conclui a aula com pelo menos 70% de acertos.
+      const pctFinal = Math.round((finalScore / quizQuestions.length) * 100);
+      if (pctFinal >= NOTA_MINIMA_CONCLUSAO && toggleLessonComplete && completedLessons && !completedLessons.includes(lessonId)) {
         try {
           toggleLessonComplete(lessonId);
         } catch (err) {
@@ -304,6 +360,11 @@ function QuizEngine({ questions, lessonId, onBackToTheory, nextLessonUrl }) {
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
           Você acertou <strong>{finalScore}</strong> de <strong>{quizQuestions.length}</strong> questões ({pct}% de aproveitamento).
         </p>
+        {pct < NOTA_MINIMA_CONCLUSAO && (
+          <p style={{ color: 'var(--text-primary)', fontSize: '0.9rem', margin: '-0.75rem 0 1.5rem 0' }}>
+            A aula é marcada como concluída a partir de {NOTA_MINIMA_CONCLUSAO}% de acertos. Revise a teoria e tente de novo.
+          </p>
+        )}
 
         <div style={{ height: '8px', width: '100%', background: 'var(--bg-surface)', borderRadius: '999px', overflow: 'hidden', marginBottom: '2rem' }}>
           <div style={{ height: '100%', width: `${pct}%`, background: pct >= 70 ? 'var(--track-finance)' : 'var(--track-brhsic)', borderRadius: '999px' }} />
