@@ -4595,3 +4595,27 @@
 .bfa-btn--ouro:hover {
   opacity: 0.9;
 }
+
+/* -- Banco de exercicios ---------------------------------------------------- */
+:root {
+  --ex-ok-bg: #E7F6EF;
+  --ex-ok-fg: #047857;
+  --ex-erro-bg: #FDECEC;
+  --ex-erro-fg: #B91C1C;
+}
+[data-theme="dark-obsidian"],
+[data-theme="dark"],
+.dark {
+  --ex-ok-bg: rgba(16, 185, 129, 0.14);
+  --ex-ok-fg: #6EE7B7;
+  --ex-erro-bg: rgba(239, 68, 68, 0.14);
+  --ex-erro-fg: #FCA5A5;
+}
+.ex-alternativa:not(:disabled):hover {
+  border-color: var(--text-primary) !important;
+}
+.ex-alternativa:focus-visible,
+.ex-chip:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}

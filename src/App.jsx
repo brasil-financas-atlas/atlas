@@ -3,7 +3,8 @@ import { useRouter } from './router';
 import Home from './pages/Home';
 import DisciplinaOverview, { ModuloIntroPage } from './pages/DisciplinaOverview';
 import AulaPage from './pages/AulaPage';
-import BrhsicPage, { Exercicios, Noticias, Sobre } from './pages/ExtraPages';
+import BrhsicPage, { Noticias, Sobre } from './pages/ExtraPages';
+import ExerciciosPage from './pages/ExerciciosPage';
 import AdminDashboard from './pages/AdminPages';
 import LoginPage from './pages/LoginPage';
 import ConfirmacaoPage from './pages/ConfirmacaoPage';
@@ -121,7 +122,7 @@ function App() {
     }
 
     if (currentPath === '/exercicios') {
-      return <Exercicios />;
+      return <ExerciciosPage />;
     }
 
     if (currentPath === '/noticias') {
