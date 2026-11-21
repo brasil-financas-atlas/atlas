@@ -342,8 +342,11 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
 
       {/* Sidebar - Curriculum Tree */}
       <aside ref={sidebarRef} style={{
-        position: sidebarOpen && isMobile ? 'fixed' : 'sticky',
-        top: 'var(--bfa-header-h, 4rem)',
+        // No computador a trilha fica no fluxo, colada no topo da aula (o
+        // conteiner .aula-layout tem overflow hidden, entao sticky deslocaria
+        // a trilha para baixo). No celular ela abre como gaveta fixa.
+        position: isMobile ? 'fixed' : 'relative',
+        top: isMobile ? 'var(--bfa-header-h, 4rem)' : undefined,
         left: 0,
         zIndex: isMobile ? 96 : 30,
         display: sidebarOpen ? 'block' : 'none',
@@ -382,7 +385,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
       </aside>
 
       {/* Main Classroom Canvas */}
-      <main ref={mainRef} style={{ flex: 1, minWidth: 0, padding: isMobile ? '2rem 1.5rem' : '3rem 4rem', backgroundColor: 'var(--bg-app)', height: '100vh', overflowY: 'auto' }}>
+      <main ref={mainRef} style={{ flex: 1, minWidth: 0, padding: isMobile ? '2rem 1.5rem' : '3rem 4rem', backgroundColor: 'var(--bg-app)', height: 'calc(100vh - var(--bfa-header-h, 4rem))', overflowY: 'auto' }}>
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
         {/* Sleek Unified Lesson Header Bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
