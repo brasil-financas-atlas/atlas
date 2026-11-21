@@ -149,5 +149,20 @@ num e-mail que não seja da equipe.
 
 ## Mudanças ao vivo
 
-Nenhuma até agora. Os modelos de e-mail já estavam aplicados, então
-`node supabase/templates/aplicar.mjs` não é necessário.
+Os modelos de e-mail já estavam aplicados, então
+`node supabase/templates/aplicar.mjs` não foi necessário.
+
+Registro de 2026-11-21:
+
+- A migration `20261121120000_corrigir_cadastro_e_proteger_papel.sql` foi
+  aplicada pela equipe no SQL Editor. Conferido: a função
+  `criar_perfil_aluno()` não usa mais `student_profiles` e o trigger
+  `proteger_papel_perfil` existe. Um cadastro novo gerou perfil `student`.
+- SMTP sem domínio próprio: Gmail dedicado da plataforma com senha de app
+  (remetente "BRHSIC Academy"), configurado pela equipe no painel.
+- O campo `smtp_host` continuava com a URL do site; corrigido pela
+  Management API, com autorização do usuário no chat, para
+  `smtp.gmail.com` (porta 465). `rate_limit_email_sent` reduzido de 30
+  para 20 por hora, para ficar abaixo do limite diário do Gmail.
+- Teste: `POST /auth/v1/otp` para o próprio Gmail da plataforma voltou
+  HTTP 200 (servidor de e-mail aceitou o envio).
