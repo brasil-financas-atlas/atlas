@@ -413,7 +413,7 @@ function Navbar() {
             {authStep === 'otp' && (
               <div>
                 <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1.25rem' }}>
-                  Digite o código de 6 dígitos enviado para <strong>{authEmail}</strong>:
+                  Digite o código de 8 dígitos enviado para <strong>{authEmail}</strong>:
                 </p>
                 <form noValidate onSubmit={async (e) => {
                   e.preventDefault();
@@ -444,10 +444,10 @@ function Navbar() {
                       autoComplete="one-time-code"
                       inputMode="numeric"
                       required
-                      maxLength={10}
-                      placeholder="Código de 6 dígitos"
+                      maxLength={24}
+                      placeholder="Código de 8 dígitos"
                       value={authOtp}
-                      onChange={(e) => setAuthOtp(e.target.value)}
+                      onChange={(e) => setAuthOtp(normalizarCodigo(e.target.value).slice(0, 8))}
                       style={{ width: '100%', padding: '0.85rem', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--background)', color: 'var(--text-primary)', fontSize: '1.1rem', textAlign: 'center', letterSpacing: '0.2em', fontFamily: 'var(--font-mono)' }}
                     />
                   </div>

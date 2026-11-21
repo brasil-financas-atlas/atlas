@@ -267,7 +267,7 @@ function LoginPage() {
     const codigo = normalizarCodigo(lerCampo(e.currentTarget, 'otp', otpToken));
     setOtpToken(codigo);
     if (!codigo) {
-      setErrorMsg('Por favor, informe o código de 6 dígitos.');
+      setErrorMsg('Por favor, informe o código de 8 dígitos.');
       return;
     }
 
@@ -427,7 +427,7 @@ function LoginPage() {
             {activeTab === 'student-register'
               ? 'Salve seu progresso de 55 aulas e notas de simulados na nuvem.'
               : (activeTab === 'otp-verify'
-                  ? 'Informe o código de 6 dígitos enviado por e-mail.'
+                  ? 'Informe o código de 8 dígitos enviado por e-mail.'
                   : 'Alunos, professores e administradores entram por aqui. Quem é da equipe vai direto ao painel.')}
           </p>
         </div>
@@ -641,7 +641,7 @@ function LoginPage() {
           <form onSubmit={handleVerifyOtp} noValidate>
             <div style={{ marginBottom: '1.5rem' }}>
               <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem', textAlign: 'center' }}>
-                Código de 6 dígitos
+                Código de 8 dígitos
               </label>
               <input
                 type="text"
@@ -649,10 +649,10 @@ function LoginPage() {
                 autoComplete="one-time-code"
                 inputMode="numeric"
                 required
-                maxLength={8}
-                placeholder="123456"
+                maxLength={24}
+                placeholder="12345678"
                 value={otpToken}
-                onChange={(e) => setOtpToken(e.target.value)}
+                onChange={(e) => setOtpToken(normalizarCodigo(e.target.value).slice(0, 8))}
                 style={{ width: '100%', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)', fontSize: '1.5rem', textAlign: 'center', letterSpacing: '0.25em', fontFamily: 'var(--font-mono)', outline: 'none' }}
               />
             </div>

@@ -12,7 +12,8 @@ export function emailValido(valor) {
   return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(valor);
 }
 
-// Codigo de 6 digitos: o celular pode colar com espacos ou tracos.
+// Codigo de 8 digitos (mailer_otp_length do Supabase): o celular e o Gmail
+// podem colar com espacos ou tracos.
 export function normalizarCodigo(valor) {
   return String(valor || '').replace(/\D+/g, '');
 }
