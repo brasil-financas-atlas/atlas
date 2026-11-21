@@ -107,14 +107,22 @@ function AdminDashboard() {
         const aulas = mod.aulas.map((aula) => {
           const id = `${subjKey}-${mod.slug}-${aula.slug}`;
           const override = cmsData?.lessons?.[id] || {};
+          // Edicao enviada por quem nao e admin chefe: mostra o valor pedido
+          // e o aviso "Aguardando aprovacao" ate o chefe decidir.
+          const pendentes = (cmsData?.pendingEdits || []).filter(
+            (e) => e.resourceId === id && (e.status || 'pending') === 'pending'
+          );
+          const pedido = pendentes.reduceRight((acc, e) => ({ ...acc, ...(e.changesJson || {}) }), {});
+          const valor = (campo) => (pedido[campo] !== undefined ? pedido[campo] : override[campo]);
           return {
             id,
+            aguardandoAprovacao: pendentes.length > 0,
             title: aula.titulo,
             videoUrl: override.videoUrl !== undefined ? override.videoUrl : (aula.videoUrl || ''),
-            isDone: !!override.isDone,
-            doneBy: override.doneBy || null,
-            isReviewed: !!override.isReviewed,
-            reviewedBy: override.reviewedBy || null,
+            isDone: !!valor('isDone'),
+            doneBy: valor('doneBy') || null,
+            isReviewed: !!valor('isReviewed'),
+            reviewedBy: valor('reviewedBy') || null,
           };
         });
         groups.push({
@@ -202,7 +210,12 @@ function AdminDashboard() {
   const renderLesson = (aula) => (
     <li key={aula.id} className="adm-lesson">
       <div className="adm-lesson__row">
-        <span className="adm-lesson__title">{aula.title}</span>
+        <span className="adm-lesson__title">
+          {aula.title}
+          {aula.aguardandoAprovacao && (
+            <span className="adm-pill adm-pill--warn" style={{ marginLeft: '0.5rem' }}>Aguardando aprovação</span>
+          )}
+        </span>
 
         <div className="adm-lesson__checks">
           <label className={`adm-check${aula.isDone ? ' adm-check--on' : ''}`}>

@@ -696,6 +696,10 @@
   background-color: var(--adm-ok-bg);
   color: var(--adm-ok-fg);
 }
+.adm-pill--warn {
+  background-color: var(--adm-warn-bg);
+  color: var(--adm-warn-fg);
+}
 
 /* Aulas e videos: modulos recolhidos, uma lista por vez */
 .adm-filters {
