@@ -41,7 +41,7 @@ de `profiles` não restringe a coluna e o próprio site faz `upsert` com `role`.
 | `mailer_otp_length` / `mailer_otp_exp` | 8 dígitos / 3600 s | o campo do site aceita 8 dígitos (`maxLength={8}`); ok |
 | `password_min_length` | 6 | coerente com a mensagem do site |
 | `disable_signup` | `false` | cadastro aberto |
-| Provedores externos | Google, Apple e Facebook **desligados**; só e-mail | o botão "Entrar com Google", se exibido, vai falhar |
+| Provedores externos | Google, Apple e Facebook **desligados**; só e-mail | o site não exibe botão de Google hoje |
 | Modelos de e-mail | **já aplicados** | os 6 modelos de `supabase/templates/*.html` são idênticos ao que está no projeto, com os assuntos em português |
 
 Os avisos de "senha alterada", "e-mail alterado" etc. (notificações) ainda
@@ -96,8 +96,9 @@ têm assunto em inglês; são opcionais e estão desligados por padrão.
    limite baixo por hora (serve para testes, não para alunos).
 3. Incluir em `uri_allow_list` o domínio de produção real e o de prévia
    (ex.: `https://preview.atlas-c2i.pages.dev/**`), e conferir `site_url`.
-4. Se quiser "Entrar com Google", ligar o provedor Google (Client ID e
-   Secret do Google Cloud) ou esconder o botão no site.
+4. O site hoje não mostra botão "Entrar com Google". Se ele for adicionado,
+   antes é preciso ligar o provedor Google (Client ID e Secret do Google
+   Cloud) e incluir o domínio em `uri_allow_list`.
 5. Mais tarde: decidir se `student_profiles` deve existir. Se não, remover
    as tentativas no código (`useStudentAuth.js`, `LoginPage.jsx`), que hoje
    só geram erros 404 no console.
@@ -137,6 +138,14 @@ precisa ser desse domínio, por exemplo `nao-responda@seudominio.com.br`).
 Depois de salvar, em Authentication > Rate Limits ajuste "emails sent per
 hour" (30 hoje) conforme o plano do provedor. Teste com "Acesso sem senha"
 num e-mail que não seja da equipe.
+
+## Efeito no site (branch `preview`)
+
+- O site agora traduz "Database error saving new user" para uma mensagem
+  clara, e as chamadas de login têm tempo limite (8 s; 15 s nas que enviam
+  e-mail), com a mensagem "Sem conexão com o servidor".
+- Isso não resolve os dois defeitos acima: eles só somem com a migration e
+  com o SMTP corrigido.
 
 ## Mudanças ao vivo
 
