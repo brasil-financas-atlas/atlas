@@ -11,31 +11,40 @@ function AudioReader({ markdownContent, lessonTitle }) {
   const [supported, setSupported] = useState(true);
 
   const utteranceRef = useRef(null);
+  const restartTimerRef = useRef(null);
+  const rateRef = useRef(1);
+  const voiceRef = useRef(null);
 
-  // Strip Markdown symbols for clean Text-to-Speech narration
+  // Remove a marcacao do Markdown para a leitura em voz alta
   const spokenText = useMemo(() => {
     if (!markdownContent) return '';
-    
+
     let text = markdownContent;
-    // Remove code blocks
+    // Blocos de codigo
     text = text.replace(/```[\s\S]*?```/g, ' Exemplo de código omitido da leitura áudio. ');
-    // Remove inline code
+    // Codigo em linha
     text = text.replace(/`([^`]+)`/g, '$1');
-    // Remove headers markup
+    // Titulos
     text = text.replace(/^#+\s+/gm, '');
-    // Remove bold and italic
+    // Negrito e italico
     text = text.replace(/(\*\*|__)(.*?)\1/g, '$2');
     text = text.replace(/(\*|_)(.*?)\1/g, '$2');
-    // Remove links
+    // Links
     text = text.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
-    // Remove KaTeX blocks & inline math formulas
-    text = text.replace(/\$\$(.*?)\$\$/gs, ' Fórmula matemática. ');
-    text = text.replace(/\$(.*?)\$/g, ' fórmula ');
-    // Remove blockquotes and list symbols
+    // Valores em reais ("R$ 4.000", "R$4.000") viram "4.000 reais" antes de
+    // tratar o LaTeX, para o "$" da moeda nao ser lido como formula.
+    // (o caractere antes do R evita pegar "IR$" do fim de uma formula)
+    text = text.replace(/(^|[^\w\\{])R\$\s*(\d(?:[\d.,]*\d)?(?:\s*(?:mil|milh(?:ão|ões)|bilh(?:ão|ões)))?)/gi, '$1$2 reais');
+    text = text.replace(/(^|[^\w\\{])R\$/g, '$1reais');
+    // Formulas KaTeX: bloco $$...$$ e em linha $...$ (sem espaco logo depois
+    // do primeiro $ nem logo antes do ultimo)
+    text = text.replace(/\$\$([\s\S]*?)\$\$/g, ' Fórmula matemática. ');
+    text = text.replace(/\$(?=\S)([^$\n]*?\S)\$/g, ' fórmula ');
+    // Citacoes e marcadores de lista
     text = text.replace(/^\s*>[>]*\s*/gm, '');
     text = text.replace(/^\s*[-*+]\s+/gm, '');
     text = text.replace(/^\s*\d+\.\s+/gm, '');
-    // Clean excessive spaces and newlines
+    // Espacos e quebras de linha
     text = text.replace(/\n+/g, ' ');
 
     return text.trim();
@@ -44,17 +53,18 @@ function AudioReader({ markdownContent, lessonTitle }) {
   useEffect(() => {
     if (!('speechSynthesis' in window)) {
       setSupported(false);
-      return;
+      return undefined;
     }
 
     const loadVoices = () => {
       const availVoices = window.speechSynthesis.getVoices();
       setVoices(availVoices);
 
-      // Prefer pt-BR voices (e.g. Luciana, Daniel, Google português, Microsoft Maria, etc.)
+      // Prefere vozes pt-BR
       const ptVoice = availVoices.find(v => v.lang === 'pt-BR' || v.lang === 'pt_BR') ||
                       availVoices.find(v => v.lang.startsWith('pt'));
       if (ptVoice) {
+        voiceRef.current = ptVoice;
         setSelectedVoice(ptVoice);
       }
     };
@@ -65,11 +75,60 @@ function AudioReader({ markdownContent, lessonTitle }) {
     }
 
     return () => {
+      clearTimeout(restartTimerRef.current);
       if (window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = null;
         window.speechSynthesis.cancel();
       }
     };
   }, []);
+
+  // Trocou o conteudo (outra aula ou edicao): para a leitura antiga.
+  useEffect(() => {
+    if (!('speechSynthesis' in window)) return;
+    clearTimeout(restartTimerRef.current);
+    utteranceRef.current = null;
+    window.speechSynthesis.cancel();
+    setIsPlaying(false);
+    setIsPaused(false);
+  }, [spokenText, lessonTitle]);
+
+  const falar = () => {
+    const textToSpeak = lessonTitle ? `${lessonTitle}. ${spokenText}` : spokenText;
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    utterance.lang = 'pt-BR';
+    utterance.rate = rateRef.current;
+    if (voiceRef.current) utterance.voice = voiceRef.current;
+
+    // Eventos de uma fala ja substituida sao ignorados.
+    const atual = () => utteranceRef.current === utterance;
+    utterance.onend = () => {
+      if (!atual()) return;
+      setIsPlaying(false);
+      setIsPaused(false);
+    };
+    utterance.onerror = (e) => {
+      if (!atual()) return;
+      if (e && e.error !== 'interrupted' && e.error !== 'canceled') console.warn('SpeechSynthesis error:', e);
+      setIsPlaying(false);
+      setIsPaused(false);
+    };
+    utterance.onpause = () => {
+      if (!atual()) return;
+      setIsPaused(true);
+      setIsPlaying(false);
+    };
+    utterance.onresume = () => {
+      if (!atual()) return;
+      setIsPaused(false);
+      setIsPlaying(true);
+    };
+
+    utteranceRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
+    setIsPlaying(true);
+    setIsPaused(false);
+  };
 
   const handlePlay = () => {
     if (!supported || !spokenText) return;
@@ -81,42 +140,10 @@ function AudioReader({ markdownContent, lessonTitle }) {
       return;
     }
 
+    clearTimeout(restartTimerRef.current);
+    utteranceRef.current = null;
     window.speechSynthesis.cancel();
-
-    const textToSpeak = lessonTitle ? `${lessonTitle}. ${spokenText}` : spokenText;
-    const utterance = new SpeechSynthesisUtterance(textToSpeak);
-
-    utterance.lang = 'pt-BR';
-    utterance.rate = rate;
-    if (selectedVoice) {
-      utterance.voice = selectedVoice;
-    }
-
-    utterance.onend = () => {
-      setIsPlaying(false);
-      setIsPaused(false);
-    };
-
-    utterance.onerror = (e) => {
-      console.warn("SpeechSynthesis error:", e);
-      setIsPlaying(false);
-      setIsPaused(false);
-    };
-
-    utterance.onpause = () => {
-      setIsPaused(true);
-      setIsPlaying(false);
-    };
-
-    utterance.onresume = () => {
-      setIsPaused(false);
-      setIsPlaying(true);
-    };
-
-    utteranceRef.current = utterance;
-    window.speechSynthesis.speak(utterance);
-    setIsPlaying(true);
-    setIsPaused(false);
+    falar();
   };
 
   const handlePause = () => {
@@ -130,31 +157,29 @@ function AudioReader({ markdownContent, lessonTitle }) {
 
   const handleStop = () => {
     if (!supported) return;
+    clearTimeout(restartTimerRef.current);
+    utteranceRef.current = null;
     window.speechSynthesis.cancel();
     setIsPlaying(false);
     setIsPaused(false);
   };
 
   const handleChangeSpeed = (newRate) => {
+    rateRef.current = newRate;
     setRate(newRate);
-    if (isPlaying || isPaused) {
-      window.speechSynthesis.cancel();
-      setIsPlaying(false);
-      setIsPaused(false);
-      // Restart playback with new rate
-      setTimeout(() => {
-        const textToSpeak = lessonTitle ? `${lessonTitle}. ${spokenText}` : spokenText;
-        const utterance = new SpeechSynthesisUtterance(textToSpeak);
-        utterance.lang = 'pt-BR';
-        utterance.rate = newRate;
-        if (selectedVoice) utterance.voice = selectedVoice;
-        utterance.onend = () => { setIsPlaying(false); setIsPaused(false); };
-        utterance.onerror = () => { setIsPlaying(false); setIsPaused(false); };
-        utteranceRef.current = utterance;
-        window.speechSynthesis.speak(utterance);
-        setIsPlaying(true);
-      }, 100);
-    }
+    const tocando = isPlaying || isPaused || restartTimerRef.current !== null;
+    if (!supported || !tocando) return;
+    // Cliques rapidos: so a ultima velocidade vale. O temporizador anterior
+    // e cancelado e a fala recomeca lendo a velocidade atual da ref.
+    clearTimeout(restartTimerRef.current);
+    utteranceRef.current = null;
+    window.speechSynthesis.cancel();
+    setIsPlaying(true);
+    setIsPaused(false);
+    restartTimerRef.current = setTimeout(() => {
+      restartTimerRef.current = null;
+      falar();
+    }, 120);
   };
 
   if (!supported) {
