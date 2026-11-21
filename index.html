@@ -27,10 +27,11 @@
 <body>
   <div id="root"></div>
 
-  <!-- Global Error Handler -->
+  <!-- Global Error Handler: so registra no console. Reescrever document.body
+       recriava a pagina e desligava todos os cliques do React. -->
   <script>
     window.addEventListener('error', function(e) {
-      document.body.innerHTML += '<div style="color:red; padding:20px; font-family:monospace; background:white; z-index:9999; position:fixed; top:0; left:0; width:100%;"><h3>App Error</h3><p>' + e.message + '</p></div>';
+      console.error('[App Error]', e.message);
     });
   </script>
 
