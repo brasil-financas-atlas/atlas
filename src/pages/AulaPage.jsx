@@ -9,6 +9,21 @@ import ForumTimestamps from '../components/VideoAndForum';
 import { EXACT_CONTENT } from '../data/contentData';
 import { financasData } from '../data/financasData';
 import { matematicaData } from '../data/matematicaData';
+import { shareContent } from '../utils/nativeShare';
+import { useHaptics, useSwipeGesture } from '../utils/touchGestures';
+import BrandImg from '../components/BrandImg';
+
+const LARGURA_CELULAR = 768;
+
+function AvisoNaoEncontrado({ texto, href }) {
+  return (
+    <div className="bfa-container" style={{ padding: '4rem 1.5rem', textAlign: 'center' }}>
+      <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.75rem 0' }}>{texto}</h1>
+      <p style={{ color: 'var(--text-secondary)', margin: '0 0 1.5rem 0' }}>O endereço pode ter mudado ou a aula foi removida.</p>
+      <a href={href} className="btn-primary">Voltar para a trilha</a>
+    </div>
+  );
+}
 
 function getYouTubeEmbedUrl(url) {
   if (!url || typeof url !== 'string') return '';
@@ -33,34 +48,87 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const activeLessonRef = useRef(null);
   const [shareToast, setShareToast] = useState(false);
 
-  const { hapticTap, hapticSuccess } = (window.useHaptics ? window.useHaptics() : { hapticTap: () => {}, hapticSuccess: () => {} });
+  const { hapticTap, hapticSuccess } = useHaptics();
+  const mainRef = useRef(null);
+  const sidebarRef = useRef(null);
+  const toastTimerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < LARGURA_CELULAR);
 
   const [expandedMods, setExpandedMods] = useState({ [moduloSlug]: true });
+
+  // Ao cruzar 768px, recalcula o layout; ao ficar estreito, fecha a trilha
+  // para ela nao cobrir o conteudo.
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    let anterior = window.innerWidth < LARGURA_CELULAR;
+    const onResize = () => {
+      const mobile = window.innerWidth < LARGURA_CELULAR;
+      if (mobile === anterior) return;
+      anterior = mobile;
+      setIsMobile(mobile);
+      setSidebarOpen(!mobile);
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  useEffect(() => () => clearTimeout(toastTimerRef.current), []);
 
   useEffect(() => {
     setActiveTab('teoria');
     setExpandedMods({ [moduloSlug]: true });
-    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+    if (typeof window !== 'undefined' && window.innerWidth < LARGURA_CELULAR) {
       setSidebarOpen(false);
     }
-    if (activeLessonRef.current) {
-      activeLessonRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
+    // A rolagem da aula e do <main>, nao da janela: volta ao topo na troca.
+    if (mainRef.current) mainRef.current.scrollTop = 0;
+    if (typeof window !== 'undefined') window.scrollTo(0, 0);
   }, [aulaSlug, moduloSlug]);
+
+  // Centraliza a aula ativa rolando so o conteiner da trilha (scrollIntoView
+  // rolava a janela inteira e escondia o cabecalho).
+  useEffect(() => {
+    const box = sidebarRef.current;
+    const item = activeLessonRef.current;
+    if (!box || !item || !sidebarOpen) return;
+    const boxRect = box.getBoundingClientRect();
+    const itemRect = item.getBoundingClientRect();
+    const alvo = box.scrollTop + (itemRect.top - boxRect.top) - (box.clientHeight / 2) + (itemRect.height / 2);
+    box.scrollTop = Math.max(0, alvo);
+  }, [aulaSlug, moduloSlug, sidebarOpen]);
+
+  const tabs = ['teoria', 'quiz', 'forum'];
+  const { handlers: swipeHandlers } = useSwipeGesture({
+    onSwipeLeft: () => {
+      const nextIdx = tabs.indexOf(activeTab) + 1;
+      if (nextIdx < tabs.length) {
+        hapticTap();
+        setActiveTab(tabs[nextIdx]);
+      }
+    },
+    onSwipeRight: () => {
+      const prevIdx = tabs.indexOf(activeTab) - 1;
+      if (prevIdx >= 0) {
+        hapticTap();
+        setActiveTab(tabs[prevIdx]);
+      }
+    },
+    threshold: 60
+  });
 
   const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
   if (!subjectData) {
-    return <div className="bfa-container" style={{ padding: '4rem 1.5rem' }}>Disciplina não encontrada.</div>;
+    return <AvisoNaoEncontrado texto="Disciplina não encontrada." href="#/" />;
   }
 
   const moduloObj = subjectData.modulos.find(m => m.slug === moduloSlug);
   if (!moduloObj) {
-    return <div className="bfa-container" style={{ padding: '4rem 1.5rem' }}>Módulo não encontrado.</div>;
+    return <AvisoNaoEncontrado texto="Módulo não encontrado." href={`#/${subjectKey}`} />;
   }
 
   const aulaObj = moduloObj.aulas.find(a => a.slug === aulaSlug);
   if (!aulaObj) {
-    return <div className="bfa-container" style={{ padding: '4rem 1.5rem' }}>Aula não encontrada.</div>;
+    return <AvisoNaoEncontrado texto="Aula não encontrada." href={`#/${subjectKey}/${moduloSlug}`} />;
   }
 
   const lessonId = `${subjectKey}-${moduloSlug}-${aulaSlug}`;
@@ -84,28 +152,6 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
   const isMatematica = subjectKey === 'matematica';
   const trackColor = isMatematica ? 'var(--track-math)' : 'var(--track-finance)';
 
-  // Gestos de Swipe entre Abas
-  const tabs = ['teoria', 'quiz', 'forum'];
-  const handleSwipeLeft = () => {
-    const nextIdx = tabs.indexOf(activeTab) + 1;
-    if (nextIdx < tabs.length) {
-      hapticTap();
-      setActiveTab(tabs[nextIdx]);
-    }
-  };
-
-  const handleSwipeRight = () => {
-    const prevIdx = tabs.indexOf(activeTab) - 1;
-    if (prevIdx >= 0) {
-      hapticTap();
-      setActiveTab(tabs[prevIdx]);
-    }
-  };
-
-  const { handlers: swipeHandlers } = window.useSwipeGesture ?
-    window.useSwipeGesture({ onSwipeLeft: handleSwipeLeft, onSwipeRight: handleSwipeRight, threshold: 60 }) :
-    { handlers: {} };
-
   const handleToggleDone = () => {
     if (!isDone) {
       hapticSuccess();
@@ -115,18 +161,23 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
     toggleLessonComplete(lessonId);
   };
 
+  const mostrarToast = (tipo) => {
+    clearTimeout(toastTimerRef.current);
+    setShareToast(tipo);
+    toastTimerRef.current = setTimeout(() => setShareToast(false), tipo === 'erro' ? 5000 : 2500);
+  };
+
   const handleShare = async () => {
     hapticTap();
-    if (window.shareContent) {
-      const res = await window.shareContent({
-        title: `${aulaObj.titulo} — Brasil Finanças Atlas`,
-        text: `Estudando "${aulaObj.titulo}" no Brasil Finanças Atlas!`,
-        url: window.location.href
-      });
-      if (res && res.method === 'clipboard') {
-        setShareToast(true);
-        setTimeout(() => setShareToast(false), 2500);
-      }
+    const res = await shareContent({
+      title: `${aulaObj.titulo} — Brasil Finanças Atlas`,
+      text: `Estudando "${aulaObj.titulo}" no Brasil Finanças Atlas!`,
+      url: window.location.href
+    });
+    if (res && res.success && res.method === 'clipboard') {
+      mostrarToast('copiado');
+    } else if (res && !res.success && !res.aborted) {
+      mostrarToast('erro');
     }
   };
 
@@ -263,7 +314,9 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                         </span>
                       </div>
                       {itemDone && (
-                        <span style={{ color: 'var(--accent-green)', fontSize: '1rem' }}>✓</span>
+                        <span style={{ color: 'var(--accent-green)', display: 'inline-flex' }} aria-label="Concluída">
+                          <BfaIcon name="check" size={14} color="var(--accent-green)" />
+                        </span>
                       )}
                     </a>
                   );
@@ -288,20 +341,23 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
       )}
 
       {/* Sidebar - Curriculum Tree */}
-      <aside style={{
-        position: sidebarOpen && typeof window !== 'undefined' && window.innerWidth < 768 ? 'fixed' : 'relative',
-        zIndex: 50,
+      <aside ref={sidebarRef} style={{
+        position: sidebarOpen && isMobile ? 'fixed' : 'sticky',
+        top: 'var(--bfa-header-h, 4rem)',
+        left: 0,
+        zIndex: isMobile ? 96 : 30,
         display: sidebarOpen ? 'block' : 'none',
-        width: '320px',
+        width: isMobile ? 'min(320px, 86vw)' : '320px',
         flexShrink: 0,
-        height: '100vh',
+        alignSelf: 'flex-start',
+        height: 'calc(100vh - var(--bfa-header-h, 4rem))',
         overflowY: 'auto',
         borderRight: '1px solid var(--border-color)',
           backgroundColor: 'var(--bg-surface-blue)'
       }}>
         <div style={{ padding: '1rem', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, backgroundColor: 'var(--bg-surface-blue)', zIndex: 10 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <img src="https://brhsic-main.vercel.app/brand/brhsic-symbol.png" alt="BRHSIC" className="bfa-brand-img" style={{ height: '24px', width: 'auto' }} />
+              <BrandImg variant="symbol" className="bfa-brand-img" style={{ height: '24px', width: 'auto' }} />
               <div>
               <span style={{ color: trackColor, fontWeight: 700, fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
               <BfaIcon name={isMatematica ? "math" : "finance"} size={13} />
@@ -326,7 +382,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
       </aside>
 
       {/* Main Classroom Canvas */}
-      <main style={{ flex: 1, minWidth: 0, padding: typeof window !== 'undefined' && window.innerWidth < 768 ? '2rem 1.5rem' : '3rem 4rem', backgroundColor: 'var(--bg-app)', height: '100vh', overflowY: 'auto' }}>
+      <main ref={mainRef} style={{ flex: 1, minWidth: 0, padding: isMobile ? '2rem 1.5rem' : '3rem 4rem', backgroundColor: 'var(--bg-app)', height: '100vh', overflowY: 'auto' }}>
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
         {/* Sleek Unified Lesson Header Bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
@@ -366,9 +422,9 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
             <button
               onClick={handleToggleDone}
               style={{
-                backgroundColor: isDone ? 'var(--accent-green)' : 'var(--bg-surface)',
+                backgroundColor: isDone ? '#047857' : 'var(--bg-surface)',
                 color: isDone ? '#FFFFFF' : 'var(--text-primary)',
-                border: isDone ? '1px solid var(--accent-green)' : '1px solid var(--border-color)',
+                border: isDone ? '1px solid #047857' : '1px solid var(--border-color)',
                 padding: '0.5rem 1rem',
                 borderRadius: 'var(--radius-md)',
                 fontWeight: 600,
@@ -386,9 +442,13 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
         </div>
 
         {shareToast && (
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '1rem', backgroundColor: 'var(--status-success-bg, #E6F9F3)', color: 'var(--accent-green)', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem' }}>
-            <BfaIcon name="check" size={16} color="var(--accent-green)" />
-            <span style={{ fontWeight: 500 }}>Link da aula copiado para a área de transferência!</span>
+          <div role="status" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '1rem', backgroundColor: shareToast === 'erro' ? '#B91C1C' : '#047857', color: '#FFFFFF', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem' }}>
+            <BfaIcon name={shareToast === 'erro' ? 'close' : 'check'} size={16} color="#FFFFFF" />
+            <span style={{ fontWeight: 500 }}>
+              {shareToast === 'erro'
+                ? 'Não foi possível copiar o link. Copie o endereço da barra do navegador.'
+                : 'Link da aula copiado para a área de transferência!'}
+            </span>
           </div>
         )}
 
@@ -400,7 +460,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '3rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', margin: '0 0 1rem 0', lineHeight: 1.1 }}>
             {aulaObj.titulo}
           </h1>
-          <AudioReader markdownContent={markdownContent} lessonTitle={aulaObj.titulo} />
+          <AudioReader key={lessonId} markdownContent={markdownContent} lessonTitle={aulaObj.titulo} />
         </div>
 
         {/* Quick In-Lesson Segmented Mode Navigation Bar */}
@@ -467,7 +527,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                   onClick={() => {
                     hapticTap();
                     setActiveTab('quiz');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    if (mainRef.current) mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   style={{
                     flex: 1,
@@ -596,7 +656,7 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                         onClick={() => {
                           hapticTap();
                           setActiveTab('quiz');
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                          if (mainRef.current) mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });
                         }}
                       >
                         <BfaIcon name="target" size={16} />
@@ -608,8 +668,9 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
               )}
 
               {/* TAB 2: QUIZ */}
-              {activeTab === 'quiz' && (
-                <div id="quiz-section" style={{ marginTop: '1.5rem' }}>
+              {/* O quiz fica montado (so escondido) para nao perder o progresso ao trocar de aba */}
+              {lessonQuestions.length > 0 || activeTab === 'quiz' ? (
+                <div id="quiz-section" style={{ marginTop: '1.5rem', display: activeTab === 'quiz' ? 'block' : 'none' }}>
                   <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <button
                       type="button"
@@ -622,18 +683,19 @@ function AulaPage({ subjectKey, moduloSlug, aulaSlug }) {
                     >
                       <span>← Voltar para a Teoria</span>
                     </button>
-                    <span style={{ color: 'var(--accent-green)', fontSize: '0.875rem', fontWeight: 600 }}>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', fontWeight: 600 }}>
                       {lessonQuestions.length} Questões Disponíveis
                     </span>
                   </div>
                   <QuizEngine
+                    key={lessonId}
                     questions={lessonQuestions}
                     lessonId={lessonId}
                     onBackToTheory={() => setActiveTab('teoria')}
                     nextLessonUrl={nextAula ? `#/${subjectKey}/${nextAula.moduloSlug}/${nextAula.slug}` : null}
                   />
                 </div>
-              )}
+              ) : null}
 
               {/* TAB 3: FORUM */}
               {activeTab === 'forum' && (
