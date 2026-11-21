@@ -6,7 +6,7 @@ import { BfaSupabase } from './supabaseClient.js';
    ========================================================================== */
 
 import React, {  useState, useEffect, useRef, useCallback  } from 'react';
-import { normalizarEmail, normalizarCodigo } from './authHelpers';
+import { normalizarEmail, normalizarCodigo, comTempoLimite } from './authHelpers';
 
 export function useStudentAuth() {
   const [user, setUser] = useState(null);
@@ -293,13 +293,13 @@ export function useStudentAuth() {
       throw new Error('Supabase não configurado');
     }
     const supabase = BfaSupabase.client;
-    const { data, error } = await supabase.auth.signInWithOtp({
+    const { data, error } = await comTempoLimite(supabase.auth.signInWithOtp({
       email: normalizarEmail(email),
       options: {
         data: { name: name || 'Estudante' },
         emailRedirectTo: typeof window !== 'undefined' ? (window.location.origin + window.location.pathname + '#/confirmacao') : ''
       }
-    });
+    }), 15000);
     if (error) throw error;
     return data;
   };
@@ -310,11 +310,11 @@ export function useStudentAuth() {
       throw new Error('Supabase não configurado');
     }
     const supabase = BfaSupabase.client;
-    const { data, error } = await supabase.auth.verifyOtp({
+    const { data, error } = await comTempoLimite(supabase.auth.verifyOtp({
       email: normalizarEmail(email),
       token: normalizarCodigo(token),
       type: 'email'
-    });
+    }));
     if (error) throw error;
     if (data?.user) {
       setUser(data.user);

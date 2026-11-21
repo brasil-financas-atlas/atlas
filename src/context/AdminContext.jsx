@@ -1,5 +1,7 @@
 import React from 'react';
 import { BfaSupabase } from '../utils/supabaseClient.js';
+import { comTempoLimite, traduzirErroAuth } from '../utils/authHelpers';
+import BfaIcon from '../components/Icons';
 
 /* Não existe lista de usuários aqui, e isso é de propósito.
    Antes havia quatro pares usuário/senha escritos no código — e como este site
@@ -93,6 +95,15 @@ export function AdminProvider({ children }) {
   const [carregandoSessao, setCarregandoSessao] = React.useState(true);
   const [statusPublicacao, setStatusPublicacao] = React.useState('idle'); // idle | publicando | publicado | erro
   const [erroPublicacao, setErroPublicacao] = React.useState('');
+  // Aviso discreto (sem alert) para quem precisa de aprovacao do admin chefe.
+  const [aviso, setAviso] = React.useState(null);
+  const avisoTimerRef = React.useRef(null);
+  const mostrarAviso = React.useCallback((texto) => {
+    clearTimeout(avisoTimerRef.current);
+    setAviso(texto);
+    avisoTimerRef.current = setTimeout(() => setAviso(null), 4500);
+  }, []);
+  React.useEffect(() => () => clearTimeout(avisoTimerRef.current), []);
 
   const [cmsData, setCmsData] = React.useState(() => {
     try {
@@ -120,53 +131,63 @@ export function AdminProvider({ children }) {
       ));
     };
 
-    const carregar = async () => {
-      const sp = BfaSupabase;
+    const normalizarPendentes = (pending) => pending.map(p => ({
+      id: p.id,
+      authorName: p.author_name || p.authorName || 'Colaborador',
+      resourceType: p.resource_type || p.resourceType,
+      resourceId: p.resource_id || p.resourceId,
+      changesJson: p.changes_json || p.changesJson,
+      createdAt: p.created_at || p.createdAt,
+      status: p.status || 'pending'
+    }));
 
-      if (sp && sp.isConfigured()) {
-        const sessao = await sp.restoreSession();
-        if (!cancelado && ehEquipe(sessao)) setCurrentUser(sessao);
-
-        const doBanco = await sp.fetchSiteContent();
-        if (doBanco) {
-          adotarSeMaisNovo(doBanco);
-        }
-
-        // Carrega as edições pendentes do banco
-        try {
-          const pending = await sp.fetchPendingEdits();
-          if (!cancelado && pending && Array.isArray(pending) && pending.length > 0) {
-            const normalizedPending = pending.map(p => ({
-              id: p.id,
-              authorName: p.author_name || p.authorName || 'Colaborador',
-              resourceType: p.resource_type || p.resourceType,
-              resourceId: p.resource_id || p.resourceId,
-              changesJson: p.changes_json || p.changesJson,
-              createdAt: p.created_at || p.createdAt,
-              status: p.status || 'pending'
-            }));
-            setCmsData(prev => ({
-              ...prev,
-              pendingEdits: normalizedPending
-            }));
-          }
-        } catch (pErr) {
-          console.warn('[BFA] Não foi possível carregar pendências do Supabase:', pErr);
-        }
-
-        if (doBanco) {
-          if (!cancelado) setCarregandoSessao(false);
-          return;
-        }
-      }
-
+    const carregarPublicadoEmArquivo = async () => {
       try {
         const res = await fetch(`${CMS_PUBLICADO_URL}?v=${Date.now()}`, { cache: 'no-store' });
         if (res.ok) adotarSeMaisNovo(await res.json());
       } catch (erro) {
         console.warn('Nao foi possivel carregar o conteudo publicado:', erro);
       }
+    };
+
+    const carregar = async () => {
+      const sp = BfaSupabase;
+
+      if (!sp || !sp.isConfigured()) {
+        if (!cancelado) setCarregandoSessao(false);
+        await carregarPublicadoEmArquivo();
+        return;
+      }
+
+      // 1. Sessao: libera a tela assim que souber quem esta logado (ou
+      //    desistir depois do tempo limite), sem esperar o conteudo.
+      try {
+        const sessao = await comTempoLimite(sp.restoreSession());
+        if (!cancelado && ehEquipe(sessao)) setCurrentUser(sessao);
+      } catch (erro) {
+        console.warn('[BFA] Sessao nao recuperada:', erro && erro.message);
+      }
       if (!cancelado) setCarregandoSessao(false);
+
+      // 2. Conteudo e pendencias em segundo plano.
+      let doBanco = null;
+      try {
+        doBanco = await comTempoLimite(sp.fetchSiteContent());
+        if (doBanco) adotarSeMaisNovo(doBanco);
+      } catch (erro) {
+        console.warn('[BFA] Conteudo do banco indisponivel:', erro && erro.message);
+      }
+
+      try {
+        const pending = await comTempoLimite(sp.fetchPendingEdits());
+        if (!cancelado && Array.isArray(pending) && pending.length > 0) {
+          setCmsData(prev => ({ ...prev, pendingEdits: normalizarPendentes(pending) }));
+        }
+      } catch (pErr) {
+        console.warn('[BFA] Não foi possível carregar pendências do Supabase:', pErr);
+      }
+
+      if (!doBanco) await carregarPublicadoEmArquivo();
     };
 
     carregar();
@@ -293,7 +314,12 @@ export function AdminProvider({ children }) {
       return { success: false, error: 'Banco de dados não configurado. Fale com quem administra o site.' };
     }
 
-    const res = await sp.signInUser(String(email).trim(), password);
+    let res;
+    try {
+      res = await comTempoLimite(sp.signInUser(String(email).trim(), password));
+    } catch (erro) {
+      return { success: false, error: traduzirErroAuth(erro) };
+    }
     if (res.success && !ehEquipe(res.user)) {
       return { ...res, isStaff: false };
     }
@@ -303,7 +329,7 @@ export function AdminProvider({ children }) {
 
       // Carrega pendências ao logar
       try {
-        const pending = await sp.fetchPendingEdits();
+        const pending = await comTempoLimite(sp.fetchPendingEdits());
         if (pending && Array.isArray(pending) && pending.length > 0) {
           const normalizedPending = pending.map(p => ({
             id: p.id,
@@ -391,7 +417,7 @@ export function AdminProvider({ children }) {
         pendingEdits: [pendingObj, ...(prev.pendingEdits || [])]
       }));
 
-      alert("ℹ️ Alteração enviada para análise do Admin Chief! Sua edição será publicada após a aprovação.");
+      mostrarAviso('Alteração enviada para o admin chefe. Ela aparece como "Aguardando aprovação" até ser aprovada.');
       return;
     }
 
@@ -413,7 +439,7 @@ export function AdminProvider({ children }) {
         ...prev,
         pendingEdits: [{ id: item.id, authorName: currentUser.name || currentUser.email, resourceType: 'news', resourceId: item.id, changesJson: newsItem, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
       }));
-      alert("ℹ️ Notícia enviada para aprovação do Admin Chief!");
+      mostrarAviso('Notícia enviada para aprovação do admin chefe.');
       return;
     }
 
@@ -429,7 +455,7 @@ export function AdminProvider({ children }) {
         ...prev,
         pendingEdits: [{ id: `edit_${Date.now()}`, authorName: currentUser.name || currentUser.email, resourceType: 'override', resourceId: id, changesJson: { text: newContent }, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
       }));
-      alert("ℹ️ Alteração de texto enviada para aprovação do Admin Chief!");
+      mostrarAviso('Alteração de texto enviada para aprovação do admin chefe.');
       return;
     }
 
@@ -460,7 +486,7 @@ export function AdminProvider({ children }) {
         ...prev,
         pendingEdits: [{ id: `edit_${Date.now()}`, authorName: currentUser.name || currentUser.email, resourceType: 'module', resourceId: `${subjectKey}-${modItem.slug}`, changesJson: { subjectKey, module: modItem }, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
       }));
-      alert("ℹ️ Novo módulo enviado para aprovação do Admin Chief!");
+      mostrarAviso('Novo módulo enviado para aprovação do admin chefe.');
       return;
     }
 
@@ -481,7 +507,7 @@ export function AdminProvider({ children }) {
         ...prev,
         pendingEdits: [{ id: item.id, authorName: currentUser.name || currentUser.email, resourceType: 'exercise', resourceId: item.id, changesJson: item, createdAt: new Date().toISOString(), status: 'pending' }, ...(prev.pendingEdits || [])]
       }));
-      alert("ℹ️ Exercício enviado para aprovação do Admin Chief!");
+      mostrarAviso('Exercício enviado para aprovação do admin chefe.');
       return;
     }
 
@@ -493,7 +519,7 @@ export function AdminProvider({ children }) {
 
   const deleteExercise = (exId) => {
     if (needsApproval) {
-      alert("ℹ️ Exclusões devem ser solicitadas diretamente ao Admin Chief.");
+      mostrarAviso('Exclusões são feitas pelo admin chefe. Peça a ele.');
       return;
     }
     setCmsData(prev => comHorario({
@@ -504,7 +530,7 @@ export function AdminProvider({ children }) {
 
   const deleteNews = (newsId) => {
     if (needsApproval) {
-      alert("ℹ️ Exclusões devem ser solicitadas diretamente ao Admin Chief.");
+      mostrarAviso('Exclusões são feitas pelo admin chefe. Peça a ele.');
       return;
     }
     setCmsData(prev => comHorario({
@@ -607,7 +633,37 @@ export function AdminProvider({ children }) {
     setThemePreference: setTheme
   };
 
-  return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;
+  return (
+    <AdminContext.Provider value={value}>
+      {children}
+      {aviso && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="bfa-aviso-equipe"
+          style={{
+            position: 'fixed', left: '50%', bottom: '1.25rem', transform: 'translateX(-50%)',
+            zIndex: 10000, maxWidth: 'min(560px, calc(100vw - 2rem))',
+            display: 'flex', alignItems: 'center', gap: '0.6rem',
+            padding: '0.75rem 1rem', borderRadius: '10px',
+            backgroundColor: '#1E293B', color: '#FFFFFF',
+            fontSize: '0.875rem', lineHeight: 1.4, boxShadow: '0 8px 24px rgba(0,0,0,0.25)'
+          }}
+        >
+          <BfaIcon name="alert" size={16} color="#FFFFFF" />
+          <span style={{ flex: 1 }}>{aviso}</span>
+          <button
+            type="button"
+            onClick={() => setAviso(null)}
+            aria-label="Fechar aviso"
+            style={{ background: 'none', border: 'none', color: '#FFFFFF', cursor: 'pointer', padding: 0, display: 'inline-flex' }}
+          >
+            <BfaIcon name="close" size={14} color="#FFFFFF" />
+          </button>
+        </div>
+      )}
+    </AdminContext.Provider>
+  );
 }
 
 

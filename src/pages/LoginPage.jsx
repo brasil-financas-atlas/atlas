@@ -7,7 +7,7 @@ import React, { useState, useEffect, useContext, createContext } from 'react';
 import { ProgressContext } from '../context/ProgressContext';
 import { AdminContext } from '../context/AdminContext';
 import { BfaSupabase } from '../utils/supabaseClient';
-import { normalizarEmail, emailValido, normalizarCodigo, lerCampo, traduzirErroAuth } from '../utils/authHelpers';
+import { normalizarEmail, emailValido, normalizarCodigo, lerCampo, traduzirErroAuth, comTempoLimite } from '../utils/authHelpers';
 import BrandImg from '../components/BrandImg';
 
 function LoginPage() {
@@ -84,10 +84,10 @@ function LoginPage() {
       }
 
       const supabase = sp.client;
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await comTempoLimite(supabase.auth.signInWithPassword({
         email: emailLimpo,
         password: senha
-      });
+      }));
 
       if (error) throw error;
 
@@ -156,7 +156,7 @@ function LoginPage() {
 
       const redirectUrl = typeof window !== 'undefined' ? (window.location.origin + window.location.pathname + '#/confirmacao') : '';
 
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await comTempoLimite(supabase.auth.signUp({
         email: emailLimpo,
         password: senha,
         options: {
@@ -166,7 +166,7 @@ function LoginPage() {
             full_name: nomeLimpo
           }
         }
-      });
+      }), 15000);
 
       if (error) throw error;
 

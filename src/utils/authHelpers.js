@@ -73,8 +73,27 @@ export function traduzirErroAuth(err) {
   if (m.includes('database error saving new user') || m.includes('database error')) {
     return 'Não foi possível criar sua conta agora por uma falha no servidor. Avise a equipe da BRHSIC Academy. (erro ao salvar usuário)';
   }
-  if (codigo === 'tempo_esgotado' || m.includes('failed to fetch') || m.includes('network')) {
+  if (codigo === 'tempo_esgotado') {
+    return 'Sem conexão com o servidor. Verifique sua internet e tente de novo em instantes.';
+  }
+  if (m.includes('failed to fetch') || m.includes('network')) {
     return 'Sem conexão com o servidor. Verifique sua internet e tente de novo.';
   }
   return msg || 'Não foi possível concluir o login. Tente de novo.';
+}
+
+// Limita o tempo de espera de uma chamada ao Supabase. Com o servidor lento
+// ou fora do ar, a promessa nunca resolvia e a tela ficava travada.
+export const TEMPO_LIMITE_AUTH_MS = 8000;
+
+export function comTempoLimite(promessa, ms = TEMPO_LIMITE_AUTH_MS) {
+  let timer;
+  const limite = new Promise((_, rejeitar) => {
+    timer = setTimeout(() => {
+      const erro = new Error('Sem conexão com o servidor');
+      erro.code = 'tempo_esgotado';
+      rejeitar(erro);
+    }, ms);
+  });
+  return Promise.race([Promise.resolve(promessa), limite]).finally(() => clearTimeout(timer));
 }
