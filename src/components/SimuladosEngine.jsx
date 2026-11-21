@@ -464,7 +464,7 @@ function SimuladosEngine() {
                   >
                     {idx + 1}
                     {flagged && (
-                      <span style={{ position: 'absolute', top: '-4px', right: '-4px', fontSize: '10px' }}>🚩</span>
+                      <span style={{ position: 'absolute', top: '-4px', right: '-4px', display: 'inline-flex' }} aria-label="Marcada para revisão"><BfaIcon name="bookmark" size={10} /></span>
                     )}
                   </button>
                 );

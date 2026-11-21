@@ -412,7 +412,7 @@ function SimuladorCarteiraInvestimentos() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Índice de Sharpe:</span>
               <strong style={{ fontSize: '0.9rem', color: portfolioMetrics.sharpeRatio >= 0.2 ? 'var(--color-verde-dark)' : 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
-                {portfolioMetrics.sharpeRatio.toFixed(2)} {portfolioMetrics.sharpeRatio >= 0.2 ? '✓ (Excelente)' : ''}
+                {portfolioMetrics.sharpeRatio.toFixed(2)} {portfolioMetrics.sharpeRatio >= 0.2 ? '(Excelente)' : ''}
               </strong>
             </div>
           </div>

@@ -93,7 +93,7 @@ function ThemeSelector() {
                   setTheme(theme.id);
                 }}
               >
-                {isActive ? '✓ Ativo' : 'Aplicar Tema'}
+                {isActive ? <><BfaIcon name="check" size={12} /> Ativo</> : 'Aplicar Tema'}
               </button>
             </div>
           );

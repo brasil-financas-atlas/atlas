@@ -3,6 +3,17 @@ import { ProgressContext } from '../context/ProgressContext';
 import EditableBlock from '../components/EditableBlock';
 import LessonContent from '../components/LessonContent';
 import { EXACT_CONTENT } from '../data/contentData';
+import BfaIcon from '../components/Icons';
+
+function AvisoNaoEncontrado({ texto, href }) {
+  return (
+    <div className="site-container" style={{ padding: '4rem 1.5rem', textAlign: 'center' }}>
+      <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.75rem 0' }}>{texto}</h1>
+      <p style={{ color: 'var(--text-secondary)', margin: '0 0 1.5rem 0' }}>O endereço pode ter mudado ou o conteúdo foi removido.</p>
+      <a href={href} className="btn-primary">Voltar para a trilha</a>
+    </div>
+  );
+}
 
 function DisciplinaOverview({ subjectKey }) {
     const { completedLessons } = useContext(ProgressContext || createContext({}));
@@ -10,7 +21,7 @@ function DisciplinaOverview({ subjectKey }) {
   const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
 
   if (!subjectData) {
-    return <div className="site-container" style={{ padding: '4rem 1.5rem' }}>Disciplina não encontrada.</div>;
+    return <AvisoNaoEncontrado texto="Disciplina não encontrada." href="#/" />;
   }
 
   const isMatematica = subjectKey === 'matematica';
@@ -83,7 +94,7 @@ function DisciplinaOverview({ subjectKey }) {
                   </div>
                   <div>
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', fontWeight: 500 }}>Certificado</span>
-                    <div style={{ fontSize: '0.875rem', fontWeight: 600, color: progressPct === 100 ? 'var(--accent-green)' : 'var(--accent-gold)', marginTop: '4px' }}>
+                    <div style={{ fontSize: '0.875rem', fontWeight: 600, color: progressPct === 100 ? 'var(--text-primary)' : 'var(--gold-text, var(--accent-gold))', marginTop: '4px' }}>
                       {progressPct === 100 ? 'Disponível' : 'Em Andamento'}
                     </div>
                   </div>
@@ -222,12 +233,12 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
 
   const subjectData = EXACT_CONTENT ? EXACT_CONTENT[subjectKey] : null;
   if (!subjectData) {
-    return <div className="site-container" style={{ padding: '4rem 1.5rem' }}>Disciplina não encontrada.</div>;
+    return <AvisoNaoEncontrado texto="Disciplina não encontrada." href="#/" />;
   }
 
   const moduloObj = subjectData.modulos.find(m => m.slug === moduloSlug);
   if (!moduloObj) {
-    return <div className="site-container" style={{ padding: '4rem 1.5rem' }}>Módulo não encontrado.</div>;
+    return <AvisoNaoEncontrado texto="Módulo não encontrado." href={`#/${subjectKey}`} />;
   }
 
   const isMatematica = subjectKey === 'matematica';
@@ -270,9 +281,10 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
             <button
               type="button"
               onClick={() => setSidebarOpen(false)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.25rem' }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'inline-flex', color: 'var(--text-secondary)' }}
+              aria-label="Fechar índice"
             >
-              ✕
+              <BfaIcon name="close" size={16} />
             </button>
           )}
         </div>
@@ -380,7 +392,11 @@ function ModuloIntroPage({ subjectKey, moduloSlug }) {
                             </span>
                             <span>{a.titulo}</span>
                           </div>
-                          {itemDone && <span style={{ color: 'var(--accent-green)', fontSize: '1rem' }}>✓</span>}
+                          {itemDone && (
+                            <span style={{ color: 'var(--accent-green)', display: 'inline-flex' }} aria-label="Concluída">
+                              <BfaIcon name="check" size={14} color="var(--accent-green)" />
+                            </span>
+                          )}
                         </a>
                       );
                     })}

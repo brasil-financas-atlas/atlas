@@ -350,7 +350,7 @@ Todo indicador financeiro que você vai encontrar no resto do curso — rentabil
 
 E o uso mais valioso das quatro é a divisão que **cria taxa**: é ela que permite comparar um investimento de R$ 100 com um de R$ 100.000 na mesma régua.
 
-### 📋 Colinha — Unidade 1
+### Colinha — Unidade 1
 
 !!! abstract "Resumo de bolso"
     **As quatro perguntas**
