@@ -12,7 +12,7 @@ function BrhsicPage() {
         <div className="site-container">
           <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '0.25rem 0.75rem', backgroundColor: 'var(--accent-gold)', color: '#fff', borderRadius: '999px', letterSpacing: '0.05em' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '0.25rem 0.75rem', backgroundColor: 'var(--accent-gold)', color: '#0A0F18', borderRadius: '999px', letterSpacing: '0.05em' }}>
                 COMPETIÇÃO NACIONAL
               </span>
               <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '0.25rem 0.75rem', backgroundColor: 'var(--accent-green)', color: '#001F37', borderRadius: '999px', letterSpacing: '0.05em' }}>
@@ -97,7 +97,7 @@ function BrhsicPage() {
               <p style={{ marginBottom: '2rem', minHeight: '80px' }}>
                 Aprenda a analisar demonstrativos contábeis reais (DRE, Balanço, Fluxo de Caixa), múltiplos setoriais e dinâmicas de mercado para fundamentar sua tese.
               </p>
-              <a href="#/financas" className="btn-primary" style={{ width: '100%', backgroundColor: 'var(--text-primary)' }}>
+              <a href="#/financas" className="btn-primary" style={{ width: '100%' }}>
                 Acessar Aulas de Finanças →
               </a>
             </div>

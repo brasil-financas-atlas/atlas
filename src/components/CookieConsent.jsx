@@ -26,44 +26,25 @@ function CookieConsent() {
   if (!visible) return null;
 
   return (
-    <div
-      className="bfa-cookie-banner"
-      style={{
-        backgroundColor: 'var(--bg-surface)',
-        color: 'var(--text-primary)',
-        border: '1px solid var(--border-color)',
-        borderRadius: 'var(--radius-xl)',
-        padding: '1.25rem 1.5rem',
-        boxShadow: '0 15px 35px -5px rgba(15, 23, 42, 0.25)',
-        fontFamily: 'var(--font-sans)',
-        animation: 'fadeInUp 0.4s ease-out forwards'
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+    <div className="bfa-cookie-banner" role="region" aria-label="Aviso de privacidade">
+      <div className="bfa-cookie-banner__head">
         <BfaIcon name="shield" size={18} color="var(--track-finance)" />
-        <h4 style={{ fontSize: '1rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>
-          Privacidade & LGPD
-        </h4>
+        <h4>Privacidade & LGPD</h4>
       </div>
-      <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '1rem' }}>
-        Utilizamos armazenamento local apenas para salvar seu progresso nas aulas e preferências da plataforma, sem rastreamento comercial de terceiros.
+      <p className="bfa-cookie-banner__text">
+        <span className="bfa-cookie-banner__long">
+          Utilizamos armazenamento local apenas para salvar seu progresso nas aulas e preferências da plataforma, sem rastreamento comercial de terceiros.
+        </span>
+        <span className="bfa-cookie-banner__short">Salvamos seu progresso só neste aparelho, sem rastreamento.</span>
       </p>
-      <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'flex-end' }}>
-        <button
-          type="button"
-          onClick={handleDecline}
-          className="bfa-btn bfa-btn--ghost bfa-btn--sm"
-          style={{ fontSize: '0.78rem', padding: '0.4rem 0.75rem' }}
-        >
-          Apenas Essenciais
+      <div className="bfa-cookie-banner__actions">
+        <button type="button" onClick={handleDecline} className="bfa-btn bfa-btn--ghost bfa-btn--sm">
+          <span className="bfa-cookie-banner__long">Apenas Essenciais</span>
+          <span className="bfa-cookie-banner__short">Essenciais</span>
         </button>
-        <button
-          type="button"
-          onClick={handleAccept}
-          className="bfa-btn bfa-btn--verde bfa-btn--sm"
-          style={{ fontSize: '0.78rem', padding: '0.4rem 0.85rem' }}
-        >
-          Aceitar & Salvar Progresso
+        <button type="button" onClick={handleAccept} className="bfa-btn bfa-btn--verde bfa-btn--sm">
+          <span className="bfa-cookie-banner__long">Aceitar & Salvar Progresso</span>
+          <span className="bfa-cookie-banner__short">Aceitar</span>
         </button>
       </div>
     </div>

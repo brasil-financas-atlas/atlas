@@ -3556,26 +3556,82 @@
   bottom: calc(1.5rem + env(safe-area-inset-bottom));
   z-index: 99998;
   max-width: 420px;
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 15px 35px -5px rgba(15, 23, 42, 0.25);
+  font-family: var(--font-sans);
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+.bfa-cookie-banner__head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.bfa-cookie-banner__head h4 {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0;
+  color: var(--text-primary);
+}
+.bfa-cookie-banner__text {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+}
+.bfa-cookie-banner__actions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+}
+.bfa-cookie-banner__actions .bfa-btn {
+  font-size: 0.78rem;
+  padding: 0.4rem 0.8rem;
+}
+.bfa-cookie-banner__short {
+  display: none;
 }
 
-@media (max-width: 600px) {
+/* Celular e tela deitada: uma linha so, colada na base, para nao cobrir o
+   botao principal da pagina. */
+@media (max-width: 600px), (max-height: 500px) {
   .bfa-cookie-banner {
-    left: 0.75rem;
-    right: 0.75rem;
-    bottom: calc(0.75rem + env(safe-area-inset-bottom));
-    max-width: none;
-    padding: 1rem 1.15rem !important;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: calc(0.5rem + env(safe-area-inset-bottom));
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0.5rem 0.6rem 0.5rem 0.85rem;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
   }
-}
-
-@media (orientation: landscape) and (max-height: 540px) {
-  .bfa-cookie-banner {
-    max-width: 360px;
-    padding: 0.85rem 1rem !important;
+  .bfa-cookie-banner__head,
+  .bfa-cookie-banner__long {
+    display: none;
   }
-  .bfa-cookie-banner p {
-    margin-bottom: 0.6rem !important;
-    font-size: 0.78rem !important;
+  .bfa-cookie-banner__short {
+    display: inline;
+  }
+  .bfa-cookie-banner__text {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+  .bfa-cookie-banner__actions {
+    flex-shrink: 0;
+    gap: 0.35rem;
+  }
+  .bfa-cookie-banner__actions .bfa-btn {
+    padding: 0.35rem 0.6rem;
+    min-height: 32px;
   }
 }
 
@@ -4482,4 +4538,60 @@
   .stat-item:nth-child(even) {
     border-left: 1px solid var(--border-color);
   }
+}
+
+/* ==========================================================================
+   Contraste minimo 4,5:1 nos botoes coloridos (WCAG AA). As cores de marca
+   claras (azul-ceu, coral, verde neon) nao aguentam texto branco: nos temas
+   claros o fundo escurece um tom; no tema escuro o texto vira tinta escura.
+   ========================================================================== */
+:root,
+[data-theme="brasil-atlas"] {
+  --btn-verde-bg: #00729E;
+  --btn-azul-bg: #0369A1;
+  --btn-ouro-bg: #C2410C;
+  --btn-cor-fg: #FFFFFF;
+  --gold-text: #C2410C;
+}
+[data-theme="b3-corporate"] {
+  --btn-verde-bg: #007A66;
+  --btn-azul-bg: var(--track-math);
+  --btn-ouro-bg: var(--track-brhsic);
+  --btn-ouro-fg: #0A0F18;
+  --gold-text: #007A66;
+}
+[data-theme="khan-minimalist"] {
+  --btn-verde-bg: #0E7A42;
+  --btn-azul-bg: var(--track-math);
+  --btn-ouro-bg: var(--track-brhsic);
+  --btn-ouro-fg: #0A0F18;
+  --gold-text: #8A5A00;
+}
+[data-theme="dark-obsidian"],
+[data-theme="dark"],
+.dark {
+  --btn-verde-bg: var(--track-finance);
+  --btn-azul-bg: var(--track-math);
+  --btn-ouro-bg: var(--track-brhsic);
+  --btn-cor-fg: #0A0F18;
+  --btn-ouro-fg: #0A0F18;
+  --gold-text: var(--accent-gold);
+}
+
+.bfa-btn--verde {
+  background-color: var(--btn-verde-bg, var(--track-finance));
+  color: var(--btn-cor-fg, #FFFFFF) !important;
+}
+.bfa-btn--azul {
+  background-color: var(--btn-azul-bg, var(--track-math));
+  color: var(--btn-cor-fg, #FFFFFF) !important;
+}
+.bfa-btn--ouro {
+  background-color: var(--btn-ouro-bg, var(--track-brhsic));
+  color: var(--btn-ouro-fg, var(--btn-cor-fg, #FFFFFF)) !important;
+}
+.bfa-btn--verde:hover,
+.bfa-btn--azul:hover,
+.bfa-btn--ouro:hover {
+  opacity: 0.9;
 }
