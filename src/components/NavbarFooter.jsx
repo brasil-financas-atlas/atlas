@@ -129,7 +129,9 @@ function Navbar() {
     const onKey = (e) => {
       const tag = (e.target && e.target.tagName) || '';
       const typing = tag === 'INPUT' || tag === 'TEXTAREA' || (e.target && e.target.isContentEditable);
-      if ((e.key === '/' && !typing) || (e.key.toLowerCase() === 'k' && (e.ctrlKey || e.metaKey))) {
+      // O preenchimento automatico de senha dispara keydown sem `key`.
+      const tecla = typeof e.key === 'string' ? e.key.toLowerCase() : '';
+      if ((tecla === '/' && !typing) || (tecla === 'k' && (e.ctrlKey || e.metaKey))) {
         e.preventDefault();
         setMobileMenuOpen(false);
         setSearchOpen(true);
